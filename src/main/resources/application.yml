@@ -1,0 +1,67 @@
+server:
+  port: 80
+spring:
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://smalllei.cn:3306/xzx?characterEncoding=utf8
+    username: root
+    password: jzdmlll@1217
+    #password: root
+  redis:
+    database: 0
+    host: "192.168.204.196"
+    port: 6379
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+    timeout: 10000
+    #cluster:
+      #nodes:
+       # - 111.231.244.18:10001
+       # - 111.231.244.18:10002
+       # - 111.231.244.18:10003
+       # - 111.231.244.18:10004
+       # - 111.231.244.18:10005
+       # - 111.231.244.18:10006
+mybatis:
+  mapper-locations: classpath:/mapper/**/*.xml
+
+mail:
+  default-encoding: UTF-8
+  host: smtp.qq.com
+  port: 465
+  username: lzc@smalllei.cn
+  password: cydptnisqqhnbdfe
+  properties:
+    mail:
+      smtp:
+        auth: true
+        strttls:
+          enable: true
+          required: true
+        ssl:
+          enable: true
+
+ftpclient:
+  host: 192.168.204.196
+  port: 22
+  username: root
+  password: "123456"
+  basePath: /home/lzc
+  filePath: /
+
+  dictory: /home/images
+
+
+
+
+
+
+

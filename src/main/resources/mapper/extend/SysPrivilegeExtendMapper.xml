@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzx.xzxms.dao.extend.SysPrivilegeExtendMapper">
+  <select id="selectAll" resultMap="PrivilegeTreeResultMap">
+    SELECT *
+    FROM xzx_sys_privilege
+    WHERE parent_id is null
+  </select>
+
+  <select id="selectByParentId" resultType="com.xzx.xzxms.bean.SysPrivilege">
+    SELECT *
+    FROM xzx_sys_privilege
+    WHERE parent_id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByRoleId" resultType="com.xzx.xzxms.bean.SysPrivilege">
+    SELECT p.*
+    from xzx_sys_privilege p, xzx_sys_role r, xzx_sys_role_privilege rp
+    WHERE rp.role_id = r.id
+    AND rp.privilege_id = p.id
+    AND r.id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByUserId" resultType="com.xzx.xzxms.bean.SysPrivilege">
+    select p.*
+    from xzx_sys_user u ,xzx_sys_user_role ur, xzx_sys_role r, xzx_sys_role_privilege rp ,xzx_sys_privilege p
+    where u.id = ur.user_id
+    and r.id = ur.role_id
+    and rp.role_id = r.id
+    and rp.privilege_id = p.id
+    and u.id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectMenuByUserId" resultMap="PrivilegeTreeResultMap">
+    select distinct p.*
+    from xzx_sys_privilege p
+    inner join
+      (select p.*
+       from xzx_sys_user u ,xzx_sys_user_role ur, xzx_sys_role r, xzx_sys_role_privilege rp ,xzx_sys_privilege p
+       where u.id = ur.user_id
+       and r.id = ur.role_id
+       and rp.role_id = r.id
+       and rp.privilege_id = p.id
+       and u.id = #{id,jdbcType=BIGINT}
+       and p.type = 'menu') new_p
+    on p.id = new_p.parent_id
+  </select>
+
+  <resultMap id="PrivilegeTreeResultMap" type="com.xzx.xzxms.vm.PrivilegeTree" extends="com.xzx.xzxms.dao.SysPrivilegeMapper.BaseResultMap">
+    <collection property="children" column="id" select="selectByParentId"></collection>
+  </resultMap>
+
+</mapper>
