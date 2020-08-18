@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzx.xzxms.dao.extend.SysRoleExtendMapper">
+  <select id="selectByUserId" resultType="com.xzx.xzxms.bean.SysRole">
+    SELECT r.*
+    FROM xzx_sys_role r, xzx_sys_user_role ur
+    WHERE r.id = ur.role_id
+    AND ur.user_id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectAll" resultMap="RoleExtendResultMap">
+    SELECT *
+    FROM xzx_sys_role
+  </select>
+
+  <resultMap
+          id="RoleExtendResultMap"
+          type="com.xzx.xzxms.bean.extend.SysRoleExtend"
+          extends="com.xzx.xzxms.dao.SysRoleMapper.BaseResultMap">
+    <collection property="privileges" column="id" select="com.xzx.xzxms.dao.extend.SysPrivilegeExtendMapper.selectByRoleId"></collection>
+  </resultMap>
+</mapper>
