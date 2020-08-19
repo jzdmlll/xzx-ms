@@ -32,6 +32,7 @@ public class SysPrivilegeServiceImpl implements ISysPrivilegeService {
         } else {
             example.createCriteria().andParentIdEqualTo(parentId);
         }
+
         return sysPrivilegeMapper.selectByExample(example);
     }
 

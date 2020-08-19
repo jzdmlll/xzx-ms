@@ -87,7 +87,7 @@ public class SysUserServiceImpl implements ISysUserService {
             }
             // 初始化
             //user.setRegisterTime(new Date().getTime());
-            user.setStatus(SysUserExtend.STATUS_NORMAL);
+            //user.setStatus(SysUserExtend.STATUS_NORMAL);
             userMapper.insert(user);
         }
     }
