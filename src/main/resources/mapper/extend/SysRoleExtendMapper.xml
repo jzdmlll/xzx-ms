@@ -3,14 +3,14 @@
 <mapper namespace="com.xzx.xzxms.dao.extend.SysRoleExtendMapper">
   <select id="selectByUserId" resultType="com.xzx.xzxms.bean.SysRole">
     SELECT r.*
-    FROM xzx_sys_role r, xzx_sys_user_role ur
+    FROM sys_role r, sys_user_role ur
     WHERE r.id = ur.role_id
     AND ur.user_id = #{id,jdbcType=BIGINT}
   </select>
 
   <select id="selectAll" resultMap="RoleExtendResultMap">
     SELECT *
-    FROM xzx_sys_role
+    FROM sys_role
   </select>
 
   <resultMap

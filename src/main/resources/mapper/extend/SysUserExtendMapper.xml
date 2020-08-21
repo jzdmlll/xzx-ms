@@ -3,7 +3,7 @@
 <mapper namespace="com.xzx.xzxms.dao.extend.SysUserExtendMapper">
   <select id="selectById" resultMap="UserExtendResultMap">
     SELECT *
-    FROM xzx_sys_user
+    FROM sys_user
     WHERE id = #{id,jdbcType=BIGINT}
   </select>
   <resultMap id="UserExtendResultMap"
@@ -14,7 +14,7 @@
   </resultMap>
   <select id="selectAll" resultMap="UserExtendResultMap">
     SELECT *
-    FROM xzx_sys_user
+    FROM sys_user
   </select>
 
 </mapper>

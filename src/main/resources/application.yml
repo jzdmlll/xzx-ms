@@ -13,7 +13,7 @@ spring:
     #password: root
   redis:
     database: 0
-    host: "192.168.204.196"
+    host: "smalllei.cn"
     port: 6379
     jedis:
       pool:
