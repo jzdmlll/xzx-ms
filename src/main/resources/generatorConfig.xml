@@ -68,21 +68,19 @@
         <table tableName="lf_comment" domainObjectName="Comment" ></table>
         <table tableName="lf_logs" domainObjectName="Logs" ></table>
         -->
-    <table tableName="xzx_sys_user_role" domainObjectName="SysUserRole" ></table>
-    <table tableName="xzx_sys_user" domainObjectName="SysUser" ></table>
-    <table tableName="xzx_sys_role_privilege" domainObjectName="SysRolePrivilege" ></table>
-    <table tableName="xzx_sys_role" domainObjectName="SysRole" ></table>
-    <table tableName="xzx_sys_qualification" domainObjectName="SysQualification" ></table>
-    <table tableName="xzx_sys_protype" domainObjectName="SysProType" ></table>
-    <table tableName="xzx_sys_proorigin" domainObjectName="SysProOrigin" ></table>
-    <table tableName="xzx_sys_privilege" domainObjectName="SysPrivilege" ></table>
-    <table tableName="xzx_sys_log" domainObjectName="SysLog" ></table>
-    <table tableName="xzx_sys_level" domainObjectName="SysLevel" ></table>
-    <table tableName="xzx_sys_file" domainObjectName="SysFile" ></table>
-    <table tableName="xzx_supplierquote" domainObjectName="SupplierQuote" ></table>
-    <table tableName="xzx_supplier" domainObjectName="Supplier" ></table>
-    <table tableName="xzx_prodetail" domainObjectName="ProDetail" ></table>
-    <table tableName="xzx_inquiry" domainObjectName="Inquiry" ></table>
+    <table tableName="sys_user_role" domainObjectName="SysUserRole" ></table>
+    <table tableName="sys_user" domainObjectName="SysUser" ></table>
+    <table tableName="sys_role_privilege" domainObjectName="SysRolePrivilege" ></table>
+    <table tableName="sys_role" domainObjectName="SysRole" ></table>
+    <table tableName="sys_pro_type" domainObjectName="SysProType" ></table>
+    <table tableName="sys_pro_origin" domainObjectName="SysProOrigin" ></table>
+    <table tableName="sys_pro_detail" domainObjectName="SysProDetail" ></table>
+    <table tableName="sys_pro_check" domainObjectName="SysProCheck" ></table>
+    <table tableName="sys_privilege" domainObjectName="SysPrivilege" ></table>
+    <table tableName="sys_log" domainObjectName="SysLog" ></table>
+    <table tableName="sys_file" domainObjectName="SysFile" ></table>
+    <table tableName="inquiry" domainObjectName="Inquiry" ></table>
+    <table tableName="sys_device_type" domainObjectName="SysDeviceType" ></table>
     <!--
     mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
    -->
