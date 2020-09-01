@@ -59,6 +59,8 @@ ftpclient:
 
   dictory: /home/images
 
+pagehelper:
+  helperDialect: mysql
 
 
 
