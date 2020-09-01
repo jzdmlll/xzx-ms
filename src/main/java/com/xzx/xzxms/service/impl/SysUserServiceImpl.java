@@ -85,10 +85,7 @@ public class SysUserServiceImpl implements ISysUserService {
             if(list.size()>0){
                 throw new CustomerException("该用户已经被占用");
             }
-            // 初始化
-            //user.setRegisterTime(new Date().getTime());
-            //user.setStatus(SysUserExtend.STATUS_NORMAL);
-            userMapper.insert(user);
+            register(user);
         }
     }
 
@@ -148,7 +145,7 @@ public class SysUserServiceImpl implements ISysUserService {
     @Override
     public void register(SysUser user) {
         //插入用户
-        long id = IDUtils.getArticleId();
+        long id = IDUtils.getId();
         user.setId(id);
         //user.setRegisterTime(new Date().getTime());
         userMapper.insertSelective(user);

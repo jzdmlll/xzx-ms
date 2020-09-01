@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : smalllei.cn
-Source Server Version : 50535
-Source Host           : smalllei.cn:3306
+Source Server         : server
+Source Server Version : 50173
+Source Host           : 192.168.204.196:3306
 Source Database       : xzx
 
 Target Server Type    : MYSQL
-Target Server Version : 50535
+Target Server Version : 50173
 File Encoding         : 65001
 
-Date: 2020-08-21 15:54:09
+Date: 2020-09-01 15:42:05
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -123,7 +123,7 @@ CREATE TABLE `sys_privilege` (
   `operator` bigint(40) DEFAULT NULL COMMENT '操作者',
   `time` bigint(40) DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_privilege
@@ -145,6 +145,8 @@ INSERT INTO `sys_privilege` VALUES ('14', '级联查询所有角色', 'method', 
 INSERT INTO `sys_privilege` VALUES ('15', '新增修改角色', 'method', '2', null, '/role/saveOrUpdate', null, null, null, null, null);
 INSERT INTO `sys_privilege` VALUES ('16', '查询所有角色', 'method', '2', null, '/role/findAll', null, null, null, null, null);
 INSERT INTO `sys_privilege` VALUES ('17', '新增/修改用户', 'method', '1', null, '/user/saveOrUpdate', null, null, null, null, null);
+INSERT INTO `sys_privilege` VALUES ('18', '项目管理', 'parent', null, 'documentation', '/project/list', null, null, null, null, null);
+INSERT INTO `sys_privilege` VALUES ('19', '项目管理菜单', 'menu', '18', null, '/project/list', null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for sys_pro_check
@@ -257,7 +259,7 @@ CREATE TABLE `sys_role_privilege` (
   `operator` bigint(40) DEFAULT NULL COMMENT '操作者',
   `time` bigint(40) DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_role_privilege
@@ -276,6 +278,7 @@ INSERT INTO `sys_role_privilege` VALUES ('14', '1', '14', null, null, null, null
 INSERT INTO `sys_role_privilege` VALUES ('15', '1', '15', null, null, null, null);
 INSERT INTO `sys_role_privilege` VALUES ('16', '1', '16', null, null, null, null);
 INSERT INTO `sys_role_privilege` VALUES ('17', '1', '17', null, null, null, null);
+INSERT INTO `sys_role_privilege` VALUES ('18', '1', '19', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for sys_user

@@ -26,7 +26,7 @@ public class IDUtils {
     /**
      * id生成
      */
-    public static long getArticleId() {
+    public static long getId() {
         //取当前时间的长整形值包含毫秒
         long millis = System.currentTimeMillis();
         //long millis = System.nanoTime();

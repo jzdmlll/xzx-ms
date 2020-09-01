@@ -13,7 +13,7 @@ spring:
     #password: root
   redis:
     database: 0
-    host: "smalllei.cn"
+    host: "192.168.204.196"
     port: 6379
     jedis:
       pool:
@@ -21,7 +21,7 @@ spring:
         max-wait: -1
         max-idle: 8
         min-idle: 0
-    timeout: 10000
+        timeout: 10000
     #cluster:
       #nodes:
        # - 111.231.244.18:10001
@@ -58,6 +58,9 @@ ftpclient:
   filePath: /
 
   dictory: /home/images
+
+pagehelper:
+  helperDialect: mysql
 
 
 

@@ -165,6 +165,12 @@
             <version>1.1</version>
             <scope>provided</scope>
         </dependency>
+        <!--pagehelper -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.2.5</version>
+        </dependency>
 
     </dependencies>
 
@@ -186,7 +192,7 @@
                 <version>2.2</version>
                 <configuration>
                     <port>8080</port>
-                    <path>/lostfound_api</path>
+                    <path>/xzxms_api</path>
                     <username>root</username>
                     <password>root</password>
                     <url>http://192.168.204.196:8080/manager/text</url>

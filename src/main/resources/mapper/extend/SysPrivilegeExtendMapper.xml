@@ -20,7 +20,7 @@
        and r.id = ur.role_id
        and rp.role_id = r.id
        and rp.privilege_id = p.id
-       and u.id = #{id,jdbcType=BIGINT}
+       and p.parent_id = #{id,jdbcType=BIGINT}
        and p.type = 'menu'
   </select>
 
