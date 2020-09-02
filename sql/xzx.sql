@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : smalllei.cn
-Source Server Version : 50535
-Source Host           : smalllei.cn:3306
+Source Server         : localhost
+Source Server Version : 50712
+Source Host           : localhost:3306
 Source Database       : xzx
 
 Target Server Type    : MYSQL
-Target Server Version : 50535
+Target Server Version : 50712
 File Encoding         : 65001
 
-Date: 2020-09-02 09:25:52
+Date: 2020-09-02 16:17:53
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -123,7 +123,7 @@ CREATE TABLE `sys_privilege` (
   `operator` bigint(40) DEFAULT NULL COMMENT '操作者',
   `time` bigint(40) DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_privilege
@@ -151,6 +151,7 @@ INSERT INTO `sys_privilege` VALUES ('20', '给用户设置角色', 'method', '1'
 INSERT INTO `sys_privilege` VALUES ('21', '项目来源管理', 'menu', '18', null, '/project/origin/list', null, null, null, null, null);
 INSERT INTO `sys_privilege` VALUES ('22', '项目详情管理', 'menu', '18', null, '/project/detail/list', null, null, null, null, null);
 INSERT INTO `sys_privilege` VALUES ('23', '查询所有项目来源', 'method', '18', null, '/project/origin/findAll', null, null, null, null, null);
+INSERT INTO `sys_privilege` VALUES ('24', '新增或修改项目来源', 'method', '18', '', '/project/origin/saveOrUpdate', '', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for sys_pro_check
@@ -200,7 +201,7 @@ DROP TABLE IF EXISTS `sys_pro_origin`;
 CREATE TABLE `sys_pro_origin` (
   `id` bigint(40) NOT NULL COMMENT '项目来源编号',
   `name` varchar(255) DEFAULT NULL COMMENT '项目来源名称',
-  `code` int(10) DEFAULT NULL COMMENT '项目来源编码',
+  `code` varchar(10) DEFAULT NULL COMMENT '项目来源编码',
   `is_active` int(10) DEFAULT NULL COMMENT '是否有效',
   `is_useful` int(10) DEFAULT NULL COMMENT '是否被使用',
   `operator` bigint(40) DEFAULT NULL COMMENT '操作者',
@@ -264,7 +265,7 @@ CREATE TABLE `sys_role_privilege` (
   `operator` bigint(40) DEFAULT NULL COMMENT '操作者',
   `time` bigint(40) DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_role_privilege
@@ -288,6 +289,7 @@ INSERT INTO `sys_role_privilege` VALUES ('19', '1', '20', null, null, null, null
 INSERT INTO `sys_role_privilege` VALUES ('20', '1', '21', null, null, null, null);
 INSERT INTO `sys_role_privilege` VALUES ('21', '1', '22', null, null, null, null);
 INSERT INTO `sys_role_privilege` VALUES ('22', '1', '23', null, null, null, null);
+INSERT INTO `sys_role_privilege` VALUES ('23', '1', '24', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for sys_user

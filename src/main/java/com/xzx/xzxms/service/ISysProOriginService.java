@@ -10,4 +10,16 @@ public interface ISysProOriginService {
      * @return List<SysProOrigin>
      */
     List<SysProOrigin> findAll();
+
+    /**
+     * 新增或保存一条项目来源信息
+     * @param proOrigin
+     */
+    void saveOrUpdate(SysProOrigin proOrigin);
+
+    /**
+     * 根据id逻辑删除一条项目来源信息
+     * @param proOriginId
+     */
+    void logicDeleteById(long proOriginId);
 }
