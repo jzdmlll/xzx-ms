@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : server
-Source Server Version : 50173
-Source Host           : 192.168.204.196:3306
+Source Server         : smalllei.cn
+Source Server Version : 50535
+Source Host           : smalllei.cn:3306
 Source Database       : xzx
 
 Target Server Type    : MYSQL
-Target Server Version : 50173
+Target Server Version : 50535
 File Encoding         : 65001
 
-Date: 2020-09-01 15:42:05
+Date: 2020-09-02 09:25:52
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -123,7 +123,7 @@ CREATE TABLE `sys_privilege` (
   `operator` bigint(40) DEFAULT NULL COMMENT '操作者',
   `time` bigint(40) DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_privilege
@@ -136,9 +136,9 @@ INSERT INTO `sys_privilege` VALUES ('5', '查询用户动态菜单栏', 'method'
 INSERT INTO `sys_privilege` VALUES ('6', '级联查询所有权限', 'method', '2', null, '/role/cascadePrivilegeFindAll', null, null, null, null, null);
 INSERT INTO `sys_privilege` VALUES ('7', '查询权限树', 'method', '3', null, '/privilege/findPrivilegeTree', null, null, null, null, null);
 INSERT INTO `sys_privilege` VALUES ('8', '授权', 'method', '2', null, '/role/authorization', null, null, null, null, null);
-INSERT INTO `sys_privilege` VALUES ('9', '用户管理菜单', 'menu', '1', null, '/user/list', null, null, null, null, null);
-INSERT INTO `sys_privilege` VALUES ('10', '角色管理菜单', 'menu', '2', null, '/role/list', null, null, null, null, null);
-INSERT INTO `sys_privilege` VALUES ('11', '权限管理菜单', 'menu', '3', null, '/privilege/list', null, null, null, null, null);
+INSERT INTO `sys_privilege` VALUES ('9', '用户管理', 'menu', '1', '', '/user/list', '', null, null, null, null);
+INSERT INTO `sys_privilege` VALUES ('10', '角色管理', 'menu', '2', '', '/role/list', '', null, null, null, null);
+INSERT INTO `sys_privilege` VALUES ('11', '权限管理', 'menu', '3', '', '/privilege/list', '', null, null, null, null);
 INSERT INTO `sys_privilege` VALUES ('12', '查询所有权限', 'method', '3', null, '/privilege/findByParentId', null, null, null, null, null);
 INSERT INTO `sys_privilege` VALUES ('13', '新增/修改权限', 'method', '3', null, '/privilege/saveOrUpdate', null, null, null, null, null);
 INSERT INTO `sys_privilege` VALUES ('14', '级联查询所有角色', 'method', '1', null, '/user/cascadeRoleFindAll', null, null, null, null, null);
@@ -146,7 +146,11 @@ INSERT INTO `sys_privilege` VALUES ('15', '新增修改角色', 'method', '2', n
 INSERT INTO `sys_privilege` VALUES ('16', '查询所有角色', 'method', '2', null, '/role/findAll', null, null, null, null, null);
 INSERT INTO `sys_privilege` VALUES ('17', '新增/修改用户', 'method', '1', null, '/user/saveOrUpdate', null, null, null, null, null);
 INSERT INTO `sys_privilege` VALUES ('18', '项目管理', 'parent', null, 'documentation', '/project/list', null, null, null, null, null);
-INSERT INTO `sys_privilege` VALUES ('19', '项目管理菜单', 'menu', '18', null, '/project/list', null, null, null, null, null);
+INSERT INTO `sys_privilege` VALUES ('19', '项目分类管理', 'menu', '18', '', '/project/type/list', '', null, null, null, null);
+INSERT INTO `sys_privilege` VALUES ('20', '给用户设置角色', 'method', '1', null, '/user/setRoles', null, null, null, null, null);
+INSERT INTO `sys_privilege` VALUES ('21', '项目来源管理', 'menu', '18', null, '/project/origin/list', null, null, null, null, null);
+INSERT INTO `sys_privilege` VALUES ('22', '项目详情管理', 'menu', '18', null, '/project/detail/list', null, null, null, null, null);
+INSERT INTO `sys_privilege` VALUES ('23', '查询所有项目来源', 'method', '18', null, '/project/origin/findAll', null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for sys_pro_check
@@ -207,6 +211,7 @@ CREATE TABLE `sys_pro_origin` (
 -- ----------------------------
 -- Records of sys_pro_origin
 -- ----------------------------
+INSERT INTO `sys_pro_origin` VALUES ('1', '1', '1', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for sys_pro_type
@@ -259,7 +264,7 @@ CREATE TABLE `sys_role_privilege` (
   `operator` bigint(40) DEFAULT NULL COMMENT '操作者',
   `time` bigint(40) DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_role_privilege
@@ -279,6 +284,10 @@ INSERT INTO `sys_role_privilege` VALUES ('15', '1', '15', null, null, null, null
 INSERT INTO `sys_role_privilege` VALUES ('16', '1', '16', null, null, null, null);
 INSERT INTO `sys_role_privilege` VALUES ('17', '1', '17', null, null, null, null);
 INSERT INTO `sys_role_privilege` VALUES ('18', '1', '19', null, null, null, null);
+INSERT INTO `sys_role_privilege` VALUES ('19', '1', '20', null, null, null, null);
+INSERT INTO `sys_role_privilege` VALUES ('20', '1', '21', null, null, null, null);
+INSERT INTO `sys_role_privilege` VALUES ('21', '1', '22', null, null, null, null);
+INSERT INTO `sys_role_privilege` VALUES ('22', '1', '23', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -314,7 +323,7 @@ CREATE TABLE `sys_user_role` (
   `operator` bigint(40) DEFAULT NULL COMMENT '操作者',
   `time` bigint(40) DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_user_role
