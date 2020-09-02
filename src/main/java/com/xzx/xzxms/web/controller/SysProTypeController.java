@@ -24,6 +24,7 @@ public class SysProTypeController {
     public Message saveOrUpdate(SysProType sysProType){
 
         sysProTypeServiceImpl.saveOrUpdate(sysProType);
+        System.out.println(sysProType);
         return MessageUtil.success("更新成功");
     }
 
