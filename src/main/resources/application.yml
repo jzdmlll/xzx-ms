@@ -61,7 +61,10 @@ ftpclient:
 
 pagehelper:
   helperDialect: mysql
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 
 
 

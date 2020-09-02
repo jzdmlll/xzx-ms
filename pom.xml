@@ -171,7 +171,10 @@
             <artifactId>pagehelper-spring-boot-starter</artifactId>
             <version>1.2.5</version>
         </dependency>
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
     </dependencies>
 
     <build>
@@ -200,5 +203,6 @@
             </plugin>
         </plugins>
     </build>
+
 
 </project>

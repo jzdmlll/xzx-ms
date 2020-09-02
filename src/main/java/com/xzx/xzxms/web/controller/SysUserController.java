@@ -1,5 +1,7 @@
 package com.xzx.xzxms.web.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xzx.xzxms.bean.SysUser;
 import com.xzx.xzxms.bean.extend.SysPrivilegeExtend;
 import com.xzx.xzxms.bean.extend.SysUserExtend;
@@ -35,6 +37,17 @@ public class SysUserController {
     private ISysPrivilegeService privilegeServiceImpl;
     @Resource
     private JedisDao jedisDaoImpl;
+
+    @GetMapping("test")
+    public Message test(int a,int b){
+
+        Message ms=new Message();
+        PageHelper.startPage(a, b);
+        List<SysUser> all = userServiceImpl.findAll();
+        PageInfo<SysUser> pi=new PageInfo<SysUser>(all);
+        ms.setData(pi);
+        return ms;
+    }
 
     @PostMapping("login")
     public Message login(@RequestBody UserVM userVM) {
