@@ -1,6 +1,5 @@
 package com.xzx.xzxms.service;
 
-<<<<<<< HEAD
 import com.xzx.xzxms.bean.SysProOrigin;
 
 import java.util.List;
@@ -11,11 +10,4 @@ public interface ISysProOriginService {
      * @return List<SysProOrigin>
      */
     List<SysProOrigin> findAll();
-=======
-public interface ISysProOriginService {
-
-    
-
-
->>>>>>> master
 }

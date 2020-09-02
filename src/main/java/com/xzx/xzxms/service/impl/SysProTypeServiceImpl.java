@@ -35,7 +35,7 @@ public class SysProTypeServiceImpl implements ISysProTypeService {
                 throw new CustomerException("该项目分类已存在，请勿重复插入!");
             }
 
-            proType.setId(IDUtils.getArticleId());
+            proType.setId(IDUtils.getId());
             sysProTypeMapper.insert(proType);
         }
     }
