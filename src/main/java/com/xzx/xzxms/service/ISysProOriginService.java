@@ -10,4 +10,6 @@ public interface ISysProOriginService {
      * @return List<SysProOrigin>
      */
     List<SysProOrigin> findAll();
+
+
 }
