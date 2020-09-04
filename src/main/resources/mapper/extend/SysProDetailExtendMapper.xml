@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzx.xzxms.dao.extend.SysProDetailExtendMapper">
+  <select id="findById" resultMap="option">
+    select *
+    FROM sys_pro_detail
+    where id=#{proDetailId,jdbcType=BIGINT}
+  </select>
+
+  <resultMap id="option" type="com.xzx.xzxms.bean.extend.SysProDetailExtend" extends="com.xzx.xzxms.dao.SysProDetailMapper.BaseResultMap">
+    <association property="sysProType" column="pro_type_id" select="com.xzx.xzxms.dao.extend.SysProTypeExtendMapper.findById"></association>
+    <association property="sysProOrigin" column="pro_origin_id" select="com.xzx.xzxms.dao.extend.SysProOriginExtendMapper.findById"></association>
+  </resultMap>
+</mapper>
