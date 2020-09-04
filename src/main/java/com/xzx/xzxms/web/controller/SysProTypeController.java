@@ -13,7 +13,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
-@RequestMapping("/project/proType")
+@RequestMapping("/project/type")
 public class SysProTypeController {
 
     @Resource
@@ -28,7 +28,7 @@ public class SysProTypeController {
     }
 
     @ApiOperation(value = "查询")
-    @GetMapping(value="/project/findAll")
+    @GetMapping(value="findAll")
     public Message findAll(){
         List<SysProType> list= sysProTypeServiceImpl.findAll();
         return MessageUtil.success("查询成功",list);

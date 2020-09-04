@@ -24,6 +24,12 @@ public class SysProOriginServiceImpl  implements ISysProOriginService {
     @Override
     public void saveOrUpdate(SysProOrigin proOrigin) {
         if(proOrigin.getId() != null){
+            SysProOriginExample example = new SysProOriginExample();
+            example.createCriteria().andCodeEqualTo(proOrigin.getCode());
+            List<SysProOrigin> list = sysProOriginMapper.selectByExample(example);
+            if (list.size()>0){
+                throw new CustomerException("该项目编码已被使用，请重新输入!");
+            }
             sysProOriginMapper.updateByPrimaryKey(proOrigin);
         }else {
             SysProOriginExample example = new SysProOriginExample();
