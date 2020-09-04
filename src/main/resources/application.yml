@@ -11,6 +11,7 @@ spring:
     username: root
     password: jzdmlll@1217
     # password: root
+
     druid:
       # 数据库连接池
       type: com.alibaba.druid.pool.DruidDataSource

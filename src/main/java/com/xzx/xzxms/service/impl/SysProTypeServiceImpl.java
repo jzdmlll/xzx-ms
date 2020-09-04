@@ -2,9 +2,7 @@ package com.xzx.xzxms.service.impl;
 
 import com.xzx.xzxms.bean.SysProType;
 import com.xzx.xzxms.bean.SysProTypeExample;
-import com.xzx.xzxms.bean.extend.SysProTypeExtend;
 import com.xzx.xzxms.dao.SysProTypeMapper;
-import com.xzx.xzxms.dao.extend.SysProTypeExtendMapper;
 import com.xzx.xzxms.service.ISysProTypeService;
 import com.xzx.xzxms.utils.CustomerException;
 import com.xzx.xzxms.utils.IDUtils;
