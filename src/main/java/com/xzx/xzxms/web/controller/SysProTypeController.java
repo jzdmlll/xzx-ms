@@ -24,13 +24,15 @@ public class SysProTypeController {
     public Message saveOrUpdate(SysProType sysProType){
 
         sysProTypeServiceImpl.saveOrUpdate(sysProType);
+        System.out.println(sysProType);
         return MessageUtil.success("更新成功");
     }
 
     @ApiOperation(value = "查询")
-    @GetMapping(value="/project/findAll")
+    @GetMapping(value="findAll")
     public Message findAll(){
         List<SysProType> list= sysProTypeServiceImpl.findAll();
         return MessageUtil.success("查询成功",list);
     }
+
 }

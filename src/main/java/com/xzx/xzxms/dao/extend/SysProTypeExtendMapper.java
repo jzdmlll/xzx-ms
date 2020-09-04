@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface SysProTypeExtendMapper {
 
-    List<SysProType> selectAll();
+    List<SysProType> findById(long proTypeId);
 }
