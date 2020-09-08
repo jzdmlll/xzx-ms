@@ -24,13 +24,11 @@ public class JedisDaoImpl implements JedisDao {
 
     @Override
     public void set(String key, String value) {
-        //一小时后过期
-        stringRedisTemplate.opsForValue().set(key, value, 1L, TimeUnit.HOURS);
+        stringRedisTemplate.opsForValue().set(key, value);
     }
 
     @Override
     public void setCode(String key, String value, long minutes) {
-        //一小时后过期
         stringRedisTemplate.opsForValue().set(key, value, minutes, TimeUnit.MINUTES);
     }
 

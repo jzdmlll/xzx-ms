@@ -23,7 +23,7 @@ public interface JedisDao {
      */
     void set(String key, String value);
     /**
-     * 设置值,minutes分钟后过期
+     * 设置值, minutes分钟后过期
      * @param key
      * @param value
      * @param minutes

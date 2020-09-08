@@ -8,10 +8,7 @@ import com.xzx.xzxms.bean.extend.SysUserExtend;
 import com.xzx.xzxms.dao.redis.JedisDao;
 import com.xzx.xzxms.service.ISysPrivilegeService;
 import com.xzx.xzxms.service.ISysUserService;
-import com.xzx.xzxms.utils.JsonUtils;
-import com.xzx.xzxms.utils.JwtTokenUtil;
-import com.xzx.xzxms.utils.Message;
-import com.xzx.xzxms.utils.MessageUtil;
+import com.xzx.xzxms.utils.*;
 import com.xzx.xzxms.vm.UserRegister;
 import com.xzx.xzxms.vm.UserRoleVM;
 import com.xzx.xzxms.vm.UserVM;
@@ -61,12 +58,34 @@ public class SysUserController {
             map.put("token", token);
             //放入redis缓存
             String userJson = JsonUtils.objectToJson(user);
-            jedisDaoImpl.set(token, userJson);
+            jedisDaoImpl.setCode(token, userJson, JwtTokenUtil.REDIS_TOKEN_TIME);
 
             return MessageUtil.success("登录成功", map);
         }
         // 3. 如果登录失败
         return MessageUtil.error("登录失败,用户名或密码错误");
+    }
+
+    @PostMapping("refreshToken")
+    public Message refreshToken(String token) {
+        // 超过15分钟，token过期，判断redis里该token是否过期，如果没过期，将token刷新返回，否则抛出token过期异常
+        if(jedisDaoImpl.exists(token)) {
+            String userJson = jedisDaoImpl.get(token);
+            SysUser user = JsonUtils.jsonToPojo(userJson, SysUser.class);
+            Long userId = user.getId();
+            String username = user.getUsername();
+            //刷新token
+            String newToken = JwtTokenUtil.createJWT(userId, username);
+            // 将redis中token更新
+            jedisDaoImpl.setCode(newToken, userJson, JwtTokenUtil.REDIS_TOKEN_TIME);
+            // 将新token返回
+            Map<String, String> map = new HashMap<>();
+            System.out.println(newToken);
+            map.put("token", newToken);
+            return MessageUtil.success("刷新token成功", map);
+        }else {
+            return MessageUtil.unAuthorized("token过期, 请重新登陆");
+        }
     }
 
     @ApiOperation(value = "通过token获取用户的基本信息")

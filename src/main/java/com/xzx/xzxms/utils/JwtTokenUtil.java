@@ -1,9 +1,11 @@
 package com.xzx.xzxms.utils;
 
+import com.xzx.xzxms.dao.redis.JedisDao;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
@@ -17,12 +19,14 @@ public class JwtTokenUtil {
 
     public static final String TOKEN_PREFIX = "Bearer ";
 
+    public static final Long REDIS_TOKEN_TIME = 4*60L;
+
     // jwt配置信息
     public static final String base64Secret ="MDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjY=";
     private static final String clientId = "098f6bcd4621d373cade4e832627b4f6";
     private static final String name = "restapiuser";
-    //过期时间一小时
-    private static final int expiresSecond = 60*60*1000;
+    // token过期时间15分钟
+    private static final int expiresSecond = 15*60*1000;
     /**
      * 解析jwt
      * @param jsonWebToken
@@ -36,8 +40,8 @@ public class JwtTokenUtil {
                     .parseClaimsJws(jsonWebToken).getBody();
             return claims;
         } catch (ExpiredJwtException  eje) {
-            log.error("===== Token过期 =====", eje);
-            throw new UnAuthorizedException("token过期，请重新登陆");
+            log.error("===== 刷新Token =====", eje);
+            return null;
         } catch (Exception e){
             log.error("===== token解析异常 =====", e);
             throw new UnAuthorizedException("token解析异常");

@@ -58,5 +58,4 @@ public class MessageUtil {
         message.setTimestamp(new Date().getTime());
         return message;
     }
-
 }
