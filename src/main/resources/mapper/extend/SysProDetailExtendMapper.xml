@@ -4,7 +4,11 @@
   <select id="findById" resultMap="option">
     select *
     FROM sys_pro_detail
-    where id=#{proDetailId,jdbcType=BIGINT}
+    <where>
+      <if test="proDetailId !=null and proDetailId!=0">
+        and id=#{proDetailId,jdbcType=BIGINT}
+      </if>
+    </where>
   </select>
 
   <resultMap id="option" type="com.xzx.xzxms.bean.extend.SysProDetailExtend" extends="com.xzx.xzxms.dao.SysProDetailMapper.BaseResultMap">

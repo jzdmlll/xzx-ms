@@ -11,4 +11,5 @@ public interface ISysProDetailService {
      * @return
      */
     SysProDetailExtend findById(long proDetailId);
+    SysProDetailExtend findById();
 }
