@@ -1,7 +1,5 @@
 package com.xzx.xzxms.dao;
 
-import com.xzx.xzxms.bean.Product;
-import com.xzx.xzxms.bean.ProductExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

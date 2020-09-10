@@ -3,6 +3,8 @@ package com.xzx.xzxms.service;
 import com.xzx.xzxms.bean.SysProDetail;
 import com.xzx.xzxms.bean.extend.SysProDetailExtend;
 
+import java.util.List;
+
 public interface ISysProDetailService {
 
     /***
@@ -11,5 +13,5 @@ public interface ISysProDetailService {
      * @return
      */
     SysProDetailExtend findById(long proDetailId);
-    SysProDetailExtend findById();
+    List<SysProDetailExtend> findById();
 }
