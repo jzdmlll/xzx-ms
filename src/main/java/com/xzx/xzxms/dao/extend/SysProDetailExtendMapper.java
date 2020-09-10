@@ -9,8 +9,12 @@ public interface SysProDetailExtendMapper {
 
     SysProDetailExtend findById(long proDetailId);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> ac1a1f1184bbaef44129ece72994715911589ce2
+=======
+
+>>>>>>> a7352bdc1cd51076843a8a490f6672ec4b2b55bc
     List<SysProDetailExtend> findById();
 }
