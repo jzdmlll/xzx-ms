@@ -13,9 +13,5 @@ public interface ISysProDetailService {
      * @return
      */
     SysProDetailExtend findById(long proDetailId);
-<<<<<<< HEAD
-=======
-
->>>>>>> ac1a1f1184bbaef44129ece72994715911589ce2
     List<SysProDetailExtend> findById();
 }
