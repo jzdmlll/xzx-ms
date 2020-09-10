@@ -30,8 +30,13 @@ public class SysProDetailController {
     @GetMapping(value = "findByAll")
     public Message findById(){
 
+<<<<<<< HEAD
         List<SysProDetailExtend> sysProDetailExtend = sysProDetailServiceImpl.findById();
         return MessageUtil.success("success",sysProDetailExtend);
+=======
+        List<SysProDetailExtend> sysProDetailExtendList = sysProDetailServiceImpl.findById();
+        return MessageUtil.success("success",sysProDetailExtendList);
+>>>>>>> ac1a1f1184bbaef44129ece72994715911589ce2
     }
 
 }

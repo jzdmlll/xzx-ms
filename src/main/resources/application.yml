@@ -9,8 +9,8 @@ spring:
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/xzx?characterEncoding=utf8
     username: root
-    #password: jzdmlll@1217
-    password: root
+    password: jzdmlll@1217
+    #password: root
 
     druid:
       # 数据库连接池
