@@ -7,6 +7,7 @@ import com.xzx.xzxms.service.ISysProDetailService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class SysProDetailServiceImpl implements ISysProDetailService {
@@ -15,7 +16,7 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
     private SysProDetailExtendMapper sysProDetailExtendMapper;
 
     @Override
-    public SysProDetailExtend findById() { return sysProDetailExtendMapper.findById(); }
+    public List<SysProDetailExtend> findById() { return sysProDetailExtendMapper.findById(); }
 
     @Override
     public SysProDetailExtend findById(long proDetailId) {
