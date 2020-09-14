@@ -8,6 +8,5 @@ import java.util.List;
 public interface SysProDetailExtendMapper {
 
     SysProDetailExtend findById(long proDetailId);
-
     List<SysProDetailExtend> findById();
 }
