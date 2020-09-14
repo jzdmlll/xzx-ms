@@ -2,6 +2,7 @@ package com.xzx.xzxms.web.controller;
 
 import com.xzx.xzxms.bean.Inquiry;
 import com.xzx.xzxms.bean.InquiryExample;
+import com.xzx.xzxms.bean.InquiryWithBLOBs;
 import com.xzx.xzxms.bean.extend.SysProDetailExtend;
 import com.xzx.xzxms.service.IInquiryService;
 import com.xzx.xzxms.utils.Message;
