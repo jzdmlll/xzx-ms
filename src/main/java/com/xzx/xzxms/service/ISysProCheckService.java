@@ -1,6 +1,5 @@
 package com.xzx.xzxms.service;
 
-
 import com.xzx.xzxms.bean.SysProCheck;
 
 import java.util.List;
@@ -18,6 +17,7 @@ public interface ISysProCheckService {
      * @param ids
      */
     void revoke(long[] ids);
+
 
 
 }
