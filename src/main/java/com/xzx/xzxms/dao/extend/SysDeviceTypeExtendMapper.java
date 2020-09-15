@@ -13,5 +13,5 @@ public interface SysDeviceTypeExtendMapper {
      * @param code
      * @return
      */
-    List<SysDeviceType> findAllLike(String name,String code);
+    List<SysDeviceType> findAllLike(String name, String code);
 }

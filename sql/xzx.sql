@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50712
 File Encoding         : 65001
 
-Date: 2020-09-15 19:48:57
+Date: 2020-09-15 20:37:43
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -69,6 +69,7 @@ CREATE TABLE `sys_device_type` (
 -- ----------------------------
 -- Records of sys_device_type
 -- ----------------------------
+INSERT INTO `sys_device_type` VALUES ('1', '1', '1', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for sys_file
