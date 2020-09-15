@@ -1,9 +1,6 @@
 package com.xzx.xzxms.web.controller;
 
-import com.xzx.xzxms.bean.Inquiry;
-import com.xzx.xzxms.bean.InquiryExample;
 import com.xzx.xzxms.bean.InquiryWithBLOBs;
-import com.xzx.xzxms.bean.extend.SysProDetailExtend;
 import com.xzx.xzxms.service.IInquiryService;
 import com.xzx.xzxms.utils.Message;
 import com.xzx.xzxms.utils.MessageUtil;
@@ -27,7 +24,7 @@ public class InquiryController {
     @GetMapping(value = "findByDetailId")
     public Message findByDetailId(long id){
 
-        List<Inquiry> inquiry = inquiryServiceImpl.findByProDetailId(id);
+        List<InquiryWithBLOBs> inquiry = inquiryServiceImpl.findByProDetailId(id);
         return MessageUtil.success("success",inquiry);
     }
 

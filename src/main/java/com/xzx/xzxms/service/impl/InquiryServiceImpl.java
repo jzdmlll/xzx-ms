@@ -19,11 +19,11 @@ public class InquiryServiceImpl implements IInquiryService {
     private InquiryMapper inquiryMapper;
 
     @Override
-    public List<Inquiry> findByProDetailId(long proId) {
+    public List<InquiryWithBLOBs> findByProDetailId(long proId) {
 
         InquiryExample inquiryExample=new InquiryExample();
         inquiryExample.createCriteria().andProDetailIdEqualTo(proId);
-        return inquiryMapper.selectByExample(inquiryExample);
+        return inquiryMapper.selectByExampleWithBLOBs(inquiryExample);
     }
 
     @Override

@@ -1,7 +1,5 @@
 package com.xzx.xzxms.service;
 
-import com.xzx.xzxms.bean.Inquiry;
-import com.xzx.xzxms.bean.InquiryExample;
 import com.xzx.xzxms.bean.InquiryWithBLOBs;
 
 import java.util.List;
@@ -13,7 +11,7 @@ public interface IInquiryService {
      * @param proId
      * @return
      */
-    List<Inquiry> findByProDetailId(long proId);
+    List<InquiryWithBLOBs> findByProDetailId(long proId);
 
     /**
      * 保存或更改询价内容
