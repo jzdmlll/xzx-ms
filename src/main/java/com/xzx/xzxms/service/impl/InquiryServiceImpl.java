@@ -1,6 +1,5 @@
 package com.xzx.xzxms.service.impl;
 
-import com.xzx.xzxms.bean.Inquiry;
 import com.xzx.xzxms.bean.InquiryExample;
 import com.xzx.xzxms.bean.InquiryWithBLOBs;
 import com.xzx.xzxms.dao.InquiryMapper;
