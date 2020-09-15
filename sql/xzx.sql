@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50712
 File Encoding         : 65001
 
-Date: 2020-09-15 09:43:53
+Date: 2020-09-15 19:48:57
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -29,14 +29,14 @@ CREATE TABLE `inquiry` (
   `su_warranties` varchar(255) DEFAULT NULL COMMENT '资质',
   `pro_detail_id` bigint(40) DEFAULT NULL,
   `unit` varchar(255) DEFAULT NULL COMMENT '单位',
-  `su_require` text COMMENT '技术参数',
+  `su_params` text COMMENT '技术参数',
   `su_price` double(40,3) DEFAULT NULL COMMENT '供应商单价',
   `su_total_price` double(40,3) DEFAULT NULL COMMENT '供应商总价',
   `number` int(10) DEFAULT NULL COMMENT '数量',
   `supplier` varchar(255) DEFAULT NULL COMMENT '供应商',
   `device` varchar(255) DEFAULT NULL COMMENT '设备名',
   `model` varchar(255) DEFAULT NULL COMMENT '询价设备型号',
-  `require` text,
+  `params` text COMMENT '技术参数',
   `name` varchar(255) DEFAULT NULL COMMENT '所询价设备名称',
   `is_active` int(10) DEFAULT NULL COMMENT '是否有效',
   `is_useful` int(10) DEFAULT NULL COMMENT '是否被使用',
@@ -48,8 +48,8 @@ CREATE TABLE `inquiry` (
 -- ----------------------------
 -- Records of inquiry
 -- ----------------------------
-INSERT INTO `inquiry` VALUES ('1', null, '1', '11111111111111111111111111111111111', '1', '1', '1', '1', '1', null, null, null, null, '美的', null, null, null, null, null, null, null, null);
-INSERT INTO `inquiry` VALUES ('2', null, '2', '2222', '2', '2', '2', '1', '2', null, null, null, null, '奥克斯', null, null, null, null, null, null, null, null);
+INSERT INTO `inquiry` VALUES ('1', '品牌00001', '1234567890', '11111111111111111111111111111111111', '1', '1', '1', '1', '1', '1234567890', '1.000', '1234567890.000', '123', '美的1112', '1234567890', '1234567890', '1234567890', '1234567890', null, null, null, null);
+INSERT INTO `inquiry` VALUES ('2', '', '2', '2222', '2', '2', '2', '1', '2', null, null, null, null, '奥克斯', '', '', null, '', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for sys_device_type
@@ -77,11 +77,13 @@ DROP TABLE IF EXISTS `sys_file`;
 CREATE TABLE `sys_file` (
   `id` bigint(40) NOT NULL COMMENT '编号',
   `name` varchar(255) DEFAULT NULL COMMENT '名称',
+  `url` varchar(255) DEFAULT NULL,
+  `type` int(10) DEFAULT NULL COMMENT '0-项目详情,',
+  `other_id` bigint(40) DEFAULT NULL COMMENT '外键',
   `is_active` int(10) DEFAULT NULL COMMENT '是否有效',
   `is_useful` int(10) DEFAULT NULL COMMENT '是否被使用',
   `operator` bigint(40) DEFAULT NULL COMMENT '操作者',
   `time` bigint(40) DEFAULT NULL COMMENT '操作时间',
-  `url` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -125,7 +127,7 @@ CREATE TABLE `sys_privilege` (
   `operator` bigint(40) DEFAULT NULL COMMENT '操作者',
   `time` bigint(40) DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_privilege
@@ -164,6 +166,8 @@ INSERT INTO `sys_privilege` VALUES ('31', '新增/修改询价', 'hiddenMenu', '
 INSERT INTO `sys_privilege` VALUES ('32', '查询所有项目', 'method', '18', null, '/project/detail/findByAll', null, null, null, null, null);
 INSERT INTO `sys_privilege` VALUES ('33', '通过项目详情ID查询询价内容', 'method', '29', '', '/inquiry/findByDetailId', '', null, null, null, null);
 INSERT INTO `sys_privilege` VALUES ('34', '刷新token', 'method', '1', null, '/user/refreshToken', null, null, null, null, null);
+INSERT INTO `sys_privilege` VALUES ('35', '新增或修改询价内容', 'method', '29', null, '/inquiry/saveOrUpdate', null, null, null, null, null);
+INSERT INTO `sys_privilege` VALUES ('36', '新增或修改项目详情', 'method', '18', null, '/project/detail/saveOrUpdate', null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for sys_pro_check
@@ -171,10 +175,11 @@ INSERT INTO `sys_privilege` VALUES ('34', '刷新token', 'method', '1', null, '/
 DROP TABLE IF EXISTS `sys_pro_check`;
 CREATE TABLE `sys_pro_check` (
   `id` bigint(40) NOT NULL COMMENT '项目审核编号',
-  `business_check` int(10) DEFAULT NULL COMMENT '商务审核',
-  `engine_check` int(10) DEFAULT NULL COMMENT '工程审核',
-  `final_check` int(10) DEFAULT NULL COMMENT '最终审核',
-  `pro_detail_id` bigint(40) DEFAULT NULL COMMENT '项目详情编号',
+  `check_status` int(10) DEFAULT NULL COMMENT '审核状态',
+  `sort` int(10) DEFAULT NULL COMMENT '顺序',
+  `type` int(10) DEFAULT NULL COMMENT '项目详情编号',
+  `content_id` bigint(40) DEFAULT NULL COMMENT '询价或项目外键',
+  `role_id` bigint(40) DEFAULT NULL COMMENT '角色id',
   `operator` bigint(40) DEFAULT NULL COMMENT '操作者',
   `time` bigint(40) DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`id`)
@@ -195,7 +200,6 @@ CREATE TABLE `sys_pro_detail` (
   `content` text COMMENT '项目内容',
   `pro_type_id` bigint(40) DEFAULT NULL,
   `pro_origin_id` bigint(40) DEFAULT NULL,
-  `pro_file_id` bigint(40) DEFAULT NULL COMMENT '项目文件编号',
   `is_active` int(10) DEFAULT NULL COMMENT '是否有效',
   `is_useful` int(10) DEFAULT NULL COMMENT '是否被使用',
   `operator` bigint(40) DEFAULT NULL COMMENT '操作者',
@@ -206,8 +210,8 @@ CREATE TABLE `sys_pro_detail` (
 -- ----------------------------
 -- Records of sys_pro_detail
 -- ----------------------------
-INSERT INTO `sys_pro_detail` VALUES ('1', '项目1', '1', '1', '1', '1', null, null, null, null, null);
-INSERT INTO `sys_pro_detail` VALUES ('2', '项目2', '1', '1', '1', '1', null, null, null, null, null);
+INSERT INTO `sys_pro_detail` VALUES ('1', '项目1', '1', '1', '1', '1', null, null, null, null);
+INSERT INTO `sys_pro_detail` VALUES ('2', '项目2', '1', '1', '1', '1', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for sys_pro_origin
@@ -257,6 +261,7 @@ DROP TABLE IF EXISTS `sys_role`;
 CREATE TABLE `sys_role` (
   `id` bigint(40) NOT NULL AUTO_INCREMENT COMMENT '角色编号',
   `name` varchar(255) DEFAULT NULL COMMENT '角色名',
+  `check_name` varchar(255) DEFAULT NULL,
   `is_active` int(10) DEFAULT NULL COMMENT '是否有效',
   `is_useful` int(10) DEFAULT NULL COMMENT '是否被使用',
   `operator` bigint(40) DEFAULT NULL COMMENT '操作者',
@@ -267,8 +272,8 @@ CREATE TABLE `sys_role` (
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
-INSERT INTO `sys_role` VALUES ('1', '管理员', null, null, null, null);
-INSERT INTO `sys_role` VALUES ('2', 'test', null, null, null, null);
+INSERT INTO `sys_role` VALUES ('1', '管理员', null, null, null, null, null);
+INSERT INTO `sys_role` VALUES ('2', 'test', null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for sys_role_privilege
@@ -283,7 +288,7 @@ CREATE TABLE `sys_role_privilege` (
   `operator` bigint(40) DEFAULT NULL COMMENT '操作者',
   `time` bigint(40) DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_role_privilege
@@ -317,6 +322,8 @@ INSERT INTO `sys_role_privilege` VALUES ('29', '1', '32', null, null, null, null
 INSERT INTO `sys_role_privilege` VALUES ('30', '1', '31', null, null, null, null);
 INSERT INTO `sys_role_privilege` VALUES ('31', '1', '33', null, null, null, null);
 INSERT INTO `sys_role_privilege` VALUES ('32', '1', '34', null, null, null, null);
+INSERT INTO `sys_role_privilege` VALUES ('33', '1', '35', null, null, null, null);
+INSERT INTO `sys_role_privilege` VALUES ('34', '1', '36', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for sys_user
