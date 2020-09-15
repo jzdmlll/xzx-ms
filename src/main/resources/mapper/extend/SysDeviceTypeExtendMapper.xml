@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzx.xzxms.dao.SysDeviceTypeExtendMapper">
+    <select id="findAllLike">
+      select * from sys_device_type
+      <where>
+        <if test="name!=null and name!=''">
+          name like %#{name}%
+        </if>
+        <if test="code!=null and code!=''">
+          and code like %#{code}%
+        </if>
+      </where>
+    </select>
+</mapper>

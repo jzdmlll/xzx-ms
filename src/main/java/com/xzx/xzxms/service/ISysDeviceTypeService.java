@@ -8,17 +8,19 @@ import java.util.List;
 public interface ISysDeviceTypeService {
 
     /**
-     * 查询全部
+     * 根据设备名称、代码模糊查询
+     * @param name
+     * @param code
      * @return
      */
-    List<SysDeviceType> findAll();
+    List<SysDeviceType> findAllLike(String name,String code);
 
     /**
-     * 根据设备类别的ID查询相对应的询价全部内容
+     * 根据设备类别的ID查询相对应的内容
      * @param deviceTypeId
      * @return
      */
-    List<SysDeviceType> findById(long deviceTypeId);
+    SysDeviceType findById(long deviceTypeId);
 
     /**
      * 保存或更改设备类别信息
