@@ -23,7 +23,7 @@ public class SysProTypeServiceImpl implements ISysProTypeService {
     @Override
     public void saveOrUpdate(SysProType proType) {
 
-        if(proType.getId()!=null){
+        if(proType.getId() != null){
             sysProTypeMapper.updateByPrimaryKey(proType);
         }else {
             SysProTypeExample example=new SysProTypeExample();
