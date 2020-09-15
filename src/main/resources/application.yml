@@ -9,8 +9,8 @@ spring:
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/xzx?characterEncoding=utf8
     username: root
-    #password: jzdmlll@1217
-    password: root
+    password: jzdmlll@1217
+    #password: root
 
     druid:
       # 数据库连接池
@@ -32,13 +32,15 @@ spring:
     database: 0
     host: "192.168.204.196"
     port: 6379
+    password: "xzx@redis123"
+    timeout: 5000
     jedis:
       pool:
-        max-active: 8
+        max-active: 50
         max-wait: -1
-        max-idle: 8
-        min-idle: 0
-        timeout: 10000
+        max-idle: 50
+        min-idle: 5
+
     #cluster:
       #nodes:
        # - 111.231.244.18:10001
