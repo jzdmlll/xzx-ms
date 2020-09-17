@@ -1,6 +1,7 @@
 package com.xzx.xzxms.service;
 
 import com.xzx.xzxms.bean.InquiryWithBLOBs;
+import com.xzx.xzxms.bean.extend.InquiryExtend;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public interface IInquiryService {
      * 保存或更改询价内容
      * @param inquiry
      */
-    void saveOrUpdate(InquiryWithBLOBs inquiry);
+    void saveOrUpdate(InquiryExtend inquiry);
 
     /**
      * 批量置为无效

@@ -1,14 +1,12 @@
 package com.xzx.xzxms.web.controller;
 
 import com.xzx.xzxms.bean.InquiryWithBLOBs;
+import com.xzx.xzxms.bean.extend.InquiryExtend;
 import com.xzx.xzxms.service.IInquiryService;
 import com.xzx.xzxms.utils.Message;
 import com.xzx.xzxms.utils.MessageUtil;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -30,7 +28,7 @@ public class InquiryController {
 
     @ApiOperation(value = "修改或是新增")
     @PostMapping(value = "saveOrUpdate")
-    public Message saveOrUpdate(InquiryWithBLOBs inquiry){
+    public Message saveOrUpdate(@RequestBody InquiryExtend inquiry){
         inquiryServiceImpl.saveOrUpdate(inquiry);
         return MessageUtil.success("success");
     }

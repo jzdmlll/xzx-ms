@@ -1,7 +1,12 @@
 package com.xzx.xzxms.utils;
 import org.apache.commons.codec.binary.Base64;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
-import java.io.UnsupportedEncodingException;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.net.MalformedURLException;
 
 public class Base64Util {
     // 加密
@@ -50,6 +55,51 @@ public class Base64Util {
             e.printStackTrace();
         }
         return b;
+    }
+
+    public static String encodeBase64File(InputStream inputStream){
+        // 读取文件
+        // 声明输入流
+        // 声明字节数组
+        byte[] buffer = null;
+        try {
+            // 创建字节数组
+            buffer = new byte[inputStream.available()];
+            // 输入
+            inputStream.read(buffer);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        // 编码
+        return new BASE64Encoder()
+                .encode(buffer);
+    }
+
+    public static InputStream decodeBase64File(String base64Code) {
+        InputStream inputStream = null;
+        // 将base 64 转为字节数字
+        byte[] buffer = new byte[0];
+
+        try {
+            buffer = new BASE64Decoder().decodeBuffer(base64Code);
+            inputStream = new ByteArrayInputStream(buffer);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                if(inputStream!=null)
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return inputStream;
     }
 
 }
