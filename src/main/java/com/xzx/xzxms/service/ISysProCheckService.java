@@ -1,10 +1,23 @@
 package com.xzx.xzxms.service;
 
 import com.xzx.xzxms.bean.SysProCheck;
-
-import java.util.List;
+import com.xzx.xzxms.bean.SysProDetail;
 
 public interface ISysProCheckService {
+
+    /**
+     * 前端项目详情保存后新增一条相应的审核内容
+     * @param sysProDetail
+     */
+    void proDetailInsert(SysProDetail sysProDetail);
+
+    /**
+     * 前端询价内容保存后新增一条相应的审核内容
+     * @param sysProCheck
+     */
+    void inquiryInsert(SysProCheck sysProCheck);
+
+
 
     /**
      * 审核通过
