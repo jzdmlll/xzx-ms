@@ -22,6 +22,7 @@
        and rp.privilege_id = p.id
        and p.parent_id = #{id,jdbcType=BIGINT}
        and p.type = 'menu'
+       and u.id = #{userId,jdbcType=BIGINT}
   </select>
 
   <select id="selectByRoleId" resultType="com.xzx.xzxms.bean.SysPrivilege">
@@ -43,13 +44,13 @@
   </select>
 
   <select id="selectMenuByUserId" resultMap="PrivilegeTreeResultWithPrivilegeMap">
-    select p.*
+    select p.*, #{id,jdbcType=BIGINT} as userId
        from sys_privilege p
        where p.parent_id is null
   </select>
 
   <resultMap id="PrivilegeTreeResultWithPrivilegeMap" type="com.xzx.xzxms.vm.PrivilegeTree" extends="com.xzx.xzxms.dao.SysPrivilegeMapper.BaseResultMap">
-    <collection property="children" column="id" select="selectByParentIdWithPrivilege"></collection>
+    <collection property="children" column="userId" select="selectByParentIdWithPrivilege"></collection>
   </resultMap>
   <resultMap id="PrivilegeTreeResultMap" type="com.xzx.xzxms.vm.PrivilegeTree" extends="com.xzx.xzxms.dao.SysPrivilegeMapper.BaseResultMap">
     <collection property="children" column="id" select="selectByParentId"></collection>
