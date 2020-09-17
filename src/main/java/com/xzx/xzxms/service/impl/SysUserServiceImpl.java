@@ -76,7 +76,7 @@ public class SysUserServiceImpl implements ISysUserService {
     @Override
     public void saveOrUpdate(SysUser user) {
         if(user.getId()!=null){
-            userMapper.updateByPrimaryKey(user);
+            userMapper.updateByPrimaryKeySelective(user);
         } else {
             // 判断用户名是否被占用
             SysUserExample example = new SysUserExample();

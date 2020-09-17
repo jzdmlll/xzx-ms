@@ -2,6 +2,7 @@ package com.xzx.xzxms.dao.extend;
 
 
 import com.xzx.xzxms.bean.SysDeviceType;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -13,5 +14,5 @@ public interface SysDeviceTypeExtendMapper {
      * @param code
      * @return
      */
-    List<SysDeviceType> findAllLike(String name, String code);
+    List<SysDeviceType> findAllLike(@Param("name") String name,@Param("code") String code);
 }

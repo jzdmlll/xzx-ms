@@ -37,7 +37,7 @@ public class SysDeviceTypeServiceImpl implements ISysDeviceTypeService {
     public void saveOrUpdate(SysDeviceType sysDeviceType) {
 
         if (sysDeviceType.getId()!=null){
-            sysDeviceTypeMapper.updateByPrimaryKey(sysDeviceType);
+            sysDeviceTypeMapper.updateByPrimaryKeySelective(sysDeviceType);
         }else {
             sysDeviceType.setId(IDUtils.getId());
             sysDeviceTypeMapper.insert(sysDeviceType);

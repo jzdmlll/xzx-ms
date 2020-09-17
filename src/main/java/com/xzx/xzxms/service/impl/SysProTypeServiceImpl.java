@@ -24,7 +24,7 @@ public class SysProTypeServiceImpl implements ISysProTypeService {
     public void saveOrUpdate(SysProType proType) {
 
         if(proType.getId() != null){
-            sysProTypeMapper.updateByPrimaryKey(proType);
+            sysProTypeMapper.updateByPrimaryKeySelective(proType);
         }else {
             SysProTypeExample example=new SysProTypeExample();
             example.createCriteria().andNameEqualTo(proType.getName());

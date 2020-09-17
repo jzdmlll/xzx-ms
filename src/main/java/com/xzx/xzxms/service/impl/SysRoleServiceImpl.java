@@ -70,7 +70,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
     @Override
     public void saveOrUpdate(SysRole role) throws CustomerException {
         if(role.getId()!=null){
-            roleMapper.updateByPrimaryKey(role);
+            roleMapper.updateByPrimaryKeySelective(role);
         } else {
             roleMapper.insert(role);
         }

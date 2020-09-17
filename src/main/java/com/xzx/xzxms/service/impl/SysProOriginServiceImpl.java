@@ -30,7 +30,7 @@ public class SysProOriginServiceImpl  implements ISysProOriginService {
             if (list.size()>0){
                 throw new CustomerException("该项目编码已被使用，请重新输入!");
             }
-            sysProOriginMapper.updateByPrimaryKey(proOrigin);
+            sysProOriginMapper.updateByPrimaryKeySelective(proOrigin);
         }else {
             SysProOriginExample example = new SysProOriginExample();
             example.createCriteria().andNameEqualTo(proOrigin.getName());

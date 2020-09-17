@@ -23,27 +23,27 @@ public class InquiryController {
     public Message findByDetailId(long id){
 
         List<InquiryWithBLOBs> inquiry = inquiryServiceImpl.findByProDetailId(id);
-        return MessageUtil.success("success",inquiry);
+        return MessageUtil.success("success", inquiry);
     }
 
     @ApiOperation(value = "修改或是新增")
     @PostMapping(value = "saveOrUpdate")
     public Message saveOrUpdate(@RequestBody InquiryExtend inquiry){
         inquiryServiceImpl.saveOrUpdate(inquiry);
-        return MessageUtil.success("success");
+        return MessageUtil.success("保存成功");
     }
 
     @ApiOperation(value = "批量置为无效")
     @PostMapping(value = "setInvalid")
     public Message setInvalid(long[] ids){
         inquiryServiceImpl.setInvalid(ids);
-        return MessageUtil.success("success");
+        return MessageUtil.success("操作成功");
     }
 
     @ApiOperation(value = "批量删除")
     @PostMapping(value = "delete")
     public Message delete(long[] ids){
         inquiryServiceImpl.delete(ids);
-        return MessageUtil.success("success");
+        return MessageUtil.success("操作成功");
     }
 }

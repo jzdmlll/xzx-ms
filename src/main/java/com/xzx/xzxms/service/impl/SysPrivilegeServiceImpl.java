@@ -39,7 +39,7 @@ public class SysPrivilegeServiceImpl implements ISysPrivilegeService {
     @Override
     public void saveOrUpdate(SysPrivilege privilege) throws CustomerException {
         if(privilege.getId()!=null){
-            sysPrivilegeMapper.updateByPrimaryKey(privilege);
+            sysPrivilegeMapper.updateByPrimaryKeySelective(privilege);
         } else {
             sysPrivilegeMapper.insert(privilege);
         }
