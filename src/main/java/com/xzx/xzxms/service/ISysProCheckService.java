@@ -9,21 +9,15 @@ import java.util.List;
 public interface ISysProCheckService {
 
     /**
-     * 前端项目详情保存后新增一条相应的审核内容
-     * @param sysProDetail
-     */
-    void proDetailInsert(SysProDetail sysProDetail);
-
-    /**
      * 前端询价内容保存后新增一条相应的审核内容
      * @param sysProCheck
      */
     void inquiryInsert(SysProCheck sysProCheck);
     /**
-     * 审核通过
+     * 审核
      * @param ids
      */
-    void approved(long[] ids);
+    void check(long[] ids,int state);
     /**
      * 审核撤销
      * @param ids

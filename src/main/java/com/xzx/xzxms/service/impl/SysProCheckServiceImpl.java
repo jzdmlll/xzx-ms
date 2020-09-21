@@ -17,10 +17,6 @@ public class SysProCheckServiceImpl implements ISysProCheckService {
     private SysProCheckMapper sysProCheckMapper;
     @Resource
     private SysProCheckExtendMapper sysProCheckExtendMapper;
-    @Override
-    public void proDetailInsert(SysProDetail sysProDetail) {
-
-    }
 
     @Override
     public void inquiryInsert(SysProCheck sysProCheck) {
@@ -28,8 +24,14 @@ public class SysProCheckServiceImpl implements ISysProCheckService {
     }
 
     @Override
-    public void approved(long[] ids) {
+    public void check(long[] ids,int state) {
 
+        for (long id : ids){
+            SysProCheck sysProCheck=new SysProCheck();
+            sysProCheck.setId(id);
+            sysProCheck.setCheckStatus(state);
+            sysProCheckMapper.updateByPrimaryKeySelective(sysProCheck);
+        }
     }
 
     @Override
