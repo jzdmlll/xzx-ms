@@ -84,4 +84,9 @@ public class SysRoleServiceImpl implements ISysRoleService {
         }
         roleMapper.deleteByPrimaryKey(id);
     }
+
+    @Override
+    public List<SysRole> selectAllHasCheckName() {
+        return roleExtendMapper.selectAllHasCheckName();
+    }
 }

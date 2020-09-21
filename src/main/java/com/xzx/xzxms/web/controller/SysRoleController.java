@@ -60,4 +60,11 @@ public class SysRoleController {
         roleService.authorization(id, ids);
         return MessageUtil.success("授权成功");
     }
+
+    @ApiOperation(value = "查询所有审核名")
+    @GetMapping(value = "selectAllHasCheckName")
+    public Message selectAllHasCheckName() {
+        List<SysRole> roles = roleService.selectAllHasCheckName();
+        return MessageUtil.success("success", roles);
+    }
 }

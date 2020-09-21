@@ -50,7 +50,7 @@
   </select>
 
   <resultMap id="PrivilegeTreeResultWithPrivilegeMap" type="com.xzx.xzxms.vm.PrivilegeTree" extends="com.xzx.xzxms.dao.SysPrivilegeMapper.BaseResultMap">
-    <collection property="children" column="userId" select="selectByParentIdWithPrivilege"></collection>
+    <collection property="children" column="{id=id,userId=userId}" ofType="map" select="selectByParentIdWithPrivilege"></collection>
   </resultMap>
   <resultMap id="PrivilegeTreeResultMap" type="com.xzx.xzxms.vm.PrivilegeTree" extends="com.xzx.xzxms.dao.SysPrivilegeMapper.BaseResultMap">
     <collection property="children" column="id" select="selectByParentId"></collection>

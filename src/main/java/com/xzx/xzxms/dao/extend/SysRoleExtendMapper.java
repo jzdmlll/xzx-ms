@@ -10,4 +10,6 @@ public interface SysRoleExtendMapper {
     List<SysRole> selectByUserId(long id);
 
     List<SysRoleExtend> selectAll();
+
+    List<SysRole> selectAllHasCheckName();
 }
