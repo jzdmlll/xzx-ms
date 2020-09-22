@@ -10,5 +10,5 @@ public interface SysProCheckExtendMapper {
     List<SysProCheckExtend> cascadeRoleFindAll();
 
     List<SysProCheckExtend> cascadeFindAllByCheckName(@Param("type") int type,@Param("checkName") String checkName,
-                                                      @Param("checkStatus") int checkStatus,@Param("proDetailId") long proDetailId);
+                                                      @Param("checkStatus") int[] checkStatus,@Param("proDetailId") long proDetailId);
 }

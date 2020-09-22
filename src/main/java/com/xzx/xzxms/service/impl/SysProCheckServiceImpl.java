@@ -45,7 +45,7 @@ public class SysProCheckServiceImpl implements ISysProCheckService {
     }
 
     @Override
-    public List<SysProCheckExtend> cascadeFindAllByCheckName(int type, String checkName, int checkStatus, long proDetailId) {
+    public List<SysProCheckExtend> cascadeFindAllByCheckName(int type, String checkName, int[] checkStatus, long proDetailId) {
         return sysProCheckExtendMapper.cascadeFindAllByCheckName(type, checkName, checkStatus, proDetailId);
     }
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xzx.xzxms.dao.extend.InquiryExtendMapper">
-    <select id="cascadeSelectByPrimaryKey" resultType="com.xzx.xzxms.bean.InquiryWithBLOBs">
+    <!--<select id="cascadeSelectByPrimaryKey" resultType="com.xzx.xzxms.bean.InquiryWithBLOBs">
         select
           i.*
         from
@@ -13,5 +13,5 @@
                 and spd.id = #{proDetailId,jdbcType=BIGINT}
             </if>
         </where>
-    </select>
+    </select>-->
 </mapper>

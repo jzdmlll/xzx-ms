@@ -51,6 +51,9 @@ spring:
        # - 111.231.244.18:10006
 mybatis:
   mapper-locations: classpath:/mapper/**/*.xml
+  # 开启驼峰命名自动映射
+  configuration:
+      map-underscore-to-camel-case: true
 
 mail:
   default-encoding: UTF-8
@@ -80,6 +83,10 @@ ftpclient:
 
 pagehelper:
   helperDialect: mysql
+
+logging:
+  level:
+    com.xzx.xzxms.dao: debug
 
 
 

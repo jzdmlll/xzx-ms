@@ -38,5 +38,5 @@ public interface ISysProCheckService {
      * @param proDetailId   添加项目详情查询条件
      * @return
      */
-    List<SysProCheckExtend> cascadeFindAllByCheckName(int type, String checkName, int checkStatus, long proDetailId);
+    List<SysProCheckExtend> cascadeFindAllByCheckName(int type, String checkName, int[] checkStatus, long proDetailId);
 }
