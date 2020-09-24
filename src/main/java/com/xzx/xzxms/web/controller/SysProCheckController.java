@@ -30,8 +30,8 @@ public class SysProCheckController {
         return MessageUtil.success("success", sysProCheckExtends);
     }
     @PostMapping("batchCheck")
-    public Message check(int status, long[] ids) {
-        sysProCheckServiceImpl.check(ids, status);
+    public Message check(int status, long[] ids, long[] inquiryIds) {
+        sysProCheckServiceImpl.check(ids, status, inquiryIds);
         return MessageUtil.success("操作成功");
     }
 }

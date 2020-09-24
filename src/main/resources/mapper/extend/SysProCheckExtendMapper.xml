@@ -38,7 +38,7 @@
           i.params i_params,i.name i_name
         from
           sys_pro_detail spd
-        left join inquiry i on i.pro_detail_id = spd.id
+        right join inquiry i on i.pro_detail_id = spd.id
         left join sys_pro_check spc on spc.content_id = i.id
         left join sys_role sr on sr.id = spc.role_id
         <where>

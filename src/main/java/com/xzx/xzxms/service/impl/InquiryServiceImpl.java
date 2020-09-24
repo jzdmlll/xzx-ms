@@ -1,12 +1,10 @@
 package com.xzx.xzxms.service.impl;
 
-import com.xzx.xzxms.bean.InquiryExample;
-import com.xzx.xzxms.bean.InquiryWithBLOBs;
-import com.xzx.xzxms.bean.SysFile;
-import com.xzx.xzxms.bean.SysProCheck;
+import com.xzx.xzxms.bean.*;
 import com.xzx.xzxms.bean.extend.InquiryExtend;
 import com.xzx.xzxms.bean.extend.SysFileExtend;
 import com.xzx.xzxms.bean.extend.SysProCheckExtend;
+import com.xzx.xzxms.dao.CompareMapper;
 import com.xzx.xzxms.dao.InquiryMapper;
 import com.xzx.xzxms.dao.SysFileMapper;
 import com.xzx.xzxms.dao.redis.JedisDao;
@@ -41,6 +39,8 @@ public class InquiryServiceImpl implements IInquiryService {
     private SysFileMapper sysFileMapper;
     @Resource
     private ISysProCheckService sysProCheckServiceImpl;
+    @Resource
+    private CompareMapper compareMapper;
     @Override
     public List<InquiryWithBLOBs> findByProDetailId(long proId) {
 
@@ -79,8 +79,12 @@ public class InquiryServiceImpl implements IInquiryService {
                     System.out.println("数据库");
                 }
             }
+            long time = new Date().getTime();
             //询价信息插入数据库
             inquiry.setId(inquiryId);
+            inquiry.setTime(time);
+            inquiry.setIsActive(1);
+            inquiry.setIsUseful(0);
             inquiryMapper.insert(inquiry);
 
             //审核信息插入数据库
@@ -89,13 +93,21 @@ public class InquiryServiceImpl implements IInquiryService {
             for (SysProCheck proCheck : proChecks) {
                 proCheck.setCheckStatus(0);
                 proCheck.setType(SysProCheckExtend.InquiryType);
-                proCheck.setTime(new Date().getTime());
+                proCheck.setTime(time);
                 proCheck.setSort(sort ++);
                 proCheck.setId(IDUtils.getId());
                 proCheck.setContentId(inquiryId);
                 proCheck.setOperator(inquiry.getOperator());
                 sysProCheckServiceImpl.inquiryInsert(proCheck);
             }
+            //比价信息插入数据库
+            Compare compare = new Compare();
+            compare.setId(IDUtils.getId());
+            compare.setOperator(inquiry.getOperator());
+            compare.setStatus(0);
+            compare.setInquiryId(inquiryId);
+            compare.setTime(time);
+            compareMapper.insert(compare);
         }
     }
 

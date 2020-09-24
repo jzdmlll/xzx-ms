@@ -1,12 +1,16 @@
 package com.xzx.xzxms.service.impl;
 
+import com.xzx.xzxms.bean.Inquiry;
+import com.xzx.xzxms.bean.InquiryWithBLOBs;
 import com.xzx.xzxms.bean.SysProCheck;
 import com.xzx.xzxms.bean.SysProDetail;
 import com.xzx.xzxms.bean.extend.SysProCheckExtend;
+import com.xzx.xzxms.dao.InquiryMapper;
 import com.xzx.xzxms.dao.SysProCheckMapper;
 import com.xzx.xzxms.dao.extend.SysProCheckExtendMapper;
 import com.xzx.xzxms.service.ISysProCheckService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -17,18 +21,22 @@ public class SysProCheckServiceImpl implements ISysProCheckService {
     private SysProCheckMapper sysProCheckMapper;
     @Resource
     private SysProCheckExtendMapper sysProCheckExtendMapper;
-
+    @Resource
+    private InquiryMapper inquiryMapper;
     @Override
     public void inquiryInsert(SysProCheck sysProCheck) {
         sysProCheckMapper.insert(sysProCheck);
     }
-
+    @Transactional
     @Override
-    public void check(long[] ids,int state) {
-
-        for (long id : ids){
+    public void check(long[] ids,int state,long[] inquiryIds) {
+        for (int i = 0; i < ids.length; i ++){
+            InquiryWithBLOBs inquiry = new InquiryWithBLOBs();
+            inquiry.setId(inquiryIds[i]);
+            inquiry.setIsUseful(1);
+            inquiryMapper.updateByPrimaryKeySelective(inquiry);
             SysProCheck sysProCheck=new SysProCheck();
-            sysProCheck.setId(id);
+            sysProCheck.setId(ids[i]);
             sysProCheck.setCheckStatus(state);
             sysProCheckMapper.updateByPrimaryKeySelective(sysProCheck);
         }

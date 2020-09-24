@@ -17,7 +17,7 @@ public interface ISysProCheckService {
      * 审核
      * @param ids
      */
-    void check(long[] ids,int state);
+    void check(long[] ids,int state,long[] inquiryIds);
     /**
      * 审核撤销
      * @param ids

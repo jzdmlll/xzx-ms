@@ -30,9 +30,9 @@ spring:
 
   redis:
     database: 0
-    host: "192.168.204.196"
+    host: "smalllei.cn"
     port: 6379
-    password: "xzx@redis123"
+    #password: "xzx@redis123"
     timeout: 5000
     jedis:
       pool:
