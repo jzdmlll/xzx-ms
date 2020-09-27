@@ -1,6 +1,7 @@
 package com.xzx.xzxms.service;
 
 import com.xzx.xzxms.bean.InquiryWithBLOBs;
+import com.xzx.xzxms.vm.CompareReqVM;
 import com.xzx.xzxms.vm.InquiryCompareVM;
 
 import java.util.List;
@@ -28,4 +29,10 @@ public interface ICompareService {
      * @param otherCompareId 未选用
      */
     void completeCompare(long compareId, long[] otherCompareId);
+
+    /**
+     * 批量获取比价信息
+     * @param compareReqVM
+     */
+    List<?> batchGetCompare(CompareReqVM compareReqVM);
 }

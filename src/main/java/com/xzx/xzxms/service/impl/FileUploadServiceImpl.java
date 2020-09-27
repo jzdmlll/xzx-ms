@@ -1,6 +1,5 @@
 package com.xzx.xzxms.service.impl;
 
-import com.jcraft.jsch.SftpException;
 import com.xzx.xzxms.dao.redis.JedisDao;
 import com.xzx.xzxms.service.IFileUploadService;
 import com.xzx.xzxms.utils.Base64Util;

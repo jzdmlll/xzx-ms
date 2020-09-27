@@ -4,12 +4,16 @@ import com.xzx.xzxms.bean.Compare;
 import com.xzx.xzxms.dao.CompareMapper;
 import com.xzx.xzxms.dao.extend.CompareExtendMapper;
 import com.xzx.xzxms.service.ICompareService;
+import com.xzx.xzxms.vm.CompareReqVM;
 import com.xzx.xzxms.vm.InquiryCompareVM;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CompareServiceImpl implements ICompareService {
@@ -43,5 +47,21 @@ public class CompareServiceImpl implements ICompareService {
             System.out.println(id);
             compareMapper.updateByPrimaryKeySelective(compare);
         }
+    }
+
+    @Override
+    public List<?> batchGetCompare(CompareReqVM compareReqVM) {
+        long[] proDetailIds = compareReqVM.getProDetailIds();
+        String[] names = compareReqVM.getNames();
+
+        List<Map> result = new ArrayList<>();
+        for(int i=0; i < names.length; i++){
+            List<InquiryCompareVM> inquiryCompareVMS = compareExtendMapper.cascadeFindAllByParams(proDetailIds[i], names[i]);
+            Map map = new HashMap();
+            map.put("name", names[i]);
+            map.put("inquiryCompareVMS",inquiryCompareVMS);
+            result.add(map);
+        }
+        return result;
     }
 }

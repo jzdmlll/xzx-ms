@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50712
 File Encoding         : 65001
 
-Date: 2020-09-23 10:52:34
+Date: 2020-09-24 20:58:21
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,6 +31,9 @@ CREATE TABLE `compare` (
 -- ----------------------------
 -- Records of compare
 -- ----------------------------
+INSERT INTO `compare` VALUES ('160094858089630', '160094857007285', '2', '1', '1600948580889');
+INSERT INTO `compare` VALUES ('160094879106727', '160094878057183', '2', '1', '1600948791062');
+INSERT INTO `compare` VALUES ('160094902476935', '160094901434259', '1', '1', '1600949024767');
 
 -- ----------------------------
 -- Table structure for inquiry
@@ -66,7 +69,9 @@ CREATE TABLE `inquiry` (
 -- ----------------------------
 -- Records of inquiry
 -- ----------------------------
-INSERT INTO `inquiry` VALUES ('160074795769611', '1', '1', '1600963200000', '111', '1', '1600963200000', '1', '1', '111', '111', '11.000', '121.000', '11', '美的', '空调', '美的空调MD1', '111', '空调', null, null, '1', null);
+INSERT INTO `inquiry` VALUES ('160094857007285', '联想', '1', '1632931200000', 'ThinkPad L490', '质保期一年', '1601395200000', '有', '1', '￥10000/台', 'I7-8565u/8G/1T/128GS/2G独显', '12000.000', '120000.000', '10', '联想', 'thinkpad', '笔记本电脑', 'I7-8565u/16G/1T/128GS/4G独显', '笔记本电脑', '1', '1', '1', '1600948580889');
+INSERT INTO `inquiry` VALUES ('160094878057183', '戴尔', '1', '1635523200000', 'ThinkPad L490', '质保期一年', '1603987200000', '有', '1', '￥10000/台', 'i7 16G内存 512G固态硬盘 RTX 2060 6G 144Hz', '10000.000', '100000.000', '10', '戴尔', '戴尔(DELL)G5', '笔记本电脑', 'I7-8565u/16G/1T/128GS/4G独显', '笔记本电脑', '1', '1', '1', '1600948791062');
+INSERT INTO `inquiry` VALUES ('160094901434259', '苹果', '1', '1635523200000', 'MacBook Pro', '质保期一年', '1603987200000', '有', '1', '￥10000/台', 'Intel Core i7/16GB/2T', '16000.000', '160000.000', '10', '苹果', 'MacBook', '笔记本电脑', 'I7-8565u/16G/1T/128GS/4G独显', '笔记本电脑', '1', '1', '1', '1600949024767');
 
 -- ----------------------------
 -- Table structure for sys_device_type
@@ -86,7 +91,7 @@ CREATE TABLE `sys_device_type` (
 -- ----------------------------
 -- Records of sys_device_type
 -- ----------------------------
-INSERT INTO `sys_device_type` VALUES ('1', '设备1', '1', null, null, null, null);
+INSERT INTO `sys_device_type` VALUES ('1', '笔记本电脑', '1', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for sys_file
@@ -108,24 +113,9 @@ CREATE TABLE `sys_file` (
 -- ----------------------------
 -- Records of sys_file
 -- ----------------------------
-INSERT INTO `sys_file` VALUES ('160032707633487', 'a78b9e4c-546f-4916-b2c9-a9a8304ac37c.zip', 'http://192.168.204.196/images/a78b9e4c-546f-4916-b2c9-a9a8304ac37c.zip', '0', '160032708697072', null, null, null, null);
-INSERT INTO `sys_file` VALUES ('160032763410437', '微信图片_20200903194147.png', 'http://192.168.204.196/images/2306ca20-da7c-4d77-b33e-a2cd19393191.png', '0', '160032768801293', null, null, null, null);
-INSERT INTO `sys_file` VALUES ('160032764483332', '询价模板(1).xls', 'http://192.168.204.196/images/92ecf6fb-8d6c-46f3-8eef-276bbbd27657.xls', '0', '160032768801293', null, null, null, null);
-INSERT INTO `sys_file` VALUES ('160032766689791', 'xzx.sql', 'http://192.168.204.196/images/83ca3634-909b-4116-830d-e2bfc95876d4.sql', '0', '160032768801293', null, null, null, null);
-INSERT INTO `sys_file` VALUES ('160032768086683', '新自信项目详细设计.docx', 'http://192.168.204.196/images/67250f09-32f1-4138-ad43-f8c915151321.docx', '0', '160032768801293', null, null, null, null);
-INSERT INTO `sys_file` VALUES ('160032901985544', '新自信项目详细设计.docx', 'http://192.168.204.196/images/625af319-871d-42ba-aa77-8a2aac0d6a18.docx', '0', '160032902166081', null, null, null, null);
-INSERT INTO `sys_file` VALUES ('160033070370839', '新自信项目详细设计.docx', 'http://192.168.204.196/images/ae611eca-a183-4a02-88f0-359c673467a0.docx', '0', '160033070502448', null, null, null, null);
-INSERT INTO `sys_file` VALUES ('160039453798166', '新自信项目详细设计.docx', 'http://192.168.204.196/images/230969bc-9390-41ef-9008-d7207aa73f80.docx', '0', '160039454985386', null, null, null, null);
-INSERT INTO `sys_file` VALUES ('160039454168585', '新自信项目详细设计.docx', 'http://192.168.204.196/images/973c8763-06fc-4175-b1ef-0340b938553b.docx', '0', '160039454985386', null, null, null, null);
-INSERT INTO `sys_file` VALUES ('160039486006008', '新自信项目详细设计.docx', 'http://192.168.204.196/images/756df6bf-1689-4f14-bf45-c887f8d53454.docx', '0', '160039505820394', null, null, null, null);
-INSERT INTO `sys_file` VALUES ('160039505210002', '新自信项目详细设计.docx', 'http://192.168.204.196/images/680b8c62-a0a0-4fff-aad7-72c1537496e1.docx', '0', '160039505820394', null, null, null, null);
-INSERT INTO `sys_file` VALUES ('160039538913534', 'apache-tomcat-9.0.13-windows-x64.zip', 'http://192.168.204.196/images/22e2f3b0-f1a1-4d00-befa-0279118a54fd.zip', '0', '160039539885088', null, null, null, null);
-INSERT INTO `sys_file` VALUES ('160039902493333', 'libstdc++-6.dll', 'http://192.168.204.196/images/80ea51e2-8e97-4634-8159-06fb8cec8946.dll', '0', '160039902877277', null, null, null, null);
-INSERT INTO `sys_file` VALUES ('160065283710836', 'Qt5Core.dll', 'http://192.168.204.196/images/f39a8ebb-f958-43ba-902f-4d9c412d4fa9.dll', '0', '160065285292808', null, null, null, null);
-INSERT INTO `sys_file` VALUES ('160065512831440', 'libssh2-1.dll', 'http://192.168.204.196/images/96ee33db-5ab9-4245-815f-107563214999.dll', '0', '160065513529049', null, null, null, null);
-INSERT INTO `sys_file` VALUES ('160065538754703', 'settings.xml', 'http://192.168.204.196/images/32246ab3-18c6-4fe4-922b-ea414b462e15.xml', '0', '160065539444562', null, null, null, null);
-INSERT INTO `sys_file` VALUES ('160065556373884', 'settings.xml', 'http://192.168.204.196/images/810130cb-1ca3-4493-b30f-ff7aae80196a.xml', '0', '160065557001177', null, null, null, null);
-INSERT INTO `sys_file` VALUES ('160074795135938', 'settings.xml', 'http://192.168.204.196/images/5cb172ba-a7dc-4a91-97cc-cc3543ec114f.xml', '0', '160074795769611', null, null, null, null);
+INSERT INTO `sys_file` VALUES ('160094856418976', 'settings.xml', 'http://192.168.204.196/images/309a60d2-63cf-41c8-a4dd-085f95d9e38e.xml', '0', '160094857007285', null, null, null, null);
+INSERT INTO `sys_file` VALUES ('160094877777567', 'settings.xml', 'http://192.168.204.196/images/2f1bdd7e-eee5-4949-af64-a348bd09eade.xml', '0', '160094878057183', null, null, null, null);
+INSERT INTO `sys_file` VALUES ('160094901181583', 'settings.xml', 'http://192.168.204.196/images/8d82a579-a025-427f-b7d6-768b6220bac5.xml', '0', '160094901434259', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for sys_log
@@ -163,7 +153,7 @@ CREATE TABLE `sys_privilege` (
   `operator` bigint(40) DEFAULT NULL COMMENT '操作者',
   `time` bigint(40) DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_privilege
@@ -217,6 +207,9 @@ INSERT INTO `sys_privilege` VALUES ('46', '级联角色、询价（或项目）�
 INSERT INTO `sys_privilege` VALUES ('47', '批量审核', 'method', '42', null, '/proCheck/batchCheck', null, null, null, null, null);
 INSERT INTO `sys_privilege` VALUES ('48', '比价管理', 'parent', null, 'chart', '/compare/list', null, null, null, null, null);
 INSERT INTO `sys_privilege` VALUES ('49', '比价管理', 'menu', '48', null, '/compare/list', null, null, null, null, null);
+INSERT INTO `sys_privilege` VALUES ('50', '级联查询询价信息', 'method', '48', null, '/compare/cascadeFindAll', null, null, null, null, null);
+INSERT INTO `sys_privilege` VALUES ('51', '级联查询比价信息', 'method', '48', null, '/compare/cascadeFindAllByParams', null, null, null, null, null);
+INSERT INTO `sys_privilege` VALUES ('52', '完成一条比价', 'method', '48', null, '/compare/completeCompare', null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for sys_pro_check
@@ -237,9 +230,15 @@ CREATE TABLE `sys_pro_check` (
 -- ----------------------------
 -- Records of sys_pro_check
 -- ----------------------------
-INSERT INTO `sys_pro_check` VALUES ('160074795808607', '0', '1', '0', '160074795769611', '3', '1', '1600747958086');
-INSERT INTO `sys_pro_check` VALUES ('160074795808700', '0', '2', '0', '160074795769611', '4', '1', '1600747958087');
-INSERT INTO `sys_pro_check` VALUES ('160074795808734', '0', '3', '0', '160074795769611', '5', '1', '1600747958087');
+INSERT INTO `sys_pro_check` VALUES ('160094858089257', '1', '1', '0', '160094857007285', '3', '1', '1600948580889');
+INSERT INTO `sys_pro_check` VALUES ('160094858089501', '1', '2', '0', '160094857007285', '4', '1', '1600948580889');
+INSERT INTO `sys_pro_check` VALUES ('160094858089549', '1', '3', '0', '160094857007285', '5', '1', '1600948580889');
+INSERT INTO `sys_pro_check` VALUES ('160094879106384', '1', '1', '0', '160094878057183', '3', '1', '1600948791062');
+INSERT INTO `sys_pro_check` VALUES ('160094879106689', '1', '2', '0', '160094878057183', '4', '1', '1600948791062');
+INSERT INTO `sys_pro_check` VALUES ('160094879106770', '1', '3', '0', '160094878057183', '5', '1', '1600948791062');
+INSERT INTO `sys_pro_check` VALUES ('160094902476854', '1', '2', '0', '160094901434259', '4', '1', '1600949024767');
+INSERT INTO `sys_pro_check` VALUES ('160094902476891', '1', '1', '0', '160094901434259', '3', '1', '1600949024767');
+INSERT INTO `sys_pro_check` VALUES ('160094902476920', '1', '3', '0', '160094901434259', '5', '1', '1600949024767');
 
 -- ----------------------------
 -- Table structure for sys_pro_detail
@@ -262,7 +261,7 @@ CREATE TABLE `sys_pro_detail` (
 -- ----------------------------
 -- Records of sys_pro_detail
 -- ----------------------------
-INSERT INTO `sys_pro_detail` VALUES ('1', '项目1', '1', '1', '1', '1', null, null, null, null);
+INSERT INTO `sys_pro_detail` VALUES ('1', '采购笔记本电脑', '1', '1', '1', '1', null, null, null, null);
 INSERT INTO `sys_pro_detail` VALUES ('2', '项目2', '1', '1', '1', '1', null, null, null, null);
 
 -- ----------------------------
@@ -343,7 +342,7 @@ CREATE TABLE `sys_role_privilege` (
   `operator` bigint(40) DEFAULT NULL COMMENT '操作者',
   `time` bigint(40) DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_role_privilege
@@ -413,6 +412,9 @@ INSERT INTO `sys_role_privilege` VALUES ('75', '4', '44', null, null, null, null
 INSERT INTO `sys_role_privilege` VALUES ('76', '4', '46', null, null, null, null);
 INSERT INTO `sys_role_privilege` VALUES ('77', '4', '47', null, null, null, null);
 INSERT INTO `sys_role_privilege` VALUES ('78', '1', '49', null, null, null, null);
+INSERT INTO `sys_role_privilege` VALUES ('79', '1', '50', null, null, null, null);
+INSERT INTO `sys_role_privilege` VALUES ('80', '1', '51', null, null, null, null);
+INSERT INTO `sys_role_privilege` VALUES ('81', '1', '52', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for sys_user

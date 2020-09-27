@@ -4,11 +4,15 @@ import com.xzx.xzxms.bean.InquiryWithBLOBs;
 import com.xzx.xzxms.service.ICompareService;
 import com.xzx.xzxms.utils.Message;
 import com.xzx.xzxms.utils.MessageUtil;
+import com.xzx.xzxms.vm.CompareReqVM;
 import com.xzx.xzxms.vm.InquiryCompareVM;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/compare")
@@ -29,12 +33,24 @@ public class CompareController {
     }
     @GetMapping("cascadeFindAllByParams")
     public Message cascadeFindAllByParams(long proDetailId, String name) {
-        List<InquiryCompareVM> inquiryWithBLOBs = compareServiceImpl.cascadeFindAllByParams(proDetailId, name);
-        return MessageUtil.success("success", inquiryWithBLOBs);
+        List<InquiryCompareVM> inquiryCompareVMS = compareServiceImpl.cascadeFindAllByParams(proDetailId, name);
+        // 数据格式：[{name: "", inquiryCompareVMS: List<inquiryCompareVMS>},{...}]
+        // inquiryCompareVMS：[{...},{...}]
+        Map map = new HashMap();
+        map.put("name", name);
+        map.put("inquiryCompareVMS", inquiryCompareVMS);
+        List<Map> result = new ArrayList<>();
+        result.add(map);
+        return MessageUtil.success("success", result);
     }
     @PostMapping("completeCompare")
     public Message completeCompare(long compareId, long[] otherCompareId) {
         compareServiceImpl.completeCompare(compareId, otherCompareId);
         return MessageUtil.success("操作成功");
+    }
+    @PostMapping("batchGetCompare")
+    public Message batchGetCompare(@RequestBody CompareReqVM CompareReqVM) {
+        List<?> result = compareServiceImpl.batchGetCompare(CompareReqVM);
+        return MessageUtil.success("success", result);
     }
 }
