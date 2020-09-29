@@ -25,7 +25,7 @@
 
     <select id="cascadeFindAllByParams" resultType="com.xzx.xzxms.vm.InquiryCompareVM">
       select
-        i.*, c.id compare_id
+        i.*, c.id compare_id, c.status compare_status
       from
         compare c
         right join inquiry i on c.inquiry_id = i.id

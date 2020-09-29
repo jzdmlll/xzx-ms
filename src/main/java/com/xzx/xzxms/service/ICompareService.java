@@ -28,7 +28,7 @@ public interface ICompareService {
      * @param compareId 选用
      * @param otherCompareId 未选用
      */
-    void completeCompare(long compareId, long[] otherCompareId);
+    void completeCompare(long[] compareId, long[] otherCompareId);
 
     /**
      * 批量获取比价信息

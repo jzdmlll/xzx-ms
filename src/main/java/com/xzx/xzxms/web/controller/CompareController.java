@@ -5,6 +5,7 @@ import com.xzx.xzxms.service.ICompareService;
 import com.xzx.xzxms.utils.Message;
 import com.xzx.xzxms.utils.MessageUtil;
 import com.xzx.xzxms.vm.CompareReqVM;
+import com.xzx.xzxms.vm.CompareRespVM;
 import com.xzx.xzxms.vm.InquiryCompareVM;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,8 +45,8 @@ public class CompareController {
         return MessageUtil.success("success", result);
     }
     @PostMapping("completeCompare")
-    public Message completeCompare(long compareId, long[] otherCompareId) {
-        compareServiceImpl.completeCompare(compareId, otherCompareId);
+    public Message completeCompare(@RequestBody CompareRespVM compareRespVM) {
+        compareServiceImpl.completeCompare(compareRespVM.getCheckCompareIds(), compareRespVM.getOtherCompareIds());
         return MessageUtil.success("操作成功");
     }
     @PostMapping("batchGetCompare")

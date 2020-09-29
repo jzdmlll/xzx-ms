@@ -33,13 +33,15 @@ public class CompareServiceImpl implements ICompareService {
     }
     @Transactional
     @Override
-    public void completeCompare(long compareId, long[] otherCompareId) {
-        // 更新选中比价
-        Compare compare = new Compare();
-        compare.setId(compareId);
-        compare.setStatus(1); //1选用
-        compareMapper.updateByPrimaryKeySelective(compare);
+    public void completeCompare(long[] compareId, long[] otherCompareId) {
 
+        Compare compare = new Compare();
+        // 更新选中比价
+        compare.setStatus(1); //1选用
+        for(long i :compareId){
+            compare.setId(i);
+            compareMapper.updateByPrimaryKeySelective(compare);
+        }
         // 更新未选中比价
         compare.setStatus(2); //2未选用
         for (long id : otherCompareId) {
