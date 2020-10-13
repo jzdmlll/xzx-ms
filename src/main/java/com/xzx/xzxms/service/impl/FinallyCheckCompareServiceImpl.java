@@ -18,6 +18,7 @@ public class FinallyCheckCompareServiceImpl implements IFinallyCheckCompareServi
     public List<Map> FindDraftComparePrice(long proDetailId, int compareStatus) {
 
         String name = "";
+        double minPrice = 0;
 
         List<Map> maps = new ArrayList<Map>();
         List<FinallyCheckCompareVM> finallyCheckCompareVMS = finallyCheckExtendMapper.cascadeFindAllByParams(proDetailId, compareStatus);
@@ -26,12 +27,23 @@ public class FinallyCheckCompareServiceImpl implements IFinallyCheckCompareServi
         for (int i = 0; i < finallyCheckCompareVMS.size(); i++) {
 
             if (finallyCheckCompareVMS.get(i).getName().equals(name)) {
+                if (finallyCheckCompareVMS.get(i).getSuPrice() < minPrice) {
+                    minPrice = finallyCheckCompareVMS.get(i).getSuPrice();
+                    //将之前的那个询价最低价标志置为0
+                    finallyCheckCompareVMS.get(i - 1).setMinPrice(0);
+                    finallyCheckCompareVMS.get(i).setMinPrice(1);
+
+                } else if (finallyCheckCompareVMS.get(i).getSuPrice() == minPrice) {
+                    finallyCheckCompareVMS.get(i).setMinPrice(1);
+                }
                 map.put(finallyCheckCompareVMS.get(i).getSupplier(), finallyCheckCompareVMS.get(i));
             } else {
                 if (!map.isEmpty()) {
                     maps.add(map);
                     map = new HashMap();
                 }
+                minPrice = finallyCheckCompareVMS.get(i).getSuPrice();
+                finallyCheckCompareVMS.get(i).setMinPrice(1);
                 name = finallyCheckCompareVMS.get(i).getName();
                 map.put("inquiry", finallyCheckCompareVMS.get(i));
                 Map _map = new HashMap();
