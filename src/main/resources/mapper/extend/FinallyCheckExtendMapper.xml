@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzx.xzxms.dao.extend.FinallyCheckExtendMapper">
+    <select id="cascadeFindAllByParams" resultType="com.xzx.xzxms.vm.FinallyCheckCompareVM">
+        select
+        i.brand,i.unit,i.device_type_id,i.su_model,i.su_delivery,i.pro_detail_id,i.su_price,i.su_total_price,i.number,i.supplier
+        ,i.device,i.model,i.params,i.name,c.status as compare_status
+        from
+        inquiry i
+        left join compare c on c.inquiry_id = i.id
+        <where>
+            <if test="compareStatus!=null and compareStatus!=-1">
+                <if test="compareStatus == 0">
+                    c.status = 0
+                </if>
+                <if test="compareStatus != 0">
+                    c.status != 0
+                </if>
+            </if>
+            <if test="proDetailId!=null and proDetailId!=-1">
+                and i.pro_detail_id = #{proDetailId,jdbcType=INTEGER}
+            </if>
+        </where>
+        order by i.name
+    </select>
+
+</mapper>
