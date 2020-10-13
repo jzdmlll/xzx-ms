@@ -6,6 +6,7 @@ public class InquiryCompareVM extends InquiryWithBLOBs {
     private Long proDetailId;
     private Long compareId;
     private int compareStatus;
+    private String compareRemark;
 
     @Override
     public Long getProDetailId() {
@@ -31,5 +32,13 @@ public class InquiryCompareVM extends InquiryWithBLOBs {
 
     public void setCompareStatus(int compareStatus) {
         this.compareStatus = compareStatus;
+    }
+
+    public String getCompareRemark() {
+        return compareRemark;
+    }
+
+    public void setCompareRemark(String compareRemark) {
+        this.compareRemark = compareRemark;
     }
 }

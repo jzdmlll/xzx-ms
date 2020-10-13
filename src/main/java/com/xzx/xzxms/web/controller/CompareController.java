@@ -46,7 +46,7 @@ public class CompareController {
     }
     @PostMapping("completeCompare")
     public Message completeCompare(@RequestBody CompareRespVM compareRespVM) {
-        compareServiceImpl.completeCompare(compareRespVM.getCheckCompareIds(), compareRespVM.getOtherCompareIds());
+        compareServiceImpl.completeCompare(compareRespVM.getCheckCompareIds(), compareRespVM.getOtherCompareIds(), compareRespVM.getRemarks());
         return MessageUtil.success("操作成功");
     }
     @PostMapping("batchGetCompare")

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50712
 File Encoding         : 65001
 
-Date: 2020-10-10 11:13:23
+Date: 2020-10-12 11:28:14
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -22,7 +22,7 @@ DROP TABLE IF EXISTS `compare`;
 CREATE TABLE `compare` (
   `id` bigint(40) NOT NULL,
   `inquiry_id` bigint(40) DEFAULT NULL COMMENT '询价id外键',
-  `status` int(20) DEFAULT NULL COMMENT '状态0未比价1未选用2拟选用3最终选用',
+  `status` int(20) DEFAULT NULL COMMENT '状态0未比价2未选用1拟选用3最终选用',
   `remark` varchar(255) DEFAULT NULL,
   `operator` bigint(40) DEFAULT NULL COMMENT '操作者',
   `time` bigint(40) DEFAULT NULL COMMENT '操作时间',
@@ -32,12 +32,12 @@ CREATE TABLE `compare` (
 -- ----------------------------
 -- Records of compare
 -- ----------------------------
-INSERT INTO `compare` VALUES ('160094858089630', '160094857007285', '1', null, '1', '1600948580889');
-INSERT INTO `compare` VALUES ('160094879106727', '160094878057183', '2', null, '1', '1600948791062');
-INSERT INTO `compare` VALUES ('160094902476935', '160094901434259', '2', null, '1', '1600949024767');
-INSERT INTO `compare` VALUES ('160101803517254', '160101802463127', '1', null, '1', '1601018035170');
-INSERT INTO `compare` VALUES ('160117531600088', '160117531277962', '1', null, '1', '1601175315988');
-INSERT INTO `compare` VALUES ('160129173716543', '160129172602992', '1', null, '1', '1601291737165');
+INSERT INTO `compare` VALUES ('160094858089630', '160094857007285', '1', '12', '1', '1600948580889');
+INSERT INTO `compare` VALUES ('160094879106727', '160094878057183', '2', '', '1', '1600948791062');
+INSERT INTO `compare` VALUES ('160094902476935', '160094901434259', '2', '', '1', '1600949024767');
+INSERT INTO `compare` VALUES ('160101803517254', '160101802463127', '1', '12fsfsfsfsfsfsf', '1', '1601018035170');
+INSERT INTO `compare` VALUES ('160117531600088', '160117531277962', '1', 'fsf', '1', '1601175315988');
+INSERT INTO `compare` VALUES ('160129173716543', '160129172602992', '1', '12121212', '1', '1601291737165');
 
 -- ----------------------------
 -- Table structure for inquiry
@@ -45,7 +45,7 @@ INSERT INTO `compare` VALUES ('160129173716543', '160129172602992', '1', null, '
 DROP TABLE IF EXISTS `inquiry`;
 CREATE TABLE `inquiry` (
   `id` bigint(40) NOT NULL COMMENT '编号',
-  `brand` varchar(255) DEFAULT NULL COMMENT '品牌',
+  `brand` varchar(255) DEFAULT NULL COMMENT '询价品牌',
   `device_type_id` bigint(40) DEFAULT NULL,
   `warranty` bigint(40) DEFAULT NULL COMMENT '质保期',
   `su_model` varchar(255) DEFAULT NULL COMMENT '供应商设备型号',
