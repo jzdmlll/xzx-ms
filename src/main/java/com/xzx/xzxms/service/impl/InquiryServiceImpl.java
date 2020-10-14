@@ -131,4 +131,9 @@ public class InquiryServiceImpl implements IInquiryService {
             inquiryMapper.deleteByPrimaryKey(id);
         }
     }
+
+    @Override
+    public void batchAddInquiry(List<InquiryVM> inquiryVMs) {
+
+    }
 }

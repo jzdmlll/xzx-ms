@@ -17,15 +17,9 @@ public class FinallyCheckController {
     @Resource
     private IFinallyCheckCompareService finallyCheckCompareServiceImpl;
 
-    @GetMapping("FindDraftComparePrice")
-    public Message FindDraftComparePrice(@RequestParam(defaultValue = "-1") long proDetailId, @RequestParam(defaultValue = "-1") Integer compareStatus) {
-        List<Map> maps = finallyCheckCompareServiceImpl.FindDraftComparePrice(proDetailId, compareStatus);
-        // 数据格式：[{name: "", inquiryCompareVMS: List<inquiryCompareVMS>},{...}]
-        // inquiryCompareVMS：[{...},{...}]
-        //Map map = new HashMap();
-  /*      map.put("inquiryCompareVMS", maps);
-        List<Map> result = new ArrayList<>();
-        result.add(map);*/
+    @GetMapping("findDraftComparePrice")
+    public Message FindDraftComparePrice(@RequestParam(defaultValue = "-1") long proDetailId, @RequestParam(defaultValue = "") String checkName) {
+        List<Map> maps = finallyCheckCompareServiceImpl.FindDraftComparePrice(proDetailId, checkName);
         return MessageUtil.success("success", maps);
     }
 

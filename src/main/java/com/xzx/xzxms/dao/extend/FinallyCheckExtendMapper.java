@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface FinallyCheckExtendMapper {
 
-    List<FinallyCheckCompareVM> cascadeFindAllByParams(@Param("proDetailId") long proDetailId,@Param("compareStatus") Integer compareStatus);
+    List<FinallyCheckCompareVM> cascadeFindAllByParams(@Param("proDetailId") long proDetailId,
+                                                       @Param("checkName") String checkName);
 }

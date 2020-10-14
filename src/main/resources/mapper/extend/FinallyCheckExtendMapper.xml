@@ -3,20 +3,16 @@
 <mapper namespace="com.xzx.xzxms.dao.extend.FinallyCheckExtendMapper">
     <select id="cascadeFindAllByParams" resultType="com.xzx.xzxms.vm.FinallyCheckCompareVM">
         select
-        i.brand,i.unit,i.device_type_id,i.su_model,i.su_delivery,i.pro_detail_id,i.su_price,i.su_total_price,i.number,i.supplier
-        ,i.device,i.model,i.params,i.name,c.status as compare_status
+          i.*,c.status as compare_status,c.id as compare_id
         from
-        inquiry i
+          inquiry i
         left join compare c on c.inquiry_id = i.id
+        left join sys_pro_check spc on spc.content_id = i.id
+        left join sys_role sr on spc.role_id = sr.id
         <where>
-            <if test="compareStatus!=null and compareStatus!=-1">
-                <if test="compareStatus == 0">
-                    c.status = 0
-                </if>
-                <if test="compareStatus != 0">
-                    c.status != 0
-                </if>
-            </if>
+            c.status != 0
+            and spc.check_status = 0
+            and sr.check_name=#{checkName,jdbcType=VARCHAR}
             <if test="proDetailId!=null and proDetailId!=-1">
                 and i.pro_detail_id = #{proDetailId,jdbcType=INTEGER}
             </if>

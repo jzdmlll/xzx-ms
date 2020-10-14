@@ -6,6 +6,7 @@ import com.xzx.xzxms.bean.extend.InquiryExtend;
 import com.xzx.xzxms.service.IInquiryService;
 import com.xzx.xzxms.utils.Message;
 import com.xzx.xzxms.utils.MessageUtil;
+import com.xzx.xzxms.vm.BatchInquiryVM;
 import com.xzx.xzxms.vm.InquiryVM;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -47,5 +48,12 @@ public class InquiryController {
     public Message delete(long[] ids){
         inquiryServiceImpl.delete(ids);
         return MessageUtil.success("操作成功");
+    }
+
+    @ApiOperation(value = "批量新增询价")
+    @PostMapping(value = "batchAddInquiry")
+    public Message batchAddInquiry(@RequestBody BatchInquiryVM batchInquiryVM){
+        inquiryServiceImpl.batchAddInquiry(batchInquiryVM.getInquiryVMs());
+        return MessageUtil.success("保存成功");
     }
 }

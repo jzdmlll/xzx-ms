@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50712
 File Encoding         : 65001
 
-Date: 2020-10-12 11:28:14
+Date: 2020-10-13 21:23:00
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -32,9 +32,9 @@ CREATE TABLE `compare` (
 -- ----------------------------
 -- Records of compare
 -- ----------------------------
-INSERT INTO `compare` VALUES ('160094858089630', '160094857007285', '1', '12', '1', '1600948580889');
+INSERT INTO `compare` VALUES ('160094858089630', '160094857007285', '2', '12', '1', '1600948580889');
 INSERT INTO `compare` VALUES ('160094879106727', '160094878057183', '2', '', '1', '1600948791062');
-INSERT INTO `compare` VALUES ('160094902476935', '160094901434259', '2', '', '1', '1600949024767');
+INSERT INTO `compare` VALUES ('160094902476935', '160094901434259', '1', '12', '1', '1600949024767');
 INSERT INTO `compare` VALUES ('160101803517254', '160101802463127', '1', '12fsfsfsfsfsfsf', '1', '1601018035170');
 INSERT INTO `compare` VALUES ('160117531600088', '160117531277962', '1', 'fsf', '1', '1601175315988');
 INSERT INTO `compare` VALUES ('160129173716543', '160129172602992', '1', '12121212', '1', '1601291737165');
@@ -45,10 +45,10 @@ INSERT INTO `compare` VALUES ('160129173716543', '160129172602992', '1', '121212
 DROP TABLE IF EXISTS `inquiry`;
 CREATE TABLE `inquiry` (
   `id` bigint(40) NOT NULL COMMENT '编号',
-  `brand` varchar(255) DEFAULT NULL COMMENT '询价品牌',
+  `brand` varchar(255) DEFAULT NULL COMMENT '询价品牌（未使用，保留）',
   `device_type_id` bigint(40) DEFAULT NULL,
   `warranty` bigint(40) DEFAULT NULL COMMENT '质保期',
-  `su_model` varchar(255) DEFAULT NULL COMMENT '供应商设备型号',
+  `su_model` varchar(255) DEFAULT NULL COMMENT '供应商设备品牌型号',
   `su_remark` text COMMENT '供应商备注',
   `su_delivery` varchar(255) DEFAULT NULL COMMENT '货期',
   `su_warranties` varchar(255) DEFAULT NULL COMMENT '资质',
@@ -60,7 +60,7 @@ CREATE TABLE `inquiry` (
   `number` int(10) DEFAULT NULL COMMENT '数量',
   `supplier` varchar(255) DEFAULT NULL COMMENT '供应商',
   `device` varchar(255) DEFAULT NULL COMMENT '设备名',
-  `model` varchar(255) DEFAULT NULL COMMENT '询价设备型号',
+  `model` varchar(255) DEFAULT NULL COMMENT '询价设备品牌型号',
   `params` text COMMENT '技术参数',
   `name` varchar(255) DEFAULT NULL COMMENT '所询价设备名称',
   `is_active` int(10) DEFAULT NULL COMMENT '是否有效',
@@ -109,7 +109,7 @@ CREATE TABLE `sys_file` (
   `id` bigint(40) NOT NULL COMMENT '编号',
   `name` varchar(255) DEFAULT NULL COMMENT '名称',
   `url` varchar(255) DEFAULT NULL,
-  `type` int(10) DEFAULT NULL COMMENT '0-项目详情,',
+  `type` int(10) DEFAULT NULL COMMENT '0-项目详情,1-询价文件,2-技术文件',
   `other_id` bigint(40) DEFAULT NULL COMMENT '外键',
   `is_active` int(10) DEFAULT NULL COMMENT '是否有效',
   `is_useful` int(10) DEFAULT NULL COMMENT '是否被使用',
@@ -164,7 +164,7 @@ CREATE TABLE `sys_privilege` (
   `operator` bigint(40) DEFAULT NULL COMMENT '操作者',
   `time` bigint(40) DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_privilege
@@ -223,8 +223,7 @@ INSERT INTO `sys_privilege` VALUES ('51', '级联查询比价信息', 'method', 
 INSERT INTO `sys_privilege` VALUES ('52', '完成一条比价', 'method', '48', null, '/compare/completeCompare', null, null, null, null, null);
 INSERT INTO `sys_privilege` VALUES ('53', '批量获取比价信息', 'method', '48', null, '/compare/batchGetCompare', null, null, null, null, null);
 INSERT INTO `sys_privilege` VALUES ('54', '新增或修改设备类型', 'method', '37', null, '/deviceType/saveOrUpdate', null, null, null, null, null);
-INSERT INTO `sys_privilege` VALUES ('55', '最终审核', 'parent', null, 'eye-open', '/finalCheck/list', '', null, null, null, null);
-INSERT INTO `sys_privilege` VALUES ('56', '最终审核', 'menu', '55', null, '/finalCheck/list', null, null, null, null, null);
+INSERT INTO `sys_privilege` VALUES ('57', '最终审核查询汇总数据', 'method', '42', null, '/finallyCheck/findDraftComparePrice', null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for sys_pro_check
@@ -366,7 +365,7 @@ CREATE TABLE `sys_role_privilege` (
   `operator` bigint(40) DEFAULT NULL COMMENT '操作者',
   `time` bigint(40) DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_role_privilege
@@ -441,7 +440,7 @@ INSERT INTO `sys_role_privilege` VALUES ('80', '1', '51', null, null, null, null
 INSERT INTO `sys_role_privilege` VALUES ('81', '1', '52', null, null, null, null);
 INSERT INTO `sys_role_privilege` VALUES ('82', '1', '53', null, null, null, null);
 INSERT INTO `sys_role_privilege` VALUES ('83', '1', '54', null, null, null, null);
-INSERT INTO `sys_role_privilege` VALUES ('84', '1', '56', null, null, null, null);
+INSERT INTO `sys_role_privilege` VALUES ('85', '1', '57', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for sys_user

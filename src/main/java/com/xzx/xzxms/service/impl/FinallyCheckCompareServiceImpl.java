@@ -15,13 +15,13 @@ public class FinallyCheckCompareServiceImpl implements IFinallyCheckCompareServi
     private FinallyCheckExtendMapper finallyCheckExtendMapper;
 
     @Override
-    public List<Map> FindDraftComparePrice(long proDetailId, int compareStatus) {
+    public List<Map> FindDraftComparePrice(long proDetailId, String checkName) {
 
         String name = "";
         double minPrice = 0;
 
         List<Map> maps = new ArrayList<Map>();
-        List<FinallyCheckCompareVM> finallyCheckCompareVMS = finallyCheckExtendMapper.cascadeFindAllByParams(proDetailId, compareStatus);
+        List<FinallyCheckCompareVM> finallyCheckCompareVMS = finallyCheckExtendMapper.cascadeFindAllByParams(proDetailId, checkName);
         Map map = new HashMap();
 
         for (int i = 0; i < finallyCheckCompareVMS.size(); i++) {

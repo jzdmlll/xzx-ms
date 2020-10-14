@@ -32,4 +32,6 @@ public interface IInquiryService {
      * @param ids
      */
     void delete(long[] ids);
+
+    void batchAddInquiry(List<InquiryVM> inquiryVMs);
 }
