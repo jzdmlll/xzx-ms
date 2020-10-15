@@ -1,9 +1,17 @@
 package com.xzx.xzxms.service.impl;
 
+import com.xzx.xzxms.bean.Compare;
+import com.xzx.xzxms.bean.SysProCheck;
+import com.xzx.xzxms.bean.SysProCheckExample;
+import com.xzx.xzxms.bean.extend.SysProCheckExtend;
+import com.xzx.xzxms.dao.CompareMapper;
+import com.xzx.xzxms.dao.SysProCheckMapper;
 import com.xzx.xzxms.dao.extend.FinallyCheckExtendMapper;
+import com.xzx.xzxms.dao.extend.SysProCheckExtendMapper;
 import com.xzx.xzxms.service.IFinallyCheckCompareService;
 import com.xzx.xzxms.vm.FinallyCheckCompareVM;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -13,6 +21,10 @@ public class FinallyCheckCompareServiceImpl implements IFinallyCheckCompareServi
 
     @Resource
     private FinallyCheckExtendMapper finallyCheckExtendMapper;
+    @Resource
+    private CompareMapper compareMapper;
+    @Resource
+    private SysProCheckMapper sysProCheckMapper;
 
     @Override
     public List<Map> FindDraftComparePrice(long proDetailId, String checkName) {
@@ -58,5 +70,36 @@ public class FinallyCheckCompareServiceImpl implements IFinallyCheckCompareServi
         }
 
         return maps;
+    }
+
+    @Transactional
+    @Override
+    public void saveFinallyCheckMessage(long[] checkCompareIds, long[] unCheckCompareIds, long[] allInquiryIds, long userId, long roleId) {
+
+        Compare compare=new Compare();
+
+        for (long checkId : checkCompareIds){
+            compare.setId(checkId);
+            compare.setStatus(3);
+            compare.setOperator(userId);
+            compareMapper.updateByPrimaryKeySelective(compare);
+        }
+
+        for (long unCheckId : unCheckCompareIds){
+            compare.setId(unCheckId);
+            compare.setStatus(2);
+            compare.setOperator(userId);
+            compareMapper.updateByPrimaryKeySelective(compare);
+        }
+
+        SysProCheck sysProCheck=new SysProCheck();
+        for(long inquiryId : allInquiryIds){
+            sysProCheck.setCheckStatus(1);
+            sysProCheck.setOperator(userId);
+            SysProCheckExample sysProCheckExample=new SysProCheckExample();
+            sysProCheckExample.createCriteria().andContentIdEqualTo(inquiryId).andContentIdEqualTo(roleId);
+            sysProCheckMapper.updateByExampleSelective(sysProCheck,sysProCheckExample);
+        }
+
     }
 }

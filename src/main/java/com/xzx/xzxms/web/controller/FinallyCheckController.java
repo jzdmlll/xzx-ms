@@ -6,14 +6,13 @@ import com.xzx.xzxms.utils.MessageUtil;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/finallyCheck")
 public class FinallyCheckController {
+
     @Resource
     private IFinallyCheckCompareService finallyCheckCompareServiceImpl;
 
@@ -23,4 +22,9 @@ public class FinallyCheckController {
         return MessageUtil.success("success", maps);
     }
 
+    @PostMapping("saveFinallyCheckMessage")
+    public Message saveFinallyCheckMessage(long[] checkCompareIds, long[] unCheckCompareIds, long[] allInquiryIds, long userId, long roleId){
+        finallyCheckCompareServiceImpl.saveFinallyCheckMessage(checkCompareIds, unCheckCompareIds, allInquiryIds, userId, roleId);
+        return MessageUtil.success("success");
+    }
 }

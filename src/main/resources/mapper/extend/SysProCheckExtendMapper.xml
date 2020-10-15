@@ -9,6 +9,7 @@
       WHERE
 	    spc.role_id = sr.id
     </select>
+
     <!--<select id="cascadeFindAllByCheckName1" resultMap="ProCheckExtendMap1">
 	  SELECT
         spc.* , sr.check_name checkName

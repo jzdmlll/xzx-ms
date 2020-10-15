@@ -1,10 +1,11 @@
 package com.xzx.xzxms.bean.extend;
 
 import com.xzx.xzxms.bean.SysProDetail;
+import com.xzx.xzxms.bean.SysProDetailWithBLOBs;
 import com.xzx.xzxms.bean.SysProOrigin;
 import com.xzx.xzxms.bean.SysProType;
 
-public class SysProDetailExtend extends SysProDetail {
+public class SysProDetailExtend extends SysProDetailWithBLOBs {
 
     private SysProType sysProType;
     private SysProOrigin sysProOrigin;

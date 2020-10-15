@@ -33,5 +33,9 @@ public interface IInquiryService {
      */
     void delete(long[] ids);
 
+    /**
+     * 批量新增询价
+     * @param inquiryVMs
+     */
     void batchAddInquiry(List<InquiryVM> inquiryVMs);
 }

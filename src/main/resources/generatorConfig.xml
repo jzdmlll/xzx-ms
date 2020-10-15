@@ -68,7 +68,7 @@
         <table tableName="lf_comment" domainObjectName="Comment" ></table>
         <table tableName="lf_logs" domainObjectName="Logs" ></table>
         -->
-    <!--<table tableName="sys_user_role" domainObjectName="SysUserRole" ></table>
+    <table tableName="sys_user_role" domainObjectName="SysUserRole" ></table>
     <table tableName="sys_user" domainObjectName="SysUser" ></table>
     <table tableName="sys_role_privilege" domainObjectName="SysRolePrivilege" ></table>
     <table tableName="sys_role" domainObjectName="SysRole" ></table>
@@ -80,7 +80,7 @@
     <table tableName="sys_log" domainObjectName="SysLog" ></table>
     <table tableName="sys_file" domainObjectName="SysFile" ></table>
     <table tableName="inquiry" domainObjectName="Inquiry" ></table>
-    <table tableName="sys_device_type" domainObjectName="SysDeviceType" ></table>-->
+    <table tableName="sys_device_type" domainObjectName="SysDeviceType" ></table>
     <table tableName="compare" domainObjectName="Compare" ></table>
     <!--
     mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate

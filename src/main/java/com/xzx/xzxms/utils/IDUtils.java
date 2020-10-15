@@ -1,6 +1,9 @@
 package com.xzx.xzxms.utils;
 
+import com.google.common.math.LongMath;
+
 import java.util.Random;
+import java.util.UUID;
 
 /**
  * 各种id生成策略
@@ -26,9 +29,10 @@ public class IDUtils {
     /**
      * id生成
      */
-    public static long getId() {
+    public static long oldGetId() {
         //取当前时间的长整形值包含毫秒
         long millis = System.currentTimeMillis();
+
         //long millis = System.nanoTime();
         //加上两位随机数
         Random random = new Random();
@@ -37,6 +41,12 @@ public class IDUtils {
         String str = millis + String.format("%02d", end2);
         long id = new Long(str);
         return id;
+    }
+
+    public static Long getId(){
+        Integer orderId=UUID.randomUUID().toString().hashCode();
+
+        return Long.valueOf(Math.abs(orderId));
     }
 
 }
