@@ -49,11 +49,11 @@
           <if test="checkStatus!=null and checkStatus!=-1">
             and spc.check_status in
             <foreach item="item" collection="checkStatus" open="(" separator="," close=")">
-              #{item}#{proDetailId,jdbcType=BIGINT}
+              #{item}
             </foreach>
           </if>
           <if test="proDetailId!=null and proDetailId!=-1">
-            and spd.id =
+            and spd.id = #{proDetailId,jdbcType=BIGINT}
           </if>
         </where>
     </select>
