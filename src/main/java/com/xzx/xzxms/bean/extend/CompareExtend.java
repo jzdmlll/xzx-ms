@@ -13,4 +13,9 @@ public class CompareExtend extends Compare {
     public void setInquiry(InquiryWithBLOBs inquiry) {
         this.inquiry = inquiry;
     }
+    public void setInquiry1(InquiryWithBLOBs inquiry) {
+        this.inquiry = inquiry;
+    }
+
+    
 }
