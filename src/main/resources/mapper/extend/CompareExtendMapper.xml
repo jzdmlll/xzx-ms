@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xzx.xzxms.dao.extend.CompareExtendMapper">
-    <select id="cascadeFindAll" resultType="com.xzx.xzxms.vm.InquiryCompareVM">
+    <!--<select id="cascadeFindAll" resultType="com.xzx.xzxms.vm.InquiryCompareVM">
       select
-        i.name, i.params, i.pro_detail_id pro_detailId
+        i.name, i.params, i.pro_detail_id pro_detailId,spc.check_status,sum(spc.check_status) checknum, count(i.id)/3 inquirynum
       from
         inquiry i
       right join compare c on c.inquiry_id = i.id
+      left join sys_pro_check spc on spc.content_id = i.id
       <where>
+          spc.type=0 and i.final_check = 0
         <if test="compareStatus!=null and compareStatus!=-1">
             <if test="compareStatus == 0">
-                c.status = 0
+              and  c.status = 0
             </if>
             <if test="compareStatus != 0">
-                c.status != 0
+              and c.status != 0
             </if>
         </if>
         <if test="proDetailId!=null and proDetailId!=-1">
             and i.pro_detail_id = #{proDetailId,jdbcType=INTEGER}
         </if>
       </where>
-      group by i.name , i.params, i.pro_detail_id
+        group by i.name , i.params, i.pro_detail_id HAVING checknum/inquirynum = 2
     </select>
 
     <select id="cascadeFindAllByParams" resultType="com.xzx.xzxms.vm.InquiryCompareVM">
@@ -30,8 +32,12 @@
         compare c
         right join inquiry i on c.inquiry_id = i.id
         left join sys_pro_detail spd on i.pro_detail_id = spd.id
-      WHERE
+      <where>
         spd.id = #{proDetailId,jdbcType=INTEGER}
         and i.name = #{name,jdbcType=VARCHAR}
-    </select>
+        <if test="params!=null">
+          and i.params = #{params,jdbcType=VARCHAR}
+        </if>
+      </where>
+    </select>-->
 </mapper>

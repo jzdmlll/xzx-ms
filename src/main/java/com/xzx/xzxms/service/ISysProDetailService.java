@@ -1,6 +1,6 @@
 package com.xzx.xzxms.service;
 
-import com.xzx.xzxms.bean.SysProDetail;
+import com.xzx.xzxms.bean.*;
 import com.xzx.xzxms.bean.extend.SysProDetailExtend;
 
 import java.util.List;
@@ -13,5 +13,14 @@ public interface ISysProDetailService {
      * @return
      */
     SysProDetailExtend findById(long proDetailId);
+
     List<SysProDetailExtend> findById();
+
+    /**
+     * 新增或修改项目
+     * @param proDetail
+     * @param files
+     * @param checks
+     */
+    void saveOrUpdate(SysProDetailWithBLOBs proDetail, List<SysFile> files, List<SysProDetailCheck> checks);
 }

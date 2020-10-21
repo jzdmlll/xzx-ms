@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xzx.xzxms.dao.extend.SysProCheckExtendMapper">
-    <select id="cascadeRoleFindAll" resultType="com.xzx.xzxms.bean.extend.SysProCheckExtend">
+    <!--<select id="cascadeRoleFindAll" resultType="com.xzx.xzxms.bean.extend.SysProCheckExtend">
       SELECT
         spc.* , sr.check_name checkName
 	  FROM
@@ -10,7 +10,7 @@
 	    spc.role_id = sr.id
     </select>
 
-    <!--<select id="cascadeFindAllByCheckName1" resultMap="ProCheckExtendMap1">
+    &lt;!&ndash;<select id="cascadeFindAllByCheckName1" resultMap="ProCheckExtendMap1">
 	  SELECT
         spc.* , sr.check_name checkName
             ,#{proDetailId,jdbcType=BIGINT} as proDetailId
@@ -30,7 +30,7 @@
     </select>
     <resultMap id="ProCheckExtendMap1" type="com.xzx.xzxms.bean.extend.SysProCheckExtend" extends="com.xzx.xzxms.dao.SysProCheckMapper.BaseResultMap">
         <collection property="inquiry" ofType="map" column="{contentId=content_id,proDetailId=proDetailId}" select="com.xzx.xzxms.dao.extend.InquiryExtendMapper.cascadeSelectByPrimaryKey"></collection>
-    </resultMap>-->
+    </resultMap>&ndash;&gt;
     <select id="cascadeFindAllByCheckName" resultMap="ProCheckExtendMap">
         select
           spc.*,sr.check_name checkName,
@@ -60,5 +60,5 @@
     <resultMap id="ProCheckExtendMap" type="com.xzx.xzxms.bean.extend.SysProCheckExtend" extends="com.xzx.xzxms.dao.SysProCheckMapper.BaseResultMap">
         <collection property="inquiry" ofType="com.xzx.xzxms.bean.InquiryWithBLOBs" autoMapping="true" columnPrefix="i_">
         </collection>
-    </resultMap>
+    </resultMap>-->
 </mapper>
