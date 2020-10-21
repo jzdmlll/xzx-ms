@@ -25,8 +25,4 @@ public class InquiryExtend extends Inquiry {
     public void setQuotes(List<Quote> quotes) {
         this.quotes = quotes;
     }
-    public void setQuotes1(List<Quote> quotes) {
-        this.quotes = quotes;
-    }
-
 }
