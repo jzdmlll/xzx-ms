@@ -1,6 +1,7 @@
 package com.xzx.xzxms.service;
 
 import com.xzx.xzxms.bean.Quote;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -11,4 +12,10 @@ public interface IQuoteService {
      * @return 所有报价
      */
     List<Quote> findByInquiryId(long inquiryId);
+
+    /**
+     * 解析excel传来的数据
+     * @param excelData Quote报价单excel数据
+     */
+    void ImportExcelQuote(MultipartFile excelData);
 }
