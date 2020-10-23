@@ -2,7 +2,6 @@ package com.xzx.xzxms.service.impl;
 
 import com.xzx.xzxms.bean.*;
 import com.xzx.xzxms.bean.extend.SysFileExtend;
-import com.xzx.xzxms.bean.extend.SysProCheckExtend;
 import com.xzx.xzxms.bean.extend.SysProDetailExtend;
 import com.xzx.xzxms.dao.SysFileMapper;
 import com.xzx.xzxms.dao.SysProDetailCheckMapper;
@@ -10,18 +9,20 @@ import com.xzx.xzxms.dao.SysProDetailMapper;
 import com.xzx.xzxms.dao.extend.SysProDetailExtendMapper;
 import com.xzx.xzxms.dao.redis.JedisDao;
 import com.xzx.xzxms.service.IFileUploadService;
-//import com.xzx.xzxms.service.ISysProCheckService;
 import com.xzx.xzxms.service.ISysProDetailService;
 import com.xzx.xzxms.utils.Base64Util;
 import com.xzx.xzxms.utils.IDUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+//import com.xzx.xzxms.service.ISysProCheckService;
 
 @Service
 public class SysProDetailServiceImpl implements ISysProDetailService {
@@ -41,12 +42,24 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
 
     @Override
     public List<SysProDetailExtend> findById() { return sysProDetailExtendMapper.findById(); }
-
+    @Transactional
     @Override
     public void saveOrUpdate(SysProDetailWithBLOBs proDetail, List<SysFile> files, List<SysProDetailCheck> proChecks) {
         long time = new Date().getTime();
         long operatorId = proDetail.getOperator();
         if (proDetail.getId() != null){
+
+            sysProDetailMapper.updateByPrimaryKeySelective(proDetail);
+
+            if (proChecks.size() >0 ){
+                SysProDetailCheckExample example = new SysProDetailCheckExample();
+                example.createCriteria().andProDetailIdEqualTo(proDetail.getId());
+                sysProDetailCheckMapper.deleteByExample(example);
+            }
+
+            for(SysProDetailCheck check : proChecks) {
+                sysProDetailCheckMapper.insert(check);
+            }
 
         }else {
             long proDetailId = IDUtils.getId();
