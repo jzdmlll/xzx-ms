@@ -1,28 +1,11 @@
 package com.xzx.xzxms.bean.extend;
 
-import com.xzx.xzxms.bean.InquiryWithBLOBs;
+//import com.xzx.xzxms.bean.InquiryWithBLOBs;
 import com.xzx.xzxms.bean.SysProCheck;
 
 public class SysProCheckExtend extends SysProCheck {
-    public final static Integer InquiryType = 0;
-    public final static Integer ProDetailType = 1;
-
-    private InquiryWithBLOBs inquiry;
-    private String checkName;
-
-    public String getCheckName() {
-        return checkName;
-    }
-
-    public void setCheckName(String checkName) {
-        this.checkName = checkName;
-    }
-
-    public InquiryWithBLOBs getInquiry() {
-        return inquiry;
-    }
-
-    public void setInquiry(InquiryWithBLOBs inquiry) {
-        this.inquiry = inquiry;
-    }
+    public final static String COMPARE_CHECK = "比价";
+    public final static int INIT_STATUS_ = 0;
+    public final static int PASS_STATUS_ = 1;
+    public final static int REFUSE_STATUS_ = 2;
 }

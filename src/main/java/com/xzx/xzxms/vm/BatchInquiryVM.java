@@ -4,7 +4,7 @@ import java.util.List;
 
 public class BatchInquiryVM {
 
-    List<InquiryVM> inquiryVMs;
+    /*List<InquiryVM> inquiryVMs;
 
     public List<InquiryVM> getInquiryVMs() {
         return inquiryVMs;
@@ -12,5 +12,5 @@ public class BatchInquiryVM {
 
     public void setInquiryVMs(List<InquiryVM> inquiryVMs) {
         this.inquiryVMs = inquiryVMs;
-    }
+    }*/
 }
