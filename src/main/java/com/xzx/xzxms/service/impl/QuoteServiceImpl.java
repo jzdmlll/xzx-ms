@@ -142,27 +142,6 @@ public class QuoteServiceImpl implements IQuoteService {
                 }
             }
 
-          /*  //审核信息插入数据库
-            SysProDetailCheckExample example = new SysProDetailCheckExample();
-            example.createCriteria().andProDetailIdEqualTo(quote.getProDetailId());
-            List<SysProDetailCheck> proChecks = sysProDetailCheckMapper.selectByExample(example);
-            int sort = 1;
-            SysProCheck sysProCheck = new SysProCheck();
-            for (SysProDetailCheck proCheck : proChecks) {
-                sysProCheck.setCheckStatus(0);
-
-                sysProCheck.setType(proCheck.getCheckName());
-                sysProCheck.setTime(time);
-                sysProCheck.setId(IDUtils.getId());
-                sysProCheck.setOperator(operatorId);
-                sysProCheck.setContentId(quote.getId());
-                sysProCheck.setCheckStatus(SysProCheckExtend.INIT_STATUS_);
-                sysProCheckMapper.insert(sysProCheck);
-            }
-
-            //比价信息插入数据库
-            sysProCheck.setType(SysProCheckExtend.COMPARE_CHECK);
-            sysProCheckMapper.insert(sysProCheck);*/
         }
     }
 
