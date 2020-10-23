@@ -4,9 +4,7 @@ import com.xzx.xzxms.service.IInquiryService;
 import com.xzx.xzxms.utils.Message;
 import com.xzx.xzxms.utils.MessageUtil;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -23,6 +21,15 @@ public class InquiryController {
         List<Inquiry> inquiryList = iInquiryServiceImpl.findByProDetailId(proDetailId);
 
         return MessageUtil.success("success", inquiryList);
+    }
+
+
+
+    @ApiOperation(value = "批量新增询价")
+    @PostMapping(value ="batchAddInquiry" )
+    public Message batchAddInquiry(@RequestBody List<Inquiry> inquiryList){
+        iInquiryServiceImpl.batchAddInquiry(inquiryList);
+        return MessageUtil.success("保存成功");
     }
 
 

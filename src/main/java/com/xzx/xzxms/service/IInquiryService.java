@@ -10,4 +10,12 @@ public interface IInquiryService {
      * @return
      */
     List<Inquiry> findByProDetailId(long proDetailId);
+
+    /**
+     * 批量导入
+     * @param inquiryList
+     */
+
+    void batchAddInquiry(List<Inquiry> inquiryList );
+
 }

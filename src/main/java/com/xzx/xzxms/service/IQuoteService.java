@@ -3,6 +3,7 @@ package com.xzx.xzxms.service;
 import com.xzx.xzxms.bean.Quote;
 import com.xzx.xzxms.bean.extend.QuoteExtend;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -14,7 +15,6 @@ public interface IQuoteService {
      * @return 所有报价
      */
     List<Quote> findByInquiryId(long inquiryId);
-
     /**
      * 新增或更改报价内容
      * @param quote
