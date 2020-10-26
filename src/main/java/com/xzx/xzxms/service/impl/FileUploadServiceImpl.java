@@ -124,5 +124,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
         map.put("url", "http://"+host+"/images/"+fileName);
         return map;
     }
+
+
 }
 

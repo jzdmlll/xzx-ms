@@ -1,5 +1,5 @@
 server:
-  port: 80
+  port: 8081
 spring:
   servlet:
     multipart:
@@ -77,6 +77,7 @@ ftpclient:
   filePath: /
 
   dictory: /home/images
+
 
 pagehelper:
   helperDialect: mysql
