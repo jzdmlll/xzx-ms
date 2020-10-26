@@ -36,13 +36,13 @@ public class ProCheckServiceImpl implements IProCheckService {
 
     @Transactional
     @Override
-    public void UpdateCheckStatus(Integer status, List<SysProCheck> sysProChecks, long operator) {
+    public void UpdateCheckStatus(Integer status, List<Long> ids, long operator) {
 
-        for (SysProCheck check : sysProChecks){
-            check.setCheckStatus(status);
-            check.setOperator(operator);
-            check.setTime(new Date().getTime());
-            sysProCheckMapper.updateByPrimaryKeySelective(check);
+        for (long id : ids){
+            sysProCheck.setId(id);
+            sysProCheck.setOperator(operator);
+            sysProCheck.setTime(new Date().getTime());
+            sysProCheckMapper.updateByPrimaryKeySelective(sysProCheck);
         }
     }
 
