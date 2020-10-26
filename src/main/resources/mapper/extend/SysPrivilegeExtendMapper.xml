@@ -15,14 +15,12 @@
 
   <select id="selectByParentIdWithPrivilege" resultType="com.xzx.xzxms.bean.SysPrivilege">
     select p.*
-       from sys_user u ,sys_user_role ur, sys_role r, sys_role_privilege rp ,sys_privilege p
-       where u.id = ur.user_id
-       and r.id = ur.role_id
-       and rp.role_id = r.id
+       from sys_role r, sys_role_privilege rp ,sys_privilege p
+       where rp.role_id = r.id
        and rp.privilege_id = p.id
        and p.parent_id = #{id,jdbcType=BIGINT}
        and p.type = 'menu'
-       and u.id = #{userId,jdbcType=BIGINT}
+       and r.id = #{roleId,jdbcType=BIGINT}
   </select>
 
   <select id="selectByRoleId" resultType="com.xzx.xzxms.bean.SysPrivilege">
@@ -44,13 +42,13 @@
   </select>
 
   <select id="selectMenuByUserId" resultMap="PrivilegeTreeResultWithPrivilegeMap">
-    select p.*, #{id,jdbcType=BIGINT} as userId
+    select p.*, #{id,jdbcType=BIGINT} as roleId
        from sys_privilege p
        where p.parent_id is null
   </select>
 
   <resultMap id="PrivilegeTreeResultWithPrivilegeMap" type="com.xzx.xzxms.vm.PrivilegeTree" extends="com.xzx.xzxms.dao.SysPrivilegeMapper.BaseResultMap">
-    <collection property="children" column="userId" select="selectByParentIdWithPrivilege"></collection>
+    <collection property="children" column="{id=id,roleId=roleId}" ofType="map" select="selectByParentIdWithPrivilege"></collection>
   </resultMap>
   <resultMap id="PrivilegeTreeResultMap" type="com.xzx.xzxms.vm.PrivilegeTree" extends="com.xzx.xzxms.dao.SysPrivilegeMapper.BaseResultMap">
     <collection property="children" column="id" select="selectByParentId"></collection>

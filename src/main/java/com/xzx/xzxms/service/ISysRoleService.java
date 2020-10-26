@@ -40,4 +40,10 @@ public interface ISysRoleService {
      * @throws CustomerException
      */
     void deleteById(long id) throws CustomerException;
+
+    /**
+     * 查询所有审核名
+     * @return
+     */
+    List<SysRole> selectAllHasCheckName();
 }

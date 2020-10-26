@@ -10,7 +10,7 @@ import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.Map;
 
-@Controller()
+@Controller
 public class FileUploadController {
     @Resource
     private IFileUploadService picServiceImpl;

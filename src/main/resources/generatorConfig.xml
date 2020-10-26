@@ -14,9 +14,9 @@
   <context id="DB2Tables" targetRuntime="MyBatis3">
 
     <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-        connectionURL="jdbc:mysql://127.0.0.1:3306/xzx"
+        connectionURL="jdbc:mysql://localhost:3306/xzx"
         userId="root"
-        password="jzdmlll@1217">
+        password="root">
       <!--产生selectByPrimaryKey-->
       <property name="useInformationSchema" value="true" />
     </jdbcConnection>
@@ -68,7 +68,7 @@
         <table tableName="lf_comment" domainObjectName="Comment" ></table>
         <table tableName="lf_logs" domainObjectName="Logs" ></table>
         -->
-    <!--<table tableName="sys_user_role" domainObjectName="SysUserRole" ></table>
+   <!-- <table tableName="sys_user_role" domainObjectName="SysUserRole" ></table>
     <table tableName="sys_user" domainObjectName="SysUser" ></table>
     <table tableName="sys_role_privilege" domainObjectName="SysRolePrivilege" ></table>
     <table tableName="sys_role" domainObjectName="SysRole" ></table>
@@ -80,7 +80,10 @@
     <table tableName="sys_log" domainObjectName="SysLog" ></table>
     <table tableName="sys_file" domainObjectName="SysFile" ></table>
     <table tableName="inquiry" domainObjectName="Inquiry" ></table>
-    <table tableName="sys_device_type" domainObjectName="SysDeviceType" ></table>-->
+    <table tableName="quote" domainObjectName="Quote" ></table>
+    <table tableName="sys_device_type" domainObjectName="SysDeviceType" ></table>
+    <table tableName="sys_pro_detail_check" domainObjectName="SysProDetailCheck" ></table>
+-->
     <table tableName="inquiry" domainObjectName="Inquiry" ></table>
     <!--
     mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate

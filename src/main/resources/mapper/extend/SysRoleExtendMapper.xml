@@ -13,6 +13,12 @@
     FROM sys_role
   </select>
 
+  <select id="selectAllHasCheckName" resultMap="RoleExtendResultMap">
+    SELECT *
+    FROM sys_role
+    WHERE check_name is not null AND check_name != ''
+  </select>
+
   <resultMap
           id="RoleExtendResultMap"
           type="com.xzx.xzxms.bean.extend.SysRoleExtend"

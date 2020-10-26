@@ -11,7 +11,7 @@
     </where>
   </select>
 
-  <resultMap id="option" type="com.xzx.xzxms.bean.extend.SysProDetailExtend" extends="com.xzx.xzxms.dao.SysProDetailMapper.BaseResultMap">
+  <resultMap id="option" type="com.xzx.xzxms.bean.extend.SysProDetailExtend" extends="com.xzx.xzxms.dao.SysProDetailMapper.ResultMapWithBLOBs">
     <association property="sysProType" column="pro_type_id" select="com.xzx.xzxms.dao.extend.SysProTypeExtendMapper.findById"></association>
     <association property="sysProOrigin" column="pro_origin_id" select="com.xzx.xzxms.dao.extend.SysProOriginExtendMapper.findById"></association>
   </resultMap>

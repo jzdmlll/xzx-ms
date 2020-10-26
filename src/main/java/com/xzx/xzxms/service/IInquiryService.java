@@ -1,34 +1,21 @@
 package com.xzx.xzxms.service;
 
-import com.xzx.xzxms.bean.InquiryWithBLOBs;
-import com.xzx.xzxms.bean.extend.InquiryExtend;
+import com.xzx.xzxms.bean.Inquiry;
 
 import java.util.List;
 
 public interface IInquiryService {
-
     /**
-     * 根据项目详情的ID查询相对应的询价全部内容
-     * @param proId
+     * 根据项目id查询所有询价
      * @return
      */
-    List<InquiryWithBLOBs> findByProDetailId(long proId);
+    List<Inquiry> findByProDetailId(long proDetailId);
 
     /**
-     * 保存或更改询价内容
-     * @param inquiry
+     * 批量导入
+     * @param inquiryList
      */
-    void saveOrUpdate(InquiryExtend inquiry);
 
-    /**
-     * 批量置为无效
-     * @param ids
-     */
-    void setInvalid(long[] ids);
+    void batchAddInquiry(List<Inquiry> inquiryList );
 
-    /**
-     * 批量删除
-     * @param ids
-     */
-    void delete(long[] ids);
 }

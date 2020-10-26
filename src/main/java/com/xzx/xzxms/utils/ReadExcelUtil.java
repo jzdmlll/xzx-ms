@@ -8,6 +8,7 @@ import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.PictureData;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.*;
 import org.junit.Test;
 import org.openxmlformats.schemas.drawingml.x2006.spreadsheetDrawing.CTMarker;
@@ -123,9 +124,9 @@ class ExcelUtil {
      * @return
      * @throws IOException
      */
-    public static Map<Integer, byte[]> getPicturesXls (HSSFSheet sheet) throws IOException {
+    public static Map<Integer, InputStream> getPicturesXls (HSSFSheet sheet) throws IOException {
 
-        Map<Integer, byte[]> map = new HashMap<Integer, byte[]>();
+        Map<Integer, InputStream> map = new HashMap<Integer, InputStream>();
         try{
             List<HSSFShape> list = sheet.getDrawingPatriarch().getChildren();
             for (HSSFShape shape : list) {
@@ -135,8 +136,10 @@ class ExcelUtil {
                     PictureData pdata = picture.getPictureData();
                     //String key = cAnchor.getRow1() + "-" + cAnchor.getCol1(); // 行号-列号
                     Integer key=cAnchor.getRow1();
-                    System.out.println(pdata.getData());
-                    map.put(key, pdata.getData());
+                    if (pdata.getData()!=null){
+                        System.out.println(pdata.getData().length+"****");
+                        map.put(key, new ByteArrayInputStream(pdata.getData()));
+                    }
                 }
             }
         }catch (Exception ex){
@@ -207,7 +210,7 @@ public class ReadExcelUtil{
      * @return
      * @throws IOException
      */
-    public List<ArrayList<String>> readExcel(MultipartFile file) throws IOException {
+    public List<LinkedList<Map<String,Object>>> readExcel(MultipartFile file) throws IOException {
         if(file==null||ExcelUtil.EMPTY.equals(file.getOriginalFilename().trim())){
             return null;
         }else{
@@ -216,7 +219,7 @@ public class ReadExcelUtil{
                 if(ExcelUtil.OFFICE_EXCEL_2003_POSTFIX.equals(postfix)){
                     return readXls(file);
                 }else if(ExcelUtil.OFFICE_EXCEL_2010_POSTFIX.equals(postfix)){
-                    return readXlsx(file);
+                    //return readXlsx(file);
                 }else{
                     return null;
                 }
@@ -289,13 +292,15 @@ public class ReadExcelUtil{
      * @return
      * @throws IOException
      */
-    public List<ArrayList<String>> readXls(MultipartFile file){
-        List<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
+    public List<LinkedList<Map<String,Object>>> readXls(MultipartFile file){
+        List<LinkedList<Map<String,Object>>> list = new ArrayList<LinkedList<Map<String,Object>>>();
         // IO流读取文件
         InputStream input = null;
         HSSFWorkbook wb = null;
-        ArrayList<String> rowList = null;
+        LinkedList<Map<String,Object>> rowList = null;
         HSSFSheet hssfSheet = null;
+        ArrayList<String> keys = new ArrayList<>();
+        Map<String,Object> excel;
 
         try {
             input = file.getInputStream();
@@ -308,7 +313,7 @@ public class ReadExcelUtil{
             {
                 hssfSheet = wb.getSheetAt(numSheet);
                 Map map = ExcelUtil.getPicturesXls(hssfSheet);
-                System.out.println(map);
+                //System.out.println(map);
                 if(hssfSheet == null)
                 {
                     continue;
@@ -316,38 +321,54 @@ public class ReadExcelUtil{
 
                 //获得数据总行数
                 totalRows = hssfSheet.getLastRowNum();
+
+                if (totalRows>=1&&hssfSheet.getRow(0)!=null){
+                    //列数
+                    totalCells = hssfSheet.getRow(0).getPhysicalNumberOfCells();
+                    //第一行的数据
+                    //获取第一行的数据
+                    Row row1 = hssfSheet.getRow(0);
+                    for (int i = 0; i < totalCells; i++) {
+                        Cell cell = row1.getCell(i);
+                        String value = cell.getStringCellValue();
+                        keys.add(value);
+                    }
+                    System.out.println(keys);
+                }
+
                 //读取Row,从第二行开始
                 for(int rowNum = 1;rowNum <= totalRows;rowNum++)
                 {
                     //根据行号取出map中的图片字节流
-                    byte[] value= (byte[]) map.get(rowNum);
+                    InputStream value= (InputStream) map.get(rowNum);
 
                     HSSFRow hssfRow = hssfSheet.getRow(rowNum);
                     if(hssfRow!=null)
                     {
                         //表格第一列如果不是数字类型则代表接下来的行数不循环
                         if (hssfRow.getCell(0).getCellType() == HSSFCell.CELL_TYPE_NUMERIC){
+                            rowList = new LinkedList<Map<String,Object>>();
 
-                            rowList = new ArrayList<String>();
-                            //列数
-                            //totalCells = hssfRow.getLastCellNum();
-                            totalCells=15;
                             //读取列，从第一列开始
-                            for(int c=0;c <= totalCells;c++)
+                            for(int c=0;c < totalCells;c++)
                             {
+                                excel=new HashMap<String,Object>();
                                 HSSFCell cell = hssfRow.getCell(c);
                                 if(cell == null){
-                                    rowList.add(ExcelUtil.EMPTY);
+                                    excel.put(keys.get(c),ExcelUtil.EMPTY);
+                                    rowList.add(excel);
                                     continue;
                                 }
+                                //13为图片列
                                 if(c == 13){
-                                    if (value != null){
-                                        String _value=new String(value,"utf-8");
-                                        rowList.add(_value);
+
+                                        excel.put(keys.get(c),value);
+                                        rowList.add(excel);
                                         continue;
-                                    }
+
                                 }
-                                rowList.add(ExcelUtil.getHValue(cell).trim());
+                                excel.put(keys.get(c),ExcelUtil.getHValue(cell).trim());
+                                rowList.add(excel);
                             }
                             list.add(rowList);
                         }else {
@@ -358,6 +379,7 @@ public class ReadExcelUtil{
                 }
             }
             return list;
+
         } catch (IOException e) {
             e.printStackTrace();
         } finally{
@@ -387,9 +409,14 @@ public class ReadExcelUtil{
 //        }
 
 
+
         FileInputStream fileInputStream=new FileInputStream(file);
         MultipartFile multipartFile = new MockMultipartFile("copy"+file.getName(),file.getName(), ContentType.APPLICATION_OCTET_STREAM.toString(),fileInputStream);
         List<?> lists = readExcel(multipartFile);
+
+
+
+
         System.out.println(lists);
 
 //        XSSFWorkbook xssfWorkbook=new XSSFWorkbook(new FileInputStream(filePath));
