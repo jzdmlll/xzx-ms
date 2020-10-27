@@ -23,8 +23,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-//import com.xzx.xzxms.service.ISysProCheckService;
-
 @Service
 public class SysProDetailServiceImpl implements ISysProDetailService {
 
