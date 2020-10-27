@@ -52,4 +52,13 @@ public class InquiryController {
     }
 
 
+
+    @ApiOperation(value = "批量新增询价")
+    @PostMapping(value ="batchAddInquiry" )
+    public Message batchAddInquiry(@RequestBody List<Inquiry> inquiryList){
+        iInquiryServiceImpl.batchAddInquiry(inquiryList);
+        return MessageUtil.success("保存成功");
+    }
+
+
 }

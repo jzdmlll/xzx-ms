@@ -66,6 +66,18 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
                 sysProDetailCheckMapper.insert(check);
             }
 
+            sysProDetailMapper.updateByPrimaryKeySelective(proDetail);
+
+            if (proChecks.size() >0 ){
+                SysProDetailCheckExample example = new SysProDetailCheckExample();
+                example.createCriteria().andProDetailIdEqualTo(proDetail.getId());
+                sysProDetailCheckMapper.deleteByExample(example);
+            }
+
+            for(SysProDetailCheck check : proChecks) {
+                sysProDetailCheckMapper.insert(check);
+            }
+
         }else {
             long proDetailId = IDUtils.getId();
             //文件上传
