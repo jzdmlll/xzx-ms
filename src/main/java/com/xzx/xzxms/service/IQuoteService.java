@@ -22,7 +22,7 @@ public interface IQuoteService {
     void saveOrUpdate(QuoteExtend quote);
     /**
      * 批量新增报价
-     * @param uploadFile 报价文件
+     * @param quote 项目详情id和文件内容
      */
-    void batchAddQuote(MultipartFile uploadFile) throws IOException;
+    void batchAddQuote(QuoteExtend quote) throws IOException;
 }

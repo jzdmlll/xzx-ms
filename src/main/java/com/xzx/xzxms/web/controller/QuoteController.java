@@ -3,16 +3,15 @@ package com.xzx.xzxms.web.controller;
 import com.xzx.xzxms.bean.Quote;
 import com.xzx.xzxms.bean.extend.QuoteExtend;
 import com.xzx.xzxms.service.IQuoteService;
+import com.xzx.xzxms.utils.CustomerException;
 import com.xzx.xzxms.utils.Message;
 import com.xzx.xzxms.utils.MessageUtil;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -35,9 +34,13 @@ public class QuoteController {
         return MessageUtil.success("操作成功");
     }
     @ApiOperation("批量插入报价")
-    @GetMapping("batchAddQuote")
-    public Message batchAddQuote(@RequestParam("file") MultipartFile uploadFile) {
-
+    @PostMapping("batchAddQuote")
+    public Message batchAddQuote(@RequestBody QuoteExtend quote) {
+        try {
+            iQuoteServiceImpl.batchAddQuote(quote);
+        } catch (IOException e) {
+            throw new CustomerException("导入失败，原因："+e.getMessage());
+        }
         return MessageUtil.success("导入成功");
     }
 }

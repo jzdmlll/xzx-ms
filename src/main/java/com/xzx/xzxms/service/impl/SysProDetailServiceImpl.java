@@ -48,16 +48,21 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
         long time = new Date().getTime();
         long operatorId = proDetail.getOperator();
         if (proDetail.getId() != null){
-
+            long proDetailId = proDetail.getId();
             sysProDetailMapper.updateByPrimaryKeySelective(proDetail);
 
             if (proChecks.size() >0 ){
                 SysProDetailCheckExample example = new SysProDetailCheckExample();
-                example.createCriteria().andProDetailIdEqualTo(proDetail.getId());
+                example.createCriteria().andProDetailIdEqualTo(proDetailId);
                 sysProDetailCheckMapper.deleteByExample(example);
             }
 
             for(SysProDetailCheck check : proChecks) {
+                check.setId(IDUtils.getId());
+                check.setProDetailId(proDetailId);
+                check.setTime(time);
+                check.setCheckStatus(0);
+                check.setOperator(operatorId);
                 sysProDetailCheckMapper.insert(check);
             }
 

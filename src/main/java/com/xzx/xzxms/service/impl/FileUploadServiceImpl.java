@@ -98,6 +98,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
                 map.put("error", 0);
                 map.put("url", "http://"+host+"/images/"+fileName);
                 map.put("msg", "上传成功");
+                map.put("name", fileName);
             }else{
                 map.put("error", 1);
                 map.put("msg", "图片上传失败!");
@@ -116,8 +117,9 @@ public class FileUploadServiceImpl implements IFileUploadService {
         // 生成随机文件id作为key存入redis
         Long fileId = IDUtils.getId();
         jedisDaoImpl.setCode(fileId.toString(), base64File, 10L);
+        map.put("status", 200);
         map.put("error", 0);
-        map.put("msg", "上传成功");
+        map.put("message", "上传成功");
         map.put("fileId", fileId);
         map.put("fileName", oldName);
         map.put("url", "http://"+host+"/images/"+fileName);

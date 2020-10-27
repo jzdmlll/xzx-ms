@@ -1,16 +1,18 @@
 package com.xzx.xzxms.vm;
 
+import com.xzx.xzxms.bean.Inquiry;
+
 import java.util.List;
 
 public class BatchInquiryVM {
 
-    /*List<InquiryVM> inquiryVMs;
+    List<Inquiry> inquiryList;
 
-    public List<InquiryVM> getInquiryVMs() {
-        return inquiryVMs;
+    public List<Inquiry> getInquiryList() {
+        return inquiryList;
     }
 
-    public void setInquiryVMs(List<InquiryVM> inquiryVMs) {
-        this.inquiryVMs = inquiryVMs;
-    }*/
+    public void setInquiryList(List<Inquiry> inquiryList) {
+        this.inquiryList = inquiryList;
+    }
 }
