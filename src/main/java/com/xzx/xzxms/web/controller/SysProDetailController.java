@@ -44,9 +44,8 @@ public class SysProDetailController {
     @ApiOperation(value = "验证项目名称是否存在")
     @GetMapping(value = "verifyExistence")
     public Message verifyExistence(String proName){
-
         Boolean bool = sysProDetailServiceImpl.verifyExistence(proName);
-        return MessageUtil.success("success",bool);
+        return MessageUtil.success("success", bool);
     }
 
 }

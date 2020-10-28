@@ -118,9 +118,9 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
         sysProDetailExample.createCriteria().andNameEqualTo(proName);
         List<SysProDetail> sysProDetail = sysProDetailMapper.selectByExample(sysProDetailExample);
         if (sysProDetail.size() > 0){
-            return false;
-        }else {
             return true;
+        }else {
+            return false;
         }
     }
 
