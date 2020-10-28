@@ -5,7 +5,7 @@ import com.xzx.xzxms.bean.extend.QuoteExtend;
 import com.xzx.xzxms.bean.extend.QuoteExtendInquiry;
 import com.xzx.xzxms.bean.extend.SysFileExtend;
 import com.xzx.xzxms.dao.*;
-import com.xzx.xzxms.dao.extend.QuoteAndInquiry;
+import com.xzx.xzxms.dao.extend.QuoteAndInquiryExtendMapper;
 import com.xzx.xzxms.dao.redis.JedisDao;
 import com.xzx.xzxms.service.IFileUploadService;
 import com.xzx.xzxms.service.IQuoteService;
@@ -277,7 +277,7 @@ public class QuoteServiceImpl implements IQuoteService {
     }
 
     @Resource
-    private QuoteAndInquiry quoteAndInquiry;
+    private QuoteAndInquiryExtendMapper quoteAndInquiry;
 
 
     @Override

@@ -56,7 +56,7 @@ public class InquiryController {
     public Message batchSetInvalid(long[] ids){
 
         iInquiryServiceImpl.batchSetInvalid(ids);
-        return MessageUtil.success("success");
+        return MessageUtil.success("删除成功");
     }
 
 }

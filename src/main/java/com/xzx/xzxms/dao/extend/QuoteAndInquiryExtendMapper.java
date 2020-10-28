@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface QuoteAndInquiry {
+public interface QuoteAndInquiryExtendMapper {
 
     List<QuoteExtendInquiry> findBySupplierOrPro(@Param("supplier") String supplier,@Param("proId") long proId);
 }

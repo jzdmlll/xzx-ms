@@ -55,7 +55,7 @@ public class QuoteController {
 
     @ApiOperation("供应商报价查询/项目报价查询")
     @GetMapping("findBySupplierOrPro")
-    public Message findBySupplierOrPro(@RequestParam(value = "supplier",required = false,defaultValue = "-1") String supplier,@RequestParam(value = "proId",required = false,defaultValue = "-1") long proId){
+    public Message findBySupplierOrPro(@RequestParam(value = "supplier",required = false) String supplier,@RequestParam(value = "proId",required = false,defaultValue = "-1") long proId){
 
         List<QuoteExtendInquiry> list = iQuoteServiceImpl.findBySupplierOrPro(supplier,proId);
         return MessageUtil.success("success",list);

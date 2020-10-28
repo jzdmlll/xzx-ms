@@ -5,7 +5,7 @@
       select * from sys_device_type
       <where>
         <if test="name!=null and name!=''">
-          name like %#{name,jdbcType=VARCHAR}%
+          name like '%'#{name,jdbcType=VARCHAR}'%'
         </if>
         <if test="code!=null and code!=''">
           and code like %#{code,jdbcType=VARCHAR}%
