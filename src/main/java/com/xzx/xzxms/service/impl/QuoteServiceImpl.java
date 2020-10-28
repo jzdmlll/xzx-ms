@@ -261,6 +261,15 @@ public class QuoteServiceImpl implements IQuoteService {
                             proCheck.setContentId(quoteId);
                             sysProCheckMapper.insertSelective(proCheck);
                         }
+                        //还需添加比价审核
+                        proCheck.setId(IDUtils.getId());
+                        proCheck.setId(IDUtils.getId());
+                        proCheck.setOperator(operator);
+                        proCheck.setTime(time);
+                        proCheck.setType("比价审核");
+                        proCheck.setCheckStatus(0);
+                        proCheck.setContentId(quoteId);
+                        sysProCheckMapper.insertSelective(proCheck);
                     }else {
                         throw new CustomerException("所属项目没有添加审核");
                     }

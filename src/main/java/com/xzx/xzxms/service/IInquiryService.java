@@ -36,4 +36,10 @@ public interface IInquiryService {
      * @param ids
      */
     void batchSetInvalid(long[] ids);
+
+    /**
+     * 根据项目id/比价状态查询
+     * @return
+     */
+    List<Inquiry> findByProIdOrCompareStatus(long proDetailId,Integer compareStatus);
 }

@@ -3,6 +3,7 @@ package com.xzx.xzxms.service.impl;
 import com.xzx.xzxms.bean.Inquiry;
 import com.xzx.xzxms.bean.InquiryExample;
 import com.xzx.xzxms.dao.InquiryMapper;
+import com.xzx.xzxms.dao.extend.InquiryExtendMapper;
 import com.xzx.xzxms.service.IInquiryService;
 import com.xzx.xzxms.utils.CustomerException;
 import com.xzx.xzxms.utils.IDUtils;
@@ -86,5 +87,16 @@ public class InquiryServiceImpl implements IInquiryService{
                 throw new CustomerException("该数据已不存在");
             }
         }
+    }
+
+    @Resource
+    private InquiryExtendMapper inquiryExtendMapper;
+
+    @Override
+    public List<Inquiry> findByProIdOrCompareStatus(long proDetailId, Integer compareStatus) {
+
+        List<Inquiry> inquiries = inquiryExtendMapper.findByProIdOrCompareStatus(proDetailId,compareStatus);
+
+        return inquiries;
     }
 }

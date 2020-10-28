@@ -14,4 +14,25 @@
             </if>
         </where>
     </select>-->
+
+    <select id="findByProIdOrCompareStatus" resultType="com.xzx.xzxms.bean.Inquiry">
+        select * from inquiry i
+            left join sys_pro_detail pro on i.pro_detail_id = pro.id
+            left join sys_pro_check che on i.id = che.content_id
+            <where>
+                i.is_active = 1 and pro.is_active = 1 and che.type = '比价审核'
+                <if test="proDetailId != -1">
+                    and pro.id = #{proDetailId,jdbcType=BIGINT}
+                </if>
+                <if test="compareStatus = 0">
+                    and che.check_status = 0
+                </if>
+                <if test="compareStatus = 1">
+                    and che.check_status = 1
+                </if>
+                <if test="compareStatus = 2">
+                    and che.check_status = 2
+                </if>
+            </where>
+    </select>
 </mapper>
