@@ -2,10 +2,7 @@ package com.xzx.xzxms.service.impl;
 
 import com.xzx.xzxms.dao.redis.JedisDao;
 import com.xzx.xzxms.service.IFileUploadService;
-import com.xzx.xzxms.utils.Base64Util;
-import com.xzx.xzxms.utils.FtpUtil;
-import com.xzx.xzxms.utils.IDUtils;
-import com.xzx.xzxms.utils.SFTPUtil;
+import com.xzx.xzxms.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -54,6 +51,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
             }else{
                 map.put("error", 1);
                 map.put("msg", "图片上传失败!");
+                throw new CustomerException("图片上传失败!");
             }
         }
         return map;
@@ -79,6 +77,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
             }else{
                 map.put("error", 1);
                 map.put("msg", "图片上传失败!");
+                throw new CustomerException("图片上传失败!");
             }
         }
         return map;
@@ -90,6 +89,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
         boolean result = false;
         try {
             SFTPUtil sftp = new SFTPUtil(username, password, host, 22);
+            fileName = UUID.randomUUID().toString() + fileName.substring(fileName.lastIndexOf("."));
             result = sftp.upload(dictory,fileName,inputStream);
         } catch (Exception e) {
             e.printStackTrace();
@@ -102,6 +102,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
             }else{
                 map.put("error", 1);
                 map.put("msg", "图片上传失败!");
+                throw new CustomerException("图片上传失败!");
             }
         }
         return map;

@@ -8,7 +8,6 @@ import com.xzx.xzxms.utils.Message;
 import com.xzx.xzxms.utils.MessageUtil;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.IOException;
@@ -28,8 +27,8 @@ public class QuoteController {
     }
 
     @ApiOperation("新增或修改报价")
-    @GetMapping("saveOrUpdate")
-    public Message saveOrUpdate(QuoteExtend quote) {
+    @PostMapping("saveOrUpdate")
+    public Message saveOrUpdate(@RequestBody QuoteExtend quote) {
         iQuoteServiceImpl.saveOrUpdate(quote);
         return MessageUtil.success("操作成功");
     }
@@ -42,5 +41,11 @@ public class QuoteController {
             throw new CustomerException("导入失败，原因："+e.getMessage());
         }
         return MessageUtil.success("导入成功");
+    }
+    @ApiOperation("行内编辑保存")
+    @PostMapping("rowSave")
+    public Message rowSave(@RequestBody Quote quote) {
+        iQuoteServiceImpl.rowSave(quote);
+        return MessageUtil.success("保存成功");
     }
 }

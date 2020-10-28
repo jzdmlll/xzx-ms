@@ -54,18 +54,17 @@ public class QuoteServiceImpl implements IQuoteService {
         long time = new Date().getTime();
         long operatorId = quote.getOperator();
         if (quote.getId() != null){
-            /*inquiryMapper.updateByPrimaryKeySelective(inquiry);
-            List<SysFile> files = inquiry.getFiles();
+            List<SysFile> files = quote.getFiles();
             if (files != null && files.size() > 0  ) {
                 for ( SysFile file : files ) {
                     file.setTime(time);
                     file.setIsActive(1);
                     file.setIsUseful(1);
                     file.setOperator(operatorId);
-                    // 询价文件
-                    if(file.getType() == SysFileExtend.TYPE_INQUIRY) {
+                    // 报价文件
+                    if(file.getType() == SysFileExtend.TYPE_QUOTE) {
                         SysFileExample example = new SysFileExample();
-                        example.createCriteria().andOtherIdEqualTo(inquiry.getId()).andTypeEqualTo(SysFileExtend.TYPE_INQUIRY);
+                        example.createCriteria().andOtherIdEqualTo(quote.getId()).andTypeEqualTo(SysFileExtend.TYPE_QUOTE);
                         List<SysFile> sysFiles = sysFileMapper.selectByExample(example);
                         //替换
                         if (sysFiles.size() > 0){
@@ -83,11 +82,11 @@ public class QuoteServiceImpl implements IQuoteService {
                                 //上传到Nginx
                                 Map<String, Object> map = fileUploadServiceImpl.uploadByStream(inputStream, file.getName());
 
-                                System.out.println(map.get("url"));
+                                String url = map.get("url").toString();
                                 //文件信息持久化到数据库
-                                file.setType(SysFileExtend.TYPE_INQUIRY);
-                                file.setOtherId(inquiry.getId());
-
+                                file.setType(SysFileExtend.TYPE_QUOTE);
+                                file.setOtherId(quote.getId());
+                                file.setUrl(url);
 
                                 sysFileMapper.insert(file);
                                 System.out.println("数据库");
@@ -105,17 +104,17 @@ public class QuoteServiceImpl implements IQuoteService {
                             jedisDaoImpl.del(file.getId().toString());
                             //上传到Nginx
                             Map<String, Object> map = fileUploadServiceImpl.uploadByStream(inputStream, file.getName());
-
-                            System.out.println(map.get("url"));
+                            String url = map.get("url").toString();
                             //文件信息持久化到数据库
                             file.setType(SysFileExtend.TYPE_TECHNOLOGY);
-                            file.setOtherId(inquiry.getId());
+                            file.setOtherId(quote.getId());
+                            file.setUrl(url);
                             sysFileMapper.insert(file);
                             System.out.println("数据库");
                         }
                     }
                 }
-            }*/
+            }
         }else {
             long quoteId = IDUtils.getId();
             //文件上传
@@ -132,12 +131,13 @@ public class QuoteServiceImpl implements IQuoteService {
                     jedisDaoImpl.del(file.getId().toString());
                     //上传到Nginx
                     Map<String, Object> map = fileUploadServiceImpl.uploadByStream(inputStream, file.getName());
-
+                    String url = map.get("url").toString();
                     System.out.println(map.get("url"));
                     //文件信息持久化到数据库
                     file.setType(SysFileExtend.TYPE_QUOTE);
                     file.setOtherId(quoteId);
                     file.setTime(time);
+                    file.setUrl(url);
                     file.setIsActive(1);
                     file.setIsUseful(1);
                     sysFileMapper.insert(file);
@@ -188,10 +188,20 @@ public class QuoteServiceImpl implements IQuoteService {
                         example.createCriteria().andNameEqualTo(name).andParamsEqualTo(params).andProDetailIdEqualTo(proDetailId);
                         List<Inquiry> inquiries = inquiryMapper.selectByExample(example);
                         if (inquiries.size() > 0) {
-                            inquiryId =  inquiries.get(0).getId();
+                            Inquiry inquiry = inquiries.get(0);
+                            inquiryId =  inquiry.getId();
+                            inquiry.setIsUseful(1);
+                            inquiryMapper.updateByPrimaryKeySelective(inquiry);
                         }else {
                             throw new CustomerException("找不到对应的询价函");
                         }
+                    }
+                    QuoteExample quoteExample = new QuoteExample();
+                    String supplier = item.get("供应商").toString().trim();
+                    quoteExample.createCriteria().andSupplierEqualTo(supplier).andInquiryIdEqualTo(inquiryId);
+                    List<Quote> quotes = quoteMapper.selectByExample(quoteExample);
+                    if (quotes.size() > 0) {
+                        throw new CustomerException("文件中： ["+supplier+"]  数据已存在");
                     }
                     Quote q = new Quote();
                     long quoteId = IDUtils.getId();
@@ -202,7 +212,7 @@ public class QuoteServiceImpl implements IQuoteService {
                     q.setSuDelivery(Long.parseLong(item.get("货期").toString().trim()));
                     q.setSuModel(item.get("报价品牌型号").toString().trim());
                     q.setSuParams(item.get("实际技术参数").toString().trim());
-                    q.setSupplier(item.get("供应商").toString().trim());
+                    q.setSupplier(supplier);
                     q.setSuPrice(Double.parseDouble(item.get("设备单价").toString().trim()));
                     q.setSuRemark(item.get("备注").toString().trim());
                     q.setSuTotalPrice(Double.parseDouble(item.get("设备总价").toString().trim()));
@@ -264,5 +274,10 @@ public class QuoteServiceImpl implements IQuoteService {
             }
         }
 
+    }
+
+    @Override
+    public void rowSave(Quote quote) {
+        quoteMapper.updateByPrimaryKeySelective(quote);
     }
 }
