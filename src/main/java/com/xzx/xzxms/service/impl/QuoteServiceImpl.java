@@ -212,7 +212,7 @@ public class QuoteServiceImpl implements IQuoteService {
                     q.setSuDelivery(Long.parseLong(item.get("货期").toString().trim()));
                     q.setSuModel(item.get("报价品牌型号").toString().trim());
                     q.setSuParams(item.get("实际技术参数").toString().trim());
-                    q.setSupplier(supplier);
+                    q.setSupplier(item.get("供应商").toString().trim());
                     q.setSuPrice(Double.parseDouble(item.get("设备单价").toString().trim()));
                     q.setSuRemark(item.get("备注").toString().trim());
                     q.setSuTotalPrice(Double.parseDouble(item.get("设备总价").toString().trim()));
