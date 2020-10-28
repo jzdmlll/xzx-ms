@@ -44,6 +44,11 @@ public class InquiryServiceImpl implements IInquiryService{
         example.createCriteria().andProDetailIdEqualTo(inquiryList.get(0).getProDetailId());
         List<Inquiry> inquiries = inquiryMapper.selectByExample(example);
         if (inquiries.size() > 0) {
+            for (Inquiry i:inquiries){
+                if(i.getIsUseful() == 1) {
+                    throw new CustomerException("询价函["+i.getName()+"]下已有报价单存在，禁止覆盖");
+                }
+            }
             inquiryMapper.deleteByExample(example);
         }
         int sort = 1;

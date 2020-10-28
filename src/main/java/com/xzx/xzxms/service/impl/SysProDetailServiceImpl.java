@@ -11,6 +11,7 @@ import com.xzx.xzxms.dao.redis.JedisDao;
 import com.xzx.xzxms.service.IFileUploadService;
 import com.xzx.xzxms.service.ISysProDetailService;
 import com.xzx.xzxms.utils.Base64Util;
+import com.xzx.xzxms.utils.CustomerException;
 import com.xzx.xzxms.utils.IDUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,14 +49,12 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
         long time = new Date().getTime();
         long operatorId = proDetail.getOperator();
         if (proDetail.getId() != null){
+            if (proChecks.size() >0 ){
+                throw new CustomerException("失败，项目已有审核");
+            }
+
             long proDetailId = proDetail.getId();
             sysProDetailMapper.updateByPrimaryKeySelective(proDetail);
-
-            if (proChecks.size() >0 ){
-                SysProDetailCheckExample example = new SysProDetailCheckExample();
-                example.createCriteria().andProDetailIdEqualTo(proDetailId);
-                sysProDetailCheckMapper.deleteByExample(example);
-            }
 
             for(SysProDetailCheck check : proChecks) {
                 check.setId(IDUtils.getId());
@@ -63,18 +62,6 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
                 check.setTime(time);
                 check.setCheckStatus(0);
                 check.setOperator(operatorId);
-                sysProDetailCheckMapper.insert(check);
-            }
-
-            sysProDetailMapper.updateByPrimaryKeySelective(proDetail);
-
-            if (proChecks.size() >0 ){
-                SysProDetailCheckExample example = new SysProDetailCheckExample();
-                example.createCriteria().andProDetailIdEqualTo(proDetail.getId());
-                sysProDetailCheckMapper.deleteByExample(example);
-            }
-
-            for(SysProDetailCheck check : proChecks) {
                 sysProDetailCheckMapper.insert(check);
             }
 

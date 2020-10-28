@@ -1,5 +1,6 @@
 package com.xzx.xzxms.service;
 
+import com.xzx.xzxms.bean.Inquiry;
 import com.xzx.xzxms.bean.Quote;
 import com.xzx.xzxms.bean.extend.QuoteExtend;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,4 +26,9 @@ public interface IQuoteService {
      * @param quote 项目详情id和文件内容
      */
     void batchAddQuote(QuoteExtend quote) throws IOException;
+    /**
+     * 行内编辑保存
+     * @param quote
+     */
+    void rowSave(Quote quote);
 }
