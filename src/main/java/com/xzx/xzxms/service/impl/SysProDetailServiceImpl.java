@@ -113,6 +113,18 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
     }
 
     @Override
+    public boolean verifyExistence(String proName) {
+        SysProDetailExample sysProDetailExample=new SysProDetailExample();
+        sysProDetailExample.createCriteria().andNameEqualTo(proName);
+        List<SysProDetail> sysProDetail = sysProDetailMapper.selectByExample(sysProDetailExample);
+        if (sysProDetail.size() > 0){
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+    @Override
     public SysProDetailExtend findById(long proDetailId) {
         return sysProDetailExtendMapper.findById(proDetailId);
     }

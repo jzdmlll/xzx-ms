@@ -2,9 +2,10 @@ package com.xzx.xzxms.service.impl;
 
 import com.xzx.xzxms.bean.*;
 import com.xzx.xzxms.bean.extend.QuoteExtend;
+import com.xzx.xzxms.bean.extend.QuoteExtendInquiry;
 import com.xzx.xzxms.bean.extend.SysFileExtend;
-import com.xzx.xzxms.bean.extend.SysProCheckExtend;
 import com.xzx.xzxms.dao.*;
+import com.xzx.xzxms.dao.extend.QuoteAndInquiry;
 import com.xzx.xzxms.dao.redis.JedisDao;
 import com.xzx.xzxms.service.IFileUploadService;
 import com.xzx.xzxms.service.IQuoteService;
@@ -15,11 +16,8 @@ import com.xzx.xzxms.utils.POIExcelUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
@@ -45,7 +43,7 @@ public class QuoteServiceImpl implements IQuoteService {
     @Override
     public List<Quote> findByInquiryId(long inquiryId) {
         QuoteExample example = new QuoteExample();
-        example.createCriteria().andInquiryIdEqualTo(inquiryId);
+        example.createCriteria().andInquiryIdEqualTo(inquiryId).andIsActiveEqualTo(1);
         return quoteMapper.selectByExample(example);
     }
     @Transactional
@@ -212,7 +210,7 @@ public class QuoteServiceImpl implements IQuoteService {
                     q.setSuDelivery(Long.parseLong(item.get("货期").toString().trim()));
                     q.setSuModel(item.get("报价品牌型号").toString().trim());
                     q.setSuParams(item.get("实际技术参数").toString().trim());
-                    q.setSupplier(item.get("供应商").toString().trim());
+                    q.setSupplier(supplier);
                     q.setSuPrice(Double.parseDouble(item.get("设备单价").toString().trim()));
                     q.setSuRemark(item.get("备注").toString().trim());
                     q.setSuTotalPrice(Double.parseDouble(item.get("设备总价").toString().trim()));
@@ -266,18 +264,26 @@ public class QuoteServiceImpl implements IQuoteService {
                     }else {
                         throw new CustomerException("所属项目没有添加审核");
                     }
-
                 }
-
             }else {
                 throw new CustomerException("文件信息过期，请重新上传");
             }
         }
-
     }
 
     @Override
     public void rowSave(Quote quote) {
         quoteMapper.updateByPrimaryKeySelective(quote);
+    }
+
+    @Resource
+    private QuoteAndInquiry quoteAndInquiry;
+
+
+    @Override
+    public List<QuoteExtendInquiry> findBySupplierOrPro(String supplier, long proId) {
+
+        List<QuoteExtendInquiry> list = quoteAndInquiry.findBySupplierOrPro(supplier,proId);
+        return list;
     }
 }

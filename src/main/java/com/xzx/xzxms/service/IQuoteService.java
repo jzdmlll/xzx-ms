@@ -1,10 +1,8 @@
 package com.xzx.xzxms.service;
 
-import com.xzx.xzxms.bean.Inquiry;
 import com.xzx.xzxms.bean.Quote;
 import com.xzx.xzxms.bean.extend.QuoteExtend;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartFile;
+import com.xzx.xzxms.bean.extend.QuoteExtendInquiry;
 
 import java.io.IOException;
 import java.util.List;
@@ -31,4 +29,10 @@ public interface IQuoteService {
      * @param quote
      */
     void rowSave(Quote quote);
+
+    /**
+     * 供应商报价查询/项目报价查询
+     * @return
+     */
+    List<QuoteExtendInquiry> findBySupplierOrPro(String supplier,long proId);
 }

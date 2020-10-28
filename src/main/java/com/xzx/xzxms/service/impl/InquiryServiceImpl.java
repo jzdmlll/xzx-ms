@@ -6,6 +6,8 @@ import com.xzx.xzxms.dao.InquiryMapper;
 import com.xzx.xzxms.service.IInquiryService;
 import com.xzx.xzxms.utils.CustomerException;
 import com.xzx.xzxms.utils.IDUtils;
+import com.xzx.xzxms.utils.Message;
+import com.xzx.xzxms.utils.MessageUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,14 +24,15 @@ public class InquiryServiceImpl implements IInquiryService{
     @Override
     public List<Inquiry> findByProDetailId(long proDetailId) {
         InquiryExample example = new InquiryExample();
-        example.createCriteria().andProDetailIdEqualTo(proDetailId);
-
+        example.createCriteria().andProDetailIdEqualTo(proDetailId).andIsActiveEqualTo(1);
         return inquiryMapper.selectByExample(example);
     }
 
     @Override
     public List<Inquiry> findAll() {
-        return inquiryMapper.selectByExample(new InquiryExample());
+        InquiryExample example = new InquiryExample();
+        example.createCriteria().andIsActiveEqualTo(1);
+        return inquiryMapper.selectByExample(example);
     }
 
     /**
@@ -53,13 +56,6 @@ public class InquiryServiceImpl implements IInquiryService{
         }
         int sort = 1;
         for (Inquiry inquiry : inquiryList) {
-            example = new InquiryExample();
-            example.createCriteria().andParamsEqualTo(inquiry.getParams()).andNameEqualTo(inquiry.getName());
-            List<Inquiry> inquiriesList = inquiryMapper.selectByExample(example);
-            System.out.println(inquiriesList.size());
-            if (inquiriesList.size() > 0) {
-                throw new CustomerException("数据已存在");
-            }
               long inquiryId = IDUtils.getId();
               inquiry.setId(inquiryId);
               inquiry.setTime(time);
@@ -67,7 +63,6 @@ public class InquiryServiceImpl implements IInquiryService{
               inquiry.setIsUseful(0);
               inquiry.setSort(sort ++);
               inquiryMapper.insert(inquiry);
-
         }
     }
 
@@ -77,4 +72,19 @@ public class InquiryServiceImpl implements IInquiryService{
         inquiryMapper.updateByPrimaryKeySelective(inquiry);
     }
 
+
+    @Transactional
+    @Override
+    public void batchSetInvalid(long[] ids) {
+
+        for (long id : ids){
+            Inquiry inquiry=inquiryMapper.selectByPrimaryKey(id);
+            if (inquiry != null){
+                inquiry.setIsActive(0);
+                inquiryMapper.updateByPrimaryKeySelective(inquiry);
+            }else {
+                throw new CustomerException("该数据已不存在");
+            }
+        }
+    }
 }

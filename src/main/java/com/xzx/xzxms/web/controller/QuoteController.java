@@ -2,11 +2,13 @@ package com.xzx.xzxms.web.controller;
 
 import com.xzx.xzxms.bean.Quote;
 import com.xzx.xzxms.bean.extend.QuoteExtend;
+import com.xzx.xzxms.bean.extend.QuoteExtendInquiry;
 import com.xzx.xzxms.service.IQuoteService;
 import com.xzx.xzxms.utils.CustomerException;
 import com.xzx.xzxms.utils.Message;
 import com.xzx.xzxms.utils.MessageUtil;
 import io.swagger.annotations.ApiOperation;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -32,6 +34,7 @@ public class QuoteController {
         iQuoteServiceImpl.saveOrUpdate(quote);
         return MessageUtil.success("操作成功");
     }
+
     @ApiOperation("批量插入报价")
     @PostMapping("batchAddQuote")
     public Message batchAddQuote(@RequestBody QuoteExtend quote) {
@@ -42,10 +45,20 @@ public class QuoteController {
         }
         return MessageUtil.success("导入成功");
     }
+
     @ApiOperation("行内编辑保存")
     @PostMapping("rowSave")
     public Message rowSave(@RequestBody Quote quote) {
         iQuoteServiceImpl.rowSave(quote);
         return MessageUtil.success("保存成功");
     }
+
+    @ApiOperation("供应商报价查询/项目报价查询")
+    @GetMapping("findBySupplierOrPro")
+    public Message findBySupplierOrPro(@RequestParam(value = "supplier",required = false,defaultValue = "-1") String supplier,@RequestParam(value = "proId",required = false,defaultValue = "-1") long proId){
+
+        List<QuoteExtendInquiry> list = iQuoteServiceImpl.findBySupplierOrPro(supplier,proId);
+        return MessageUtil.success("success",list);
+    }
+
 }

@@ -30,4 +30,10 @@ public interface IInquiryService {
      * @param inquiry
      */
     void rowSave(Inquiry inquiry);
+
+    /**
+     * 批量置为无效（假删）
+     * @param ids
+     */
+    void batchSetInvalid(long[] ids);
 }

@@ -23,4 +23,11 @@ public interface ISysProDetailService {
      * @param checks
      */
     void saveOrUpdate(SysProDetailWithBLOBs proDetail, List<SysFile> files, List<SysProDetailCheck> checks);
+
+    /**
+     * 验证项目名称是否存在
+     * @param proName
+     * @return
+     */
+    boolean verifyExistence(String proName);
 }

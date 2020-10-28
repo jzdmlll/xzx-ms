@@ -7,8 +7,9 @@ import javax.annotation.Resource;
 @RestController
 @RequestMapping("/compare")
 public class CompareController {
-    @Resource
-    private ICompareService compareServiceImpl;
+//    @Resource
+//    private ICompareService compareServiceImpl;
+
 
 
 }

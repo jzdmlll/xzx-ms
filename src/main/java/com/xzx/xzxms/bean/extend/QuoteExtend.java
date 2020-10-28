@@ -6,6 +6,7 @@ import com.xzx.xzxms.bean.SysFile;
 import java.util.List;
 
 public class QuoteExtend extends Quote {
+
     private List<SysFile> files;
     private long proDetailId;
 
@@ -16,7 +17,6 @@ public class QuoteExtend extends Quote {
     public void setFiles(List<SysFile> files) {
         this.files = files;
     }
-
 
     public long getProDetailId() {
         return proDetailId;

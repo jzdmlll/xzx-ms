@@ -51,4 +51,12 @@ public class InquiryController {
         return MessageUtil.success("保存成功");
     }
 
+    @ApiOperation(value="批量删除询价内容")
+    @PostMapping(value="batchSetInvalid")
+    public Message batchSetInvalid(long[] ids){
+
+        iInquiryServiceImpl.batchSetInvalid(ids);
+        return MessageUtil.success("success");
+    }
+
 }
