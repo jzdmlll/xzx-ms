@@ -79,7 +79,7 @@ public class InquiryServiceImpl implements IInquiryService{
 
         for (long id : ids){
             Inquiry inquiry=inquiryMapper.selectByPrimaryKey(id);
-            if (inquiry != null){
+            if (inquiry != null || !inquiry.getIsActive().equals(0)){
                 inquiry.setIsActive(0);
                 inquiryMapper.updateByPrimaryKeySelective(inquiry);
             }else {

@@ -35,4 +35,10 @@ public interface IQuoteService {
      * @return
      */
     List<QuoteExtendInquiry> findBySupplierOrPro(String supplier,long proId);
+
+    /**
+     * 批量置为无效（假删）
+     * @param ids
+     */
+    void batchSetInvalid(long[] ids);
 }

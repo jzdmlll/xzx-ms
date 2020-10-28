@@ -286,4 +286,19 @@ public class QuoteServiceImpl implements IQuoteService {
         List<QuoteExtendInquiry> list = quoteAndInquiry.findBySupplierOrPro(supplier,proId);
         return list;
     }
+
+    @Transactional
+    @Override
+    public void batchSetInvalid(long[] ids) {
+
+        for (long id : ids){
+            Quote quote=quoteMapper.selectByPrimaryKey(id);
+            if (quote != null || !quote.getIsActive().equals(0)){
+                quote.setIsActive(0);
+                quoteMapper.updateByPrimaryKeySelective(quote);
+            }else {
+                throw new CustomerException("该数据已不存在");
+            }
+        }
+    }
 }
