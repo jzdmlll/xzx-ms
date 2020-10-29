@@ -84,7 +84,7 @@
     <table tableName="sys_device_type" domainObjectName="SysDeviceType" ></table>
     <table tableName="sys_pro_detail_check" domainObjectName="SysProDetailCheck" ></table>
 -->
-    <table tableName="quote" domainObjectName="Quote" ></table>
+    <table tableName="inquiry" domainObjectName="Inquiry" ></table>
     <!--
     mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
    -->

@@ -24,20 +24,17 @@
       </where>
         group by i.name , i.params, i.pro_detail_id HAVING checknum/inquirynum = 2
     </select>
-
-    <select id="cascadeFindAllByParams" resultType="com.xzx.xzxms.vm.InquiryCompareVM">
-      select
-        i.*, c.id compare_id, c.status compare_status, c.remark compare_remark
-      from
-        compare c
-        right join inquiry i on c.inquiry_id = i.id
-        left join sys_pro_detail spd on i.pro_detail_id = spd.id
+-->
+    <!--<select id="cascadeFindAllByParams" resultType="com.xzx.xzxms.vm.InquiryCompareVM">
+        select
+        q.*, spc.id compare_id, spc.check_status compare_status, spc.remark compare_remark
+        from
+        inquiry i LEFT JOIN quote q ON i.id = q.inquiry_id
+        LEFT JOIN sys_pro_detail spd ON i.pro_detail_id = spd.id
+        LEFT JOIN sys_pro_check spc ON q.id = spc.content_id
       <where>
-        spd.id = #{proDetailId,jdbcType=INTEGER}
-        and i.name = #{name,jdbcType=VARCHAR}
-        <if test="params!=null">
-          and i.params = #{params,jdbcType=VARCHAR}
-        </if>
+          spc.type = '比价审核'
+          and i.id = #{inquiryId}
       </where>
     </select>-->
 </mapper>

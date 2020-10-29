@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50712
 File Encoding         : 65001
 
-Date: 2020-10-21 15:39:39
+Date: 2020-10-29 08:59:53
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -27,6 +27,8 @@ CREATE TABLE `inquiry` (
   `model` varchar(255) DEFAULT NULL COMMENT '品牌型号',
   `unit` varchar(255) DEFAULT NULL COMMENT '单位',
   `number` int(10) DEFAULT NULL COMMENT '数量',
+  `total_price` double(20,2) DEFAULT NULL COMMENT '报价总价',
+  `price` double(20,2) DEFAULT NULL COMMENT '报价单价',
   `sort` int(10) DEFAULT NULL,
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   `pro_detail_id` bigint(40) DEFAULT NULL,
@@ -41,7 +43,12 @@ CREATE TABLE `inquiry` (
 -- ----------------------------
 -- Records of inquiry
 -- ----------------------------
-INSERT INTO `inquiry` VALUES ('1', '1', '1', '1', '1', null, '1', null, null, '275476318', '1', null, null, null, null);
+INSERT INTO `inquiry` VALUES ('110893159', '电话机', null, '带来电显示，TCL', 'TCLHCD868（37）', '台', '50', null, null, '3', null, '275476318', null, '1', '1', '1', '1603426990857');
+INSERT INTO `inquiry` VALUES ('574075547', '保安配线箱', null, '300回线', 'DP-1', '套', '1', null, null, '2', null, '275476318', null, '1', '1', '1', '1603426990857');
+INSERT INTO `inquiry` VALUES ('920780065', '调度电话总机', null, '容量：用户56门+环路中继16门', 'DCD128M', '套', '2', null, null, '1', null, '275476318', null, '1', '0', '1', '1603845483305');
+INSERT INTO `inquiry` VALUES ('1001269108', '电话分线箱(含箱内接线端子)', null, '20对线', '20对线', '只', '10', null, null, '4', null, '275476318', null, '1', '0', '1', '1603426990857');
+INSERT INTO `inquiry` VALUES ('1085275955', '电话插座', null, '单口', '单口', '只', '50', null, null, '5', null, '275476318', null, '1', '0', '1', '1603426990857');
+INSERT INTO `inquiry` VALUES ('1915891030', '铜芯市话通信电缆', null, 'HYA30X2X0.5', 'HYA30X2X0.5', '米', '550', null, null, '6', null, '275476318', null, '1', '0', '1', '1603426990857');
 
 -- ----------------------------
 -- Table structure for quote
@@ -69,6 +76,8 @@ CREATE TABLE `quote` (
 -- ----------------------------
 -- Records of quote
 -- ----------------------------
+INSERT INTO `quote` VALUES ('701235873', '供应商1', '实际型号1', '实际参数1', '100.00', '1000.00', '2', '2', '2', 'http://192.168.204.196/images/3af7233b-015c-4d09-bff3-238d5a21be41.png', '110893159', '1', '0', '1', '1603871626418');
+INSERT INTO `quote` VALUES ('1524001653', '供应商2', '', '2', '2.00', '2.00', '2', '2', '2', '', '574075547', '1', '0', '1', '1603871626418');
 
 -- ----------------------------
 -- Table structure for sys_device_type
@@ -100,7 +109,7 @@ CREATE TABLE `sys_file` (
   `id` bigint(40) NOT NULL COMMENT '编号',
   `name` varchar(255) DEFAULT NULL COMMENT '名称',
   `url` varchar(255) DEFAULT NULL,
-  `type` int(10) DEFAULT NULL COMMENT '0-项目文件,1-询价文件,2-技术文件',
+  `type` int(10) DEFAULT NULL COMMENT '0-项目文件1-,询价文件,2-技术文件,3-报价文件',
   `other_id` bigint(40) DEFAULT NULL COMMENT '外键',
   `is_active` int(10) DEFAULT NULL COMMENT '是否有效',
   `is_useful` int(10) DEFAULT NULL COMMENT '是否被使用',
@@ -112,10 +121,12 @@ CREATE TABLE `sys_file` (
 -- ----------------------------
 -- Records of sys_file
 -- ----------------------------
-INSERT INTO `sys_file` VALUES ('320289028', '询价模板.xls', 'http://192.168.204.196/images/0d5f95e2-5782-426a-8211-c3968b40559f.xls', '0', '1599777433', '1', '1', '1', '1602853636402');
-INSERT INTO `sys_file` VALUES ('451487321', '新自信.txt', 'http://192.168.204.196/images/f99a7767-1bd6-4f0d-ad69-c58f5e0876c7.txt', '0', '1269230258', '1', '1', '1', '1603090585958');
-INSERT INTO `sys_file` VALUES ('960490302', '新自信.txt', 'http://192.168.204.196/images/27ada7e9-d689-42c6-9a01-e6ba1094ab31.txt', '0', '275476318', '1', '1', '1', '1602853824929');
-INSERT INTO `sys_file` VALUES ('1336731530', '新自信.txt', 'http://192.168.204.196/images/8c0598c9-da23-4ae0-bc11-661e3e26294d.txt', '0', '1915620732', '1', '1', '1', '1603197792503');
+INSERT INTO `sys_file` VALUES ('74870406', '165d69d4-b491-41aa-81ee-26e6c48835af.xls', 'http://192.168.204.196/images/165d69d4-b491-41aa-81ee-26e6c48835af.xls', '3', '701235873', '1', '1', '1', '1603871626418');
+INSERT INTO `sys_file` VALUES ('547840335', 'devenv.exe', 'http://192.168.204.196/images/9cbeeb3b-50ab-45e3-909c-2a2cd4445507.exe', '2', '1217852782', '1', '1', '1', '1603802350289');
+INSERT INTO `sys_file` VALUES ('737166784', '165d69d4-b491-41aa-81ee-26e6c48835af.xls', 'http://192.168.204.196/images/165d69d4-b491-41aa-81ee-26e6c48835af.xls', '3', '1524001653', '1', '1', '1', '1603871626418');
+INSERT INTO `sys_file` VALUES ('777853767', '询价模板.xls', 'http://192.168.204.196/images/a7d8a57c-6343-4f36-be7c-b16dbf0bda3a.xls', '3', '214104612', '1', '1', '1', '1603802324519');
+INSERT INTO `sys_file` VALUES ('978933030', '新自信.txt', 'http://192.168.204.196/images/717d68de-b60f-4643-8e1e-23340b4cc101.txt', '2', '214104612', '1', '1', '1', '1603802324519');
+INSERT INTO `sys_file` VALUES ('1657829029', '询价函汇总.xls', 'http://192.168.204.196/images/68f62807-8b0a-4925-9f59-e53e56318a2e.xls', '3', '1217852782', '1', '1', '1', '1603802350289');
 
 -- ----------------------------
 -- Table structure for sys_log
@@ -153,7 +164,7 @@ CREATE TABLE `sys_privilege` (
   `operator` bigint(40) DEFAULT NULL COMMENT '操作者',
   `time` bigint(40) DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_privilege
@@ -187,7 +198,7 @@ INSERT INTO `sys_privilege` VALUES ('26', '查询所有项目分类', 'method', 
 INSERT INTO `sys_privilege` VALUES ('27', '新增或修改项目分类', 'method', '18', null, '/project/type/saveOrUpdate', null, null, null, null, null);
 INSERT INTO `sys_privilege` VALUES ('28', '逻辑删除项目分类', 'method', '18', null, 'project/type/logicDeleteById', null, null, null, null, null);
 INSERT INTO `sys_privilege` VALUES ('29', '询价管理', 'parent', null, 'message', '/inquiry/list', null, null, null, null, null);
-INSERT INTO `sys_privilege` VALUES ('30', '询价管理', 'menu', '29', null, '/inquiry/list', null, null, null, null, null);
+INSERT INTO `sys_privilege` VALUES ('30', '询价函管理', 'menu', '29', '', '/inquiry/inquiry/list', '', null, null, null, null);
 INSERT INTO `sys_privilege` VALUES ('31', '新增/修改询价', 'hiddenMenu', '29', null, '/inquiry/eidtor', null, null, null, null, null);
 INSERT INTO `sys_privilege` VALUES ('32', '查询所有项目', 'method', '18', null, '/project/detail/findByAll', null, null, null, null, null);
 INSERT INTO `sys_privilege` VALUES ('33', '通过项目详情ID查询询价内容', 'method', '29', '', '/inquiry/findByProDetailId', '', null, null, null, null);
@@ -217,6 +228,17 @@ INSERT INTO `sys_privilege` VALUES ('58', '最终审核保存', 'method', '42', 
 INSERT INTO `sys_privilege` VALUES ('59', '批量新增询价', 'method', '29', null, '/inquiry/batchAddInquiry', null, null, null, null, null);
 INSERT INTO `sys_privilege` VALUES ('60', '报价管理', 'parent', null, null, '/quote/list', null, null, null, null, null);
 INSERT INTO `sys_privilege` VALUES ('61', '查询一条询价下的所有报价', 'method', '60', null, '/quote/findByInquiryId', null, null, null, null, null);
+INSERT INTO `sys_privilege` VALUES ('62', '报价单管理', 'menu', '29', null, '/inquiry/quote/list', null, null, null, null, null);
+INSERT INTO `sys_privilege` VALUES ('63', '新增或修改报价', 'method', '60', null, '/quote/saveOrUpdate', null, null, null, null, null);
+INSERT INTO `sys_privilege` VALUES ('64', '查询所有询价函', 'method', '29', '', '/inquiry/findAll', '', null, null, null, null);
+INSERT INTO `sys_privilege` VALUES ('65', '修改一条询价', 'method', '29', null, '/inquiry/rowSave', null, null, null, null, null);
+INSERT INTO `sys_privilege` VALUES ('66', '批量导入报价', 'method', '60', null, '/quote/batchAddQuote', null, null, null, null, null);
+INSERT INTO `sys_privilege` VALUES ('67', '报价行内编辑保存', 'method', '60', null, '/quote/rowSave', null, null, null, null, null);
+INSERT INTO `sys_privilege` VALUES ('68', '批量逻辑删除询价', 'method', '29', null, '/inquiry/batchSetInvalid', null, null, null, null, null);
+INSERT INTO `sys_privilege` VALUES ('69', '按条件查询报价单', 'method', '60', null, '/quote/findBySupplierOrPro', null, null, null, null, null);
+INSERT INTO `sys_privilege` VALUES ('70', '批量逻辑删除报价', 'method', '60', null, '/quote/batchSetInvalid', null, null, null, null, null);
+INSERT INTO `sys_privilege` VALUES ('71', '验证项目名是否存在', 'method', '18', null, '/project/detail/verifyExistence', null, null, null, null, null);
+INSERT INTO `sys_privilege` VALUES ('72', '比价查询', 'method', '48', '', '/compare/findByProIdOrCompareStatus', '', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for sys_pro_check
@@ -227,7 +249,7 @@ CREATE TABLE `sys_pro_check` (
   `check_status` int(10) DEFAULT NULL COMMENT '审核状态0初始值1通过2未通过',
   `type` varchar(10) DEFAULT NULL COMMENT '比价、xx审核',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
-  `content_id` bigint(40) DEFAULT NULL COMMENT '询价或项目外键',
+  `content_id` bigint(40) DEFAULT NULL COMMENT '报价id',
   `operator` bigint(40) DEFAULT NULL COMMENT '操作者',
   `time` bigint(40) DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`id`)
@@ -236,6 +258,14 @@ CREATE TABLE `sys_pro_check` (
 -- ----------------------------
 -- Records of sys_pro_check
 -- ----------------------------
+INSERT INTO `sys_pro_check` VALUES ('117755090', '0', '商务审核', null, '1524001653', '1', '1603871626418');
+INSERT INTO `sys_pro_check` VALUES ('357104080', '0', '最终审核', null, '1524001653', '1', '1603871626418');
+INSERT INTO `sys_pro_check` VALUES ('968653610', '0', '比价审核', null, '1524001653', '1', '1603871626418');
+INSERT INTO `sys_pro_check` VALUES ('1211116861', '0', '技术审核', null, '701235873', '1', '1603871626418');
+INSERT INTO `sys_pro_check` VALUES ('1336949414', '0', '技术审核', null, '1524001653', '1', '1603871626418');
+INSERT INTO `sys_pro_check` VALUES ('1770777399', '0', '商务审核', null, '701235873', '1', '1603871626418');
+INSERT INTO `sys_pro_check` VALUES ('2037532668', '0', '最终审核', null, '701235873', '1', '1603871626418');
+INSERT INTO `sys_pro_check` VALUES ('2090126488', '0', '比价审核', null, '701235873', '1', '1603871626418');
 
 -- ----------------------------
 -- Table structure for sys_pro_detail
@@ -283,6 +313,9 @@ CREATE TABLE `sys_pro_detail_check` (
 INSERT INTO `sys_pro_detail_check` VALUES ('144660424', '1915620732', '0', '技术审核', '1', '1603197792503');
 INSERT INTO `sys_pro_detail_check` VALUES ('873420587', '1915620732', '0', '最终审核', '1', '1603197792503');
 INSERT INTO `sys_pro_detail_check` VALUES ('875137048', '1915620732', '0', '商务审核', '1', '1603197792503');
+INSERT INTO `sys_pro_detail_check` VALUES ('1083093988', '275476318', '0', '技术审核', '1', '1603715683041');
+INSERT INTO `sys_pro_detail_check` VALUES ('1255599427', '275476318', '0', '最终审核', '1', '1603715683041');
+INSERT INTO `sys_pro_detail_check` VALUES ('1741815124', '275476318', '0', '商务审核', '1', '1603715683041');
 
 -- ----------------------------
 -- Table structure for sys_pro_origin
@@ -363,7 +396,7 @@ CREATE TABLE `sys_role_privilege` (
   `operator` bigint(40) DEFAULT NULL COMMENT '操作者',
   `time` bigint(40) DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_role_privilege
@@ -442,6 +475,17 @@ INSERT INTO `sys_role_privilege` VALUES ('85', '1', '57', null, null, null, null
 INSERT INTO `sys_role_privilege` VALUES ('86', '1', '58', null, null, null, null);
 INSERT INTO `sys_role_privilege` VALUES ('87', '1', '59', null, null, null, null);
 INSERT INTO `sys_role_privilege` VALUES ('88', '1', '61', null, null, null, null);
+INSERT INTO `sys_role_privilege` VALUES ('89', '1', '62', null, null, null, null);
+INSERT INTO `sys_role_privilege` VALUES ('90', '1', '63', null, null, null, null);
+INSERT INTO `sys_role_privilege` VALUES ('91', '1', '64', null, null, null, null);
+INSERT INTO `sys_role_privilege` VALUES ('92', '1', '65', null, null, null, null);
+INSERT INTO `sys_role_privilege` VALUES ('93', '1', '66', null, null, null, null);
+INSERT INTO `sys_role_privilege` VALUES ('94', '1', '67', null, null, null, null);
+INSERT INTO `sys_role_privilege` VALUES ('95', '1', '68', null, null, null, null);
+INSERT INTO `sys_role_privilege` VALUES ('96', '1', '69', null, null, null, null);
+INSERT INTO `sys_role_privilege` VALUES ('97', '1', '70', null, null, null, null);
+INSERT INTO `sys_role_privilege` VALUES ('98', '1', '71', null, null, null, null);
+INSERT INTO `sys_role_privilege` VALUES ('99', '1', '72', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for sys_user
