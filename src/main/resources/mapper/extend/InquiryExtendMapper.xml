@@ -44,7 +44,8 @@
 
     <select id="findByProIdOrCompareStatusToEquals" resultMap="compareResultMap">
         select
-        i.id, i.name, i.params, i.pro_detail_id,che.type che_type,che.check_status che_check_status
+        i.id, i.name, i.params,i.number,i.price,i.total_price, i.pro_detail_id,
+        che.type che_type,che.check_status che_check_status
         from inquiry i
         left join sys_pro_detail pro on i.pro_detail_id = pro.id
         left join quote q on i.id=q.inquiry_id

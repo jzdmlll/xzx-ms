@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50712
 File Encoding         : 65001
 
-Date: 2020-10-30 10:48:42
+Date: 2020-10-30 16:09:16
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -51,6 +51,31 @@ INSERT INTO `inquiry` VALUES ('1036678836', '保安配线箱', null, '300回线'
 INSERT INTO `inquiry` VALUES ('1098634570', '铜芯市话通信电缆', null, 'HYA30X2X0.5', 'HYA30X2X0.5', '米', '550', null, null, '6', null, '275476318', null, '1', '1', '1', '1603941445675');
 INSERT INTO `inquiry` VALUES ('1560140268', '电话分线箱(含箱内接线端子)', null, '20对线', '20对线', '只', '10', null, null, '4', null, '275476318', null, '1', '1', '1', '1603941445675');
 INSERT INTO `inquiry` VALUES ('1698007238', '电话机', null, '带来电显示，TCL', 'TCLHCD868（37）', '台', '50', null, null, '3', null, '275476318', null, '1', '1', '1', '1603941445675');
+
+-- ----------------------------
+-- Table structure for product_pool
+-- ----------------------------
+DROP TABLE IF EXISTS `product_pool`;
+CREATE TABLE `product_pool` (
+  `id` bigint(20) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `brand` varchar(255) DEFAULT NULL,
+  `supplier` varchar(255) DEFAULT NULL,
+  `model` varchar(255) DEFAULT NULL,
+  `params` varchar(255) DEFAULT NULL,
+  `price` double(10,0) DEFAULT NULL,
+  `delivery` double(255,0) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `is_active` int(255) DEFAULT NULL,
+  `is_useful` int(255) DEFAULT NULL,
+  `operator` bigint(255) DEFAULT NULL,
+  `time` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of product_pool
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for quote
@@ -289,60 +314,60 @@ CREATE TABLE `sys_pro_check` (
 -- ----------------------------
 -- Records of sys_pro_check
 -- ----------------------------
-INSERT INTO `sys_pro_check` VALUES ('56686800', '0', '最终审核', null, '1591060122', '1', '1603950558205');
+INSERT INTO `sys_pro_check` VALUES ('56686800', '1', '最终审核', '', '1591060122', '1', '1604044239699');
 INSERT INTO `sys_pro_check` VALUES ('57796620', '0', '技术审核', null, '1455191337', '1', '1603950716292');
-INSERT INTO `sys_pro_check` VALUES ('107395683', '1', '比价审核', null, '85454375', '1', '1603950745915');
+INSERT INTO `sys_pro_check` VALUES ('107395683', '0', '比价审核', null, '85454375', '1', '1603950745915');
 INSERT INTO `sys_pro_check` VALUES ('135337131', '0', '最终审核', null, '1119293847', '1', '1603950716292');
 INSERT INTO `sys_pro_check` VALUES ('159135150', '0', '技术审核', null, '1119293847', '1', '1603950716292');
 INSERT INTO `sys_pro_check` VALUES ('177566360', '0', '最终审核', null, '1728278085', '1', '1603950745915');
-INSERT INTO `sys_pro_check` VALUES ('178874492', '1', '比价审核', null, '493811384', '1', '1603950558205');
+INSERT INTO `sys_pro_check` VALUES ('178874492', '0', '比价审核', null, '493811384', '1', '1603950558205');
 INSERT INTO `sys_pro_check` VALUES ('237390954', '0', '最终审核', null, '883245617', '1', '1603950526547');
-INSERT INTO `sys_pro_check` VALUES ('285322985', '0', '商务审核', null, '1484646394', '1', '1603950716292');
-INSERT INTO `sys_pro_check` VALUES ('466150050', '0', '技术审核', null, '1484646394', '1', '1603950716292');
+INSERT INTO `sys_pro_check` VALUES ('285322985', '1', '商务审核', null, '1484646394', '1', '1604035615735');
+INSERT INTO `sys_pro_check` VALUES ('466150050', '1', '技术审核', null, '1484646394', '1', '1604035589365');
 INSERT INTO `sys_pro_check` VALUES ('476700156', '0', '商务审核', null, '816217374', '1', '1603950558205');
 INSERT INTO `sys_pro_check` VALUES ('560823620', '0', '商务审核', null, '645036627', '1', '1603950526547');
-INSERT INTO `sys_pro_check` VALUES ('612865177', '1', '比价审核', '价格最低', '1963981846', '1', '1603950684220');
+INSERT INTO `sys_pro_check` VALUES ('612865177', '2', '比价审核', '价格最低', '1963981846', '1', '1604043936900');
 INSERT INTO `sys_pro_check` VALUES ('621441823', '0', '商务审核', null, '1750310300', '1', '1603950526547');
-INSERT INTO `sys_pro_check` VALUES ('669156510', '2', '比价审核', null, '646472982', '1', '1603950716292');
+INSERT INTO `sys_pro_check` VALUES ('669156510', '0', '比价审核', null, '646472982', '1', '1603950716292');
 INSERT INTO `sys_pro_check` VALUES ('694286567', '0', '最终审核', null, '816217374', '1', '1603950558205');
-INSERT INTO `sys_pro_check` VALUES ('773811366', '1', '比价审核', null, '1119293847', '1', '1603950716292');
+INSERT INTO `sys_pro_check` VALUES ('773811366', '0', '比价审核', null, '1119293847', '1', '1603950716292');
 INSERT INTO `sys_pro_check` VALUES ('806370248', '0', '技术审核', null, '493811384', '1', '1603950558205');
 INSERT INTO `sys_pro_check` VALUES ('817290399', '0', '商务审核', null, '1728278085', '1', '1603950745915');
 INSERT INTO `sys_pro_check` VALUES ('828918431', '0', '技术审核', null, '645036627', '1', '1603950526547');
 INSERT INTO `sys_pro_check` VALUES ('883758562', '0', '商务审核', null, '1963981846', '1', '1603950684220');
 INSERT INTO `sys_pro_check` VALUES ('985486373', '0', '商务审核', null, '1119293847', '1', '1603950716292');
-INSERT INTO `sys_pro_check` VALUES ('1028950491', '1', '比价审核', null, '1591060122', '1', '1603950558205');
+INSERT INTO `sys_pro_check` VALUES ('1028950491', '1', '比价审核', '通过', '1591060122', '1', '1604043936900');
 INSERT INTO `sys_pro_check` VALUES ('1044718992', '0', '最终审核', null, '1455191337', '1', '1603950716292');
-INSERT INTO `sys_pro_check` VALUES ('1048851787', '0', '最终审核', null, '1484646394', '1', '1603950716292');
+INSERT INTO `sys_pro_check` VALUES ('1048851787', '2', '最终审核', '', '1484646394', '1', '1604044239699');
 INSERT INTO `sys_pro_check` VALUES ('1057811303', '0', '商务审核', null, '493811384', '1', '1603950558205');
 INSERT INTO `sys_pro_check` VALUES ('1078166970', '0', '技术审核', null, '1963981846', '1', '1603950684220');
 INSERT INTO `sys_pro_check` VALUES ('1100598146', '0', '技术审核', null, '883245617', '1', '1603950526547');
 INSERT INTO `sys_pro_check` VALUES ('1120909000', '0', '技术审核', null, '816217374', '1', '1603950558205');
 INSERT INTO `sys_pro_check` VALUES ('1128184358', '0', '最终审核', null, '493811384', '1', '1603950558205');
 INSERT INTO `sys_pro_check` VALUES ('1129092932', '0', '技术审核', null, '1750310300', '1', '1603950526547');
-INSERT INTO `sys_pro_check` VALUES ('1147225588', '2', '比价审核', null, '1484646394', '1', '1603950716292');
+INSERT INTO `sys_pro_check` VALUES ('1147225588', '1', '比价审核', '', '1484646394', '1', '1604043936900');
 INSERT INTO `sys_pro_check` VALUES ('1284622504', '0', '技术审核', null, '646472982', '1', '1603950716292');
-INSERT INTO `sys_pro_check` VALUES ('1358743119', '0', '技术审核', null, '1591060122', '1', '1603950558205');
+INSERT INTO `sys_pro_check` VALUES ('1358743119', '1', '技术审核', null, '1591060122', '1', '1604042250755');
 INSERT INTO `sys_pro_check` VALUES ('1378225198', '0', '商务审核', null, '85454375', '1', '1603950745915');
 INSERT INTO `sys_pro_check` VALUES ('1378348656', '0', '技术审核', null, '1767853284', '1', '1603950684220');
-INSERT INTO `sys_pro_check` VALUES ('1380095851', '2', '比价审核', null, '1455191337', '1', '1603950716292');
+INSERT INTO `sys_pro_check` VALUES ('1380095851', '0', '比价审核', null, '1455191337', '1', '1603950716292');
 INSERT INTO `sys_pro_check` VALUES ('1462183592', '0', '最终审核', null, '85454375', '1', '1603950745915');
-INSERT INTO `sys_pro_check` VALUES ('1465002149', '2', '比价审核', null, '645036627', '1', '1603950526547');
+INSERT INTO `sys_pro_check` VALUES ('1465002149', '0', '比价审核', null, '645036627', '1', '1603950526547');
 INSERT INTO `sys_pro_check` VALUES ('1522969219', '0', '商务审核', null, '1767853284', '1', '1603950684220');
 INSERT INTO `sys_pro_check` VALUES ('1545090354', '0', '最终审核', null, '646472982', '1', '1603950716292');
-INSERT INTO `sys_pro_check` VALUES ('1563153955', '2', '比价审核', null, '1767853284', '1', '1603950684220');
-INSERT INTO `sys_pro_check` VALUES ('1676357550', '1', '比价审核', null, '1750310300', '1', '1603950526547');
-INSERT INTO `sys_pro_check` VALUES ('1714005100', '1', '比价审核', null, '883245617', '1', '1603950526547');
+INSERT INTO `sys_pro_check` VALUES ('1563153955', '0', '比价审核', null, '1767853284', '1', '1603950684220');
+INSERT INTO `sys_pro_check` VALUES ('1676357550', '0', '比价审核', null, '1750310300', '1', '1603950526547');
+INSERT INTO `sys_pro_check` VALUES ('1714005100', '0', '比价审核', null, '883245617', '1', '1603950526547');
 INSERT INTO `sys_pro_check` VALUES ('1772559559', '0', '最终审核', null, '1750310300', '1', '1603950526547');
-INSERT INTO `sys_pro_check` VALUES ('1791291796', '0', '最终审核', null, '1963981846', '1', '1603950684220');
+INSERT INTO `sys_pro_check` VALUES ('1791291796', '1', '最终审核', '', '1963981846', '1', '1604044239699');
 INSERT INTO `sys_pro_check` VALUES ('1819508354', '0', '最终审核', null, '645036627', '1', '1603950526547');
 INSERT INTO `sys_pro_check` VALUES ('1828332521', '0', '技术审核', null, '85454375', '1', '1603950745915');
 INSERT INTO `sys_pro_check` VALUES ('1838328913', '0', '技术审核', null, '1728278085', '1', '1603950745915');
-INSERT INTO `sys_pro_check` VALUES ('1859385113', '0', '商务审核', null, '1591060122', '1', '1603950558205');
+INSERT INTO `sys_pro_check` VALUES ('1859385113', '1', '商务审核', null, '1591060122', '1', '1604042255701');
 INSERT INTO `sys_pro_check` VALUES ('1880534342', '0', '最终审核', null, '1767853284', '1', '1603950684220');
 INSERT INTO `sys_pro_check` VALUES ('1891015627', '0', '商务审核', null, '1455191337', '1', '1603950716292');
-INSERT INTO `sys_pro_check` VALUES ('1932674104', '2', '比价审核', null, '1728278085', '1', '1603950745915');
-INSERT INTO `sys_pro_check` VALUES ('1936834571', '1', '比价审核', null, '816217374', '1', '1603950558205');
+INSERT INTO `sys_pro_check` VALUES ('1932674104', '0', '比价审核', null, '1728278085', '1', '1603950745915');
+INSERT INTO `sys_pro_check` VALUES ('1936834571', '0', '比价审核', null, '816217374', '1', '1603950558205');
 INSERT INTO `sys_pro_check` VALUES ('1947900517', '0', '商务审核', null, '883245617', '1', '1603950526547');
 INSERT INTO `sys_pro_check` VALUES ('2133086494', '0', '商务审核', null, '646472982', '1', '1603950716292');
 
