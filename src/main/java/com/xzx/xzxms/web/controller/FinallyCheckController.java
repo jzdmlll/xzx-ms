@@ -25,7 +25,7 @@ public class FinallyCheckController {
 
     @PostMapping("saveFinallyCheckMessage")
     public Message saveFinallyCheckMessage(@RequestBody FinallyCheckReqVM finallyCheckReqVM){
-        //finallyCheckCompareServiceImpl.saveFinallyCheckMessage(finallyCheckReqVM.getCheckInquiryIds(), finallyCheckReqVM.getRemarks(), finallyCheckReqVM.getAllInquiryIds(), finallyCheckReqVM.getUserId(), finallyCheckReqVM.getRoleId());
+        finallyCheckServiceImpl.FinallyCheckCommit(finallyCheckReqVM.getCheckCompareIds(), finallyCheckReqVM.getUncheckCompareIds(), finallyCheckReqVM.getRemarks(), finallyCheckReqVM.getUserId());
         return MessageUtil.success("操作成功");
     }
 }
