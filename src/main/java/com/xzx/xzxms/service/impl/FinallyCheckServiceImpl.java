@@ -1,15 +1,16 @@
 package com.xzx.xzxms.service.impl;
 
+import com.xzx.xzxms.bean.SysProCheck;
+import com.xzx.xzxms.bean.extend.SysProCheckExtend;
+import com.xzx.xzxms.dao.SysProCheckMapper;
 import com.xzx.xzxms.dao.extend.FinallyCheckExtendMapper;
 import com.xzx.xzxms.service.IFinallyCheckService;
 import com.xzx.xzxms.vm.FinallyCheckCompareVM;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class FinallyCheckServiceImpl implements IFinallyCheckService {
@@ -64,5 +65,44 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
         }
 
         return maps;
+    }
+
+    @Resource
+    private SysProCheckMapper sysProCheckMapper;
+
+    @Transactional
+    @Override
+    public void FinallyCheckCommit(long[] checkIds, long[] unCheckIds, List<Map> remarks, long userId) {
+
+        long time = new Date().getTime();
+
+        SysProCheck proCheck = new SysProCheck();
+        // 更新选中比价
+        proCheck.setCheckStatus(SysProCheckExtend.PASS_STATUS); //1选用
+        proCheck.setOperator(userId);
+        proCheck.setTime(time);
+        for (long id : checkIds) {
+            proCheck.setId(id);
+            sysProCheckMapper.updateByPrimaryKeySelective(proCheck);
+        }
+        // 更新备注
+        proCheck = new SysProCheck();
+        proCheck.setOperator(userId);
+        for(Map map :remarks){
+            proCheck.setId(Long.parseLong(map.get("id").toString()));
+            proCheck.setRemark(map.get("remark").toString());
+            sysProCheckMapper.updateByPrimaryKeySelective(proCheck);
+        }
+        // 更新未选中比价
+        proCheck = new SysProCheck();
+        proCheck.setCheckStatus(SysProCheckExtend.REFUSE_STATUS); //2未选用
+        proCheck.setOperator(userId);
+        proCheck.setTime(time);
+        for (long id : unCheckIds) {
+            proCheck.setId(id);
+            sysProCheckMapper.updateByPrimaryKeySelective(proCheck);
+        }
+
+
     }
 }

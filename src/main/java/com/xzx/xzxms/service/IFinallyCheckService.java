@@ -10,4 +10,13 @@ public interface IFinallyCheckService {
      * @return
      */
     List<Map> cascadeFindAllByParams(long proDetailId);
+
+    /**
+     * 最终审核提交
+     * @param checkIds 选用的审核ID
+     * @param unCheckIds 未选用的审核ID
+     * @param remarks 审核意见
+     * @param userId 提交人ID
+     */
+    void FinallyCheckCommit(long[] checkIds, long[] unCheckIds, List<Map> remarks, long userId);
 }

@@ -1,6 +1,5 @@
 package com.xzx.xzxms.bean.extend;
 
-//import com.xzx.xzxms.bean.InquiryWithBLOBs;
 import com.xzx.xzxms.bean.Inquiry;
 import com.xzx.xzxms.bean.Quote;
 import com.xzx.xzxms.bean.SysFile;
@@ -9,7 +8,7 @@ import com.xzx.xzxms.bean.SysProCheck;
 import java.util.List;
 
 public class SysProCheckExtend extends SysProCheck {
-    public final static String COMPARE_CHECK = "比价审核";
+    //public final static String COMPARE_CHECK = "比价审核";
     public final static int INIT_STATUS = 0;
     public final static int PASS_STATUS = 1;
     public final static int REFUSE_STATUS = 2;

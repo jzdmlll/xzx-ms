@@ -8,12 +8,10 @@ import com.xzx.xzxms.service.ICompareService;
 import com.xzx.xzxms.vm.CompareReqVM;
 import com.xzx.xzxms.vm.QuoteRespVM;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class CompareServiceImpl implements ICompareService {
@@ -44,21 +42,23 @@ public class CompareServiceImpl implements ICompareService {
         return result;
     }
 
+    @Transactional
     @Override
     public void completeCompare(long[] checkCompareIds, long[] otherCompareIds, List<Map> remarks, long userId) {
+
+        long time = new Date().getTime();
+
         SysProCheck proCheck = new SysProCheck();
-        proCheck.setType(SysProCheckExtend.COMPARE_CHECK); //比价审核
         // 更新选中比价
         proCheck.setCheckStatus(SysProCheckExtend.PASS_STATUS); //1选用
         proCheck.setOperator(userId);
+        proCheck.setTime(time);
         for (long id : checkCompareIds) {
             proCheck.setId(id);
-
             sysProCheckMapper.updateByPrimaryKeySelective(proCheck);
         }
         // 更新备注
         proCheck = new SysProCheck();
-        proCheck.setType(SysProCheckExtend.COMPARE_CHECK); //比价审核
         proCheck.setOperator(userId);
         for(Map map :remarks){
             proCheck.setId(Long.parseLong(map.get("id").toString()));
@@ -67,9 +67,9 @@ public class CompareServiceImpl implements ICompareService {
         }
         // 更新未选中比价
         proCheck = new SysProCheck();
-        proCheck.setType(SysProCheckExtend.COMPARE_CHECK); //比价审核
         proCheck.setCheckStatus(SysProCheckExtend.REFUSE_STATUS); //2未选用
         proCheck.setOperator(userId);
+        proCheck.setTime(time);
         for (long id : otherCompareIds) {
             proCheck.setId(id);
             sysProCheckMapper.updateByPrimaryKeySelective(proCheck);
