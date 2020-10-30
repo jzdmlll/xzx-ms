@@ -38,10 +38,6 @@
         </where>
         order by che.content_id
     </select>
-    <resultMap id="compareResultMap" type="com.xzx.xzxms.bean.extend.InquiryCompareExtend" extends="com.xzx.xzxms.dao.InquiryMapper">
-        <collection property="sysProCheck" ofType="com.xzx.xzxms.bean.SysProCheck" autoMapping="true" columnPrefix="che_">
-        </collection>
-    </resultMap>
 
 
     <select id="findByProIdOrCompareStatusToEquals" resultMap="compareResultMap">

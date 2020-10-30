@@ -22,10 +22,10 @@ public class FinallyCheckController {
         List<Map> maps = finallyCheckServiceImpl.cascadeFindAllByParams(proDetailId);
         return MessageUtil.success("success", maps);
     }
-/*
+
     @PostMapping("saveFinallyCheckMessage")
     public Message saveFinallyCheckMessage(@RequestBody FinallyCheckReqVM finallyCheckReqVM){
-        finallyCheckCompareServiceImpl.saveFinallyCheckMessage(finallyCheckReqVM.getCheckInquiryIds(), finallyCheckReqVM.getRemarks(), finallyCheckReqVM.getAllInquiryIds(), finallyCheckReqVM.getUserId(), finallyCheckReqVM.getRoleId());
+        //finallyCheckCompareServiceImpl.saveFinallyCheckMessage(finallyCheckReqVM.getCheckInquiryIds(), finallyCheckReqVM.getRemarks(), finallyCheckReqVM.getAllInquiryIds(), finallyCheckReqVM.getUserId(), finallyCheckReqVM.getRoleId());
         return MessageUtil.success("操作成功");
-    }*/
+    }
 }

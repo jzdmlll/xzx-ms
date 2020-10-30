@@ -31,8 +31,8 @@ public class CompareController {
     @GetMapping("findByProIdOrCompareStatus")
     public Message findByProIdOrCompareStatus(@RequestParam(value = "proDetailId",required = false,defaultValue = "-1") long proDetailId, @RequestParam(value = "compareStatus",required = false,defaultValue = "-1") int compareStatus){
 
-        List<Inquiry> inquiries = iInquiryServiceImpl.findByProIdOrCompareStatus(proDetailId,compareStatus);
-        return MessageUtil.success("success", inquiries);
+        //List<Inquiry> inquiries = iInquiryServiceImpl.findByProIdOrCompareStatus(proDetailId,compareStatus);
+        return MessageUtil.success("success", null);
     }
     @ApiOperation("单个比价查询")
     @GetMapping("cascadeFindAllByParams")

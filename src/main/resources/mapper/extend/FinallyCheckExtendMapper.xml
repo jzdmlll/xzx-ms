@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xzx.xzxms.dao.extend.FinallyCheckExtendMapper">
-   <select id="cascadeFindAllByParams" resultType="com.xzx.xzxms.vm.FinallyCheckCompareVM">
+   <select id="cascadeFindAllByParams" resultMap="FinallyCheckExtendMap">
         select
           q.*,
           i.model model,i.name name,i.number number,i.params params,i.unit unit,
@@ -19,5 +19,10 @@
         </where>
         order by i.name
     </select>
-
+    <resultMap id="FinallyCheckExtendMap" type="com.xzx.xzxms.vm.FinallyCheckCompareVM" extends="com.xzx.xzxms.dao.QuoteMapper.BaseResultMap">
+        <collection property="finalCheck" column="id" select="com.xzx.xzxms.dao.extend.FinallyCheckExtendMapper.findCheckByQuoteId" />
+    </resultMap>
+    <select id="findCheckByQuoteId" resultType="com.xzx.xzxms.bean.SysProCheck">
+        select * from sys_pro_check where content_id = #{id,jdbcType=BIGINT} and type = "最终审核"
+    </select>
 </mapper>
