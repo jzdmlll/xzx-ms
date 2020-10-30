@@ -4,7 +4,7 @@
    <select id="cascadeFindAllByParams" resultMap="FinallyCheckExtendMap">
         select
           q.*,
-          i.model model,i.name name,i.number number,i.params params,i.unit unit,
+          i.model model,i.name name,i.number number,i.params params,i.unit unit,i.price price,i.total_price total_price,
           spc.id compare_id, spc.check_status compare_status, spc.remark compare_remark
         from
           inquiry i
