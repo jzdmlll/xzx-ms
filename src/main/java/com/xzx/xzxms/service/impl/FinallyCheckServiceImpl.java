@@ -1,16 +1,22 @@
 package com.xzx.xzxms.service.impl;
 
+import com.xzx.xzxms.bean.ProPool;
 import com.xzx.xzxms.bean.SysProCheck;
+import com.xzx.xzxms.bean.extend.QuoteExtendInquiry;
 import com.xzx.xzxms.bean.extend.SysProCheckExtend;
+import com.xzx.xzxms.dao.ProPoolMapper;
 import com.xzx.xzxms.dao.SysProCheckMapper;
 import com.xzx.xzxms.dao.extend.FinallyCheckExtendMapper;
+import com.xzx.xzxms.dao.extend.QuoteAndInquiryExtendMapper;
 import com.xzx.xzxms.service.IFinallyCheckService;
+import com.xzx.xzxms.utils.IDUtils;
 import com.xzx.xzxms.vm.FinallyCheckCompareVM;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.*;
+import java.util.concurrent.locks.Lock;
 
 @Service
 public class FinallyCheckServiceImpl implements IFinallyCheckService {
@@ -69,6 +75,10 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
 
     @Resource
     private SysProCheckMapper sysProCheckMapper;
+    @Resource
+    private ProPoolMapper proPoolMapper;
+    @Resource
+    private QuoteAndInquiryExtendMapper quoteAndInquiryExtendMapper;
 
     @Transactional
     @Override
@@ -84,6 +94,23 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
         for (long id : checkIds) {
             proCheck.setId(id);
             sysProCheckMapper.updateByPrimaryKeySelective(proCheck);
+            //选中信息插入产品池中
+            QuoteExtendInquiry quoteExtendInquiry = quoteAndInquiryExtendMapper.findByQuoteId(id);
+            ProPool proPool = new ProPool();
+            proPool.setId(IDUtils.getId());
+            proPool.setName(quoteExtendInquiry.getInquiry().getName());
+            proPool.setBrand(quoteExtendInquiry.getInquiry().getBrand());
+            proPool.setSupplier(quoteExtendInquiry.getSupplier());
+            proPool.setModel(quoteExtendInquiry.getSuModel());
+            proPool.setParams(quoteExtendInquiry.getSuParams());
+            proPool.setPrice(quoteExtendInquiry.getSuPrice());
+            proPool.setDelivery(quoteExtendInquiry.getSuDelivery());
+            proPool.setRemark(quoteExtendInquiry.getSuRemark());
+            proPool.setIsActive(1);
+            proPool.setIsUseful(0);
+            proPool.setOperator(userId);
+            proPool.setTime(time);
+            proPoolMapper.insert(proPool);
         }
         // 更新备注
         proCheck = new SysProCheck();
