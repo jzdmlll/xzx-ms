@@ -14,9 +14,9 @@
   <context id="DB2Tables" targetRuntime="MyBatis3">
 
     <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-        connectionURL="jdbc:mysql://localhost:3306/xzx"
+        connectionURL="jdbc:mysql://smalllei.cn:3306/xzx"
         userId="root"
-        password="root">
+        password="jzdmlll@1217">
       <!--产生selectByPrimaryKey-->
       <property name="useInformationSchema" value="true" />
     </jdbcConnection>
@@ -84,7 +84,7 @@
     <table tableName="sys_device_type" domainObjectName="SysDeviceType" ></table>
     <table tableName="sys_pro_detail_check" domainObjectName="SysProDetailCheck" ></table>
 -->
-    <table tableName="inquiry" domainObjectName="Inquiry" ></table>
+    <table tableName="product_pool" domainObjectName="ProPool" ></table>
     <!--
     mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
    -->

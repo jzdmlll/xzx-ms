@@ -43,6 +43,7 @@ public class CompareController {
 
         Map map = new HashMap();
         map.put("name", name);
+        map.put("inquiryId", inquiryId);
         map.put("inquiryCompareVMS", quoteRespVMS);
         List<Map> result = new ArrayList<>();
         result.add(map);

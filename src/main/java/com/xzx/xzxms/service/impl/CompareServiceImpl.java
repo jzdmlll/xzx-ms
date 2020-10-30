@@ -36,6 +36,7 @@ public class CompareServiceImpl implements ICompareService {
             List<QuoteRespVM> inquiryCompareVMS = compareExtendMapper.cascadeFindAllByParams(inquiryIds[i]);
             Map map = new HashMap();
             map.put("name", names[i]);
+            map.put("inquiryId", inquiryIds[i]);
             map.put("inquiryCompareVMS",inquiryCompareVMS);
             result.add(map);
         }
