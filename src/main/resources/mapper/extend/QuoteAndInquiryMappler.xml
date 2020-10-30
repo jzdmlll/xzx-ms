@@ -25,7 +25,7 @@
         <collection property="sysProDetail" ofType="com.xzx.xzxms.bean.SysProDetail" autoMapping="true" columnPrefix="spd_" />
     </resultMap>
 
-    <select id="findByQuoteId" resultMap="QuoteExtendMap">
+    <select id="findByQuoteId" resultMap="QuoteExtendMap1">
         select
         q.*,
         i.model i_model,i.name i_name,i.number i_number,i.params i_params,i.sort i_sort,i.unit i_unit
@@ -37,7 +37,7 @@
             </if>
         </where>
     </select>
-    <resultMap id="QuoteExtendMap" type="com.xzx.xzxms.bean.extend.QuoteExtendInquiry" extends="com.xzx.xzxms.dao.QuoteMapper.BaseResultMap">
+    <resultMap id="QuoteExtendMap1" type="com.xzx.xzxms.bean.extend.QuoteExtendInquiry" extends="com.xzx.xzxms.dao.QuoteMapper.BaseResultMap">
         <collection property="inquiry" ofType="com.xzx.xzxms.bean.Inquiry" autoMapping="true" columnPrefix="i_"></collection>
     </resultMap>
 </mapper>
