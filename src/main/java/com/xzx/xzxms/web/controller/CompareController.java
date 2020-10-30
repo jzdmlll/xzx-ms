@@ -2,6 +2,7 @@ package com.xzx.xzxms.web.controller;
 
 
 import com.xzx.xzxms.bean.Inquiry;
+import com.xzx.xzxms.bean.extend.InquiryExtend;
 import com.xzx.xzxms.service.ICompareService;
 import com.xzx.xzxms.service.IInquiryService;
 import com.xzx.xzxms.utils.Message;
@@ -23,16 +24,17 @@ import java.util.Map;
 public class CompareController {
 
     @Resource
-    private IInquiryService iInquiryServiceImpl;
+    private IInquiryService inquiryServiceImpl;
     @Resource
     private ICompareService compareServiceImpl;
 
     @ApiOperation("根据项目或比价状态查询")
     @GetMapping("findByProIdOrCompareStatus")
     public Message findByProIdOrCompareStatus(@RequestParam(value = "proDetailId",required = false,defaultValue = "-1") long proDetailId, @RequestParam(value = "compareStatus",required = false,defaultValue = "-1") int compareStatus){
+        List<InquiryExtend> byProIdOrCompareStatus = inquiryServiceImpl.findByProIdOrCompareStatus(proDetailId, compareStatus);
 
         //List<Inquiry> inquiries = iInquiryServiceImpl.findByProIdOrCompareStatus(proDetailId,compareStatus);
-        return MessageUtil.success("success", null);
+        return MessageUtil.success("success", byProIdOrCompareStatus);
     }
     @ApiOperation("单个比价查询")
     @GetMapping("cascadeFindAllByParams")
@@ -56,7 +58,7 @@ public class CompareController {
     @ApiOperation("比价选用")
     @PostMapping("completeCompare")
     public Message completeCompare(@RequestBody CompareRespVM compareRespVM) {
-        compareServiceImpl.completeCompare(compareRespVM.getCheckCompareIds(), compareRespVM.getOtherCompareIds(), compareRespVM.getRemarks());
+        compareServiceImpl.completeCompare(compareRespVM.getCheckCompareIds(), compareRespVM.getOtherCompareIds(), compareRespVM.getRemarks(), compareRespVM.getUserId());
         //compareServiceImpl.completeCompare(compareRespVM.getCheckCompareIds(), compareRespVM.getOtherCompareIds(), compareRespVM.getRemarks());
         return MessageUtil.success("操作成功");
     }

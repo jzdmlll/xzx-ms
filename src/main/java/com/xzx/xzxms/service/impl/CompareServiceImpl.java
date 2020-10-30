@@ -45,18 +45,21 @@ public class CompareServiceImpl implements ICompareService {
     }
 
     @Override
-    public void completeCompare(long[] checkCompareIds, long[] otherCompareIds, List<Map> remarks) {
+    public void completeCompare(long[] checkCompareIds, long[] otherCompareIds, List<Map> remarks, long userId) {
         SysProCheck proCheck = new SysProCheck();
         proCheck.setType(SysProCheckExtend.COMPARE_CHECK); //比价审核
         // 更新选中比价
         proCheck.setCheckStatus(SysProCheckExtend.PASS_STATUS); //1选用
+        proCheck.setOperator(userId);
         for (long id : checkCompareIds) {
             proCheck.setId(id);
+
             sysProCheckMapper.updateByPrimaryKeySelective(proCheck);
         }
         // 更新备注
         proCheck = new SysProCheck();
         proCheck.setType(SysProCheckExtend.COMPARE_CHECK); //比价审核
+        proCheck.setOperator(userId);
         for(Map map :remarks){
             proCheck.setId(Long.parseLong(map.get("id").toString()));
             proCheck.setRemark(map.get("remark").toString());
@@ -66,6 +69,7 @@ public class CompareServiceImpl implements ICompareService {
         proCheck = new SysProCheck();
         proCheck.setType(SysProCheckExtend.COMPARE_CHECK); //比价审核
         proCheck.setCheckStatus(SysProCheckExtend.REFUSE_STATUS); //2未选用
+        proCheck.setOperator(userId);
         for (long id : otherCompareIds) {
             proCheck.setId(id);
             sysProCheckMapper.updateByPrimaryKeySelective(proCheck);

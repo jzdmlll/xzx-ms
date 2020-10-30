@@ -100,6 +100,7 @@ public class InquiryServiceImpl implements IInquiryService{
 
         if(compareStatus == -1 || compareStatus == 0){
             List<InquiryCompareExtend> InquiryCompareExtends = inquiryExtendMapper.findByProIdOrCompareStatus(proDetailId,compareStatus);
+            System.out.println(InquiryCompareExtends.size());
             long inquiryId = 0L;
             Boolean compare=true;
             Boolean buss=true;
@@ -114,13 +115,14 @@ public class InquiryServiceImpl implements IInquiryService{
 
                 if(inquiryId == 0L){
 
-                    inquiryId = i.getId();
+                    inquiryId = i.getCheContentId();
                 }
-                if(inquiryId != i.getId()) {
+                if(inquiryId != i.getCheContentId()) {
 
                     if(compare && buss && fina && tench){
                         temp = InquiryCompareExtends.get(j-1);
                         InquiryExtend inquiry = new InquiryExtend();
+                        inquiry.setId(temp.getId());
                         inquiry.setName(temp.getName());
                         inquiry.setModel(temp.getModel());
                         inquiry.setNumber(temp.getNumber());
@@ -132,31 +134,31 @@ public class InquiryServiceImpl implements IInquiryService{
 
                         list.add(inquiry);
                     }
-                    inquiryId = i.getId();
+                    inquiryId = i.getCheContentId();
                     compare = true;
                     buss = true;
                     fina = true;
                     tench = true;
                 }
 
-                switch (i.sysProCheck.getType()) {
+                switch (i.getCheType()) {
                     case "比价审核":
-                        if (!i.sysProCheck.getCheckStatus().equals(0)) {
+                        if (!i.getCheCheckStatus().equals(0)) {
                             compare = false;
                         }
                         break;
                     case "商务审核":
-                        if (!i.sysProCheck.getCheckStatus().equals(1)) {
+                        if (!i.getCheCheckStatus().equals(1)) {
                             buss = false;
                         }
                         break;
                     case "技术审核":
-                        if (!i.sysProCheck.getCheckStatus().equals(1)) {
+                        if (!i.getCheCheckStatus().equals(1)) {
                             tench = false;
                         }
                         break;
                     case "最终审核":
-                        if (!i.sysProCheck.getCheckStatus().equals(0)) {
+                        if (!i.getCheCheckStatus().equals(0)) {
                             fina = false;
                         }
                         break;
@@ -172,6 +174,7 @@ public class InquiryServiceImpl implements IInquiryService{
 
                         InquiryExtend inquiry = new InquiryExtend();
                         inquiry.setName(temp.getName());
+                        inquiry.setId(temp.getId());
                         inquiry.setModel(temp.getModel());
                         inquiry.setNumber(temp.getNumber());
                         inquiry.setParams(temp.getParams());

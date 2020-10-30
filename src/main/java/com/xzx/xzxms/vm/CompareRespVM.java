@@ -6,6 +6,7 @@ import java.util.Map;
 public class CompareRespVM {
     private long[] checkCompareIds;
     private long[] otherCompareIds;
+    private long userId;
     private List<Map> remarks;
 
     public long[] getCheckCompareIds() {
@@ -30,5 +31,13 @@ public class CompareRespVM {
 
     public void setRemarks(List<Map> remarks) {
         this.remarks = remarks;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 }
