@@ -9,8 +9,6 @@ import com.xzx.xzxms.dao.extend.InquiryExtendMapper;
 import com.xzx.xzxms.service.IInquiryService;
 import com.xzx.xzxms.utils.CustomerException;
 import com.xzx.xzxms.utils.IDUtils;
-import com.xzx.xzxms.utils.Message;
-import com.xzx.xzxms.utils.MessageUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -102,26 +100,27 @@ public class InquiryServiceImpl implements IInquiryService{
 
         if(compareStatus == -1 || compareStatus == 0){
             List<InquiryCompareExtend> InquiryCompareExtends = inquiryExtendMapper.findByProIdOrCompareStatus(proDetailId,compareStatus);
-            long iquiryId = 0L;
+            long inquiryId = 0L;
             Boolean compare=true;
             Boolean buss=true;
             Boolean fina=true;
             Boolean tench=true;
 
+            InquiryCompareExtend temp = null;
+
             for(int j = 0; j < InquiryCompareExtends.size(); j++){
 
                 InquiryCompareExtend i = InquiryCompareExtends.get(j);
 
-                if(iquiryId == 0L){
+                if(inquiryId == 0L){
 
-                    iquiryId = i.getId();
+                    inquiryId = i.getId();
                 }
-                if(iquiryId != i.getId()) {
+                if(inquiryId != i.getId()) {
 
                     if(compare && buss && fina && tench){
-
+                        temp = InquiryCompareExtends.get(j-1);
                         InquiryExtend inquiry = new InquiryExtend();
-                        InquiryCompareExtend temp = InquiryCompareExtends.get(j-1);
                         inquiry.setName(temp.getName());
                         inquiry.setModel(temp.getModel());
                         inquiry.setNumber(temp.getNumber());
@@ -129,11 +128,17 @@ public class InquiryServiceImpl implements IInquiryService{
                         inquiry.setUnit(temp.getUnit());
                         inquiry.setBrand(temp.getBrand());
                         inquiry.setRemark(temp.getRemark());
-                        inquiry.setCheckStatus(temp.getSysProCheck().getCheckStatus());
+                        inquiry.setCheckStatus(0);
 
                         list.add(inquiry);
                     }
+                    inquiryId = i.getId();
+                    compare = true;
+                    buss = true;
+                    fina = true;
+                    tench = true;
                 }
+
                 switch (i.sysProCheck.getType()) {
                     case "比价审核":
                         if (!i.sysProCheck.getCheckStatus().equals(0)) {
@@ -158,6 +163,27 @@ public class InquiryServiceImpl implements IInquiryService{
                     default:
                         break;
                 }
+
+                if (j == InquiryCompareExtends.size() - 1){
+
+                    temp = InquiryCompareExtends.get(j);
+
+                    if(compare && buss && fina && tench){
+
+                        InquiryExtend inquiry = new InquiryExtend();
+                        inquiry.setName(temp.getName());
+                        inquiry.setModel(temp.getModel());
+                        inquiry.setNumber(temp.getNumber());
+                        inquiry.setParams(temp.getParams());
+                        inquiry.setUnit(temp.getUnit());
+                        inquiry.setBrand(temp.getBrand());
+                        inquiry.setRemark(temp.getRemark());
+                        inquiry.setCheckStatus(0);
+
+                        list.add(inquiry);
+                    }
+                }
+
             }
         }else{
 

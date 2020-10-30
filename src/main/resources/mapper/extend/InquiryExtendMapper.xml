@@ -40,6 +40,7 @@
     </select>
 
 
+
     <select id="findByProIdOrCompareStatusToEquals" resultMap="compareResultMap">
         select
         i.id, i.name, i.params, i.pro_detail_id,che.type che_type,che.check_status che_check_status
@@ -57,6 +58,8 @@
             </if>
         </where>
     </select>
+
+
     <resultMap id="compareResultMap" type="com.xzx.xzxms.bean.extend.InquiryCompareExtend" extends="com.xzx.xzxms.dao.InquiryMapper.BaseResultMap">
         <collection property="sysProCheck" ofType="com.xzx.xzxms.bean.SysProCheck" autoMapping="true" columnPrefix="che_">
         </collection>
