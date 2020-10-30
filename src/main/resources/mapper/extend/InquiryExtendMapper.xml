@@ -15,15 +15,15 @@
         </where>
     </select>-->
 
-    <select id="findByProIdOrCompareStatus" resultType="com.xzx.xzxms.bean.extend.InquiryExtend">
+    <select id="findByProIdOrCompareStatus" resultMap="compareResultMap">
         select
-        i.id, i.name, i.params, i.pro_detail_id
+        i.id, i.name, i.params, i.pro_detail_id,che.type che_type,che.check_status che_check_status
         from inquiry i
         left join sys_pro_detail pro on i.pro_detail_id = pro.id
         left join quote q on i.id=q.inquiry_id
         left join sys_pro_check che on q.id = che.content_id
         <where>
-            i.is_active = 1 and pro.is_active = 1 and che.type = '比价审核'
+            i.is_active = 1 and pro.is_active = 1 and q.is_active = 1
             <if test="proDetailId != -1">
                 and pro.id = #{proDetailId,jdbcType=BIGINT}
             </if>
@@ -36,7 +36,35 @@
                 </if>
             </if>
         </where>
-        GROUP BY
-        i.name, i.params
+        order by che.content_id
     </select>
+    <resultMap id="compareResultMap" type="com.xzx.xzxms.bean.extend.InquiryCompareExtend" extends="com.xzx.xzxms.dao.InquiryMapper">
+        <collection property="sysProCheck" ofType="com.xzx.xzxms.bean.SysProCheck" autoMapping="true" columnPrefix="che_">
+        </collection>
+    </resultMap>
+
+
+    <select id="findByProIdOrCompareStatusToEquals" resultMap="compareResultMap">
+        select
+        i.id, i.name, i.params, i.pro_detail_id,che.type che_type,che.check_status che_check_status
+        from inquiry i
+        left join sys_pro_detail pro on i.pro_detail_id = pro.id
+        left join quote q on i.id=q.inquiry_id
+        left join sys_pro_check che on q.id = che.content_id
+        <where>
+            i.is_active = 1 and pro.is_active = 1 and q.is_active = 1 and che.type = '比价审核'
+            <if test="proDetailId != -1">
+                and pro.id = #{proDetailId,jdbcType=BIGINT}
+            </if>
+            <if test="compareStatus != 0">
+                and che.check_status != 0
+            </if>
+        </where>
+    </select>
+    <resultMap id="compareResultMap" type="com.xzx.xzxms.bean.extend.InquiryCompareExtend" extends="com.xzx.xzxms.dao.InquiryMapper.BaseResultMap">
+        <collection property="sysProCheck" ofType="com.xzx.xzxms.bean.SysProCheck" autoMapping="true" columnPrefix="che_">
+        </collection>
+    </resultMap>
+
+
 </mapper>

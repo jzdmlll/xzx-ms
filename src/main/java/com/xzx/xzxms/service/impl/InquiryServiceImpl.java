@@ -2,6 +2,8 @@ package com.xzx.xzxms.service.impl;
 
 import com.xzx.xzxms.bean.Inquiry;
 import com.xzx.xzxms.bean.InquiryExample;
+import com.xzx.xzxms.bean.extend.InquiryCompareExtend;
+import com.xzx.xzxms.bean.extend.InquiryExtend;
 import com.xzx.xzxms.dao.InquiryMapper;
 import com.xzx.xzxms.dao.extend.InquiryExtendMapper;
 import com.xzx.xzxms.service.IInquiryService;
@@ -15,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -93,10 +96,74 @@ public class InquiryServiceImpl implements IInquiryService{
     private InquiryExtendMapper inquiryExtendMapper;
 
     @Override
-    public List<Inquiry> findByProIdOrCompareStatus(long proDetailId, Integer compareStatus) {
+    public List<InquiryExtend> findByProIdOrCompareStatus(long proDetailId, Integer compareStatus) {
 
-        List<Inquiry> inquiries = inquiryExtendMapper.findByProIdOrCompareStatus(proDetailId,compareStatus);
+        List<InquiryExtend> list= new ArrayList<>();
 
-        return inquiries;
+        if(compareStatus == -1 || compareStatus == 0){
+            List<InquiryCompareExtend> InquiryCompareExtends = inquiryExtendMapper.findByProIdOrCompareStatus(proDetailId,compareStatus);
+            long iquiryId = 0L;
+            Boolean compare=true;
+            Boolean buss=true;
+            Boolean fina=true;
+            Boolean tench=true;
+
+            for(int j = 0; j < InquiryCompareExtends.size(); j++){
+
+                InquiryCompareExtend i = InquiryCompareExtends.get(j);
+
+                if(iquiryId == 0L){
+
+                    iquiryId = i.getId();
+                }
+                if(iquiryId != i.getId()) {
+
+                    if(compare && buss && fina && tench){
+
+                        InquiryExtend inquiry = new InquiryExtend();
+                        InquiryCompareExtend temp = InquiryCompareExtends.get(j-1);
+                        inquiry.setName(temp.getName());
+                        inquiry.setModel(temp.getModel());
+                        inquiry.setNumber(temp.getNumber());
+                        inquiry.setParams(temp.getParams());
+                        inquiry.setUnit(temp.getUnit());
+                        inquiry.setBrand(temp.getBrand());
+                        inquiry.setRemark(temp.getRemark());
+                        inquiry.setCheckStatus(temp.getSysProCheck().getCheckStatus());
+
+                        list.add(inquiry);
+                    }
+                }
+                switch (i.sysProCheck.getType()) {
+                    case "比价审核":
+                        if (!i.sysProCheck.getCheckStatus().equals(0)) {
+                            compare = false;
+                        }
+                        break;
+                    case "商务审核":
+                        if (!i.sysProCheck.getCheckStatus().equals(1)) {
+                            buss = false;
+                        }
+                        break;
+                    case "技术审核":
+                        if (!i.sysProCheck.getCheckStatus().equals(1)) {
+                            tench = false;
+                        }
+                        break;
+                    case "最终审核":
+                        if (!i.sysProCheck.getCheckStatus().equals(0)) {
+                            fina = false;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }else{
+
+            list = inquiryExtendMapper.findByProIdOrCompareStatusToEquals(proDetailId,compareStatus);
+        }
+
+        return list;
     }
 }

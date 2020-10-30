@@ -1,16 +1,15 @@
 package com.xzx.xzxms.vm;
 
 public class CompareReqVM {
-    private long[] proDetailIds;
+    private long[] inquiryIds;
     private String[] names;
-    private String[] params;
 
-    public long[] getProDetailIds() {
-        return proDetailIds;
+    public long[] getInquiryIds() {
+        return inquiryIds;
     }
 
-    public void setProDetailIds(long[] proDetailIds) {
-        this.proDetailIds = proDetailIds;
+    public void setInquiryIds(long[] inquiryIds) {
+        this.inquiryIds = inquiryIds;
     }
 
     public String[] getNames() {
@@ -19,13 +18,5 @@ public class CompareReqVM {
 
     public void setNames(String[] names) {
         this.names = names;
-    }
-
-    public String[] getParams() {
-        return params;
-    }
-
-    public void setParams(String[] params) {
-        this.params = params;
     }
 }

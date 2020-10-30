@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface ISysProCheckService {
 
-
     /**
      * 级联角色、询价（或项目）查询所有信息
      * @param checkName 审核名称
@@ -24,4 +23,6 @@ public interface ISysProCheckService {
      * @param operator 操作人
      */
     void UpdateCheckStatus(Integer status, long[] ids, long operator);
+
+
 }

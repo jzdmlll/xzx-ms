@@ -203,21 +203,24 @@ public class QuoteServiceImpl implements IQuoteService {
                     }
                     Quote q = new Quote();
                     long quoteId = IDUtils.getId();
-                    q.setId(quoteId);
-                    q.setIsActive(1);
-                    q.setIsUseful(0);
-                    q.setOperator(operator);
-                    q.setSuDelivery(Long.parseLong(item.get("货期").toString().trim()));
-                    q.setSuModel(item.get("报价品牌型号").toString().trim());
-                    q.setSuParams(item.get("实际技术参数").toString().trim());
-                    q.setSupplier(supplier);
-                    q.setSuPrice(Double.parseDouble(item.get("设备单价").toString().trim()));
-                    q.setSuRemark(item.get("备注").toString().trim());
-                    q.setSuTotalPrice(Double.parseDouble(item.get("设备总价").toString().trim()));
-                    q.setTime(time);
-                    q.setWarranty(Long.parseLong(item.get("质保期/售后").toString().trim()));
-                    q.setInquiryId(inquiryId);
-
+                    try {
+                        q.setId(quoteId);
+                        q.setIsActive(1);
+                        q.setIsUseful(0);
+                        q.setOperator(operator);
+                        q.setSuDelivery(Long.parseLong(item.get("货期").toString().trim()));
+                        q.setSuModel(item.get("报价品牌型号").toString().trim());
+                        q.setSuParams(item.get("实际技术参数").toString().trim());
+                        q.setSupplier(supplier);
+                        q.setSuPrice(Double.parseDouble(item.get("设备单价").toString().trim()));
+                        q.setSuRemark(item.get("备注").toString().trim());
+                        q.setSuTotalPrice(Double.parseDouble(item.get("设备总价").toString().trim()));
+                        q.setTime(time);
+                        q.setWarranty(Long.parseLong(item.get("质保期/售后").toString().trim()));
+                        q.setInquiryId(inquiryId);
+                    }catch (NumberFormatException exception) {
+                        throw new CustomerException("失败，存在数据格式不正确或者为空");
+                    }
                     if(item.get("图片") != null && !"".equals(item.get("图片").toString().trim())) {
                         InputStream is = (InputStream)item.get("图片");
                         String imgType = item.get("imgType").toString();

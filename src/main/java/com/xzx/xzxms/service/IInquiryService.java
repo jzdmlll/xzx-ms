@@ -1,6 +1,7 @@
 package com.xzx.xzxms.service;
 
 import com.xzx.xzxms.bean.Inquiry;
+import com.xzx.xzxms.bean.extend.InquiryExtend;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -41,5 +42,5 @@ public interface IInquiryService {
      * 根据项目id/比价状态查询
      * @return
      */
-    List<Inquiry> findByProIdOrCompareStatus(long proDetailId,Integer compareStatus);
+    List<InquiryExtend> findByProIdOrCompareStatus(long proDetailId, Integer compareStatus);
 }
