@@ -60,8 +60,8 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
                 name = finallyCheckCompareVMS.get(i).getName();
                 map.put("inquiry", finallyCheckCompareVMS.get(i));
                 Map _map = new HashMap();
-                _map.put("price", price);
-                _map.put("totalPrice", finallyCheckCompareVMS.get(i).getSuTotalPrice());
+                _map.put("price", finallyCheckCompareVMS.get(i).getPrice());
+                _map.put("totalPrice", finallyCheckCompareVMS.get(i).getTotalPrice());
                 map.put("draft", _map);
                 map.put(finallyCheckCompareVMS.get(i).getSupplier(), finallyCheckCompareVMS.get(i));
             }
@@ -69,7 +69,6 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
                 maps.add(map);
             }
         }
-
         return maps;
     }
 
