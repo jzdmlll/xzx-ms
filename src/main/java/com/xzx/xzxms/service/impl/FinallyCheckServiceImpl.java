@@ -55,6 +55,7 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
                     maps.add(map);
                     map = new HashMap();
                 }
+
                 minPrice = price;
                 finallyCheckCompareVMS.get(i).setMinPrice(1);
                 name = finallyCheckCompareVMS.get(i).getName();

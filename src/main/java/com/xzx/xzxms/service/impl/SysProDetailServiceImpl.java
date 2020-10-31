@@ -6,6 +6,7 @@ import com.xzx.xzxms.bean.extend.SysProDetailExtend;
 import com.xzx.xzxms.dao.SysFileMapper;
 import com.xzx.xzxms.dao.SysProDetailCheckMapper;
 import com.xzx.xzxms.dao.SysProDetailMapper;
+import com.xzx.xzxms.dao.extend.SysProCheckExtendMapper;
 import com.xzx.xzxms.dao.extend.SysProDetailExtendMapper;
 import com.xzx.xzxms.dao.redis.JedisDao;
 import com.xzx.xzxms.service.IFileUploadService;
@@ -40,6 +41,8 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
     private IFileUploadService fileUploadServiceImpl;
     @Resource
     private SysFileMapper sysFileMapper;
+    @Resource
+    private SysProCheckExtendMapper sysProCheckExtendMapper;
 
     @Override
     public List<SysProDetailExtend> findById() { return sysProDetailExtendMapper.findById(); }
@@ -51,14 +54,13 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
         if (proDetail.getId() != null){
 
             //判断该项目是否存在审核，若存在审核则不能修改审核流程，必须将报价单的数据全部删除，则系统删除对应的项目审核
-            if (proChecks.size() >0 ){
-                throw new CustomerException("失败，项目已有审核");
+//            if (proChecks.size() >0 ){
+//                throw new CustomerException("失败，项目已有审核");
+//            }
+            int size = sysProCheckExtendMapper.findExistsCheck(proDetail.getId());
+            if (size > 0){
+                throw  new CustomerException("审核流程修改失败, 需将项目的所有报价单数据删除才可修改审核流程");
             }
-
-            /*SELECT COUNT(d.type) from sys_pro_check d
-            LEFT JOIN quote c on c.id=d.content_id
-            LEFT JOIN inquiry b on b.id=c.inquiry_id
-            LEFT JOIN sys_pro_detail a on a.id=b.pro_detail_id*/
 
             long proDetailId = proDetail.getId();
             sysProDetailMapper.updateByPrimaryKeySelective(proDetail);

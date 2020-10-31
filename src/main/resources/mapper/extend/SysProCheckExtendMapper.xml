@@ -93,4 +93,13 @@
         </collection>
         <collection property="files" column="q_id" select="com.xzx.xzxms.dao.extend.SysFileExtendMapper.selectByOtherId" />
     </resultMap>
+
+
+    <select id="findExistsCheck" resultType="Integer">
+        SELECT COUNT(d.type) from sys_pro_check d
+        LEFT JOIN quote c on c.id=d.content_id
+        LEFT JOIN inquiry b on b.id=c.inquiry_id
+        LEFT JOIN sys_pro_detail a on a.id=b.pro_detail_id
+        where a.id = #{proDetailId,jdbcType=BIGINT}
+    </select>
 </mapper>
