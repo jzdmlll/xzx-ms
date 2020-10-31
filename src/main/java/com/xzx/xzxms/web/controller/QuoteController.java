@@ -8,6 +8,7 @@ import com.xzx.xzxms.utils.CustomerException;
 import com.xzx.xzxms.utils.Message;
 import com.xzx.xzxms.utils.MessageUtil;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -60,10 +61,12 @@ public class QuoteController {
         return MessageUtil.success("success",list);
     }
 
+    @Transactional
     @ApiOperation("供应商报价批量置为无效")
     @PostMapping("batchSetInvalid")
     public Message batchSetInvalid(long[] ids){
         iQuoteServiceImpl.batchSetInvalid(ids);
+
         return MessageUtil.success("删除成功");
     }
 }

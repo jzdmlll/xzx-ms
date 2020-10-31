@@ -71,10 +71,10 @@ mail:
           enable: true
 
 ftpclient:
-  host: 192.168.204.196
+  host: smalllei.cn
   port: 22
   username: root
-  password: "123456"
+  password: "jzdmlll@1217"
   basePath: /home/lzc
   filePath: /
 

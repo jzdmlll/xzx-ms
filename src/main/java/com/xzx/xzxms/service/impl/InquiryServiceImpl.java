@@ -46,7 +46,7 @@ public class InquiryServiceImpl implements IInquiryService{
     public void batchAddInquiry(List<Inquiry> inquiryList) throws SQLException {
         long time = new Date().getTime();
         InquiryExample  example = new InquiryExample();
-        example.createCriteria().andProDetailIdEqualTo(inquiryList.get(0).getProDetailId());
+        example.createCriteria().andProDetailIdEqualTo(inquiryList.get(0).getProDetailId()).andIsActiveEqualTo(1);
         List<Inquiry> inquiries = inquiryMapper.selectByExample(example);
         if (inquiries.size() > 0) {
             for (Inquiry i:inquiries){

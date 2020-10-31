@@ -40,6 +40,8 @@ public class QuoteServiceImpl implements IQuoteService {
     private SysProDetailCheckMapper sysProDetailCheckMapper;
     @Resource
     private InquiryMapper inquiryMapper;
+    @Resource
+    private QuoteAndInquiryExtendMapper quoteAndInquiry;
     @Override
     public List<Quote> findByInquiryId(long inquiryId) {
         QuoteExample example = new QuoteExample();
@@ -288,8 +290,6 @@ public class QuoteServiceImpl implements IQuoteService {
         quoteMapper.updateByPrimaryKeySelective(quote);
     }
 
-    @Resource
-    private QuoteAndInquiryExtendMapper quoteAndInquiry;
 
 
     @Override
@@ -308,6 +308,15 @@ public class QuoteServiceImpl implements IQuoteService {
             if (quote != null || !quote.getIsActive().equals(0)){
                 quote.setIsActive(0);
                 quoteMapper.updateByPrimaryKeySelective(quote);
+                // 报价逻辑删除时，将对应审核删除
+                SysProCheckExample example = new SysProCheckExample();
+                example.createCriteria().andContentIdEqualTo(quote.getId());
+                List<SysProCheck> sysProChecks = sysProCheckMapper.selectByExample(example);
+                if(sysProChecks.size() > 0) {
+                    for(SysProCheck proCheck : sysProChecks) {
+                        sysProCheckMapper.deleteByPrimaryKey(proCheck.getId());
+                    }
+                }
             }else {
                 throw new CustomerException("该数据已不存在");
             }
