@@ -32,9 +32,9 @@
         inquiry i LEFT JOIN quote q ON i.id = q.inquiry_id
         LEFT JOIN sys_pro_detail spd ON i.pro_detail_id = spd.id
         LEFT JOIN sys_pro_check spc ON q.id = spc.content_id
-      where
+      <where>
           spc.type != '最终审核'
           and i.id = #{inquiryId,jdbcType=BIGINT}
-      order by spc.content_id
+      </where>
     </select>
 </mapper>

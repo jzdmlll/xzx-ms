@@ -13,7 +13,6 @@ public class QuoteRespVM extends Quote {
     private String model;
     private String checkType;
 
-
     public String getCheckType() {
         return checkType;
     }
