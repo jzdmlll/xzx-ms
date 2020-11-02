@@ -134,6 +134,13 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
     }
 
     @Override
+    public List<SysProDetailCheck> findProDetailCheck(long proDetailId) {
+        SysProDetailCheckExample example = new SysProDetailCheckExample();
+        example.createCriteria().andProDetailIdEqualTo(proDetailId);
+        return sysProDetailCheckMapper.selectByExample(example);
+    }
+
+    @Override
     public SysProDetailExtend findById(long proDetailId) {
         return sysProDetailExtendMapper.findById(proDetailId);
     }
