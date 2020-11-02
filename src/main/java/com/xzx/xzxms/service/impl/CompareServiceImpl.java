@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class CompareServiceImpl implements ICompareService {
@@ -22,8 +23,20 @@ public class CompareServiceImpl implements ICompareService {
 
     @Override
     public List<QuoteRespVM> cascadeFindAllByParams(long inquiryId) {
-        return compareExtendMapper.cascadeFindAllByParams(inquiryId);
+
+        List<QuoteRespVM> quoteRespVM = compareExtendMapper.cascadeFindAllByParams(inquiryId);
+
+        for (QuoteRespVM q : quoteRespVM){
+            if (!q.getCheckType().equals("比价审核")){
+                if (q.getCompareStatus() == 2){
+                    quoteRespVM = quoteRespVM.stream().filter(x->x.getCompareId() == q.getCompareId()).collect(Collectors.toList());
+                }
+            }
+        }
+        return quoteRespVM;
     }
+
+
 
     @Override
     public List<?> batchGetCompare(CompareReqVM compareReqVM) {

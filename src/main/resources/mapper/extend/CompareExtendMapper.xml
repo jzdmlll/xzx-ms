@@ -27,13 +27,13 @@
 -->
     <select id="cascadeFindAllByParams" resultType="com.xzx.xzxms.vm.QuoteRespVM">
         select
-        q.*, spc.id compare_id, spc.check_status compare_status, spc.remark compare_remark, i.name name
+        q.*, spc.id compare_id, spc.check_status compare_status, spc.remark compare_remark, i.name name, spc.type check_type
         from
         inquiry i LEFT JOIN quote q ON i.id = q.inquiry_id
         LEFT JOIN sys_pro_detail spd ON i.pro_detail_id = spd.id
         LEFT JOIN sys_pro_check spc ON q.id = spc.content_id
       <where>
-          spc.type = '比价审核'
+          spc.type != '最终审核'
           and i.id = #{inquiryId,jdbcType=BIGINT}
       </where>
     </select>

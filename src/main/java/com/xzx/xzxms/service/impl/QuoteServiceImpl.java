@@ -151,6 +151,10 @@ public class QuoteServiceImpl implements IQuoteService {
     public void batchAddQuote(QuoteExtend quote) throws IOException {
         List<SysFile> files = quote.getFiles();
         if(files.size() > 0) {
+            Quote quote1 = quoteMapper.selectByPrimaryKey(quote.getId());
+            if (quote1.getIsUseful() == 1){
+                throw new CustomerException("请撤销审核再提交文件修改");
+            }
             long operator = quote.getOperator();
             long time = new Date().getTime();
             long proDetailId = quote.getProDetailId();
@@ -198,7 +202,7 @@ public class QuoteServiceImpl implements IQuoteService {
                     }
                     QuoteExample quoteExample = new QuoteExample();
                     String supplier = item.get("供应商").toString().trim();
-                    quoteExample.createCriteria().andSupplierEqualTo(supplier).andInquiryIdEqualTo(inquiryId);
+                    quoteExample.createCriteria().andSupplierEqualTo(supplier).andInquiryIdEqualTo(inquiryId).andIsActiveEqualTo(1);
                     List<Quote> quotes = quoteMapper.selectByExample(quoteExample);
                     if (quotes.size() > 0) {
                         throw new CustomerException("文件中： ["+supplier+"]  数据已存在");
@@ -287,7 +291,12 @@ public class QuoteServiceImpl implements IQuoteService {
 
     @Override
     public void rowSave(Quote quote) {
-        quoteMapper.updateByPrimaryKeySelective(quote);
+        Quote quote1 = quoteMapper.selectByPrimaryKey(quote.getId());
+        if (quote1.getIsUseful() == 0){
+            quoteMapper.updateByPrimaryKeySelective(quote);
+        }else {
+            throw new CustomerException("请撤销审核后再修改!");
+        }
     }
 
 

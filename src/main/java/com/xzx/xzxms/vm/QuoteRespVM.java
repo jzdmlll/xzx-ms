@@ -1,6 +1,7 @@
 package com.xzx.xzxms.vm;
 
 import com.xzx.xzxms.bean.Quote;
+import com.xzx.xzxms.bean.SysProCheck;
 
 public class QuoteRespVM extends Quote {
     private Long compareId;
@@ -11,6 +12,15 @@ public class QuoteRespVM extends Quote {
     private String params;
     private String unit;
     private String model;
+    private String checkType;
+
+    public String getCheckType() {
+        return checkType;
+    }
+
+    public void setCheckType(String checkType) {
+        this.checkType = checkType;
+    }
 
     public String getNumber() {
         return number;
