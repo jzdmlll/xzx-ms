@@ -9,7 +9,7 @@ spring:
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/xzx?characterEncoding=utf8
     username: root
-    password: root
+    password: jzdmlll@1217
 
     druid:
       # 数据库连接池
@@ -31,7 +31,7 @@ spring:
     database: 0
     host: "127.0.0.1"
     port: 6379
-    #password: "xzx@redis123"
+    password: "xzx@redis123"
     timeout: 5000
     jedis:
       pool:
@@ -71,10 +71,10 @@ mail:
           enable: true
 
 ftpclient:
-  host: smalllei.cn
+  host: 10.70.0.113
   port: 22
   username: root
-  password: "jzdmlll@1217"
+  password: "6293082"
   basePath: /home/lzc
   filePath: /
 

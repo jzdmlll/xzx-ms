@@ -11,6 +11,16 @@ public class QuoteRespVM extends Quote {
     private String params;
     private String unit;
     private String model;
+    private String checkType;
+
+
+    public String getCheckType() {
+        return checkType;
+    }
+
+    public void setCheckType(String checkType) {
+        this.checkType = checkType;
+    }
 
     public String getNumber() {
         return number;
