@@ -1,5 +1,6 @@
 package com.xzx.xzxms.web.controller;
 
+import com.xzx.xzxms.bean.SysProDetailCheck;
 import com.xzx.xzxms.bean.extend.SysProDetailExtend;
 import com.xzx.xzxms.service.ISysProDetailService;
 import com.xzx.xzxms.utils.Message;
@@ -46,6 +47,14 @@ public class SysProDetailController {
     public Message verifyExistence(String proName){
         Boolean bool = sysProDetailServiceImpl.verifyExistence(proName);
         return MessageUtil.success("success", bool);
+    }
+
+
+    @ApiOperation(value = "根据项目详情ID查询项目的审核流程")
+    @GetMapping(value = "findProDetailCheckByProId")
+    public Message findProDetailCheckByProId(long Id){
+        List<SysProDetailCheck> list = sysProDetailServiceImpl.findProDetailCheckByProId(Id);
+        return MessageUtil.success("success", list);
     }
 
 }

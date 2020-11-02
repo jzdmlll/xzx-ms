@@ -7,9 +7,9 @@ spring:
       max-request-size: 20MB
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/xzx?characterEncoding=utf8
+    url: jdbc:mysql://10.70.0.113:3306/xzx?characterEncoding=utf8
     username: root
-    password: root
+    password: jzdmlll@1217
 
     druid:
       # 数据库连接池
@@ -71,7 +71,7 @@ mail:
           enable: true
 
 ftpclient:
-  host: smalllei.cn
+  host: 10.70.0.113
   port: 22
   username: root
   password: "jzdmlll@1217"

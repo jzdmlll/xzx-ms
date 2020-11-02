@@ -30,4 +30,11 @@ public interface ISysProDetailService {
      * @return
      */
     boolean verifyExistence(String proName);
+
+    /**
+     * 根据项目详情ID查询项目的审核流程
+     * @param Id
+     * @return
+     */
+    List<SysProDetailCheck> findProDetailCheckByProId(long Id);
 }
