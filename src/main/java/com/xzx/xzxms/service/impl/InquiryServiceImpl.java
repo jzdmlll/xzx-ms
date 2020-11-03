@@ -23,11 +23,12 @@ import java.util.List;
 public class InquiryServiceImpl implements IInquiryService{
     @Resource
     private InquiryMapper inquiryMapper;
+    @Resource
+    private InquiryExtendMapper inquiryExtendMapper;
     @Override
-    public List<Inquiry> findByProDetailId(long proDetailId) {
-        InquiryExample example = new InquiryExample();
-        example.createCriteria().andProDetailIdEqualTo(proDetailId).andIsActiveEqualTo(1);
-        return inquiryMapper.selectByExample(example);
+    public List<InquiryExtend> findByProDetailId(long proDetailId) {
+
+        return inquiryExtendMapper.findInquiryAndQuoteNum(proDetailId);
     }
 
     @Override
@@ -89,9 +90,6 @@ public class InquiryServiceImpl implements IInquiryService{
             }
         }
     }
-
-    @Resource
-    private InquiryExtendMapper inquiryExtendMapper;
 
     @Override
     public List<InquiryExtend> findByProIdOrCompareStatus(long proDetailId, Integer compareStatus) {

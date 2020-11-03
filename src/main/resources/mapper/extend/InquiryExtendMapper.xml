@@ -1,19 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xzx.xzxms.dao.extend.InquiryExtendMapper">
-    <!--<select id="cascadeSelectByPrimaryKey" resultType="com.xzx.xzxms.bean.InquiryWithBLOBs">
-        select
-          i.*
-        from
-          inquiry i, sys_pro_detail spd
-        <where>
-            i.pro_detail_id = spd.id
-            and i.id = #{contentId,jdbcType=BIGINT}
-            <if test="proDetailId!=-1">
-                and spd.id = #{proDetailId,jdbcType=BIGINT}
-            </if>
-        </where>
-    </select>-->
 
     <select id="findByProIdOrCompareStatus" resultMap="compareResultMap">
         select
@@ -66,5 +53,16 @@
 
     <resultMap id="compareResultMap" type="com.xzx.xzxms.bean.extend.InquiryCompareExtend" extends="com.xzx.xzxms.dao.InquiryMapper.BaseResultMap">
     </resultMap>
+
+    <select id="findInquiryAndQuoteNum" resultType="com.xzx.xzxms.bean.extend.InquiryExtend">
+        SELECT
+          b.*,a.num quote_num
+        from
+          inquiry b left join (SELECT inquiry_id,count(1) num from quote where inquiry_id=inquiry_id group by inquiry_id)a
+        ON
+          b.id = a.inquiry_id
+        where
+          b.pro_detail_id = #{proDetailId,jdbcType=BIGINT} and b.is_active = 1
+    </select>
 
 </mapper>

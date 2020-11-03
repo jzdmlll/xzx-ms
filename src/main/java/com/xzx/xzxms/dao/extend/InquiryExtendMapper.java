@@ -12,4 +12,6 @@ public interface InquiryExtendMapper {
     List<InquiryCompareExtend> findByProIdOrCompareStatus(@Param("proDetailId") long proDetailId, @Param("compareStatus") Integer compareStatus);
 
     List<InquiryExtend> findByProIdOrCompareStatusToEquals(@Param("proDetailId") long proDetailId, @Param("compareStatus") Integer compareStatus);
+
+    List<InquiryExtend> findInquiryAndQuoteNum(long proDetailId);
 }

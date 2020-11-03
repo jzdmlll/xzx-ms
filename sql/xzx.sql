@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost
-Source Server Version : 50712
-Source Host           : localhost:3306
+Source Server         : 新自信
+Source Server Version : 50731
+Source Host           : 10.70.0.113:3306
 Source Database       : xzx
 
 Target Server Type    : MYSQL
-Target Server Version : 50712
+Target Server Version : 50731
 File Encoding         : 65001
 
-Date: 2020-10-30 16:09:16
+Date: 2020-11-03 19:10:57
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -22,6 +22,7 @@ DROP TABLE IF EXISTS `inquiry`;
 CREATE TABLE `inquiry` (
   `id` bigint(40) NOT NULL COMMENT '编号',
   `name` varchar(255) DEFAULT NULL COMMENT '所询价设备名称',
+  `real_brand` varchar(255) DEFAULT '' COMMENT '品牌',
   `brand` varchar(255) DEFAULT '' COMMENT '品牌推荐',
   `params` varchar(255) DEFAULT NULL COMMENT '技术参数',
   `model` varchar(255) DEFAULT NULL COMMENT '品牌型号',
@@ -43,14 +44,14 @@ CREATE TABLE `inquiry` (
 -- ----------------------------
 -- Records of inquiry
 -- ----------------------------
-INSERT INTO `inquiry` VALUES ('143858580', '调度电话总机', null, '容量：用户56门+环路中继16门', 'DCD128M', '套', '1', null, null, '1', null, '275476318', null, '1', '1', '1', '1603941445675');
-INSERT INTO `inquiry` VALUES ('470823228', '铜芯市话通信电缆', null, 'HYA10X2X0.5', 'HYA10X2X0.5', '米', '2500', null, null, '8', null, '275476318', null, '1', '1', '1', '1603941445675');
-INSERT INTO `inquiry` VALUES ('619023849', '电话插座', null, '单口', '单口', '只', '50', null, null, '5', null, '275476318', null, '1', '1', '1', '1603941445675');
-INSERT INTO `inquiry` VALUES ('780458993', '铜芯市话通信电缆', null, 'HYA20X2X0.5', 'HYA20X2X0.5', '米', '850', null, null, '7', null, '275476318', null, '1', '1', '1', '1603941445675');
-INSERT INTO `inquiry` VALUES ('1036678836', '保安配线箱', null, '300回线', 'DP-1', '套', '1', null, null, '2', null, '275476318', null, '1', '1', '1', '1603941445675');
-INSERT INTO `inquiry` VALUES ('1098634570', '铜芯市话通信电缆', null, 'HYA30X2X0.5', 'HYA30X2X0.5', '米', '550', null, null, '6', null, '275476318', null, '1', '1', '1', '1603941445675');
-INSERT INTO `inquiry` VALUES ('1560140268', '电话分线箱(含箱内接线端子)', null, '20对线', '20对线', '只', '10', null, null, '4', null, '275476318', null, '1', '1', '1', '1603941445675');
-INSERT INTO `inquiry` VALUES ('1698007238', '电话机', null, '带来电显示，TCL', 'TCLHCD868（37）', '台', '50', null, null, '3', null, '275476318', null, '1', '1', '1', '1603941445675');
+INSERT INTO `inquiry` VALUES ('36412891', '铜芯市话通信电缆', null, null, 'HYA30X2X0.5', 'HYA30X2X0.5', '米', '550', null, null, '6', null, '4130147', null, '1', '0', '1', '1604393664076');
+INSERT INTO `inquiry` VALUES ('64507735', '调度电话总机', '品牌1', null, '容量：用户56门+环路中继16门', 'DCD128M', '套', '1', null, null, '1', null, '4130147', null, '1', '1', '1', '1604393664076');
+INSERT INTO `inquiry` VALUES ('88170170', '铜芯市话通信电缆', null, null, 'HYA10X2X0.5', 'HYA10X2X0.5', '米', '2500', null, null, '8', null, '4130147', null, '1', '0', '1', '1604393664076');
+INSERT INTO `inquiry` VALUES ('374777115', '铜芯市话通信电缆', null, null, 'HYA20X2X0.5', 'HYA20X2X0.5', '米', '850', null, null, '7', null, '4130147', null, '1', '0', '1', '1604393664076');
+INSERT INTO `inquiry` VALUES ('510141959', '电话插座', null, null, '单口', '单口', '只', '50', null, null, '5', null, '4130147', null, '1', '0', '1', '1604393664076');
+INSERT INTO `inquiry` VALUES ('1249120047', '保安配线箱', null, null, '300回线', 'DP-1', '套', '1', null, null, '2', null, '4130147', null, '1', '0', '1', '1604393664076');
+INSERT INTO `inquiry` VALUES ('1351789275', '电话分线箱(含箱内接线端子)', null, null, '20对线', '20对线', '只', '10', null, null, '4', null, '4130147', null, '1', '1', '1', '1604393664076');
+INSERT INTO `inquiry` VALUES ('1571397479', '电话机', null, null, '带来电显示，TCL', 'TCLHCD868（37）', '台', '50', null, null, '3', null, '4130147', null, '1', '1', '1', '1604393664076');
 
 -- ----------------------------
 -- Table structure for product_pool
@@ -85,6 +86,7 @@ CREATE TABLE `quote` (
   `id` bigint(40) NOT NULL COMMENT '主键',
   `supplier` varchar(255) DEFAULT NULL,
   `su_model` varchar(255) DEFAULT NULL COMMENT '报价型号',
+  `su_brand` varchar(255) DEFAULT NULL COMMENT '品牌',
   `su_params` varchar(255) DEFAULT NULL COMMENT '报价参数',
   `su_price` double(20,2) DEFAULT NULL COMMENT '报价设备单价',
   `su_total_price` double(20,2) DEFAULT NULL COMMENT '报价设备总价',
@@ -103,20 +105,9 @@ CREATE TABLE `quote` (
 -- ----------------------------
 -- Records of quote
 -- ----------------------------
-INSERT INTO `quote` VALUES ('85454375', '英华', '单口', '单口', '2.00', '100.00', '1603900800000', '1666972800000', '', '', '619023849', '1', '0', '1', '1603950745915');
-INSERT INTO `quote` VALUES ('493811384', '天联', 'HYA10X2X0.5', 'HYA10X2X0.5', '4.12', '10300.00', '1603900800000', '1666972800000', '', '', '470823228', '1', '0', '1', '1603950558205');
-INSERT INTO `quote` VALUES ('645036627', '淙顺', '20对线', '20对线', '1.00', '10.00', '1603900800000', '1666972800000', '', '', '1560140268', '1', '0', '1', '1603950526547');
-INSERT INTO `quote` VALUES ('646472982', '鑫盛江达', 'C8000', '容量：用户56门+环路中继16门', '100.00', '100.00', '1603900800000', '1666972800000', '2', 'http://192.168.204.196/images/b2830db2-177b-4975-b5be-01fb1b0ff7ed.png', '143858580', '1', '0', '1', '1603950716292');
-INSERT INTO `quote` VALUES ('816217374', '天联', 'HYA20X2X0.5', 'HYA20X2X0.5', '7.83', '6273.00', '1603900800000', '1666972800000', '', '', '780458993', '1', '0', '1', '1603950558205');
-INSERT INTO `quote` VALUES ('883245617', '淙顺', '带来电显', '带来电显示，TCL', '1.00', '50.00', '1603900800000', '1666972800000', '', '', '1698007238', '1', '0', '1', '1603950526547');
-INSERT INTO `quote` VALUES ('1119293847', '鑫盛江达', '20对线', '20对线', '10.00', '140.00', '1603900800000', '1666972800000', '', '', '1560140268', '1', '0', '1', '1603950716292');
-INSERT INTO `quote` VALUES ('1455191337', '鑫盛江达', 'TCLHCD868（37）', '带来电显示，TCL', '50.00', '2500.00', '1603900800000', '1666972800000', '', '', '1698007238', '1', '0', '1', '1603950716292');
-INSERT INTO `quote` VALUES ('1484646394', '鑫盛江达', '300回线', '300回线', '200.00', '200.00', '1603900800000', '1666972800000', '2', '', '1036678836', '1', '0', '1', '1603950716292');
-INSERT INTO `quote` VALUES ('1591060122', '天联', 'HYA30X2X0.5', 'HYA30X2X0.5', '10.84', '5962.00', '1603900800000', '1666972800000', '', 'http://192.168.204.196/images/ef4fdf33-77f5-47e7-9f0c-f4fcc6b0ea0d.png', '1098634570', '1', '0', '1', '1603950558205');
-INSERT INTO `quote` VALUES ('1728278085', '英华', 'SW-2000D', '容量：用户56门+环路中继16门', '2.00', '2.00', '1603900800000', '1666972800000', '', '', '143858580', '1', '0', '1', '1603950745915');
-INSERT INTO `quote` VALUES ('1750310300', '淙顺', 'HT-9000', '容量：用户56门+环路中继16门', '1.00', '1.00', '1603900800000', '1666972800000', '', '', '143858580', '1', '0', '1', '1603950526547');
-INSERT INTO `quote` VALUES ('1767853284', '同德龙', 'DCD128M', '容量：用户56门+环路中继16门', '120.00', '120.00', '1603900800000', '1666972800000', '', 'http://192.168.204.196/images/287dec44-4250-4d96-a982-4411c27a54ba.png', '143858580', '1', '0', '1', '1603950684220');
-INSERT INTO `quote` VALUES ('1963981846', '同德龙', 'DP-1', '300回线', '1.00', '1.00', '1603900800000', '1666972800000', '', '', '1036678836', '1', '0', '1', '1603950684220');
+INSERT INTO `quote` VALUES ('137285572', '淙顺', 'HT-9000', 'test', '容量：用户56门+环路中继16门', '1.00', '1.00', '1603900800000', '1666972800000', '', '', '64507735', '1', '0', '1', '1604393968763');
+INSERT INTO `quote` VALUES ('481245340', '淙顺', '20对线', '', '20对线', '1.00', '10.00', '1603900800000', '1666972800000', '', '', '1351789275', '1', '0', '1', '1604393968763');
+INSERT INTO `quote` VALUES ('1563685448', '淙顺', '带来电显', '', '带来电显示，TCL', '1.00', '50.00', '1603900800000', '1666972800000', '', '', '1571397479', '1', '0', '1', '1604393968763');
 
 -- ----------------------------
 -- Table structure for sys_device_type
@@ -136,9 +127,6 @@ CREATE TABLE `sys_device_type` (
 -- ----------------------------
 -- Records of sys_device_type
 -- ----------------------------
-INSERT INTO `sys_device_type` VALUES ('1', '笔记本电脑', '1', null, null, null, null);
-INSERT INTO `sys_device_type` VALUES ('463667349', '通信电子', '3', null, null, null, null);
-INSERT INTO `sys_device_type` VALUES ('160117375509248', '键盘', '2', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for sys_file
@@ -160,29 +148,9 @@ CREATE TABLE `sys_file` (
 -- ----------------------------
 -- Records of sys_file
 -- ----------------------------
-INSERT INTO `sys_file` VALUES ('74870406', '165d69d4-b491-41aa-81ee-26e6c48835af.xls', 'http://192.168.204.196/images/165d69d4-b491-41aa-81ee-26e6c48835af.xls', '3', '701235873', '1', '1', '1', '1603871626418');
-INSERT INTO `sys_file` VALUES ('227452731', '533fd278-c56c-4740-8800-fc2260da6dac.xls', 'http://192.168.204.196/images/533fd278-c56c-4740-8800-fc2260da6dac.xls', '3', '1484646394', '1', '1', '1', '1603950716292');
-INSERT INTO `sys_file` VALUES ('311120242', '8abd3b0e-2d65-495f-922a-7f8ab28382d0.xls', 'http://192.168.204.196/images/8abd3b0e-2d65-495f-922a-7f8ab28382d0.xls', '3', '1794350714', '1', '1', '1', '1603941462464');
-INSERT INTO `sys_file` VALUES ('521574231', '177871c4-d228-49ce-8a27-537fd45ef30b.xls', 'http://192.168.204.196/images/177871c4-d228-49ce-8a27-537fd45ef30b.xls', '3', '1591060122', '1', '1', '1', '1603950558205');
-INSERT INTO `sys_file` VALUES ('547840335', 'devenv.exe', 'http://192.168.204.196/images/9cbeeb3b-50ab-45e3-909c-2a2cd4445507.exe', '2', '1217852782', '1', '1', '1', '1603802350289');
-INSERT INTO `sys_file` VALUES ('665170072', '177871c4-d228-49ce-8a27-537fd45ef30b.xls', 'http://192.168.204.196/images/177871c4-d228-49ce-8a27-537fd45ef30b.xls', '3', '816217374', '1', '1', '1', '1603950558205');
-INSERT INTO `sys_file` VALUES ('737166784', '165d69d4-b491-41aa-81ee-26e6c48835af.xls', 'http://192.168.204.196/images/165d69d4-b491-41aa-81ee-26e6c48835af.xls', '3', '1524001653', '1', '1', '1', '1603871626418');
-INSERT INTO `sys_file` VALUES ('777853767', '询价模板.xls', 'http://192.168.204.196/images/a7d8a57c-6343-4f36-be7c-b16dbf0bda3a.xls', '3', '214104612', '1', '1', '1', '1603802324519');
-INSERT INTO `sys_file` VALUES ('882386895', '10a9ba77-63d9-4287-bf8a-85875f4c4d03.xls', 'http://192.168.204.196/images/10a9ba77-63d9-4287-bf8a-85875f4c4d03.xls', '3', '1963981846', '1', '1', '1', '1603950684220');
-INSERT INTO `sys_file` VALUES ('978933030', '新自信.txt', 'http://192.168.204.196/images/717d68de-b60f-4643-8e1e-23340b4cc101.txt', '2', '214104612', '1', '1', '1', '1603802324519');
-INSERT INTO `sys_file` VALUES ('1185858733', '2f81e000-e60f-434c-a354-25c3cd6018d3.xls', 'http://192.168.204.196/images/2f81e000-e60f-434c-a354-25c3cd6018d3.xls', '3', '1750310300', '1', '1', '1', '1603950526547');
-INSERT INTO `sys_file` VALUES ('1260564846', 'b7e708f0-c211-4135-815c-04d8b47d3b7f.xls', 'http://192.168.204.196/images/b7e708f0-c211-4135-815c-04d8b47d3b7f.xls', '3', '1728278085', '1', '1', '1', '1603950745915');
-INSERT INTO `sys_file` VALUES ('1439208477', '177871c4-d228-49ce-8a27-537fd45ef30b.xls', 'http://192.168.204.196/images/177871c4-d228-49ce-8a27-537fd45ef30b.xls', '3', '493811384', '1', '1', '1', '1603950558205');
-INSERT INTO `sys_file` VALUES ('1444412694', '2f81e000-e60f-434c-a354-25c3cd6018d3.xls', 'http://192.168.204.196/images/2f81e000-e60f-434c-a354-25c3cd6018d3.xls', '3', '883245617', '1', '1', '1', '1603950526547');
-INSERT INTO `sys_file` VALUES ('1490714063', '533fd278-c56c-4740-8800-fc2260da6dac.xls', 'http://192.168.204.196/images/533fd278-c56c-4740-8800-fc2260da6dac.xls', '3', '1119293847', '1', '1', '1', '1603950716292');
-INSERT INTO `sys_file` VALUES ('1496411626', '8abd3b0e-2d65-495f-922a-7f8ab28382d0.xls', 'http://192.168.204.196/images/8abd3b0e-2d65-495f-922a-7f8ab28382d0.xls', '3', '506790780', '1', '1', '1', '1603941462464');
-INSERT INTO `sys_file` VALUES ('1596522707', '533fd278-c56c-4740-8800-fc2260da6dac.xls', 'http://192.168.204.196/images/533fd278-c56c-4740-8800-fc2260da6dac.xls', '3', '646472982', '1', '1', '1', '1603950716292');
-INSERT INTO `sys_file` VALUES ('1657829029', '询价函汇总.xls', 'http://192.168.204.196/images/68f62807-8b0a-4925-9f59-e53e56318a2e.xls', '3', '1217852782', '1', '1', '1', '1603802350289');
-INSERT INTO `sys_file` VALUES ('1663130618', '2f81e000-e60f-434c-a354-25c3cd6018d3.xls', 'http://192.168.204.196/images/2f81e000-e60f-434c-a354-25c3cd6018d3.xls', '3', '645036627', '1', '1', '1', '1603950526547');
-INSERT INTO `sys_file` VALUES ('1747037942', '10a9ba77-63d9-4287-bf8a-85875f4c4d03.xls', 'http://192.168.204.196/images/10a9ba77-63d9-4287-bf8a-85875f4c4d03.xls', '3', '1767853284', '1', '1', '1', '1603950684220');
-INSERT INTO `sys_file` VALUES ('1788288849', 'b7e708f0-c211-4135-815c-04d8b47d3b7f.xls', 'http://192.168.204.196/images/b7e708f0-c211-4135-815c-04d8b47d3b7f.xls', '3', '85454375', '1', '1', '1', '1603950745915');
-INSERT INTO `sys_file` VALUES ('1808268684', '8abd3b0e-2d65-495f-922a-7f8ab28382d0.xls', 'http://192.168.204.196/images/8abd3b0e-2d65-495f-922a-7f8ab28382d0.xls', '3', '395615320', '1', '1', '1', '1603941462464');
-INSERT INTO `sys_file` VALUES ('2004283167', '533fd278-c56c-4740-8800-fc2260da6dac.xls', 'http://192.168.204.196/images/533fd278-c56c-4740-8800-fc2260da6dac.xls', '3', '1455191337', '1', '1', '1', '1603950716292');
+INSERT INTO `sys_file` VALUES ('574722158', '12f91c2e-1ccc-4225-9144-3e94f3aacad7.xls', 'http://218.87.96.53:8006/images/12f91c2e-1ccc-4225-9144-3e94f3aacad7.xls', '3', '481245340', '1', '1', '1', '1604393968763');
+INSERT INTO `sys_file` VALUES ('632797225', '12f91c2e-1ccc-4225-9144-3e94f3aacad7.xls', 'http://218.87.96.53:8006/images/12f91c2e-1ccc-4225-9144-3e94f3aacad7.xls', '3', '1563685448', '1', '1', '1', '1604393968763');
+INSERT INTO `sys_file` VALUES ('1941575456', '12f91c2e-1ccc-4225-9144-3e94f3aacad7.xls', 'http://218.87.96.53:8006/images/12f91c2e-1ccc-4225-9144-3e94f3aacad7.xls', '3', '137285572', '1', '1', '1', '1604393968763');
 
 -- ----------------------------
 -- Table structure for sys_log
@@ -220,7 +188,7 @@ CREATE TABLE `sys_privilege` (
   `operator` bigint(40) DEFAULT NULL COMMENT '操作者',
   `time` bigint(40) DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_privilege
@@ -295,6 +263,10 @@ INSERT INTO `sys_privilege` VALUES ('69', '按条件查询报价单', 'method', 
 INSERT INTO `sys_privilege` VALUES ('70', '批量逻辑删除报价', 'method', '60', null, '/quote/batchSetInvalid', null, null, null, null, null);
 INSERT INTO `sys_privilege` VALUES ('71', '验证项目名是否存在', 'method', '18', null, '/project/detail/verifyExistence', null, null, null, null, null);
 INSERT INTO `sys_privilege` VALUES ('72', '比价查询', 'method', '48', '', '/compare/findByProIdOrCompareStatus', '', null, null, null, null);
+INSERT INTO `sys_privilege` VALUES ('73', '查询项目详情审核', 'method', '18', null, '/project/detail/findProDetailCheck', null, null, null, null, null);
+INSERT INTO `sys_privilege` VALUES ('74', '产品池管理', 'parent', null, '', '/pool/list', '', null, null, null, null);
+INSERT INTO `sys_privilege` VALUES ('75', '产品池管理', 'menu', '74', '', '/pool/list', '', null, null, null, null);
+INSERT INTO `sys_privilege` VALUES ('76', '产品池查询', 'method', '74', null, '/pool/findByParams', null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for sys_pro_check
@@ -314,62 +286,18 @@ CREATE TABLE `sys_pro_check` (
 -- ----------------------------
 -- Records of sys_pro_check
 -- ----------------------------
-INSERT INTO `sys_pro_check` VALUES ('56686800', '1', '最终审核', '', '1591060122', '1', '1604044239699');
-INSERT INTO `sys_pro_check` VALUES ('57796620', '0', '技术审核', null, '1455191337', '1', '1603950716292');
-INSERT INTO `sys_pro_check` VALUES ('107395683', '0', '比价审核', null, '85454375', '1', '1603950745915');
-INSERT INTO `sys_pro_check` VALUES ('135337131', '0', '最终审核', null, '1119293847', '1', '1603950716292');
-INSERT INTO `sys_pro_check` VALUES ('159135150', '0', '技术审核', null, '1119293847', '1', '1603950716292');
-INSERT INTO `sys_pro_check` VALUES ('177566360', '0', '最终审核', null, '1728278085', '1', '1603950745915');
-INSERT INTO `sys_pro_check` VALUES ('178874492', '0', '比价审核', null, '493811384', '1', '1603950558205');
-INSERT INTO `sys_pro_check` VALUES ('237390954', '0', '最终审核', null, '883245617', '1', '1603950526547');
-INSERT INTO `sys_pro_check` VALUES ('285322985', '1', '商务审核', null, '1484646394', '1', '1604035615735');
-INSERT INTO `sys_pro_check` VALUES ('466150050', '1', '技术审核', null, '1484646394', '1', '1604035589365');
-INSERT INTO `sys_pro_check` VALUES ('476700156', '0', '商务审核', null, '816217374', '1', '1603950558205');
-INSERT INTO `sys_pro_check` VALUES ('560823620', '0', '商务审核', null, '645036627', '1', '1603950526547');
-INSERT INTO `sys_pro_check` VALUES ('612865177', '2', '比价审核', '价格最低', '1963981846', '1', '1604043936900');
-INSERT INTO `sys_pro_check` VALUES ('621441823', '0', '商务审核', null, '1750310300', '1', '1603950526547');
-INSERT INTO `sys_pro_check` VALUES ('669156510', '0', '比价审核', null, '646472982', '1', '1603950716292');
-INSERT INTO `sys_pro_check` VALUES ('694286567', '0', '最终审核', null, '816217374', '1', '1603950558205');
-INSERT INTO `sys_pro_check` VALUES ('773811366', '0', '比价审核', null, '1119293847', '1', '1603950716292');
-INSERT INTO `sys_pro_check` VALUES ('806370248', '0', '技术审核', null, '493811384', '1', '1603950558205');
-INSERT INTO `sys_pro_check` VALUES ('817290399', '0', '商务审核', null, '1728278085', '1', '1603950745915');
-INSERT INTO `sys_pro_check` VALUES ('828918431', '0', '技术审核', null, '645036627', '1', '1603950526547');
-INSERT INTO `sys_pro_check` VALUES ('883758562', '0', '商务审核', null, '1963981846', '1', '1603950684220');
-INSERT INTO `sys_pro_check` VALUES ('985486373', '0', '商务审核', null, '1119293847', '1', '1603950716292');
-INSERT INTO `sys_pro_check` VALUES ('1028950491', '1', '比价审核', '通过', '1591060122', '1', '1604043936900');
-INSERT INTO `sys_pro_check` VALUES ('1044718992', '0', '最终审核', null, '1455191337', '1', '1603950716292');
-INSERT INTO `sys_pro_check` VALUES ('1048851787', '2', '最终审核', '', '1484646394', '1', '1604044239699');
-INSERT INTO `sys_pro_check` VALUES ('1057811303', '0', '商务审核', null, '493811384', '1', '1603950558205');
-INSERT INTO `sys_pro_check` VALUES ('1078166970', '0', '技术审核', null, '1963981846', '1', '1603950684220');
-INSERT INTO `sys_pro_check` VALUES ('1100598146', '0', '技术审核', null, '883245617', '1', '1603950526547');
-INSERT INTO `sys_pro_check` VALUES ('1120909000', '0', '技术审核', null, '816217374', '1', '1603950558205');
-INSERT INTO `sys_pro_check` VALUES ('1128184358', '0', '最终审核', null, '493811384', '1', '1603950558205');
-INSERT INTO `sys_pro_check` VALUES ('1129092932', '0', '技术审核', null, '1750310300', '1', '1603950526547');
-INSERT INTO `sys_pro_check` VALUES ('1147225588', '1', '比价审核', '', '1484646394', '1', '1604043936900');
-INSERT INTO `sys_pro_check` VALUES ('1284622504', '0', '技术审核', null, '646472982', '1', '1603950716292');
-INSERT INTO `sys_pro_check` VALUES ('1358743119', '1', '技术审核', null, '1591060122', '1', '1604042250755');
-INSERT INTO `sys_pro_check` VALUES ('1378225198', '0', '商务审核', null, '85454375', '1', '1603950745915');
-INSERT INTO `sys_pro_check` VALUES ('1378348656', '0', '技术审核', null, '1767853284', '1', '1603950684220');
-INSERT INTO `sys_pro_check` VALUES ('1380095851', '0', '比价审核', null, '1455191337', '1', '1603950716292');
-INSERT INTO `sys_pro_check` VALUES ('1462183592', '0', '最终审核', null, '85454375', '1', '1603950745915');
-INSERT INTO `sys_pro_check` VALUES ('1465002149', '0', '比价审核', null, '645036627', '1', '1603950526547');
-INSERT INTO `sys_pro_check` VALUES ('1522969219', '0', '商务审核', null, '1767853284', '1', '1603950684220');
-INSERT INTO `sys_pro_check` VALUES ('1545090354', '0', '最终审核', null, '646472982', '1', '1603950716292');
-INSERT INTO `sys_pro_check` VALUES ('1563153955', '0', '比价审核', null, '1767853284', '1', '1603950684220');
-INSERT INTO `sys_pro_check` VALUES ('1676357550', '0', '比价审核', null, '1750310300', '1', '1603950526547');
-INSERT INTO `sys_pro_check` VALUES ('1714005100', '0', '比价审核', null, '883245617', '1', '1603950526547');
-INSERT INTO `sys_pro_check` VALUES ('1772559559', '0', '最终审核', null, '1750310300', '1', '1603950526547');
-INSERT INTO `sys_pro_check` VALUES ('1791291796', '1', '最终审核', '', '1963981846', '1', '1604044239699');
-INSERT INTO `sys_pro_check` VALUES ('1819508354', '0', '最终审核', null, '645036627', '1', '1603950526547');
-INSERT INTO `sys_pro_check` VALUES ('1828332521', '0', '技术审核', null, '85454375', '1', '1603950745915');
-INSERT INTO `sys_pro_check` VALUES ('1838328913', '0', '技术审核', null, '1728278085', '1', '1603950745915');
-INSERT INTO `sys_pro_check` VALUES ('1859385113', '1', '商务审核', null, '1591060122', '1', '1604042255701');
-INSERT INTO `sys_pro_check` VALUES ('1880534342', '0', '最终审核', null, '1767853284', '1', '1603950684220');
-INSERT INTO `sys_pro_check` VALUES ('1891015627', '0', '商务审核', null, '1455191337', '1', '1603950716292');
-INSERT INTO `sys_pro_check` VALUES ('1932674104', '0', '比价审核', null, '1728278085', '1', '1603950745915');
-INSERT INTO `sys_pro_check` VALUES ('1936834571', '0', '比价审核', null, '816217374', '1', '1603950558205');
-INSERT INTO `sys_pro_check` VALUES ('1947900517', '0', '商务审核', null, '883245617', '1', '1603950526547');
-INSERT INTO `sys_pro_check` VALUES ('2133086494', '0', '商务审核', null, '646472982', '1', '1603950716292');
+INSERT INTO `sys_pro_check` VALUES ('405482976', '0', '最终审核', null, '137285572', '1', '1604393968763');
+INSERT INTO `sys_pro_check` VALUES ('551103485', '0', '最终审核', null, '1563685448', '1', '1604393968763');
+INSERT INTO `sys_pro_check` VALUES ('586911492', '0', '比价审核', null, '1563685448', '1', '1604393968763');
+INSERT INTO `sys_pro_check` VALUES ('821693735', '0', '最终审核', null, '481245340', '1', '1604393968763');
+INSERT INTO `sys_pro_check` VALUES ('969006535', '0', '商务审核', null, '1563685448', '1', '1604393968763');
+INSERT INTO `sys_pro_check` VALUES ('987371634', '0', '商务审核', null, '137285572', '1', '1604393968763');
+INSERT INTO `sys_pro_check` VALUES ('1045960980', '0', '技术审核', null, '1563685448', '1', '1604393968763');
+INSERT INTO `sys_pro_check` VALUES ('1087798459', '0', '技术审核', null, '481245340', '1', '1604393968763');
+INSERT INTO `sys_pro_check` VALUES ('1215495447', '0', '比价审核', null, '481245340', '1', '1604393968763');
+INSERT INTO `sys_pro_check` VALUES ('1332562010', '0', '技术审核', null, '137285572', '1', '1604393968763');
+INSERT INTO `sys_pro_check` VALUES ('1350589452', '0', '商务审核', null, '481245340', '1', '1604393968763');
+INSERT INTO `sys_pro_check` VALUES ('1398452158', '0', '比价审核', null, '137285572', '1', '1604393968763');
 
 -- ----------------------------
 -- Table structure for sys_pro_detail
@@ -392,10 +320,8 @@ CREATE TABLE `sys_pro_detail` (
 -- ----------------------------
 -- Records of sys_pro_detail
 -- ----------------------------
-INSERT INTO `sys_pro_detail` VALUES ('275476318', '通信设备采购', null, '通信设备采购', '159909505476470', '2', '1', '0', '1', '1602853824929');
-INSERT INTO `sys_pro_detail` VALUES ('1269230258', '1', null, null, '1', '1', '1', '0', '1', '1603090585958');
-INSERT INTO `sys_pro_detail` VALUES ('1599777433', '笔记本电脑采购', null, '笔记本电脑采购', '1', '1', '1', '0', '1', '1602853636402');
-INSERT INTO `sys_pro_detail` VALUES ('1915620732', '11', null, null, '1', '1', '1', '0', '1', '1603197792503');
+INSERT INTO `sys_pro_detail` VALUES ('4130147', 'TEST_Pro', null, 'TESTCONTENT', '326533751', '803443434', '1', '0', '1', '1604282592545');
+INSERT INTO `sys_pro_detail` VALUES ('1367812690', 'vbvf', null, 'fdffg', '326533751', '803443434', '1', '0', '1', '1604384777915');
 
 -- ----------------------------
 -- Table structure for sys_pro_detail_check
@@ -414,12 +340,9 @@ CREATE TABLE `sys_pro_detail_check` (
 -- ----------------------------
 -- Records of sys_pro_detail_check
 -- ----------------------------
-INSERT INTO `sys_pro_detail_check` VALUES ('144660424', '1915620732', '0', '技术审核', '1', '1603197792503');
-INSERT INTO `sys_pro_detail_check` VALUES ('873420587', '1915620732', '0', '最终审核', '1', '1603197792503');
-INSERT INTO `sys_pro_detail_check` VALUES ('875137048', '1915620732', '0', '商务审核', '1', '1603197792503');
-INSERT INTO `sys_pro_detail_check` VALUES ('1083093988', '275476318', '0', '技术审核', '1', '1603715683041');
-INSERT INTO `sys_pro_detail_check` VALUES ('1255599427', '275476318', '0', '最终审核', '1', '1603715683041');
-INSERT INTO `sys_pro_detail_check` VALUES ('1741815124', '275476318', '0', '商务审核', '1', '1603715683041');
+INSERT INTO `sys_pro_detail_check` VALUES ('560757435', '4130147', '0', '技术审核', '1', '1604393957886');
+INSERT INTO `sys_pro_detail_check` VALUES ('1655317443', '4130147', '0', '商务审核', '1', '1604393957886');
+INSERT INTO `sys_pro_detail_check` VALUES ('2094624089', '4130147', '0', '最终审核', '1', '1604393957886');
 
 -- ----------------------------
 -- Table structure for sys_pro_origin
@@ -439,9 +362,7 @@ CREATE TABLE `sys_pro_origin` (
 -- ----------------------------
 -- Records of sys_pro_origin
 -- ----------------------------
-INSERT INTO `sys_pro_origin` VALUES ('1', '工程项目', 'B', '1', null, null, null);
-INSERT INTO `sys_pro_origin` VALUES ('2', '采购招标', 'C', '1', null, null, null);
-INSERT INTO `sys_pro_origin` VALUES ('159903472576303', '工程招标', 'A', '1', null, null, null);
+INSERT INTO `sys_pro_origin` VALUES ('803443434', 'TEST_Origin', null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for sys_pro_type
@@ -460,8 +381,7 @@ CREATE TABLE `sys_pro_type` (
 -- ----------------------------
 -- Records of sys_pro_type
 -- ----------------------------
-INSERT INTO `sys_pro_type` VALUES ('1', '工程项目', null, null, null, null);
-INSERT INTO `sys_pro_type` VALUES ('159909505476470', '采购项目', null, null, null, null);
+INSERT INTO `sys_pro_type` VALUES ('326533751', 'TEST_Type', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -500,7 +420,7 @@ CREATE TABLE `sys_role_privilege` (
   `operator` bigint(40) DEFAULT NULL COMMENT '操作者',
   `time` bigint(40) DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_role_privilege
@@ -590,6 +510,9 @@ INSERT INTO `sys_role_privilege` VALUES ('96', '1', '69', null, null, null, null
 INSERT INTO `sys_role_privilege` VALUES ('97', '1', '70', null, null, null, null);
 INSERT INTO `sys_role_privilege` VALUES ('98', '1', '71', null, null, null, null);
 INSERT INTO `sys_role_privilege` VALUES ('99', '1', '72', null, null, null, null);
+INSERT INTO `sys_role_privilege` VALUES ('100', '1', '73', null, null, null, null);
+INSERT INTO `sys_role_privilege` VALUES ('101', '1', '75', null, null, null, null);
+INSERT INTO `sys_role_privilege` VALUES ('102', '1', '76', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for sys_user

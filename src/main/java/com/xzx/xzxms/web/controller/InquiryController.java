@@ -1,5 +1,6 @@
 package com.xzx.xzxms.web.controller;
 import com.xzx.xzxms.bean.Inquiry;
+import com.xzx.xzxms.bean.extend.InquiryExtend;
 import com.xzx.xzxms.service.IInquiryService;
 import com.xzx.xzxms.utils.CustomerException;
 import com.xzx.xzxms.utils.Message;
@@ -21,7 +22,7 @@ public class InquiryController {
     @ApiOperation("根据项目id查询所有询价")
     @GetMapping("findByProDetailId")
     public Message findByProDetailId(long proDetailId) {
-        List<Inquiry> inquiryList = iInquiryServiceImpl.findByProDetailId(proDetailId);
+        List<InquiryExtend> inquiryList = iInquiryServiceImpl.findByProDetailId(proDetailId);
 
         return MessageUtil.success("success", inquiryList);
     }
