@@ -10,11 +10,11 @@
 <generatorConfiguration>
 
   <!--<classPathEntry location="D:\gg\repository\mysql\mysql-connector-java\8.0.16\mysql-connector-java-8.0.16.jar" />-->
-  <classPathEntry location="D:\Maven\repository\mysql\mysql-connector-java\5.1.6\mysql-connector-java-5.1.6.jar" />
+  <classPathEntry location="C:\Maven\repository\mysql\mysql-connector-java\5.1.6\mysql-connector-java-5.1.6.jar" />
   <context id="DB2Tables" targetRuntime="MyBatis3">
 
     <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-        connectionURL="jdbc:mysql://smalllei.cn:3306/xzx"
+        connectionURL="jdbc:mysql://10.70.0.113:3306/xzx"
         userId="root"
         password="jzdmlll@1217">
       <!--产生selectByPrimaryKey-->
@@ -84,7 +84,8 @@
     <table tableName="sys_device_type" domainObjectName="SysDeviceType" ></table>
     <table tableName="sys_pro_detail_check" domainObjectName="SysProDetailCheck" ></table>
 -->
-    <table tableName="product_pool" domainObjectName="ProPool" ></table>
+<!--    <table tableName="inquiry" domainObjectName="Inquiry" ></table>-->
+<!--    <table tableName="quote" domainObjectName="Quote" ></table>-->
     <!--
     mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
    -->
