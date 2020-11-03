@@ -32,6 +32,8 @@ public class FileUploadServiceImpl implements IFileUploadService {
     private String filePath;
     @Value("${ftpclient.dictory}")
     private String dictory;
+    @Value("${ftpclient.realHost}")
+    private String realHost;
 
     @Override
     public Map<String, Object> upload(MultipartFile uploadFile) {
@@ -47,7 +49,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
         }finally {
             if(result){
                 map.put("error", 0);
-                map.put("url", "http://"+host+"/images/"+fileName);
+                map.put("url", "http://"+realHost+":8006"+"/images/"+fileName);
             }else{
                 map.put("error", 1);
                 map.put("msg", "图片上传失败!");
@@ -72,7 +74,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
         }finally {
             if(result){
                 map.put("error", 0);
-                map.put("url", "http://"+host+"/images/"+fileName);
+                map.put("url", "http://"+realHost+":8006"+"/images/"+fileName);
                 map.put("msg", "上传成功");
             }else{
                 map.put("error", 1);
@@ -96,7 +98,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
         }finally {
             if(result){
                 map.put("error", 0);
-                map.put("url", "http://"+host+"/images/"+fileName);
+                map.put("url", "http://"+realHost+":8006"+"/images/"+fileName);
                 map.put("msg", "上传成功");
                 map.put("name", fileName);
             }else{
@@ -123,7 +125,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
         map.put("message", "上传成功");
         map.put("fileId", fileId);
         map.put("fileName", oldName);
-        map.put("url", "http://"+host+"/images/"+fileName);
+        map.put("url", "http://"+realHost+":8006"+"/images/"+fileName);
         return map;
     }
 }

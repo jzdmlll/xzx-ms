@@ -59,7 +59,8 @@
                 and che.check_status != 0
             </if>
         </where>
-        GROUP BY i.name, i.params
+        GROUP BY i.id, i.name, i.params,i.number,i.price,i.total_price, i.pro_detail_id,
+        che.type,che.check_status
     </select>
 
 

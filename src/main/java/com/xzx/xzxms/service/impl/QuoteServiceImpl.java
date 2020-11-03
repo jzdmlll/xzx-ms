@@ -54,6 +54,12 @@ public class QuoteServiceImpl implements IQuoteService {
         long time = new Date().getTime();
         long operatorId = quote.getOperator();
         if (quote.getId() != null){
+            Quote quote1 = quoteMapper.selectByPrimaryKey(quote.getId());
+            if(quote1!=null) {
+                if (quote1.getIsUseful() == 1){
+                    throw new CustomerException("请撤销审核再提交文件修改");
+                }
+            }
             List<SysFile> files = quote.getFiles();
             if (files != null && files.size() > 0  ) {
                 for ( SysFile file : files ) {
@@ -67,30 +73,30 @@ public class QuoteServiceImpl implements IQuoteService {
                         example.createCriteria().andOtherIdEqualTo(quote.getId()).andTypeEqualTo(SysFileExtend.TYPE_QUOTE);
                         List<SysFile> sysFiles = sysFileMapper.selectByExample(example);
                         //替换
+                        if(jedisDaoImpl.exists(file.getId().toString())) {
+                            long startTime = System.currentTimeMillis(); //获取开始时间
+                            //从redis中取出base64文件码
+                            String base64File = jedisDaoImpl.get(file.getId().toString());
+                            //解码，还原成输入流
+                            InputStream inputStream = Base64Util.decodeBase64File(base64File);
+                            long redisTime = System.currentTimeMillis(); //获取开始时间
+                            System.out.println("redis" + (redisTime - startTime) + "ms");
+                            //清除redis该文件缓存
+                            jedisDaoImpl.del(file.getId().toString());
+                            //上传到Nginx
+                            Map<String, Object> map = fileUploadServiceImpl.uploadByStream(inputStream, file.getName());
+                            long ftpTime = System.currentTimeMillis(); //获取开始时间
+                            System.out.println("sftp上传" + (ftpTime - redisTime) + "ms");
+                            String url = map.get("url").toString();
+                            //文件信息持久化到数据库
+                            file.setType(SysFileExtend.TYPE_QUOTE);
+                            file.setOtherId(quote.getId());
+                            file.setUrl(url);
+                        }
                         if (sysFiles.size() > 0){
                             sysFileMapper.updateByExampleSelective(file, example);
                         }else {
-                            //插入
-                            if(jedisDaoImpl.exists(file.getId().toString())) {
-                                //从redis中取出base64文件码
-                                String base64File = jedisDaoImpl.get(file.getId().toString());
-                                //解码，还原成输入流
-                                InputStream inputStream = Base64Util.decodeBase64File(base64File);
-                                System.out.println("redis");
-                                //清除redis该文件缓存
-                                jedisDaoImpl.del(file.getId().toString());
-                                //上传到Nginx
-                                Map<String, Object> map = fileUploadServiceImpl.uploadByStream(inputStream, file.getName());
-
-                                String url = map.get("url").toString();
-                                //文件信息持久化到数据库
-                                file.setType(SysFileExtend.TYPE_QUOTE);
-                                file.setOtherId(quote.getId());
-                                file.setUrl(url);
-
-                                sysFileMapper.insert(file);
-                                System.out.println("数据库");
-                            }
+                            sysFileMapper.insert(file);
                         }
                     }else if(file.getType() == SysFileExtend.TYPE_TECHNOLOGY){
                         // 技术文件
@@ -151,10 +157,7 @@ public class QuoteServiceImpl implements IQuoteService {
     public void batchAddQuote(QuoteExtend quote) throws IOException {
         List<SysFile> files = quote.getFiles();
         if(files.size() > 0) {
-            Quote quote1 = quoteMapper.selectByPrimaryKey(quote.getId());
-            if (quote1.getIsUseful() == 1){
-                throw new CustomerException("请撤销审核再提交文件修改");
-            }
+
             long operator = quote.getOperator();
             long time = new Date().getTime();
             long proDetailId = quote.getProDetailId();
@@ -314,7 +317,10 @@ public class QuoteServiceImpl implements IQuoteService {
 
         for (long id : ids){
             Quote quote=quoteMapper.selectByPrimaryKey(id);
-            if (quote != null || !quote.getIsActive().equals(0)){
+            if (quote != null || quote.getIsActive() != 0){
+                if(quote.getIsUseful() == 1){
+                    throw new CustomerException("该报价信息已经被审核，无法删除");
+                }
                 quote.setIsActive(0);
                 quoteMapper.updateByPrimaryKeySelective(quote);
                 // 报价逻辑删除时，将对应审核删除

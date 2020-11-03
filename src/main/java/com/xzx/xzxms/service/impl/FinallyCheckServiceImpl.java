@@ -91,10 +91,7 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
         proCheck.setCheckStatus(SysProCheckExtend.PASS_STATUS); //1选用
         proCheck.setOperator(userId);
         proCheck.setTime(time);
-
         for (long id : checkIds) {
-            SysProCheck proCheck1 = sysProCheckMapper.selectByPrimaryKey(id);
-            id = proCheck1.getContentId();
 
             proCheck.setId(id);
             sysProCheckMapper.updateByPrimaryKeySelective(proCheck);
@@ -133,7 +130,5 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
             proCheck.setId(id);
             sysProCheckMapper.updateByPrimaryKeySelective(proCheck);
         }
-
-
     }
 }

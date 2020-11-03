@@ -33,8 +33,9 @@
         LEFT JOIN sys_pro_detail spd ON i.pro_detail_id = spd.id
         LEFT JOIN sys_pro_check spc ON q.id = spc.content_id
       <where>
-          spc.type != '最终审核'
+          spc.type != '最终审核' and q.is_active = 1
           and i.id = #{inquiryId,jdbcType=BIGINT}
       </where>
+        order by spc.content_id
     </select>
 </mapper>

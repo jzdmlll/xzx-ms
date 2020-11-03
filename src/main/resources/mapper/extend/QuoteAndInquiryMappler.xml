@@ -31,9 +31,11 @@
         i.model i_model,i.name i_name,i.number i_number,i.params i_params,i.sort i_sort,i.unit i_unit
         from quote q
         left join inquiry i on q.inquiry_id=i.id
+        left join sys_pro_check c on q.id = c.content_id
         <where>
+            q.is_active = 1
             <if test="quoteId != null">
-                q.id = #{quoteId,jdbcType = BIGINT}
+            and c.id = #{quoteId,jdbcType = BIGINT}
             </if>
         </where>
     </select>

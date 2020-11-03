@@ -7,9 +7,9 @@ spring:
       max-request-size: 20MB
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/xzx?characterEncoding=utf8
+    url: jdbc:mysql://10.70.0.113:3306/xzx?characterEncoding=utf8
     username: root
-    password: root
+    password: jzdmlll@1217
 
     druid:
       # 数据库连接池
@@ -29,9 +29,9 @@ spring:
 
   redis:
     database: 0
-    host: "127.0.0.1"
+    host: "10.70.0.113"
     port: 6379
-    #password: "xzx@redis123"
+    password: "xzx@redis123"
     timeout: 5000
     jedis:
       pool:
@@ -72,6 +72,7 @@ mail:
 
 ftpclient:
   host: 10.70.0.113
+  realHost: 218.87.96.53
   port: 22
   username: root
   password: "6293082"

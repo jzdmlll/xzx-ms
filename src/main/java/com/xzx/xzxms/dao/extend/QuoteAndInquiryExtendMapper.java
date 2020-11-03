@@ -11,7 +11,7 @@ public interface QuoteAndInquiryExtendMapper {
 
     /**
      * 根据报价表ID关联查询出询价、报价内容
-     * @param quoteId 报价表ID
+     * @param quoteId 审核表ID
      * @return
      */
     QuoteExtendInquiry findByQuoteId(@Param("quoteId") long quoteId);

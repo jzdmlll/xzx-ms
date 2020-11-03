@@ -34,7 +34,7 @@ public class ProductPoolController {
 
     @ApiOperation(value = "查询")
     @GetMapping(value = "findByParams")
-    public Message findByParams(@RequestParam(value="name", required=false)String name, @RequestParam(value="brand", required=false)String brand){
+    public Message findByParams(@RequestParam(value="name", required=false, defaultValue = "")String name, @RequestParam(value="brand", required=false, defaultValue = "")String brand){
         List<ProPool> list = productPoolServiceImpl.findByParams(name, brand);
         return MessageUtil.success("success", list);
     }

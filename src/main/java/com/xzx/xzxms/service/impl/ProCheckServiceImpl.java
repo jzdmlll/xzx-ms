@@ -35,6 +35,7 @@ public class ProCheckServiceImpl implements ISysProCheckService {
     @Transactional
     @Override
     public void UpdateCheckStatus(Integer status, long[] ids, long operator) {
+        int temp = 0;
         for (long id : ids){
             SysProCheck sysProCheck = sysProCheckMapper.selectByPrimaryKey(id);
             Quote quote = quoteMapper.selectByPrimaryKey(sysProCheck.getContentId());
@@ -46,7 +47,16 @@ public class ProCheckServiceImpl implements ISysProCheckService {
             }
 
             if(status == 0) {
-                quote.setIsUseful(0);
+                SysProCheckExample example = new SysProCheckExample();
+                example.createCriteria().andContentIdEqualTo(sysProCheck.getContentId()).andIdNotEqualTo(id).andTypeNotEqualTo("最终审核").andTypeNotEqualTo("比价审核");
+                List<SysProCheck> list = sysProCheckMapper.selectByExample(example);
+                //如果list存在 则说明存在另一个审核 并且判断这个审核状态不为0 则代表已使用 反之置为未使用（0）
+                if(list.size() > 0 && list.get(0).getCheckStatus() !=0){
+                    quote.setIsUseful(1);
+                }else{
+
+                    quote.setIsUseful(0);
+                }
             }else {
                 quote.setIsUseful(1);
             }
