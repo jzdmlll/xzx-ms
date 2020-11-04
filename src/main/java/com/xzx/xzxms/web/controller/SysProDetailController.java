@@ -56,4 +56,5 @@ public class SysProDetailController {
         return MessageUtil.success("success", result);
     }
 
+
 }

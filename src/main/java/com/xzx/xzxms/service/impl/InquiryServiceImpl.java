@@ -2,9 +2,12 @@ package com.xzx.xzxms.service.impl;
 
 import com.xzx.xzxms.bean.Inquiry;
 import com.xzx.xzxms.bean.InquiryExample;
+import com.xzx.xzxms.bean.Quote;
+import com.xzx.xzxms.bean.QuoteExample;
 import com.xzx.xzxms.bean.extend.InquiryCompareExtend;
 import com.xzx.xzxms.bean.extend.InquiryExtend;
 import com.xzx.xzxms.dao.InquiryMapper;
+import com.xzx.xzxms.dao.QuoteMapper;
 import com.xzx.xzxms.dao.extend.InquiryExtendMapper;
 import com.xzx.xzxms.service.IInquiryService;
 import com.xzx.xzxms.utils.CustomerException;
@@ -25,6 +28,8 @@ public class InquiryServiceImpl implements IInquiryService{
     private InquiryMapper inquiryMapper;
     @Resource
     private InquiryExtendMapper inquiryExtendMapper;
+    @Resource
+    private QuoteMapper quoteMapper;
     @Override
     public List<InquiryExtend> findByProDetailId(long proDetailId) {
 
@@ -32,10 +37,8 @@ public class InquiryServiceImpl implements IInquiryService{
     }
 
     @Override
-    public List<Inquiry> findAll() {
-        InquiryExample example = new InquiryExample();
-        example.createCriteria().andIsActiveEqualTo(1);
-        return inquiryMapper.selectByExample(example);
+    public List<InquiryExtend> findAll() {
+        return inquiryExtendMapper.findInquiryAndQuoteNum(-1L);
     }
 
     /**
@@ -82,6 +85,12 @@ public class InquiryServiceImpl implements IInquiryService{
 
         for (long id : ids){
             Inquiry inquiry=inquiryMapper.selectByPrimaryKey(id);
+            QuoteExample example = new QuoteExample();
+            example.createCriteria().andInquiryIdEqualTo(id).andIsActiveEqualTo(1);
+            List<Quote> quotes = quoteMapper.selectByExample(example);
+            if(quotes.size() > 0) {
+                throw new CustomerException("该询价下有报价内容，请删除对应报价内容后执行该操作");
+            }
             if (inquiry != null || !inquiry.getIsActive().equals(0)){
                 inquiry.setIsActive(0);
                 inquiryMapper.updateByPrimaryKeySelective(inquiry);
@@ -92,105 +101,9 @@ public class InquiryServiceImpl implements IInquiryService{
     }
 
     @Override
-    public List<InquiryExtend> findByProIdOrCompareStatus(long proDetailId, Integer compareStatus) {
+    public List<InquiryCompareExtend> findByProIdOrCompareStatus(long proDetailId, Integer compareStatus) {
+        List<InquiryCompareExtend> InquiryCompareExtends = inquiryExtendMapper.findByProIdOrCompareStatus(proDetailId,compareStatus);
 
-        List<InquiryExtend> list= new ArrayList<>();
-
-        if(compareStatus == -1 || compareStatus == 0){
-            List<InquiryCompareExtend> InquiryCompareExtends = inquiryExtendMapper.findByProIdOrCompareStatus(proDetailId,compareStatus);
-            System.out.println(InquiryCompareExtends.size());
-            long inquiryId = 0L;
-            Boolean compare=true;
-            Boolean buss=true;
-            Boolean fina=true;
-            Boolean tench=true;
-
-            InquiryCompareExtend temp = null;
-
-            for(int j = 0; j < InquiryCompareExtends.size(); j++){
-
-                InquiryCompareExtend i = InquiryCompareExtends.get(j);
-
-                if(inquiryId == 0L){
-
-                    inquiryId = i.getCheContentId();
-                }
-                if(inquiryId != i.getCheContentId()) {
-
-                    if(compare && buss && fina && tench){
-                        temp = InquiryCompareExtends.get(j-1);
-                        InquiryExtend inquiry = new InquiryExtend();
-                        inquiry.setId(temp.getId());
-                        inquiry.setName(temp.getName());
-                        inquiry.setModel(temp.getModel());
-                        inquiry.setNumber(temp.getNumber());
-                        inquiry.setParams(temp.getParams());
-                        inquiry.setUnit(temp.getUnit());
-                        inquiry.setBrand(temp.getBrand());
-                        inquiry.setRemark(temp.getRemark());
-                        inquiry.setCheckStatus(0);
-
-                        list.add(inquiry);
-                    }
-                    inquiryId = i.getCheContentId();
-                    compare = true;
-                    buss = true;
-                    fina = true;
-                    tench = true;
-                }
-
-                switch (i.getCheType()) {
-                    case "比价审核":
-                        if (!i.getCheCheckStatus().equals(0)) {
-                            compare = false;
-                        }
-                        break;
-                    case "商务审核":
-                        if (!i.getCheCheckStatus().equals(1)) {
-                            buss = false;
-                        }
-                        break;
-                    case "技术审核":
-                        if (!i.getCheCheckStatus().equals(1)) {
-                            tench = false;
-                        }
-                        break;
-                    case "最终审核":
-                        if (!i.getCheCheckStatus().equals(0)) {
-                            fina = false;
-                        }
-                        break;
-                    default:
-                        break;
-                }
-
-                if (j == InquiryCompareExtends.size() - 1){
-
-                    temp = InquiryCompareExtends.get(j);
-
-                    if(compare && buss && fina && tench){
-
-                        InquiryExtend inquiry = new InquiryExtend();
-                        inquiry.setName(temp.getName());
-                        inquiry.setId(temp.getId());
-                        inquiry.setModel(temp.getModel());
-                        inquiry.setNumber(temp.getNumber());
-                        inquiry.setParams(temp.getParams());
-                        inquiry.setUnit(temp.getUnit());
-                        inquiry.setBrand(temp.getBrand());
-                        inquiry.setRemark(temp.getRemark());
-                        inquiry.setCheckStatus(0);
-
-                        list.add(inquiry);
-                    }
-                }
-
-            }
-        }else{
-
-            list = inquiryExtendMapper.findByProIdOrCompareStatusToEquals(proDetailId,compareStatus);
-        }
-
-        return list;
+        return InquiryCompareExtends;
     }
 }

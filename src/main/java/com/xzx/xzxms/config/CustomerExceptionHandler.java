@@ -19,6 +19,6 @@ public class CustomerExceptionHandler {
             }
             return MessageUtil.error(exception.getMessage());
         }
-        return MessageUtil.error("后台接口异常！");
+        return MessageUtil.error("后台接口异常！"+"原因："+exception.getMessage());
     }
 }

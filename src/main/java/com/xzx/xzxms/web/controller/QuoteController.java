@@ -65,8 +65,8 @@ public class QuoteController {
     @ApiOperation("供应商报价批量置为无效")
     @PostMapping("batchSetInvalid")
     public Message batchSetInvalid(long[] ids){
-        iQuoteServiceImpl.batchSetInvalid(ids);
 
+        iQuoteServiceImpl.batchSetInvalid(ids);
         return MessageUtil.success("删除成功");
     }
 }

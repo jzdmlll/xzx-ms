@@ -84,4 +84,5 @@ public class QuoteRespVM extends Quote {
     public void setName(String name) {
         this.name = name;
     }
+
 }

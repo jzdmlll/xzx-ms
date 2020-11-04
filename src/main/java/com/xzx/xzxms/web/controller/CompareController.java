@@ -2,6 +2,7 @@ package com.xzx.xzxms.web.controller;
 
 
 import com.xzx.xzxms.bean.Inquiry;
+import com.xzx.xzxms.bean.extend.InquiryCompareExtend;
 import com.xzx.xzxms.bean.extend.InquiryExtend;
 import com.xzx.xzxms.service.ICompareService;
 import com.xzx.xzxms.service.IInquiryService;
@@ -31,7 +32,7 @@ public class CompareController {
     @ApiOperation("根据项目或比价状态查询")
     @GetMapping("findByProIdOrCompareStatus")
     public Message findByProIdOrCompareStatus(@RequestParam(value = "proDetailId",required = false,defaultValue = "-1") long proDetailId, @RequestParam(value = "compareStatus",required = false,defaultValue = "-1") int compareStatus){
-        List<InquiryExtend> byProIdOrCompareStatus = inquiryServiceImpl.findByProIdOrCompareStatus(proDetailId, compareStatus);
+        List<InquiryCompareExtend> byProIdOrCompareStatus = inquiryServiceImpl.findByProIdOrCompareStatus(proDetailId, compareStatus);
 
         //List<Inquiry> inquiries = iInquiryServiceImpl.findByProIdOrCompareStatus(proDetailId,compareStatus);
         return MessageUtil.success("success", byProIdOrCompareStatus);

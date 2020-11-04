@@ -37,7 +37,7 @@ public class InquiryController {
     @ApiOperation("查询所有询价")
     @GetMapping("findAll")
     public Message findAll() {
-        List<Inquiry> inquiryList = iInquiryServiceImpl.findAll();
+        List<InquiryExtend> inquiryList = iInquiryServiceImpl.findAll();
         return MessageUtil.success("success", inquiryList);
     }
 

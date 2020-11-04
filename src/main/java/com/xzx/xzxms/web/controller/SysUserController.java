@@ -80,7 +80,6 @@ public class SysUserController {
             jedisDaoImpl.setCode(newToken, userJson, JwtTokenUtil.REDIS_TOKEN_TIME);
             // 将新token返回
             Map<String, String> map = new HashMap<>();
-            System.out.println(newToken);
             map.put("token", newToken);
             return MessageUtil.success("刷新token成功", map);
         }else {

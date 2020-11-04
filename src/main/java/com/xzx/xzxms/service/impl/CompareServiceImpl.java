@@ -15,8 +15,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class CompareServiceImpl implements ICompareService {
@@ -31,20 +33,63 @@ public class CompareServiceImpl implements ICompareService {
         List<QuoteRespVM> quoteRespVM = compareExtendMapper.cascadeFindAllByParams(inquiryId);
         List<QuoteRespVM> newQuote = new ArrayList<>();
 
+        long id = -1L;
+        List<QuoteRespVM> tempList = null;
+        List<List<QuoteRespVM>> resultList = new ArrayList<>();
         for (QuoteRespVM q : quoteRespVM){
-            if (!q.getCheckType().equals("比价审核")){
-                if (q.getCompareStatus() == 2){
-                    quoteRespVM = quoteRespVM.stream().filter(x->x.getId() == q.getId()).collect(Collectors.toList());
+            if(id != q.getId()) {
+                if(tempList!=null){
+                    resultList.add(tempList);
+                }
+                id = q.getId();
+                tempList = new ArrayList<>();
+                tempList.add(q);
+            }else {
+                tempList.add(q);
+            }
+        }
+        resultList.add(tempList);
+        System.out.println(resultList.size());
+
+        for(List<QuoteRespVM> list: resultList){
+            int key = 0;
+            int index = 0;
+            for(int i=0;i<list.size();i++){
+                QuoteRespVM q = list.get(i);
+                if(q.getCompareStatus() ==  2 && !"比价审核".equals(q.getCheckType())) {
+                    key ++;
+                }
+                if("比价审核".equals(q.getCheckType())) {
+                    index = i;
                 }
             }
+            if(key == 0) {
+                newQuote.add(list.get(index));
+            }
+        }
+
+
+        /*long id = 1L;
+        for (QuoteRespVM q : quoteRespVM){
+            if (!q.getCheckType().equals("比价审核")){
+                if (q.getCompareStatus() == 2 || id == q.getId()){
+
+                    id = q.getId();
+                    if(quoteRespVM.stream().anyMatch(x->x.getId() == q.getId())){
+
+                        quoteRespVM = quoteRespVM.stream().filter(x->x.getId() != q.getId()).collect(Collectors.toList());
+                    }
+                }
+
+            }
+
         }
 
         for(QuoteRespVM q : quoteRespVM){
             if(q.getCheckType().equals("比价审核")){
                 newQuote.add(q);
             }
-        }
-        //quoteRespVM = quoteRespVM.stream().collect(Collectors.collectingAndThen(Collectors.toCollection(()-> new TreeSet<>(Comparator.comparing(QuoteRespVM::getId))),ArrayList::new));
+        }*/
 
         return newQuote;
     }

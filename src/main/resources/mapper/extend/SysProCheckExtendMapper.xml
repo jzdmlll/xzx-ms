@@ -1,66 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xzx.xzxms.dao.extend.SysProCheckExtendMapper">
-    <!--<select id="cascadeRoleFindAll" resultType="com.xzx.xzxms.bean.extend.SysProCheckExtend">
-      SELECT
-        spc.* , sr.check_name checkName
-	  FROM
-	    sys_pro_check spc, sys_role sr
-      WHERE
-	    spc.role_id = sr.id
-    </select>
-
-    &lt;!&ndash;<select id="cascadeFindAllByCheckName1" resultMap="ProCheckExtendMap1">
-	  SELECT
-        spc.* , sr.check_name checkName
-            ,#{proDetailId,jdbcType=BIGINT} as proDetailId
-	  FROM
-	    sys_pro_check spc, sys_role sr
-      <where>
-          spc.role_id = sr.id
-          AND spc.type = #{type,jdbcType=INTEGER}
-          AND sr.check_name = #{checkName,jdbcType=VARCHAR}
-          <if test="checkStatus!=null and checkStatus!=-1">
-              and spc.check_status in
-              <foreach item="item" collection="checkStatus" open="(" separator="," close=")">
-                  #{item}
-              </foreach>
-          </if>
-      </where>
-    </select>
-    <resultMap id="ProCheckExtendMap1" type="com.xzx.xzxms.bean.extend.SysProCheckExtend" extends="com.xzx.xzxms.dao.SysProCheckMapper.BaseResultMap">
-        <collection property="inquiry" ofType="map" column="{contentId=content_id,proDetailId=proDetailId}" select="com.xzx.xzxms.dao.extend.InquiryExtendMapper.cascadeSelectByPrimaryKey"></collection>
-    </resultMap>&ndash;&gt;
-    <select id="cascadeFindAllByCheckName" resultMap="ProCheckExtendMap">
-        select
-          spc.*,sr.check_name checkName,
-          i.id i_id,i.brand i_brand,i.warranty i_warranty,i.su_model i_su_model,i.su_remark i_su_remark,i.su_delivery i_su_delivery,i.su_warranties i_su_warranties,
-          i.unit i_unit,i.su_params i_su_params,i.su_price i_su_price,i.su_total_price i_su_total_price,i.number i_number,i.supplier i_supplier,i.device i_device,i.model i_model,
-          i.params i_params,i.name i_name
-        from
-          sys_pro_detail spd
-        right join inquiry i on i.pro_detail_id = spd.id
-        left join sys_pro_check spc on spc.content_id = i.id
-        left join sys_role sr on sr.id = spc.role_id
-        <where>
-          spc.type = #{type,jdbcType=INTEGER}
-        and
-          sr.check_name = #{checkName,jdbcType=VARCHAR}
-          <if test="checkStatus!=null and checkStatus!=-1">
-            and spc.check_status in
-            <foreach item="item" collection="checkStatus" open="(" separator="," close=")">
-              #{item}
-            </foreach>
-          </if>
-          <if test="proDetailId!=null and proDetailId!=-1">
-            and spd.id = #{proDetailId,jdbcType=BIGINT}
-          </if>
-        </where>
-    </select>
-    <resultMap id="ProCheckExtendMap" type="com.xzx.xzxms.bean.extend.SysProCheckExtend" extends="com.xzx.xzxms.dao.SysProCheckMapper.BaseResultMap">
-        <collection property="inquiry" ofType="com.xzx.xzxms.bean.InquiryWithBLOBs" autoMapping="true" columnPrefix="i_">
-        </collection>
-    </resultMap>-->
     <select id="cascadeFindAllByCheckName" resultMap="ProCheckExtendMap">
         SELECT
         spc.*,
@@ -74,7 +14,7 @@
         LEFT JOIN sys_pro_check spc ON spc.content_id = q.id
         LEFT JOIN sys_file sf ON sf.other_id = q.id
         <where>
-            spc.type = #{checkName,jdbcType=VARCHAR}
+            spc.type = #{checkName,jdbcType=VARCHAR} and q.is_active = 1 and i.is_active = 1
             <if test="checkStatus!=null and checkStatus!=-1">
                 AND spc.check_status in
                 <foreach item="item" collection="checkStatus" open="(" separator="," close=")">
