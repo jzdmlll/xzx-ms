@@ -32,7 +32,7 @@ spring:
     host: "10.70.0.113"
     port: 6379
     password: "xzx@redis123"
-    timeout: 5000
+    timeout: 10000
     jedis:
       pool:
         max-active: 50
@@ -79,7 +79,8 @@ ftpclient:
   basePath: /home/lzc
   filePath: /
 
-  dictory: /home/images
+  #dictory: D:\images\
+  dictory: /home/images/
 
 pagehelper:
   helperDialect: mysql

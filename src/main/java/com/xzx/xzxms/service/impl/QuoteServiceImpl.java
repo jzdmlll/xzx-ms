@@ -13,6 +13,7 @@ import com.xzx.xzxms.utils.Base64Util;
 import com.xzx.xzxms.utils.CustomerException;
 import com.xzx.xzxms.utils.IDUtils;
 import com.xzx.xzxms.utils.POIExcelUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,7 +51,7 @@ public class QuoteServiceImpl implements IQuoteService {
     }
     @Transactional
     @Override
-    public void saveOrUpdate(QuoteExtend quote) {
+    public synchronized void saveOrUpdate(QuoteExtend quote) {
         long time = new Date().getTime();
         long operatorId = quote.getOperator();
         if (quote.getId() != null){
@@ -90,6 +91,11 @@ public class QuoteServiceImpl implements IQuoteService {
                             String url = map.get("url").toString();
                             //文件信息持久化到数据库
                             file.setType(SysFileExtend.TYPE_QUOTE);
+                            file.setTime(time);
+                            file.setIsActive(1);
+                            file.setIsUseful(1);
+                            file.setOperator(operatorId);
+                            file.setName(map.get("fileName").toString());
                             file.setOtherId(quote.getId());
                             file.setUrl(url);
                         }
@@ -113,7 +119,12 @@ public class QuoteServiceImpl implements IQuoteService {
                             String url = map.get("url").toString();
                             //文件信息持久化到数据库
                             file.setType(SysFileExtend.TYPE_TECHNOLOGY);
+                            file.setTime(time);
+                            file.setIsActive(1);
+                            file.setIsUseful(1);
+                            file.setOperator(operatorId);
                             file.setOtherId(quote.getId());
+                            file.setName(map.get("fileName").toString());
                             file.setUrl(url);
                             sysFileMapper.insert(file);
                             System.out.println("数据库");
@@ -168,13 +179,15 @@ public class QuoteServiceImpl implements IQuoteService {
                 String base64File = jedisDaoImpl.get(file.getId().toString());
                 //解码，还原成输入流
                 InputStream inputStream = Base64Util.decodeBase64File(base64File);
+                InputStream temp = Base64Util.decodeBase64File(base64File);
+                //上传到Nginx
+                Map<String, Object> excelUploadMap = fileUploadServiceImpl.uploadByStream(inputStream, file.getName());
                 //解析excel
-                List<Map<String, Object>> dataFromExcel = POIExcelUtils.getDataFromExcel(inputStream);
+                List<Map<String, Object>> dataFromExcel = POIExcelUtils.getDataFromExcel(temp);
 
                 //清除redis该文件缓存
                 jedisDaoImpl.del(file.getId().toString());
-                //上传到Nginx
-                Map<String, Object> excelUploadMap = fileUploadServiceImpl.uploadByStream(inputStream, file.getName());
+
 
                 String excelUrl = excelUploadMap.get("url").toString();
                 //2.报价信息存入数据库报价表
@@ -217,19 +230,27 @@ public class QuoteServiceImpl implements IQuoteService {
                         q.setIsActive(1);
                         q.setIsUseful(0);
                         q.setOperator(operator);
-                        q.setSuDelivery(Long.parseLong(item.get("货期").toString().trim()));
+                        q.setSuDelivery(item.get("货期").toString().trim());
                         q.setSuModel(item.get("报价型号").toString().trim());
                         q.setSuBrand(item.get("报价品牌").toString().trim());
                         q.setSuParams(item.get("实际技术参数").toString().trim());
                         q.setSupplier(supplier);
-                        q.setSuPrice(Double.parseDouble(item.get("设备单价").toString().trim()));
+                        if(StringUtils.isEmpty(item.get("设备单价").toString().trim())){
+                            q.setSuPrice(0D);
+                        }else{
+                            q.setSuPrice(Double.parseDouble(item.get("设备单价").toString().trim()));
+                        }
+                        if(StringUtils.isEmpty(item.get("设备总价").toString().trim())){
+                            q.setSuTotalPrice(0D);
+                        }else{
+                            q.setSuTotalPrice(Double.parseDouble(item.get("设备总价").toString().trim()));
+                        }
                         q.setSuRemark(item.get("备注").toString().trim());
-                        q.setSuTotalPrice(Double.parseDouble(item.get("设备总价").toString().trim()));
                         q.setTime(time);
-                        q.setWarranty(Long.parseLong(item.get("质保期/售后").toString().trim()));
+                        q.setWarranty(item.get("质保期/售后").toString().trim());
                         q.setInquiryId(inquiryId);
                     }catch (NumberFormatException exception) {
-                        throw new CustomerException("失败，存在数据格式不正确或者为空");
+                        throw new CustomerException("失败，存在数据格式不正确"+exception.getMessage());
                     }
                     if(item.get("图片") != null && !"".equals(item.get("图片").toString().trim())) {
                         InputStream is = (InputStream)item.get("图片");

@@ -205,7 +205,17 @@ public class POIExcelUtils {
                 cellValue = cell.getBooleanCellValue()+"";;
                 break;
             case Cell.CELL_TYPE_FORMULA: // 公式
-                cellValue = cell.getCellFormula();
+                try {
+                    cellValue = String.valueOf(cell.getNumericCellValue());
+                } catch (IllegalStateException e) {
+                    if (e.getMessage().indexOf("from a STRING cell") != -1) {
+                        cellValue = String.valueOf(cell.getStringCellValue());
+                    } else if (e.getMessage().indexOf("from a ERROR formula cell") != -1) {
+                        cellValue = String.valueOf(cell.getErrorCellValue());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
             case Cell.CELL_TYPE_BLANK: // 空值
                 cellValue = "";

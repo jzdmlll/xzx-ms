@@ -54,7 +54,11 @@ public class InquiryServiceImpl implements IInquiryService{
         List<Inquiry> inquiries = inquiryMapper.selectByExample(example);
         if (inquiries.size() > 0) {
             for (Inquiry i:inquiries){
-                if(i.getIsUseful() == 1) {
+                QuoteExample ex = new QuoteExample();
+                ex.createCriteria().andInquiryIdEqualTo(i.getId()).andIsActiveEqualTo(1);
+                List<Quote> quotes = quoteMapper.selectByExample(ex);
+
+                if(quotes.size() > 0) {
                     throw new CustomerException("询价函["+i.getName()+"]下已有报价单存在，禁止覆盖");
                 }
             }
