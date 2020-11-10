@@ -113,18 +113,24 @@ public class POIExcelUtils {
      */
     public static Map<Integer, Object> getPictures1 (HSSFSheet sheet) throws IOException {
         Map<Integer, Object> map = new HashMap<>();
-        List<HSSFShape> list = sheet.getDrawingPatriarch().getChildren();
-        for (HSSFShape shape : list) {
-            if (shape instanceof HSSFPicture) {
-                HSSFPicture picture = (HSSFPicture) shape;
-                HSSFClientAnchor cAnchor = (HSSFClientAnchor) picture.getAnchor();
-                PictureData pdata = picture.getPictureData();
-                int key = cAnchor.getRow1(); // 行号
-                map.put(key, pdata);
-                String name = picture.getPictureData().getMimeType();
-                name = name.substring(name.lastIndexOf("/")+1, name.length());
-                map.put(-1, name);
+        if(sheet.getDrawingPatriarch()!=null){
+            try {
+                List<HSSFShape> list = sheet.getDrawingPatriarch().getChildren();
+                for (HSSFShape shape : list) {
+                    if (shape instanceof HSSFPicture) {
+                        HSSFPicture picture = (HSSFPicture) shape;
+                        HSSFClientAnchor cAnchor = (HSSFClientAnchor) picture.getAnchor();
+                        PictureData pdata = picture.getPictureData();
+                        int key = cAnchor.getRow1(); // 行号
+                        map.put(key, pdata);
+                        String name = picture.getPictureData().getMimeType();
+                        name = name.substring(name.lastIndexOf("/") + 1, name.length());
+                        map.put(-1, name);
 
+                    }
+                }
+            }catch (Exception e){
+                throw new CustomerException("excel中图片解析异常");
             }
         }
         return map;
@@ -137,21 +143,27 @@ public class POIExcelUtils {
      */
     public static Map<Integer, Object> getPictures2 (XSSFSheet sheet) throws IOException {
         Map<Integer, Object> map = new HashMap<>();
-        List<POIXMLDocumentPart> list = sheet.getRelations();
-        for (POIXMLDocumentPart part : list) {
-            if (part instanceof XSSFDrawing) {
-                XSSFDrawing drawing = (XSSFDrawing) part;
-                List<XSSFShape> shapes = drawing.getShapes();
-                for (XSSFShape shape : shapes) {
-                    XSSFPicture picture = (XSSFPicture) shape;
-                    XSSFClientAnchor anchor = picture.getPreferredSize();
-                    CTMarker marker = anchor.getFrom();
-                    int key = marker.getRow();
-                    map.put(key, picture.getPictureData());
-                    String name = picture.getPictureData().getMimeType();
-                    name = name.substring(name.lastIndexOf("/")+1, name.length());
-                    map.put(-1, name);
+        if(sheet.getRelations()!=null){
+            try {
+                List<POIXMLDocumentPart> list = sheet.getRelations();
+                for (POIXMLDocumentPart part : list) {
+                    if (part instanceof XSSFDrawing) {
+                        XSSFDrawing drawing = (XSSFDrawing) part;
+                        List<XSSFShape> shapes = drawing.getShapes();
+                        for (XSSFShape shape : shapes) {
+                            XSSFPicture picture = (XSSFPicture) shape;
+                            XSSFClientAnchor anchor = picture.getPreferredSize();
+                            CTMarker marker = anchor.getFrom();
+                            int key = marker.getRow();
+                            map.put(key, picture.getPictureData());
+                            String name = picture.getPictureData().getMimeType();
+                            name = name.substring(name.lastIndexOf("/") + 1, name.length());
+                            map.put(-1, name);
+                        }
+                    }
                 }
+            }catch (Exception e){
+                throw new CustomerException("excel中图片解析异常");
             }
         }
         return map;

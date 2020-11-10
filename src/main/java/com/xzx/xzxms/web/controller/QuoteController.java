@@ -1,5 +1,7 @@
 package com.xzx.xzxms.web.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xzx.xzxms.bean.Quote;
 import com.xzx.xzxms.bean.extend.QuoteExtend;
 import com.xzx.xzxms.bean.extend.QuoteExtendInquiry;
@@ -55,10 +57,13 @@ public class QuoteController {
 
     @ApiOperation("供应商报价查询/项目报价查询")
     @GetMapping("findBySupplierOrPro")
-    public Message findBySupplierOrPro(@RequestParam(value = "supplier",required = false) String supplier,@RequestParam(value = "proId",required = false,defaultValue = "-1") long proId){
-
+    public Message findBySupplierOrPro(@RequestParam(value = "supplier",required = false) String supplier,
+                                       @RequestParam(value = "proId",required = false,defaultValue = "-1") long proId,
+                                       @RequestParam(value = "pageNum",required = false,defaultValue = "1")int pageNum){
+        PageHelper.startPage(pageNum, 50);
         List<QuoteExtendInquiry> list = iQuoteServiceImpl.findBySupplierOrPro(supplier,proId);
-        return MessageUtil.success("success",list);
+        PageInfo<QuoteExtendInquiry> pageInfo = new PageInfo<>(list);
+        return MessageUtil.success("success",pageInfo);
     }
 
     @Transactional

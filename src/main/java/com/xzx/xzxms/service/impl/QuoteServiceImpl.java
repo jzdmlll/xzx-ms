@@ -196,10 +196,12 @@ public class QuoteServiceImpl implements IQuoteService {
                 String params = "";
                 long inquiryId = -1L;
                 SysFile sysFile = new SysFile();
+                String notFound = "";
                 for (Map<String, Object> item : dataFromExcel) {
                     String imgUrl = "";
                     String nameExcel = item.get("设备名称").toString();
                     String paramsExcel = item.get("技术要求").toString();
+
                     if (name.equals(nameExcel) && params.equals(paramsExcel)){
                     }else {
                         name = item.get("设备名称").toString();
@@ -213,100 +215,105 @@ public class QuoteServiceImpl implements IQuoteService {
                             inquiry.setIsUseful(1);
                             inquiryMapper.updateByPrimaryKeySelective(inquiry);
                         }else {
-                            throw new CustomerException("找不到对应的询价函");
+                            notFound += "["+name+" "+params+"]----";
                         }
                     }
-                    QuoteExample quoteExample = new QuoteExample();
-                    String supplier = item.get("供应商").toString().trim();
-                    quoteExample.createCriteria().andSupplierEqualTo(supplier).andInquiryIdEqualTo(inquiryId).andIsActiveEqualTo(1);
-                    List<Quote> quotes = quoteMapper.selectByExample(quoteExample);
-                    if (quotes.size() > 0) {
-                        throw new CustomerException("文件中： ["+supplier+"]  数据已存在");
-                    }
-                    Quote q = new Quote();
-                    long quoteId = IDUtils.getId();
-                    try {
-                        q.setId(quoteId);
-                        q.setIsActive(1);
-                        q.setIsUseful(0);
-                        q.setOperator(operator);
-                        q.setSuDelivery(item.get("货期").toString().trim());
-                        q.setSuModel(item.get("报价型号").toString().trim());
-                        q.setSuBrand(item.get("报价品牌").toString().trim());
-                        q.setSuParams(item.get("实际技术参数").toString().trim());
-                        q.setSupplier(supplier);
-                        if(StringUtils.isEmpty(item.get("设备单价").toString().trim())){
-                            q.setSuPrice(0D);
-                        }else{
-                            q.setSuPrice(Double.parseDouble(item.get("设备单价").toString().trim()));
+                    if("".equals(notFound)){
+                        QuoteExample quoteExample = new QuoteExample();
+                        String supplier = item.get("供应商").toString().trim();
+                        quoteExample.createCriteria().andSupplierEqualTo(supplier).andInquiryIdEqualTo(inquiryId).andIsActiveEqualTo(1);
+                        List<Quote> quotes = quoteMapper.selectByExample(quoteExample);
+                        if (quotes.size() > 0) {
+                            throw new CustomerException("文件中： ["+supplier+"]  数据已存在");
                         }
-                        if(StringUtils.isEmpty(item.get("设备总价").toString().trim())){
-                            q.setSuTotalPrice(0D);
-                        }else{
-                            q.setSuTotalPrice(Double.parseDouble(item.get("设备总价").toString().trim()));
+                        Quote q = new Quote();
+                        long quoteId = IDUtils.getId();
+                        try {
+                            q.setId(quoteId);
+                            q.setIsActive(1);
+                            q.setIsUseful(0);
+                            q.setOperator(operator);
+                            q.setSuDelivery(item.get("货期").toString().trim());
+                            q.setSuModel(item.get("报价型号").toString().trim());
+                            q.setSuBrand(item.get("报价品牌").toString().trim());
+                            q.setSuParams(item.get("实际技术参数").toString().trim());
+                            q.setSupplier(supplier);
+                            if(StringUtils.isEmpty(item.get("设备单价").toString().trim())){
+                                q.setSuPrice(0D);
+                            }else{
+                                q.setSuPrice(Double.parseDouble(item.get("设备单价").toString().trim()));
+                            }
+                            if(StringUtils.isEmpty(item.get("设备总价").toString().trim())){
+                                q.setSuTotalPrice(0D);
+                            }else{
+                                q.setSuTotalPrice(Double.parseDouble(item.get("设备总价").toString().trim()));
+                            }
+                            q.setSuRemark(item.get("备注").toString().trim());
+                            q.setTime(time);
+                            q.setWarranty(item.get("质保期/售后").toString().trim());
+                            q.setInquiryId(inquiryId);
+                        }catch (NumberFormatException exception) {
+                            throw new CustomerException("失败，存在数据格式不正确"+exception.getMessage());
                         }
-                        q.setSuRemark(item.get("备注").toString().trim());
-                        q.setTime(time);
-                        q.setWarranty(item.get("质保期/售后").toString().trim());
-                        q.setInquiryId(inquiryId);
-                    }catch (NumberFormatException exception) {
-                        throw new CustomerException("失败，存在数据格式不正确"+exception.getMessage());
-                    }
-                    if(item.get("图片") != null && !"".equals(item.get("图片").toString().trim())) {
-                        InputStream is = (InputStream)item.get("图片");
-                        String imgType = item.get("imgType").toString();
-                        String imgName = item.get("供应商").toString().trim() + name + "报价设备图." + imgType;
-                        Map<String, Object> uploadResult = fileUploadServiceImpl.uploadByStream(is, imgName);
-                        if (uploadResult.get("url")!=null){
-                            imgUrl = uploadResult.get("url").toString();
-                        }else {
-                            throw new CustomerException("excel中图片上传失败");
+                        if(item.get("图片") != null && !"".equals(item.get("图片").toString().trim())) {
+                            InputStream is = (InputStream)item.get("图片");
+                            String imgType = item.get("imgType").toString();
+                            String imgName = item.get("供应商").toString().trim() + name + "报价设备图." + imgType;
+                            Map<String, Object> uploadResult = fileUploadServiceImpl.uploadByStream(is, imgName);
+                            if (uploadResult.get("url")!=null){
+                                imgUrl = uploadResult.get("url").toString();
+                            }else {
+                                throw new CustomerException("excel中图片上传失败");
+                            }
                         }
-                    }
-                    q.setImage(imgUrl);
-                    quoteMapper.insert(q);
+                        q.setImage(imgUrl);
+                        quoteMapper.insert(q);
 
-                    //3.报价信息存入文件表
-                    sysFile.setId(IDUtils.getId());
-                    sysFile.setIsActive(1);
-                    sysFile.setIsUseful(1);
-                    sysFile.setName(excelUploadMap.get("name").toString());
-                    sysFile.setOperator(operator);
-                    sysFile.setOtherId(quoteId);
-                    sysFile.setTime(time);
-                    sysFile.setType(SysFileExtend.TYPE_QUOTE);
-                    sysFile.setUrl(excelUrl);
-                    sysFileMapper.insert(sysFile);
+                        //3.报价信息存入文件表
+                        sysFile.setId(IDUtils.getId());
+                        sysFile.setIsActive(1);
+                        sysFile.setIsUseful(1);
+                        sysFile.setName(excelUploadMap.get("name").toString());
+                        sysFile.setOperator(operator);
+                        sysFile.setOtherId(quoteId);
+                        sysFile.setTime(time);
+                        sysFile.setType(SysFileExtend.TYPE_QUOTE);
+                        sysFile.setUrl(excelUrl);
+                        sysFileMapper.insert(sysFile);
 
-                    //4.给每条报价添加审核记录
-                    //查询所属项目的审核流程
-                    SysProDetailCheckExample example = new SysProDetailCheckExample();
-                    example.createCriteria().andProDetailIdEqualTo(proDetailId);
-                    List<SysProDetailCheck> sysProDetailChecks = sysProDetailCheckMapper.selectByExample(example);
-                    // 根据项目审核流程插入报价审核流程
-                    SysProCheck proCheck = new SysProCheck();
-                    if (sysProDetailChecks.size() > 0) {
-                        for (SysProDetailCheck sysProDetailCheck : sysProDetailChecks ) {
+                        //4.给每条报价添加审核记录
+                        //查询所属项目的审核流程
+                        SysProDetailCheckExample example = new SysProDetailCheckExample();
+                        example.createCriteria().andProDetailIdEqualTo(proDetailId);
+                        List<SysProDetailCheck> sysProDetailChecks = sysProDetailCheckMapper.selectByExample(example);
+                        // 根据项目审核流程插入报价审核流程
+                        SysProCheck proCheck = new SysProCheck();
+                        if (sysProDetailChecks.size() > 0) {
+                            for (SysProDetailCheck sysProDetailCheck : sysProDetailChecks ) {
+                                proCheck.setId(IDUtils.getId());
+                                proCheck.setOperator(operator);
+                                proCheck.setTime(time);
+                                proCheck.setType(sysProDetailCheck.getCheckName());
+                                proCheck.setCheckStatus(0);
+                                proCheck.setContentId(quoteId);
+                                sysProCheckMapper.insertSelective(proCheck);
+                            }
+                            //还需添加比价审核
+                            proCheck.setId(IDUtils.getId());
                             proCheck.setId(IDUtils.getId());
                             proCheck.setOperator(operator);
                             proCheck.setTime(time);
-                            proCheck.setType(sysProDetailCheck.getCheckName());
+                            proCheck.setType("比价审核");
                             proCheck.setCheckStatus(0);
                             proCheck.setContentId(quoteId);
                             sysProCheckMapper.insertSelective(proCheck);
+                        }else {
+                            throw new CustomerException("所属项目没有添加审核");
                         }
-                        //还需添加比价审核
-                        proCheck.setId(IDUtils.getId());
-                        proCheck.setId(IDUtils.getId());
-                        proCheck.setOperator(operator);
-                        proCheck.setTime(time);
-                        proCheck.setType("比价审核");
-                        proCheck.setCheckStatus(0);
-                        proCheck.setContentId(quoteId);
-                        sysProCheckMapper.insertSelective(proCheck);
-                    }else {
-                        throw new CustomerException("所属项目没有添加审核");
                     }
+                }
+                if(!"".equals(notFound)){
+                    throw new CustomerException("找不到对应询价函;提示："+notFound);
                 }
             }else {
                 throw new CustomerException("文件信息过期，请重新上传");
