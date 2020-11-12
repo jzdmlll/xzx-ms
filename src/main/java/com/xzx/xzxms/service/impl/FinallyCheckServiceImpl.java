@@ -1,13 +1,13 @@
 package com.xzx.xzxms.service.impl;
 
-import com.xzx.xzxms.bean.ProPool;
-import com.xzx.xzxms.bean.SysProCheck;
+import com.xzx.xzxms.bean.*;
 import com.xzx.xzxms.bean.extend.QuoteExtendInquiry;
 import com.xzx.xzxms.bean.extend.SysProCheckExtend;
 import com.xzx.xzxms.dao.ProPoolMapper;
 import com.xzx.xzxms.dao.SysProCheckMapper;
 import com.xzx.xzxms.dao.extend.FinallyCheckExtendMapper;
 import com.xzx.xzxms.dao.extend.QuoteAndInquiryExtendMapper;
+import com.xzx.xzxms.dao.extend.SysProDetailExtendMapper;
 import com.xzx.xzxms.service.IFinallyCheckService;
 import com.xzx.xzxms.utils.IDUtils;
 import com.xzx.xzxms.vm.FinallyCheckCompareVM;
@@ -79,12 +79,24 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
     private ProPoolMapper proPoolMapper;
     @Resource
     private QuoteAndInquiryExtendMapper quoteAndInquiryExtendMapper;
+    @Resource
+    private SysProDetailExtendMapper sysProDetailExtendMapper;
 
     @Transactional
     @Override
     public void FinallyCheckCommit(long[] checkIds, long[] unCheckIds, List<Map> remarks, long userId) {
 
         long time = new Date().getTime();
+
+        //根据审核ID查询出询价ID 再查询出项目详情ID
+        SysProCheck sysProCheck = sysProCheckMapper.selectByPrimaryKey(checkIds[0]);
+        Long proDetailId = sysProDetailExtendMapper.isExistsProDetailId(sysProCheck.getId());
+        if (proDetailId != null){
+            //如果项目详情ID存在  则先全部删除内容，重新添加
+            ProPoolExample example =new ProPoolExample();
+            example.createCriteria().andProDetailIdEqualTo(proDetailId);
+            proPoolMapper.deleteByExample(example);
+        }
 
         SysProCheck proCheck = new SysProCheck();
         // 更新选中比价
@@ -106,7 +118,10 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
             proPool.setParams(quoteExtendInquiry.getSuParams());
             proPool.setPrice(quoteExtendInquiry.getSuPrice());
             proPool.setDelivery(quoteExtendInquiry.getSuDelivery());
+            proPool.setQuote(quoteExtendInquiry.getInquiry().getPrice().toString());
             proPool.setRemark(quoteExtendInquiry.getSuRemark());
+            proPool.setProDetailId(proDetailId);
+            proPool.setChoose(1);
             proPool.setIsActive(1);
             proPool.setIsUseful(0);
             proPool.setOperator(userId);
@@ -129,6 +144,27 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
         for (long id : unCheckIds) {
             proCheck.setId(id);
             sysProCheckMapper.updateByPrimaryKeySelective(proCheck);
+
+            //未选中信息插入产品池中
+            QuoteExtendInquiry quoteExtendInquiry = quoteAndInquiryExtendMapper.findByQuoteId(id);
+            ProPool proPool = new ProPool();
+            proPool.setId(IDUtils.getId());
+            proPool.setName(quoteExtendInquiry.getInquiry().getName());
+            proPool.setBrand(quoteExtendInquiry.getInquiry().getBrand());
+            proPool.setSupplier(quoteExtendInquiry.getSupplier());
+            proPool.setModel(quoteExtendInquiry.getSuModel());
+            proPool.setParams(quoteExtendInquiry.getSuParams());
+            proPool.setPrice(quoteExtendInquiry.getSuPrice());
+            proPool.setDelivery(quoteExtendInquiry.getSuDelivery());
+            proPool.setQuote(quoteExtendInquiry.getInquiry().getPrice().toString());
+            proPool.setRemark(quoteExtendInquiry.getSuRemark());
+            proPool.setProDetailId(proDetailId);
+            proPool.setChoose(0);
+            proPool.setIsActive(1);
+            proPool.setIsUseful(0);
+            proPool.setOperator(userId);
+            proPool.setTime(time);
+            proPoolMapper.insert(proPool);
         }
     }
 }

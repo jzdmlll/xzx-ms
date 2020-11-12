@@ -14,6 +14,7 @@ public interface IProductPoolService {
      * 查询
      * @param name
      * @param brand 品牌
+     //* @param choose 选用标识
      * @return
      */
     List<ProPool> findByParams(String name, String brand);

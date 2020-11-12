@@ -117,7 +117,6 @@ public class CompareServiceImpl implements ICompareService {
     @Override
     public void completeCompare(long[] checkCompareIds, long[] otherCompareIds, List<Map> remarks, long userId) {
 
-
         long time = new Date().getTime();
 
         SysProCheck proCheck = new SysProCheck();
