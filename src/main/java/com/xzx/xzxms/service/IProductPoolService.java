@@ -23,4 +23,11 @@ public interface IProductPoolService {
      * @param ids
      */
     void batchSetInvalid(long[] ids);
+
+    /**
+     * 查询历史报价和成本价
+     * @param name（设备名）
+     * @return
+     */
+    List<ProPool> findHistoryPrices(String name);
 }
