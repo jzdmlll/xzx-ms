@@ -126,10 +126,9 @@ public class CompareServiceImpl implements ICompareService {
         proCheck.setOperator(userId);
         proCheck.setTime(time);
         for (long id : checkCompareIds) {
-            SysProCheckExample example = new SysProCheckExample();
-            example.createCriteria().andTypeEqualTo("最终审核").andCheckStatusNotEqualTo(0);
-            List<SysProCheck> sysProCheck = sysProCheckMapper.selectByExample(example);
-            if(sysProCheck.size() > 0){
+
+            int num = compareExtendMapper.isFinalCheck(id);
+            if(num > 0){
                 throw new CustomerException("该报价已终审，请勿再修改拟比价!");
             }
 
