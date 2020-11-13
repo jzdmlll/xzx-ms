@@ -74,7 +74,6 @@
     <table tableName="sys_role" domainObjectName="SysRole" ></table>
     <table tableName="sys_pro_type" domainObjectName="SysProType" ></table>
     <table tableName="sys_pro_origin" domainObjectName="SysProOrigin" ></table>
-    <table tableName="sys_pro_detail" domainObjectName="SysProDetail" ></table>
     <table tableName="sys_pro_check" domainObjectName="SysProCheck" ></table>
     <table tableName="sys_privilege" domainObjectName="SysPrivilege" ></table>
     <table tableName="sys_log" domainObjectName="SysLog" ></table>
@@ -84,9 +83,10 @@
     <table tableName="sys_device_type" domainObjectName="SysDeviceType" ></table>
     <table tableName="sys_pro_detail_check" domainObjectName="SysProDetailCheck" ></table>
 -->
-<!--    <table tableName="inquiry" domainObjectName="Inquiry" ></table>-->
+    <table tableName="sys_pro_detail" domainObjectName="SysProDetail" ></table>
+    <table tableName="inquiry" domainObjectName="Inquiry" ></table>
 <!--    <table tableName="quote" domainObjectName="Quote" ></table>-->
-    <table tableName="product_pool" domainObjectName="ProPool" ></table>
+<!--    <table tableName="product_pool" domainObjectName="ProPool" ></table>-->
     <!--
     mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
    -->
