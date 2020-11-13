@@ -60,4 +60,12 @@ public class InquiryController {
         return MessageUtil.success("删除成功");
     }
 
+    @ApiOperation(value = "批量置为不询价")
+    @PostMapping(value = "batchSetIsNotInquiry")
+    public Message batchSetIsNotInquiry(long[] ids){
+
+        iInquiryServiceImpl.batchSetIsNotInquiry(ids);
+        return MessageUtil.success("success");
+    }
+
 }

@@ -12,6 +12,7 @@ import com.xzx.xzxms.dao.extend.InquiryExtendMapper;
 import com.xzx.xzxms.service.IInquiryService;
 import com.xzx.xzxms.utils.CustomerException;
 import com.xzx.xzxms.utils.IDUtils;
+import io.swagger.models.auth.In;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -106,8 +107,22 @@ public class InquiryServiceImpl implements IInquiryService{
 
     @Override
     public List<InquiryCompareExtend> findByProIdOrCompareStatus(long proDetailId, Integer compareStatus) {
+
         List<InquiryCompareExtend> InquiryCompareExtends = inquiryExtendMapper.findByProIdOrCompareStatus(proDetailId,compareStatus);
 
         return InquiryCompareExtends;
     }
+
+    @Transactional
+    @Override
+    public void batchSetIsNotInquiry(long[] ids) {
+
+        for (long id : ids){
+            Inquiry inquiry = new Inquiry();
+            inquiry.setId(id);
+            inquiry.setIsinquiry(1);
+            inquiryMapper.updateByPrimaryKeySelective(inquiry);
+        }
+    }
+
 }

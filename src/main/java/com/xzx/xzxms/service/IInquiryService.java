@@ -44,4 +44,10 @@ public interface IInquiryService {
      * @return
      */
     List<InquiryCompareExtend> findByProIdOrCompareStatus(long proDetailId, Integer compareStatus);
+
+    /**
+     * 批量置为不询价
+     * @param ids 询价ID
+     */
+    void batchSetIsNotInquiry(long[] ids);
 }

@@ -7,8 +7,17 @@ public class InquiryCompareExtend extends Inquiry {
 
     private String cheType;
 
+    private Integer rate;
 
     private Long cheContentId;
+
+    public Integer getRate() {
+        return rate;
+    }
+
+    public void setRate(Integer rate) {
+        this.rate = rate;
+    }
 
     public Integer getCheCheckStatus() {
         return cheCheckStatus;

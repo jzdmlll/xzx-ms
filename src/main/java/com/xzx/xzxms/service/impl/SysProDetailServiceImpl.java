@@ -151,9 +151,10 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
     //根据项目详情id修改更新利率
     @Override
     public void updateProRate(long proDetailId,int proRate) {
-        SysProDetail sysProDetail = sysProDetailMapper.selectByPrimaryKey(proDetailId);
+        SysProDetailWithBLOBs sysProDetail = new SysProDetailWithBLOBs();
+        sysProDetail.setId(proDetailId);
         sysProDetail.setProRate(proRate);
-        sysProDetailMapper.updateByPrimaryKey(sysProDetail);
+        sysProDetailMapper.updateByPrimaryKeySelective(sysProDetail);
 
     }
 

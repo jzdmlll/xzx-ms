@@ -4,7 +4,7 @@
 
     <select id="findByProIdOrCompareStatus" resultMap="compareResultMap">
         select
-        i.*
+        i.*,pro.pro_rate rate
         from inquiry i
         left join sys_pro_detail pro on i.pro_detail_id = pro.id
         left join quote q on i.id=q.inquiry_id
