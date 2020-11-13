@@ -30,5 +30,5 @@ public interface IProductPoolService {
      * @param name（设备名）
      * @return
      */
-    List<ProPool> findHistoryPrices(String name);
+    List<ProPool> findHistoryPrices(String name, String model);
 }

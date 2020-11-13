@@ -41,8 +41,8 @@ public class ProductPoolController {
 
     @ApiOperation(value = "查询历史报价和成本")
     @GetMapping(value = "findHistoryPrices")
-    public Message findHistoryPrices(String name){
-        List<ProPool> list = productPoolServiceImpl.findHistoryPrices(name);
+    public Message findHistoryPrices(@RequestParam(value="name", required=false, defaultValue = "") String name,@RequestParam(value="model", required=false, defaultValue = "") String model){
+        List<ProPool> list = productPoolServiceImpl.findHistoryPrices(name, model);
         return MessageUtil.success("success", list);
     }
 }

@@ -10,6 +10,7 @@ public class FinallyCheckCompareVM extends QuoteRespVM {
     private SysProCheck finalCheck;
     private double price;
     private double totalPrice;
+    private int sort;
 
     public SysProCheck getFinalCheck() {
         return finalCheck;
@@ -43,4 +44,11 @@ public class FinallyCheckCompareVM extends QuoteRespVM {
         this.minPrice = minPrice;
     }
 
+    public int getSort() {
+        return sort;
+    }
+
+    public void setSort(int sort) {
+        this.sort = sort;
+    }
 }
