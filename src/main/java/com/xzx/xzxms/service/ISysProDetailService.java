@@ -37,4 +37,17 @@ public interface ISysProDetailService {
      * @return
      */
     List<SysProDetailCheck> findProDetailCheck(long proDetailId);
+
+    /**
+     * 根据项目详情id查询利率
+     * @param proDetailId
+     * @return
+     */
+    SysProDetail findProRate(long proDetailId);
+
+    /**
+     * 根据项目详情id修改更新利率内容
+     * @param proDetailId
+     */
+    void updateProRate(long proDetailId,int proRate);
 }

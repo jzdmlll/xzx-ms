@@ -141,6 +141,22 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
         return sysProDetailCheckMapper.selectByExample(example);
     }
 
+    //根据项目详情id查询利率
+    @Override
+    public SysProDetail findProRate(long proDetailId) {
+        SysProDetail sysProDetail = sysProDetailMapper.selectByPrimaryKey(proDetailId);
+        return sysProDetail;
+    }
+
+    //根据项目详情id修改更新利率
+    @Override
+    public void updateProRate(long proDetailId,int proRate) {
+        SysProDetail sysProDetail = sysProDetailMapper.selectByPrimaryKey(proDetailId);
+        sysProDetail.setProRate(proRate);
+        sysProDetailMapper.updateByPrimaryKey(sysProDetail);
+
+    }
+
     @Override
     public SysProDetailExtend findById(long proDetailId) {
         return sysProDetailExtendMapper.findById(proDetailId);

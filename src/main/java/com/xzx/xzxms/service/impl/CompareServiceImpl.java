@@ -1,8 +1,6 @@
 package com.xzx.xzxms.service.impl;
 
 import com.xzx.xzxms.bean.SysProCheck;
-import com.xzx.xzxms.bean.SysProCheckExample;
-import com.xzx.xzxms.bean.SysUser;
 import com.xzx.xzxms.bean.extend.SysProCheckExtend;
 import com.xzx.xzxms.dao.SysProCheckMapper;
 import com.xzx.xzxms.dao.extend.CompareExtendMapper;
@@ -10,15 +8,11 @@ import com.xzx.xzxms.service.ICompareService;
 import com.xzx.xzxms.utils.CustomerException;
 import com.xzx.xzxms.vm.CompareReqVM;
 import com.xzx.xzxms.vm.QuoteRespVM;
-import org.apache.logging.log4j.util.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.lang.reflect.Array;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class CompareServiceImpl implements ICompareService {
@@ -152,6 +146,6 @@ public class CompareServiceImpl implements ICompareService {
             sysProCheckMapper.updateByPrimaryKeySelective(proCheck);
         }
     }
-    
+
 
 }

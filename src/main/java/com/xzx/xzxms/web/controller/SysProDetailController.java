@@ -1,5 +1,6 @@
 package com.xzx.xzxms.web.controller;
 
+import com.xzx.xzxms.bean.SysProDetail;
 import com.xzx.xzxms.bean.SysProDetailCheck;
 import com.xzx.xzxms.bean.extend.SysProDetailExtend;
 import com.xzx.xzxms.service.ISysProDetailService;
@@ -56,5 +57,17 @@ public class SysProDetailController {
         return MessageUtil.success("success", result);
     }
 
+    @ApiOperation(value = "根据项目详情id查利率")
+    @GetMapping(value = "findProRate")
+    public Message findProRate(long proDetailId){
+        SysProDetail sysProDetail = sysProDetailServiceImpl.findProRate(proDetailId);
+        return MessageUtil.success("success",sysProDetail.getProRate());
+    }
 
+    @ApiOperation(value = "修改利率")
+    @PostMapping(value = "updateProRate")
+    public Message updateProRate(long proDetailId,int proRate){
+        sysProDetailServiceImpl.updateProRate(proDetailId,proRate);
+        return MessageUtil.success("操作成功");
+    }
 }
