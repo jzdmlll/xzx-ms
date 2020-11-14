@@ -68,7 +68,5 @@ public class InquiryController {
         return MessageUtil.success("success");
     }
 
-    @ApiOperation(value = "此条询价被否决")
-    @GetMapping(value = "")
 
 }

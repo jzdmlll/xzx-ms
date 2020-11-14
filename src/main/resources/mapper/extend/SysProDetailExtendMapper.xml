@@ -5,6 +5,7 @@
     select *
     FROM sys_pro_detail
     <where>
+      is_active = 1
       <if test="proDetailId !=null and proDetailId!=0">
         and id=#{proDetailId,jdbcType=BIGINT}
       </if>

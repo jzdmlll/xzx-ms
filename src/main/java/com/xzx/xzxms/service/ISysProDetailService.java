@@ -49,4 +49,10 @@ public interface ISysProDetailService {
      * @param proDetailId
      */
     void updateProRate(long proDetailId,int proRate);
+
+    /**
+     * 置为无效（假删）
+     * @param id
+     */
+    void setInvalid(long id);
 }

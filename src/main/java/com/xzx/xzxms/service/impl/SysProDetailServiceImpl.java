@@ -149,6 +149,14 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
     }
 
     @Override
+    public void setInvalid(long id) {
+        SysProDetailWithBLOBs proDetail = new SysProDetailWithBLOBs();
+        proDetail.setId(id);
+        proDetail.setIsActive(0);
+        sysProDetailMapper.updateByPrimaryKeySelective(proDetail);
+    }
+
+    @Override
     public SysProDetailExtend findById(long proDetailId) {
         return sysProDetailExtendMapper.findById(proDetailId);
     }

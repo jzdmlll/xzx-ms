@@ -30,7 +30,6 @@ public class SysProDetailController {
     @ApiOperation(value = "查询所有项目的类型和来源")
     @GetMapping(value = "findByAll")
     public Message findById(){
-
         List<SysProDetailExtend> sysProDetailExtend = sysProDetailServiceImpl.findById();
         return MessageUtil.success("success",sysProDetailExtend);
     }
@@ -60,6 +59,13 @@ public class SysProDetailController {
     @PostMapping(value = "updateProRate")
     public Message updateProRate(long proDetailId,int proRate){
         sysProDetailServiceImpl.updateProRate(proDetailId,proRate);
+        return MessageUtil.success("操作成功");
+    }
+
+    @ApiOperation(value = "逻辑删除项目")
+    @PostMapping(value = "setInvalid")
+    public Message setInvalid(long proDetailId) {
+        sysProDetailServiceImpl.setInvalid(proDetailId);
         return MessageUtil.success("操作成功");
     }
 }
