@@ -82,10 +82,10 @@
     <table tableName="sys_device_type" domainObjectName="SysDeviceType" ></table>
     <table tableName="sys_pro_detail_check" domainObjectName="SysProDetailCheck" ></table>
 -->
-    <table tableName="inquiry" domainObjectName="Inquiry" ></table>
+<!--    <table tableName="inquiry_pool" domainObjectName="InquiryPool" ></table>-->
+<!--    <table tableName="inquiry" domainObjectName="Inquiry" ></table>-->
 <!--    <table tableName="sys_pro_detail" domainObjectName="SysProDetail" ></table>-->
-<!--    <table tableName="inquiry_pool" domainObjectName="Inquiry" ></table>-->
-<!--    <table tableName="product_pool" domainObjectName="Inquiry" ></table>-->
+<!--    <table tableName="product_pool" domainObjectName="ProPool" ></table>-->
 <!--    <table tableName="sys_pro_check" domainObjectName="SysProCheck" ></table>-->
 <!--    <table tableName="quote" domainObjectName="Quote" ></table>-->
 
