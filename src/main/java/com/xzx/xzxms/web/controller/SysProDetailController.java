@@ -1,7 +1,6 @@
 package com.xzx.xzxms.web.controller;
 
 import com.xzx.xzxms.bean.SysProDetail;
-import com.xzx.xzxms.bean.SysProDetailCheck;
 import com.xzx.xzxms.bean.extend.SysProDetailExtend;
 import com.xzx.xzxms.service.ISysProDetailService;
 import com.xzx.xzxms.utils.Message;
@@ -39,7 +38,7 @@ public class SysProDetailController {
     @ApiOperation(value = "新增或修改项目")
     @PostMapping(value = "saveOrUpdate")
     public Message saveOrUpdate(@RequestBody ProDetailReqVM proDetailReqVM) throws Exception {
-        sysProDetailServiceImpl.saveOrUpdate(proDetailReqVM.getProDetails(), proDetailReqVM.getFiles(),proDetailReqVM.getProChecks());
+        sysProDetailServiceImpl.saveOrUpdate(proDetailReqVM.getProDetails(), proDetailReqVM.getFiles());
         return MessageUtil.success("操作成功");
     }
 
@@ -48,13 +47,6 @@ public class SysProDetailController {
     public Message verifyExistence(String proName){
         Boolean bool = sysProDetailServiceImpl.verifyExistence(proName);
         return MessageUtil.success("success", bool);
-    }
-
-    @ApiOperation(value = "根据项目id查询项目审核流程")
-    @GetMapping(value = "findProDetailCheck")
-    public Message findProDetailCheck(long proDetailId){
-        List<SysProDetailCheck> result = sysProDetailServiceImpl.findProDetailCheck(proDetailId);
-        return MessageUtil.success("success", result);
     }
 
     @ApiOperation(value = "根据项目详情id查利率")

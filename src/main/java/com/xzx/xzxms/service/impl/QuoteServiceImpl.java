@@ -38,8 +38,6 @@ public class QuoteServiceImpl implements IQuoteService {
     @Resource
     private SysProCheckMapper sysProCheckMapper;
     @Resource
-    private SysProDetailCheckMapper sysProDetailCheckMapper;
-    @Resource
     private InquiryMapper inquiryMapper;
     @Resource
     private QuoteAndInquiryExtendMapper quoteAndInquiry;
@@ -309,11 +307,11 @@ public class QuoteServiceImpl implements IQuoteService {
 
                         //4.给每条报价添加审核记录
                         //查询所属项目的审核流程
-                        SysProDetailCheckExample example = new SysProDetailCheckExample();
+                        /*SysProDetailCheckExample example = new SysProDetailCheckExample();
                         example.createCriteria().andProDetailIdEqualTo(proDetailId);
-                        List<SysProDetailCheck> sysProDetailChecks = sysProDetailCheckMapper.selectByExample(example);
+                        List<SysProDetailCheck> sysProDetailChecks = sysProDetailCheckMapper.selectByExample(example);*/
                         // 根据项目审核流程插入报价审核流程
-                        SysProCheck proCheck = new SysProCheck();
+                        /*SysProCheck proCheck = new SysProCheck();
                         if (sysProDetailChecks.size() > 0) {
                             for (SysProDetailCheck sysProDetailCheck : sysProDetailChecks ) {
                                 proCheck.setId(IDUtils.getId());
@@ -335,7 +333,7 @@ public class QuoteServiceImpl implements IQuoteService {
                             sysProCheckMapper.insertSelective(proCheck);
                         }else {
                             throw new CustomerException("所属项目没有添加审核");
-                        }
+                        }*/
                     }
                 }
                 if(!"".equals(notFound)){

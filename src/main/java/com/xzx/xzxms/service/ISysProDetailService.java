@@ -20,9 +20,8 @@ public interface ISysProDetailService {
      * 新增或修改项目
      * @param proDetail
      * @param files
-     * @param checks
      */
-    void saveOrUpdate(SysProDetailWithBLOBs proDetail, List<SysFile> files, List<SysProDetailCheck> checks);
+    void saveOrUpdate(SysProDetailWithBLOBs proDetail, List<SysFile> files);
 
     /**
      * 验证项目名称是否存在
@@ -36,7 +35,7 @@ public interface ISysProDetailService {
      * @param proDetailId
      * @return
      */
-    List<SysProDetailCheck> findProDetailCheck(long proDetailId);
+    //List<SysProDetailCheck> findProDetailCheck(long proDetailId);
 
     /**
      * 根据项目详情id查询利率

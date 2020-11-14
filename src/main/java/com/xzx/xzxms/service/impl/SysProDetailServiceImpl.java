@@ -4,7 +4,6 @@ import com.xzx.xzxms.bean.*;
 import com.xzx.xzxms.bean.extend.SysFileExtend;
 import com.xzx.xzxms.bean.extend.SysProDetailExtend;
 import com.xzx.xzxms.dao.SysFileMapper;
-import com.xzx.xzxms.dao.SysProDetailCheckMapper;
 import com.xzx.xzxms.dao.SysProDetailMapper;
 import com.xzx.xzxms.dao.extend.SysProCheckExtendMapper;
 import com.xzx.xzxms.dao.extend.SysProDetailExtendMapper;
@@ -33,8 +32,6 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
     private SysProDetailExtendMapper sysProDetailExtendMapper;
     @Resource
     private SysProDetailMapper sysProDetailMapper;
-    @Resource
-    private SysProDetailCheckMapper sysProDetailCheckMapper;
     @Autowired
     private JedisDao jedisDaoImpl;
     @Resource
@@ -48,12 +45,12 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
     public List<SysProDetailExtend> findById() { return sysProDetailExtendMapper.findById(); }
     @Transactional
     @Override
-    public void saveOrUpdate(SysProDetailWithBLOBs proDetail, List<SysFile> files, List<SysProDetailCheck> proChecks) {
+    public void saveOrUpdate(SysProDetailWithBLOBs proDetail, List<SysFile> files) {
         long time = new Date().getTime();
         long operatorId = proDetail.getOperator();
         if (proDetail.getId() != null){
 
-            int size = sysProCheckExtendMapper.findExistsCheck(proDetail.getId());
+            /*int size = sysProCheckExtendMapper.findExistsCheck(proDetail.getId());
             if (size > 0){
                 throw  new CustomerException("审核流程修改失败, 需将项目的所有报价单数据删除才可修改审核流程");
             }
@@ -75,7 +72,7 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
                 check.setCheckStatus(0);
                 check.setOperator(operatorId);
                 sysProDetailCheckMapper.insert(check);
-            }
+            }*/
         }else {
             long proDetailId = IDUtils.getId();
             //文件上传
@@ -111,14 +108,14 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
             sysProDetailMapper.insert(proDetail);
 
             //审核信息插入数据库
-            for (SysProDetailCheck proDetailCheck : proChecks) {
+            /*for (SysProDetailCheck proDetailCheck : proChecks) {
                 proDetailCheck.setCheckStatus(0);
                 proDetailCheck.setProDetailId(proDetailId);
                 proDetailCheck.setTime(time);
                 proDetailCheck.setId(IDUtils.getId());
                 proDetailCheck.setOperator(operatorId);
                 sysProDetailCheckMapper.insert(proDetailCheck);
-            }
+            }*/
         }
     }
 
@@ -132,13 +129,6 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
         }else {
             return false;
         }
-    }
-
-    @Override
-    public List<SysProDetailCheck> findProDetailCheck(long proDetailId) {
-        SysProDetailCheckExample example = new SysProDetailCheckExample();
-        example.createCriteria().andProDetailIdEqualTo(proDetailId);
-        return sysProDetailCheckMapper.selectByExample(example);
     }
 
     //根据项目详情id查询利率
