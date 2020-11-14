@@ -73,6 +73,9 @@ public class InquiryServiceImpl implements IInquiryService{
               inquiry.setIsActive(1);
               inquiry.setIsUseful(0);
               inquiry.setSort(sort ++);
+              //需要询价
+              inquiry.setIsinquiry(1);
+
               inquiryMapper.insert(inquiry);
         }
     }
