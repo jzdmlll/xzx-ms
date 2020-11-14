@@ -46,6 +46,22 @@ public class SysProCheckController {
         return MessageUtil.success("success");
     }
 
+    @ApiOperation("查询技术审核")
+    @GetMapping("findTechnicalCheck")
+    public Message findTechnicalCheck(Integer status, long proDetailId) {
+
+        sysProCheckServiceImpl.findTechnicalCheck(status, proDetailId);
+        return MessageUtil.success("success");
+    }
+
+    @ApiOperation("查询商务审核")
+    @GetMapping("findBusinessCheck")
+    public Message findBusinessCheck(Integer status, long proDetailId) {
+
+        sysProCheckServiceImpl.findBusinessCheck(status, proDetailId);
+        return MessageUtil.success("success");
+    }
+
 
 
 }
