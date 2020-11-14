@@ -62,9 +62,17 @@ public class InquiryController {
 
     @ApiOperation(value = "批量置为不询价")
     @PostMapping(value = "batchSetIsNotInquiry")
-    public Message batchSetIsNotInquiry(long[] ids){
+    public Message batchSetIsNotInquiry(long[] ids, Integer status){
 
-        iInquiryServiceImpl.batchSetIsNotInquiry(ids);
+        iInquiryServiceImpl.batchSetIsNotInquiry(ids, status);
+        return MessageUtil.success("success");
+    }
+
+    @ApiOperation(value = "此条询价被否决")
+    @GetMapping(value = "setVeto")
+    public Message setVeto(long id){
+
+        iInquiryServiceImpl.setVeto(id);
         return MessageUtil.success("success");
     }
 

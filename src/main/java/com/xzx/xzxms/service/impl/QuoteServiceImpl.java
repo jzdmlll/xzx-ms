@@ -50,12 +50,13 @@ public class QuoteServiceImpl implements IQuoteService {
         List<Quote> list = null;
         Inquiry inquiry = inquiryMapper.selectByPrimaryKey(inquiryId);
         //若不需要询价  则相关报价信息从产品池中选用的产品查询  反之从报价表中查询
-        if (inquiry.getIsinquiry() == 1){
+        if (inquiry.getIsinquiry() == 0){
             ProPoolExample example = new ProPoolExample();
             example.createCriteria().andNameEqualTo(inquiry.getName()).andChooseEqualTo(1);
             List<ProPool> proPools = proPoolMapper.selectByExample(example);
             Quote quote = new Quote();
             for (ProPool p : proPools) {
+                quote.setId(p.getId());
                 quote.setSupplier(p.getSupplier());
                 quote.setSuModel(p.getModel());
                 quote.setSuBrand(p.getBrand());
@@ -187,12 +188,12 @@ public class QuoteServiceImpl implements IQuoteService {
             }
         }
     }
+
     @Transactional
     @Override
     public void batchAddQuote(QuoteExtend quote) throws IOException {
         List<SysFile> files = quote.getFiles();
         if(files.size() > 0) {
-
             long operator = quote.getOperator();
             long time = new Date().getTime();
             long proDetailId = quote.getProDetailId();
@@ -211,8 +212,6 @@ public class QuoteServiceImpl implements IQuoteService {
 
                 //清除redis该文件缓存
                 jedisDaoImpl.del(file.getId().toString());
-
-
                 String excelUrl = excelUploadMap.get("url").toString();
                 //2.报价信息存入数据库报价表
 
@@ -227,6 +226,7 @@ public class QuoteServiceImpl implements IQuoteService {
                     String paramsExcel = item.get("技术要求").toString();
 
                     if (name.equals(nameExcel) && params.equals(paramsExcel)){
+
                     }else {
                         name = item.get("设备名称").toString();
                         params = item.get("技术要求").toString();
@@ -235,9 +235,10 @@ public class QuoteServiceImpl implements IQuoteService {
                         List<Inquiry> inquiries = inquiryMapper.selectByExample(example);
                         if (inquiries.size() > 0) {
                             Inquiry inquiry = inquiries.get(0);
-                            inquiryId =  inquiry.getId();
-                            inquiry.setIsUseful(1);
-                            inquiryMapper.updateByPrimaryKeySelective(inquiry);
+                            if (inquiry.getIsinquiry() == 0){
+                                throw new CustomerException("文件中:  ["+name+"   :"+params+"]  已被设定为不需询价，无法导入报价单,如需导入请修改!");
+                            }
+
                         }else {
                             notFound += "["+name+" "+params+"]----";
                         }
@@ -247,7 +248,9 @@ public class QuoteServiceImpl implements IQuoteService {
                         String supplier = item.get("供应商").toString().trim();
                         quoteExample.createCriteria().andSupplierEqualTo(supplier).andInquiryIdEqualTo(inquiryId).andIsActiveEqualTo(1);
                         List<Quote> quotes = quoteMapper.selectByExample(quoteExample);
+
                         if (quotes.size() > 0) {
+                            //该条报价存在则不能重复插入，正好限制该条报价不能发生修改  无需再判断该条报价是否被审核过
                             throw new CustomerException("文件中： ["+supplier+"]  数据已存在");
                         }
                         Quote q = new Quote();
@@ -262,6 +265,7 @@ public class QuoteServiceImpl implements IQuoteService {
                             q.setSuBrand(item.get("报价品牌").toString().trim());
                             q.setSuParams(item.get("实际技术参数").toString().trim());
                             q.setSupplier(supplier);
+
                             if(StringUtils.isEmpty(item.get("设备单价").toString().trim())){
                                 q.setSuPrice(0D);
                             }else{
@@ -276,6 +280,8 @@ public class QuoteServiceImpl implements IQuoteService {
                             q.setTime(time);
                             q.setWarranty(item.get("质保期/售后").toString().trim());
                             q.setInquiryId(inquiryId);
+                            //数据来源于外部数据  标志为1
+                            q.setDataSource(1);
                         }catch (NumberFormatException exception) {
                             throw new CustomerException("失败，存在数据格式不正确"+exception.getMessage());
                         }
@@ -334,6 +340,21 @@ public class QuoteServiceImpl implements IQuoteService {
                         }else {
                             throw new CustomerException("所属项目没有添加审核");
                         }*/
+                        //逐条插入审核
+                        SysProCheck sysProCheck = new SysProCheck();
+                        sysProCheck.setId(IDUtils.getId());
+                        sysProCheck.setTechnicalAudit(0);
+                        sysProCheck.setBusinessAudit(0);
+                        sysProCheck.setCompareAudit(0);
+                        sysProCheck.setFinallyAudit(0);
+                        sysProCheck.setTechnicalRemark("");
+                        sysProCheck.setBusinessRemark("");
+                        sysProCheck.setCompareRemark("");
+                        sysProCheck.setFinallyRemark("");
+                        sysProCheck.setQuoteId(quoteId);
+                        sysProCheck.setOperator(operator);
+                        sysProCheck.setTime(time);
+                        sysProCheckMapper.insertSelective(sysProCheck);
                     }
                 }
                 if(!"".equals(notFound)){
@@ -354,8 +375,6 @@ public class QuoteServiceImpl implements IQuoteService {
             throw new CustomerException("请撤销审核后再修改!");
         }
     }
-
-
 
     @Override
     public List<QuoteExtendInquiry> findBySupplierOrPro(String supplier, long proId) {
@@ -378,7 +397,7 @@ public class QuoteServiceImpl implements IQuoteService {
                 quoteMapper.updateByPrimaryKeySelective(quote);
                 // 报价逻辑删除时，将对应审核删除
                 SysProCheckExample example = new SysProCheckExample();
-                example.createCriteria().andContentIdEqualTo(quote.getId());
+                example.createCriteria().andQuoteIdEqualTo(quote.getId());
                 List<SysProCheck> sysProChecks = sysProCheckMapper.selectByExample(example);
                 if(sysProChecks.size() > 0) {
                     for(SysProCheck proCheck : sysProChecks) {
@@ -389,5 +408,57 @@ public class QuoteServiceImpl implements IQuoteService {
                 throw new CustomerException("该数据已不存在");
             }
         }
+    }
+
+    @Transactional
+    @Override
+    public void chooseProductPoolSupplier(long inquiryId, long productPoolId, long operator) {
+
+        Quote quote = new Quote();
+        QuoteExample example = new QuoteExample();
+        example.createCriteria().andInquiryIdEqualTo(inquiryId).andDataSourceEqualTo(0);
+        List<Quote> quotes = quoteMapper.selectByExample(example);
+        if(1 == quotes.get(0).getIsUseful()){
+            throw new CustomerException("此条询价内容以被审核，无法修改!");
+        }
+        if (quotes.size() > 0){
+            //存在先删除后添加
+            quoteMapper.deleteByPrimaryKey(quotes.get(0).getId());
+        }
+        ProPool proPool = proPoolMapper.selectByPrimaryKey(productPoolId);
+        long quoteId = IDUtils.getId();
+        long time = new Date().getTime();
+
+        quote.setId(quoteId);
+        quote.setSupplier(proPool.getSupplier());
+        quote.setSuModel(proPool.getModel());
+        quote.setSuBrand(proPool.getBrand());
+        quote.setSuParams(proPool.getParams());
+        quote.setSuPrice(proPool.getPrice());
+        quote.setSuDelivery(proPool.getDelivery());
+        quote.setSuRemark(proPool.getRemark());
+        quote.setImage(proPool.getImage());
+        quote.setDataSource(0);
+        quote.setInquiryId(inquiryId);
+        quote.setIsActive(1);
+        quote.setIsUseful(0);
+        quote.setTime(time);
+        quote.setOperator(operator);
+        quoteMapper.insert(quote);
+
+        SysProCheck sysProCheck = new SysProCheck();
+        sysProCheck.setId(IDUtils.getId());
+        sysProCheck.setTechnicalAudit(0);
+        sysProCheck.setBusinessAudit(0);
+        sysProCheck.setCompareAudit(0);
+        sysProCheck.setFinallyAudit(0);
+        sysProCheck.setTechnicalRemark("");
+        sysProCheck.setBusinessRemark("");
+        sysProCheck.setCompareRemark("");
+        sysProCheck.setFinallyRemark("");
+        sysProCheck.setQuoteId(quoteId);
+        sysProCheck.setOperator(operator);
+        sysProCheck.setTime(time);
+        sysProCheckMapper.insertSelective(sysProCheck);
     }
 }

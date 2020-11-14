@@ -10,7 +10,6 @@ import com.xzx.xzxms.utils.CustomerException;
 import com.xzx.xzxms.utils.Message;
 import com.xzx.xzxms.utils.MessageUtil;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -66,13 +65,20 @@ public class QuoteController {
         return MessageUtil.success("success",pageInfo);
     }
 
-    @Transactional
     @ApiOperation("供应商报价批量置为无效")
     @PostMapping("batchSetInvalid")
     public Message batchSetInvalid(long[] ids){
 
         iQuoteServiceImpl.batchSetInvalid(ids);
         return MessageUtil.success("删除成功");
+    }
+
+    @ApiOperation("无需询价的在产品池中选用供应商")
+    @GetMapping("chooseProductPoolSupplier")
+    public Message chooseProductPoolSupplier(long inquiryId, long productPoolId, long operator){
+
+        iQuoteServiceImpl.chooseProductPoolSupplier(inquiryId,productPoolId,operator);
+        return MessageUtil.success("选用成功");
     }
 }
 

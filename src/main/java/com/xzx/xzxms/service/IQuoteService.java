@@ -41,4 +41,11 @@ public interface IQuoteService {
      * @param ids
      */
     void batchSetInvalid(long[] ids);
+
+    /**
+     * 选择产品池中的供应商（不需询价的内容）
+     * @param inquiryId 询价ID
+     * @param productPoolId 产品池ID
+     */
+    void chooseProductPoolSupplier(long inquiryId, long productPoolId, long operator);
 }

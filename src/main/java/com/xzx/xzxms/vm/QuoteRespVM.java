@@ -3,78 +3,79 @@ package com.xzx.xzxms.vm;
 import com.xzx.xzxms.bean.Quote;
 
 public class QuoteRespVM extends Quote {
-    private Long compareId;
-    private int compareStatus;
-    private String compareRemark;
+
+    private int technical_audit;
+    private int business_audit;
+    private int compare_audit;
+    private int finally_audit;
+    private String technical_remark;
+    private String business_remark;
+    private String compare_remark;
+    private String finally_remark;
     private String name;
-    private String number;
-    private String params;
-    private String unit;
-    private String model;
-    private String checkType;
 
-    public String getCheckType() {
-        return checkType;
+    public int getTechnical_audit() {
+        return technical_audit;
     }
 
-    public void setCheckType(String checkType) {
-        this.checkType = checkType;
+    public void setTechnical_audit(int technical_audit) {
+        this.technical_audit = technical_audit;
     }
 
-    public String getNumber() {
-        return number;
+    public int getBusiness_audit() {
+        return business_audit;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setBusiness_audit(int business_audit) {
+        this.business_audit = business_audit;
     }
 
-    public String getParams() {
-        return params;
+    public int getCompare_audit() {
+        return compare_audit;
     }
 
-    public void setParams(String params) {
-        this.params = params;
+    public void setCompare_audit(int compare_audit) {
+        this.compare_audit = compare_audit;
     }
 
-    public String getUnit() {
-        return unit;
+    public int getFinally_audit() {
+        return finally_audit;
     }
 
-    public void setUnit(String unit) {
-        this.unit = unit;
+    public void setFinally_audit(int finally_audit) {
+        this.finally_audit = finally_audit;
     }
 
-    public String getModel() {
-        return model;
+    public String getTechnical_remark() {
+        return technical_remark;
     }
 
-    public void setModel(String model) {
-        this.model = model;
+    public void setTechnical_remark(String technical_remark) {
+        this.technical_remark = technical_remark;
     }
 
-    public Long getCompareId() {
-        return compareId;
+    public String getBusiness_remark() {
+        return business_remark;
     }
 
-    public void setCompareId(Long compareId) {
-        this.compareId = compareId;
+    public void setBusiness_remark(String business_remark) {
+        this.business_remark = business_remark;
     }
 
-    public int getCompareStatus() {
-        return compareStatus;
+    public String getCompare_remark() {
+        return compare_remark;
     }
 
-    public void setCompareStatus(int compareStatus) {
-        this.compareStatus = compareStatus;
+    public void setCompare_remark(String compare_remark) {
+        this.compare_remark = compare_remark;
     }
 
-    public String getCompareRemark() {
-        return compareRemark;
+    public String getFinally_remark() {
+        return finally_remark;
     }
 
-    public void setCompareRemark(String compareRemark) {
-        this.compareRemark = compareRemark;
+    public void setFinally_remark(String finally_remark) {
+        this.finally_remark = finally_remark;
     }
 
     public String getName() {
@@ -84,5 +85,4 @@ public class QuoteRespVM extends Quote {
     public void setName(String name) {
         this.name = name;
     }
-
 }
