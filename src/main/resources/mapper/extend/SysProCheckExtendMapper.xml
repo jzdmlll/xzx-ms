@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xzx.xzxms.dao.extend.SysProCheckExtendMapper">
-    <select id="cascadeFindAllByCheckName" resultMap="ProCheckExtendMap">
+    <select id="cascadeFindTechnical" resultMap="ProCheckExtendMap">
         SELECT
         spc.*,
         q.id q_id,q.image q_image, q.supplier q_supplier, q.su_delivery q_su_delivery,q.su_model q_su_model,q.su_params q_su_params,
@@ -11,28 +11,49 @@
         sys_pro_detail spd
         RIGHT JOIN inquiry i ON i.pro_detail_id = spd.id
         LEFT JOIN quote q ON q.inquiry_id = i.id
-        LEFT JOIN sys_pro_check spc ON spc.content_id = q.id
+        LEFT JOIN sys_pro_check spc ON spc.quote_id = q.id
         LEFT JOIN sys_file sf ON sf.other_id = q.id
         <where>
-            spc.type = #{checkName,jdbcType=VARCHAR} and q.is_active = 1 and i.is_active = 1
-            <if test="checkStatus!=null and checkStatus!=-1">
-                AND spc.check_status in
-                <foreach item="item" collection="checkStatus" open="(" separator="," close=")">
-                    #{item}
-                </foreach>
+             q.is_active = 1 and i.is_active = 1
+            <if test="status!=null and status!=-1">
+                AND spc.technical_audit = status
             </if>
             <if test="proDetailId!=null and proDetailId!=-1">
                 AND spd.id = #{proDetailId,jdbcType=BIGINT}
             </if>
         </where>
     </select>
-    <resultMap id="ProCheckExtendMap" type="com.xzx.xzxms.bean.extend.SysProCheckExtend" extends="com.xzx.xzxms.dao.SysProCheckMapper.BaseResultMap">
+    <resultMap id="ProCheckExtendMap" type="com.xzx.xzxms.bean.extend.SysCheckExtend" extends="com.xzx.xzxms.dao.SysProCheckMapper.BaseResultMap">
         <collection property="quote" ofType="com.xzx.xzxms.bean.Quote" autoMapping="true" columnPrefix="q_">
         </collection>
         <collection property="inquiry" ofType="com.xzx.xzxms.bean.Inquiry" autoMapping="true" columnPrefix="i_">
         </collection>
         <collection property="files" column="q_id" select="com.xzx.xzxms.dao.extend.SysFileExtendMapper.selectByOtherId" />
     </resultMap>
+
+    <select id="cascadeFindBusiness" resultMap="ProCheckExtendMap">
+        SELECT
+        spc.*,
+        q.id q_id,q.image q_image, q.supplier q_supplier, q.su_delivery q_su_delivery,q.su_model q_su_model,q.su_params q_su_params,
+        q.su_price q_su_price,q.su_total_price q_su_total_price,q.warranty q_warranty,
+        i.model i_model,i.name i_name,i.number i_number,i.params i_params,i.sort i_sort,i.unit i_unit
+        FROM
+        sys_pro_detail spd
+        RIGHT JOIN inquiry i ON i.pro_detail_id = spd.id
+        LEFT JOIN quote q ON q.inquiry_id = i.id
+        LEFT JOIN sys_pro_check spc ON spc.quote_id = q.id
+        LEFT JOIN sys_file sf ON sf.other_id = q.id
+        <where>
+            q.is_active = 1 and i.is_active = 1
+            <if test="status!=null and status!=-1">
+                AND spc.business_audit = status
+            </if>
+            <if test="proDetailId!=null and proDetailId!=-1">
+                AND spd.id = #{proDetailId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </select>
+
 
 
     <select id="findExistsCheck" resultType="Integer">
@@ -42,4 +63,5 @@
         LEFT JOIN sys_pro_detail a on a.id=b.pro_detail_id
         where a.id = #{proDetailId,jdbcType=BIGINT}
     </select>
+
 </mapper>

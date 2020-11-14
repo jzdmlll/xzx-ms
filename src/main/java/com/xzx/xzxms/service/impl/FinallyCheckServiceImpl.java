@@ -2,7 +2,7 @@ package com.xzx.xzxms.service.impl;
 
 import com.xzx.xzxms.bean.*;
 import com.xzx.xzxms.bean.extend.QuoteExtendInquiry;
-import com.xzx.xzxms.bean.extend.SysProCheckExtend;
+import com.xzx.xzxms.bean.extend.SysCheckExtend;
 import com.xzx.xzxms.dao.ProPoolMapper;
 import com.xzx.xzxms.dao.SysProCheckMapper;
 import com.xzx.xzxms.dao.extend.FinallyCheckExtendMapper;
@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.*;
-import java.util.concurrent.locks.Lock;
 
 @Service
 public class FinallyCheckServiceImpl implements IFinallyCheckService {
@@ -100,11 +99,10 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
 
         SysProCheck proCheck = new SysProCheck();
         // 更新选中比价
-        proCheck.setCheckStatus(SysProCheckExtend.PASS_STATUS); //1选用
+        proCheck.setFinallyAudit(SysCheckExtend.PASS_STATUS); //1选用
         proCheck.setOperator(userId);
         proCheck.setTime(time);
         for (long id : checkIds) {
-
             proCheck.setId(id);
             sysProCheckMapper.updateByPrimaryKeySelective(proCheck);
             //选中信息插入产品池中
@@ -133,12 +131,12 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
         proCheck.setOperator(userId);
         for(Map map :remarks){
             proCheck.setId(Long.parseLong(map.get("id").toString()));
-            proCheck.setRemark(map.get("remark").toString());
+            proCheck.setFinallyRemark(map.get("remark").toString());
             sysProCheckMapper.updateByPrimaryKeySelective(proCheck);
         }
         // 更新未选中比价
         proCheck = new SysProCheck();
-        proCheck.setCheckStatus(SysProCheckExtend.REFUSE_STATUS); //2未选用
+        proCheck.setFinallyAudit(SysCheckExtend.REFUSE_STATUS); //2未选用
         proCheck.setOperator(userId);
         proCheck.setTime(time);
         for (long id : unCheckIds) {

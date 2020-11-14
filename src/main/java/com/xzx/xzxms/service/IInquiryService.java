@@ -48,6 +48,13 @@ public interface IInquiryService {
     /**
      * 批量置为不询价
      * @param ids 询价ID
+     * @param status 是否询价状态
      */
-    void batchSetIsNotInquiry(long[] ids);
+    void batchSetIsNotInquiry(long[] ids, Integer status);
+
+    /**
+     * 否决询价
+     * @param id 询价ID
+     */
+    void setVeto(long id);
 }

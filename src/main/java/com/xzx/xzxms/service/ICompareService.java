@@ -12,7 +12,7 @@ public interface ICompareService {
      * @param inquiryId
      * @return
      */
-    List<QuoteRespVM> cascadeFindAllByParams( long inquiryId);
+    List<QuoteRespVM> cascadeFindAllByParams(long inquiryId);
 
     /**
      * 批量比价查询

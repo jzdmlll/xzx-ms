@@ -67,16 +67,17 @@ public class InquiryServiceImpl implements IInquiryService{
         }
         int sort = 1;
         for (Inquiry inquiry : inquiryList) {
-              long inquiryId = IDUtils.getId();
-              inquiry.setId(inquiryId);
-              inquiry.setTime(time);
-              inquiry.setIsActive(1);
-              inquiry.setIsUseful(0);
-              inquiry.setSort(sort ++);
-              //需要询价
-              inquiry.setIsinquiry(1);
-
-              inquiryMapper.insert(inquiry);
+            long inquiryId = IDUtils.getId();
+            inquiry.setId(inquiryId);
+            inquiry.setTime(time);
+            inquiry.setIsActive(1);
+            inquiry.setIsUseful(0);
+            inquiry.setSort(sort ++);
+            //需要询价
+            inquiry.setIsinquiry(1);
+            //否决
+            inquiry.setVeto(0);
+            inquiryMapper.insert(inquiry);
         }
     }
 
@@ -85,7 +86,6 @@ public class InquiryServiceImpl implements IInquiryService{
         inquiry.setTime(new Date().getTime());
         inquiryMapper.updateByPrimaryKeySelective(inquiry);
     }
-
 
     @Transactional
     @Override
@@ -118,14 +118,30 @@ public class InquiryServiceImpl implements IInquiryService{
 
     @Transactional
     @Override
-    public void batchSetIsNotInquiry(long[] ids) {
+    public void batchSetIsNotInquiry(long[] ids, Integer status) {
 
         for (long id : ids){
+            QuoteExample example = new QuoteExample();
+            example.createCriteria().andInquiryIdEqualTo(id);
+            List<Quote> list = quoteMapper.selectByExample(example);
+            if (list.size() > 0){
+                Inquiry inq = inquiryMapper.selectByPrimaryKey(id);
+                throw new CustomerException(inq.getName() + ":已存在报价，勿更改是否需要询价状态!");
+            }
             Inquiry inquiry = new Inquiry();
             inquiry.setId(id);
-            inquiry.setIsinquiry(1);
+            inquiry.setIsinquiry(status);
             inquiryMapper.updateByPrimaryKeySelective(inquiry);
         }
     }
 
+    @Override
+    public void setVeto(long id) {
+
+        Inquiry inquiry = new Inquiry();
+        inquiry.setId(id);
+        //否决
+        inquiry.setVeto(1);
+        inquiryMapper.updateByPrimaryKeySelective(inquiry);
+    }
 }

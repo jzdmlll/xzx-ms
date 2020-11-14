@@ -54,7 +54,6 @@ public class CompareController {
     @PostMapping("batchGetCompare")
     public Message batchGetCompare(@RequestBody CompareReqVM CompareReqVM) {
         List<?> result = compareServiceImpl.batchGetCompare(CompareReqVM);
-
         return MessageUtil.success("success", result);
     }
     @ApiOperation("比价选用")
