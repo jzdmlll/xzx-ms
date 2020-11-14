@@ -76,5 +76,12 @@ public class InquiryController {
         return MessageUtil.success("success");
     }
 
+    @ApiOperation(value = "此条询价选用此条产品池数据")
+    @GetMapping(value = "inquiryChoosePool")
+    public Message inquiryChoosePool(long inquiryId, long proPoolId, long operator){
+
+        iInquiryServiceImpl.inquiryChoosePool(inquiryId,proPoolId,operator);
+        return MessageUtil.success("success");
+    }
 
 }

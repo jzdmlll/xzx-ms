@@ -1,12 +1,10 @@
 package com.xzx.xzxms.service.impl;
 
-import com.xzx.xzxms.bean.Inquiry;
-import com.xzx.xzxms.bean.InquiryExample;
-import com.xzx.xzxms.bean.Quote;
-import com.xzx.xzxms.bean.QuoteExample;
+import com.xzx.xzxms.bean.*;
 import com.xzx.xzxms.bean.extend.InquiryCompareExtend;
 import com.xzx.xzxms.bean.extend.InquiryExtend;
 import com.xzx.xzxms.dao.InquiryMapper;
+import com.xzx.xzxms.dao.ProPoolMapper;
 import com.xzx.xzxms.dao.QuoteMapper;
 import com.xzx.xzxms.dao.extend.InquiryExtendMapper;
 import com.xzx.xzxms.service.IInquiryService;
@@ -31,6 +29,9 @@ public class InquiryServiceImpl implements IInquiryService{
     private InquiryExtendMapper inquiryExtendMapper;
     @Resource
     private QuoteMapper quoteMapper;
+    @Resource
+    private ProPoolMapper proPoolMapper;
+
     @Override
     public List<InquiryExtend> findByProDetailId(long proDetailId) {
 
@@ -143,5 +144,28 @@ public class InquiryServiceImpl implements IInquiryService{
         //否决
         inquiry.setVeto(1);
         inquiryMapper.updateByPrimaryKeySelective(inquiry);
+    }
+
+    @Override
+    public void inquiryChoosePool(long inquiryId, long proPoolId, long operator) {
+        ProPool proPool = proPoolMapper.selectByPrimaryKey(proPoolId);
+        Quote quote = new Quote();
+        quote.setId(IDUtils.getId());
+        quote.setSupplier(proPool.getSupplier());
+        quote.setSuModel(proPool.getSupplier());
+        quote.setSuBrand(proPool.getBrand());
+        quote.setSuParams(proPool.getParams());
+        quote.setSuPrice(proPool.getPrice());
+        quote.setSuDelivery(proPool.getDelivery());
+        quote.setSuRemark(proPool.getRemark());
+        quote.setImage(proPool.getImage());
+        //数据来源于产品池
+        quote.setDataSource(0);
+        quote.setInquiryId(inquiryId);
+        quote.setIsActive(1);
+        quote.setIsUseful(0);
+        quote.setOperator(operator);
+        quote.setTime(new Date().getTime());
+        quoteMapper.insert(quote);
     }
 }

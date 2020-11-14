@@ -48,7 +48,7 @@ public class SysProCheckController {
 
     @ApiOperation("查询技术审核")
     @GetMapping("findTechnicalCheck")
-    public Message findTechnicalCheck(Integer status, long proDetailId) {
+    public Message findTechnicalCheck(@RequestParam(value = "status",required = false,defaultValue = "-1") Integer status, @RequestParam(value = "proDetailId",required = false,defaultValue = "-1") long proDetailId) {
 
         sysProCheckServiceImpl.findTechnicalCheck(status, proDetailId);
         return MessageUtil.success("success");
