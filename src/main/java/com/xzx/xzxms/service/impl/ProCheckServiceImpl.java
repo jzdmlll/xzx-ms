@@ -28,7 +28,13 @@ public class ProCheckServiceImpl implements ISysProCheckService {
 
     @Override
     public List<SysProCheckExtend> cascadeFindAllByCheckName(String checkName, int[] checkStatus, long proDetailId) {
-        return sysProCheckExtendMapper.cascadeFindAllByCheckName(checkName, checkStatus, proDetailId);
+
+        List<SysProCheckExtend> list = null;
+        //查询出要询价的有报价数据
+        list = sysProCheckExtendMapper.cascadeFindAllByCheckName(checkName, checkStatus, proDetailId);
+        
+
+        return list;
     }
 
 
