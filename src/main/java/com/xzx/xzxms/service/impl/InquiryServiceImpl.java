@@ -7,6 +7,7 @@ import com.xzx.xzxms.bean.extend.InquiryExtend;
 import com.xzx.xzxms.dao.InquiryMapper;
 import com.xzx.xzxms.dao.ProPoolMapper;
 import com.xzx.xzxms.dao.QuoteMapper;
+import com.xzx.xzxms.dao.SysProCheckMapper;
 import com.xzx.xzxms.dao.extend.InquiryExtendMapper;
 import com.xzx.xzxms.service.IInquiryService;
 import com.xzx.xzxms.utils.CustomerException;
@@ -32,6 +33,8 @@ public class InquiryServiceImpl implements IInquiryService{
     private QuoteMapper quoteMapper;
     @Resource
     private ProPoolMapper proPoolMapper;
+    @Resource
+    private SysProCheckMapper sysProCheckMapper;
 
     @Override
     public List<InquiryExtend> findByProDetailId(long proDetailId) {
@@ -153,15 +156,21 @@ public class InquiryServiceImpl implements IInquiryService{
         QuoteExample example = new QuoteExample();
         example.createCriteria().andInquiryIdEqualTo(inquiryId);
         List<Quote> quotes = quoteMapper.selectByExample(example);
+
+        if(1 == quotes.get(0).getIsUseful()){
+            throw new CustomerException("此条询价内容以被审核，无法修改!");
+        }
         if(quotes.size() > 0){
             for(Quote q : quotes){
                 quoteMapper.deleteByPrimaryKey(q.getId());
             }
         }
+        long quoteId = IDUtils.getId();
+        long time = new Date().getTime();
 
         ProPool proPool = proPoolMapper.selectByPrimaryKey(proPoolId);
         Quote quote = new Quote();
-        quote.setId(IDUtils.getId());
+        quote.setId(quoteId);
         quote.setSupplier(proPool.getSupplier());
         quote.setSuModel(proPool.getSupplier());
         quote.setSuBrand(proPool.getBrand());
@@ -176,7 +185,22 @@ public class InquiryServiceImpl implements IInquiryService{
         quote.setIsActive(1);
         quote.setIsUseful(0);
         quote.setOperator(operator);
-        quote.setTime(new Date().getTime());
+        quote.setTime(time);
         quoteMapper.insert(quote);
+
+        SysProCheck sysProCheck = new SysProCheck();
+        sysProCheck.setId(IDUtils.getId());
+        sysProCheck.setTechnicalAudit(0);
+        sysProCheck.setBusinessAudit(0);
+        sysProCheck.setCompareAudit(0);
+        sysProCheck.setFinallyAudit(0);
+        sysProCheck.setTechnicalRemark("");
+        sysProCheck.setBusinessRemark("");
+        sysProCheck.setCompareRemark("");
+        sysProCheck.setFinallyRemark("");
+        sysProCheck.setQuoteId(quoteId);
+        sysProCheck.setOperator(operator);
+        sysProCheck.setTime(time);
+        sysProCheckMapper.insertSelective(sysProCheck);
     }
 }

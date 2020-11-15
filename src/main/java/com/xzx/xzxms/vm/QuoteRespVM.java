@@ -4,78 +4,87 @@ import com.xzx.xzxms.bean.Quote;
 
 public class QuoteRespVM extends Quote {
 
-    private int technical_audit;
-    private int business_audit;
-    private int compare_audit;
-    private int finally_audit;
-    private String technical_remark;
-    private String business_remark;
-    private String compare_remark;
-    private String finally_remark;
+    private int compareId;
+    private int technicalAudit;
+    private int businessAudit;
+    private int compareStatus;
+    private int finallyAudit;
+    private String technicalRemark;
+    private String businessRemark;
+    private String compareRemark;
+    private String finallyRemark;
     private String name;
 
-    public int getTechnical_audit() {
-        return technical_audit;
+    public int getCompareId() {
+        return compareId;
     }
 
-    public void setTechnical_audit(int technical_audit) {
-        this.technical_audit = technical_audit;
+    public void setCompareId(int compareId) {
+        this.compareId = compareId;
     }
 
-    public int getBusiness_audit() {
-        return business_audit;
+    public int getTechnicalAudit() {
+        return technicalAudit;
     }
 
-    public void setBusiness_audit(int business_audit) {
-        this.business_audit = business_audit;
+    public void setTechnicalAudit(int technicalAudit) {
+        this.technicalAudit = technicalAudit;
     }
 
-    public int getCompare_audit() {
-        return compare_audit;
+    public int getBusinessAudit() {
+        return businessAudit;
     }
 
-    public void setCompare_audit(int compare_audit) {
-        this.compare_audit = compare_audit;
+    public void setBusinessAudit(int businessAudit) {
+        this.businessAudit = businessAudit;
     }
 
-    public int getFinally_audit() {
-        return finally_audit;
+    public int getCompareStatus() {
+        return compareStatus;
     }
 
-    public void setFinally_audit(int finally_audit) {
-        this.finally_audit = finally_audit;
+    public void setCompareStatus(int compareStatus) {
+        this.compareStatus = compareStatus;
     }
 
-    public String getTechnical_remark() {
-        return technical_remark;
+    public int getFinallyAudit() {
+        return finallyAudit;
     }
 
-    public void setTechnical_remark(String technical_remark) {
-        this.technical_remark = technical_remark;
+    public void setFinallyAudit(int finallyAudit) {
+        this.finallyAudit = finallyAudit;
     }
 
-    public String getBusiness_remark() {
-        return business_remark;
+    public String getTechnicalRemark() {
+        return technicalRemark;
     }
 
-    public void setBusiness_remark(String business_remark) {
-        this.business_remark = business_remark;
+    public void setTechnicalRemark(String technicalRemark) {
+        this.technicalRemark = technicalRemark;
     }
 
-    public String getCompare_remark() {
-        return compare_remark;
+    public String getBusinessRemark() {
+        return businessRemark;
     }
 
-    public void setCompare_remark(String compare_remark) {
-        this.compare_remark = compare_remark;
+    public void setBusinessRemark(String businessRemark) {
+        this.businessRemark = businessRemark;
     }
 
-    public String getFinally_remark() {
-        return finally_remark;
+    public String getCompareRemark() {
+        return compareRemark;
     }
 
-    public void setFinally_remark(String finally_remark) {
-        this.finally_remark = finally_remark;
+    public void setCompareRemark(String compareRemark) {
+        this.compareRemark = compareRemark;
+    }
+
+    public String getFinallyRemark() {
+        return finallyRemark;
+    }
+
+    public void setFinallyRemark(String finallyRemark) {
+        this.finallyRemark = finallyRemark;
     }
 
     public String getName() {

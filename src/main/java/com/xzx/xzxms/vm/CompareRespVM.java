@@ -8,6 +8,15 @@ public class CompareRespVM {
     private long[] otherCompareIds;
     private long userId;
     private List<Map> remarks;
+    private List<Map> inquiries;
+
+    public List<Map> getInquiries() {
+        return inquiries;
+    }
+
+    public void setInquiries(List<Map> inquiries) {
+        this.inquiries = inquiries;
+    }
 
     public long[] getCheckCompareIds() {
         return checkCompareIds;

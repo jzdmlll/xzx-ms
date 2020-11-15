@@ -73,12 +73,12 @@ public class QuoteController {
         return MessageUtil.success("删除成功");
     }
 
-    @ApiOperation("无需询价的在产品池中选用供应商")
+/*    @ApiOperation("无需询价的在产品池中选用供应商")
     @GetMapping("chooseProductPoolSupplier")
     public Message chooseProductPoolSupplier(long inquiryId, long productPoolId, long operator){
 
         iQuoteServiceImpl.chooseProductPoolSupplier(inquiryId,productPoolId,operator);
         return MessageUtil.success("选用成功");
-    }
+    }*/
 }
 

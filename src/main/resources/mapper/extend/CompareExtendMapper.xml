@@ -30,8 +30,9 @@
         q.*, spc.id compare_id,
         spc.technical_audit technical_audit,spc.technical_remark technical_remark,
         spc.business_audit business_audit,spc.business_remark business_remark,
-        spc.compare_audit compare_audit,spc.compare_remark compare_remark,
+        spc.compare_audit compare_status,spc.compare_remark compare_remark,
         spc.finally_audit finally_audit,spc.finally_remark finally_remark,
+        spc.id compare_id,
         i.name name
         from
         inquiry i LEFT JOIN quote q ON i.id = q.inquiry_id

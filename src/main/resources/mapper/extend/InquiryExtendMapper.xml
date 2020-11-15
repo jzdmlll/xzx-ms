@@ -3,13 +3,14 @@
 <mapper namespace="com.xzx.xzxms.dao.extend.InquiryExtendMapper">
 
     <select id="findByProIdOrCompareStatus" resultType="com.xzx.xzxms.bean.extend.InquiryAndProDetailExtend">
-        select i.*,s.pro_rate pro_rate
+        select i.*,s.pro_rate rate
             from inquiry i
             left join sys_pro_detail s on i.pro_detail_id = s.id
             left join quote q on i.id = q.inquiry_id
             left join sys_pro_check c on q.id = c.quote_id
         <where>
-            i.is_active = 1 and s.is_active = 1
+            i.is_active = 1 and s.is_active = 1 and
+            c.business_audit != 0 and c.technical_audit != 0
             <if test="proDetailId != -1">
                 and s.id = #{proDetailId}
             </if>
