@@ -58,7 +58,7 @@ public class CompareController {
     @ApiOperation("比价选用")
     @PostMapping("completeCompare")
     public Message completeCompare(@RequestBody CompareRespVM compareRespVM) {
-        compareServiceImpl.completeCompare(compareRespVM.getCheckCompareIds(), compareRespVM.getOtherCompareIds(), compareRespVM.getRemarks(), compareRespVM.getUserId());
+        compareServiceImpl.completeCompare(compareRespVM.getCheckCompareIds(), compareRespVM.getOtherCompareIds(), compareRespVM.getRemarks(), compareRespVM.getUserId(), compareRespVM.getInquiries());
         //compareServiceImpl.completeCompare(compareRespVM.getCheckCompareIds(), compareRespVM.getOtherCompareIds(), compareRespVM.getRemarks());
         return MessageUtil.success("操作成功");
     }

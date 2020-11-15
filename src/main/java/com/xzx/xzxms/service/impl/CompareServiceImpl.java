@@ -1,13 +1,16 @@
 package com.xzx.xzxms.service.impl;
 
+import com.xzx.xzxms.bean.Inquiry;
 import com.xzx.xzxms.bean.SysProCheck;
 import com.xzx.xzxms.bean.extend.SysCheckExtend;
+import com.xzx.xzxms.dao.InquiryMapper;
 import com.xzx.xzxms.dao.SysProCheckMapper;
 import com.xzx.xzxms.dao.extend.CompareExtendMapper;
 import com.xzx.xzxms.service.ICompareService;
 import com.xzx.xzxms.utils.CustomerException;
 import com.xzx.xzxms.vm.CompareReqVM;
 import com.xzx.xzxms.vm.QuoteRespVM;
+import io.swagger.models.auth.In;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +23,8 @@ public class CompareServiceImpl implements ICompareService {
     private CompareExtendMapper compareExtendMapper;
     @Resource
     private SysProCheckMapper sysProCheckMapper;
+    @Resource
+    private InquiryMapper inquiryMapper;
 
     @Override
     public List<QuoteRespVM> cascadeFindAllByParams(long inquiryId) {
@@ -50,7 +55,7 @@ public class CompareServiceImpl implements ICompareService {
 
     @Transactional
     @Override
-    public void completeCompare(long[] checkCompareIds, long[] otherCompareIds, List<Map> remarks, long userId) {
+    public void completeCompare(long[] checkCompareIds, long[] otherCompareIds, List<Map> remarks, long userId, List<Map> inquiries) {
 
         long time = new Date().getTime();
 
@@ -86,6 +91,14 @@ public class CompareServiceImpl implements ICompareService {
             }
             proCheck.setId(id);
             sysProCheckMapper.updateByPrimaryKeySelective(proCheck);
+        }
+
+        Inquiry inquiry = new Inquiry();
+        for (Map map : inquiries){
+            inquiry.setId(Long.parseLong(map.get("id").toString()));
+            inquiry.setPrice(Double.parseDouble(map.get("price").toString()));
+            inquiry.setTotalPrice(Double.parseDouble(map.get("totalPrice").toString()));
+            inquiryMapper.updateByPrimaryKeySelective(inquiry);
         }
     }
 }

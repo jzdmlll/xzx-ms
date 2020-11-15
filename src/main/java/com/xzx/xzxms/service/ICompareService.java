@@ -27,5 +27,5 @@ public interface ICompareService {
      * @param otherCompareIds
      * @param remarks
      */
-    void completeCompare(long[] checkCompareIds, long[] otherCompareIds, List<Map> remarks, long userId);
+    void completeCompare(long[] checkCompareIds, long[] otherCompareIds, List<Map> remarks, long userId, List<Map> inquiries);
 }

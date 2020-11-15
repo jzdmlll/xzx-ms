@@ -264,6 +264,8 @@ public class QuoteServiceImpl implements IQuoteService {
                             q.setInquiryId(inquiryId);
                             //数据来源于外部数据  标志为1
                             q.setDataSource(1);
+
+
                         }catch (NumberFormatException exception) {
                             throw new CustomerException("失败，存在数据格式不正确"+exception.getMessage());
                         }
