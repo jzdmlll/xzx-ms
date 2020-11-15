@@ -1,6 +1,7 @@
 package com.xzx.xzxms.service.impl;
 
 import com.xzx.xzxms.bean.*;
+import com.xzx.xzxms.bean.extend.InquiryAndProDetailExtend;
 import com.xzx.xzxms.bean.extend.InquiryCompareExtend;
 import com.xzx.xzxms.bean.extend.InquiryExtend;
 import com.xzx.xzxms.dao.InquiryMapper;
@@ -110,9 +111,9 @@ public class InquiryServiceImpl implements IInquiryService{
     }
 
     @Override
-    public List<InquiryCompareExtend> findByProIdOrCompareStatus(long proDetailId, Integer compareStatus) {
+    public List<InquiryAndProDetailExtend> findByProIdOrCompareStatus(long proDetailId, Integer compare_audit) {
 
-        List<InquiryCompareExtend> InquiryCompareExtends = inquiryExtendMapper.findByProIdOrCompareStatus(proDetailId,compareStatus);
+        List<InquiryAndProDetailExtend> InquiryCompareExtends = inquiryExtendMapper.findByProIdOrCompareStatus(proDetailId,compare_audit);
 
         return InquiryCompareExtends;
     }

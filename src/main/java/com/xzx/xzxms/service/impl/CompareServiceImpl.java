@@ -25,45 +25,6 @@ public class CompareServiceImpl implements ICompareService {
     public List<QuoteRespVM> cascadeFindAllByParams(long inquiryId) {
 
         List<QuoteRespVM> quoteRespVM = compareExtendMapper.cascadeFindAllByParams(inquiryId);
-//        List<QuoteRespVM> newQuote = new ArrayList<>();
-
-
-
-
-//        long id = -1L;
-//        List<QuoteRespVM> tempList = null;
-//        List<List<QuoteRespVM>> resultList = new ArrayList<>();
-//        for (QuoteRespVM q : quoteRespVM){
-//            if(id != q.getId()) {
-//                if(tempList!=null){
-//                    resultList.add(tempList);
-//                }
-//                id = q.getId();
-//                tempList = new ArrayList<>();
-//                tempList.add(q);
-//            }else {
-//                tempList.add(q);
-//            }
-//        }
-//        resultList.add(tempList);
-//        System.out.println(resultList.size());
-//
-//        for(List<QuoteRespVM> list: resultList){
-//            int key = 0;
-//            int index = 0;
-//            for(int i=0;i<list.size();i++){
-//                QuoteRespVM q = list.get(i);
-//                if(q.getCompareStatus() ==  2 && !"比价审核".equals(q.getCheckType())) {
-//                    key ++;
-//                }
-//                if("比价审核".equals(q.getCheckType())) {
-//                    index = i;
-//                }
-//            }
-//            if(key == 0) {
-//                newQuote.add(list.get(index));
-//            }
-//        }
 
         return quoteRespVM;
     }

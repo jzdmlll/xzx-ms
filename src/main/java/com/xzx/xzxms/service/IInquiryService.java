@@ -1,6 +1,7 @@
 package com.xzx.xzxms.service;
 
 import com.xzx.xzxms.bean.Inquiry;
+import com.xzx.xzxms.bean.extend.InquiryAndProDetailExtend;
 import com.xzx.xzxms.bean.extend.InquiryCompareExtend;
 import com.xzx.xzxms.bean.extend.InquiryExtend;
 
@@ -41,9 +42,11 @@ public interface IInquiryService {
 
     /**
      * 根据项目id/比价状态查询
+     * @param proDetailId 项目详情ID
+     * @param compare_audit 比价审核状态
      * @return
      */
-    List<InquiryCompareExtend> findByProIdOrCompareStatus(long proDetailId, Integer compareStatus);
+    List<InquiryAndProDetailExtend> findByProIdOrCompareStatus(long proDetailId, Integer compare_audit);
 
     /**
      * 批量置为不询价

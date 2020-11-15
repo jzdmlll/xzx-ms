@@ -2,7 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xzx.xzxms.dao.extend.InquiryExtendMapper">
 
-    <select id="findByProIdOrCompareStatus" resultMap="compareResultMap">
+    <select id="findByProIdOrCompareStatus" resultType="com.xzx.xzxms.bean.extend.InquiryAndProDetailExtend">
+        select i.*,s.pro_rate pro_rate
+            from inquiry i
+            left join sys_pro_detail s on i.pro_detail_id = s.id
+            left join quote q on i.id = q.inquiry_id
+            left join sys_pro_check c on q.id = c.quote_id
+        <where>
+            i.is_active = 1 and s.is_active = 1
+            <if test="proDetailId != -1">
+                and s.id = #{proDetailId}
+            </if>
+            <if test="compare_audit != -1">
+                and c.compare_audit = #{compare_audit}
+            </if>
+        </where>
+    </select>
+
+
+
+    <select id="findByProIdOrCompareStatus_old" resultMap="compareResultMap">
         select
         i.*,pro.pro_rate rate
         from inquiry i
