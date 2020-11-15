@@ -57,4 +57,12 @@ public interface IInquiryService {
      * @param id 询价ID
      */
     void setVeto(long id);
+
+    /**
+     * 此条询价选用此条产品池数据
+     * @param inquiryId 询价ID
+     * @param proPoolId 产品池ID
+     * @param operator 操作人
+     */
+    void inquiryChoosePool(long inquiryId, long proPoolId, long operator);
 }
