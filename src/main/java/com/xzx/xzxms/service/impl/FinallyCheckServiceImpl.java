@@ -11,6 +11,7 @@ import com.xzx.xzxms.dao.extend.SysProDetailExtendMapper;
 import com.xzx.xzxms.service.IFinallyCheckService;
 import com.xzx.xzxms.utils.IDUtils;
 import com.xzx.xzxms.vm.FinallyCheckCompareVM;
+import com.xzx.xzxms.vm.FinallyQuoteInquiryVM;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +30,7 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
         double minPrice = 0;
         double price = 0;
         List<Map> maps = new ArrayList<Map>();
-        List<FinallyCheckCompareVM> finallyCheckCompareVMS = finallyCheckExtendMapper.cascadeFindAllByParams(proDetailId);
+        List<FinallyQuoteInquiryVM> finallyCheckCompareVMS = finallyCheckExtendMapper.cascadeFindAllByParams(proDetailId);
 
         Map map = new HashMap();
 
@@ -86,16 +87,16 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
     public void FinallyCheckCommit(long[] checkIds, long[] unCheckIds, List<Map> remarks, long userId) {
 
         long time = new Date().getTime();
-
-        //根据审核ID查询出询价ID 再查询出项目详情ID
         SysProCheck sysProCheck = sysProCheckMapper.selectByPrimaryKey(checkIds[0]);
         Long proDetailId = sysProDetailExtendMapper.isExistsProDetailId(sysProCheck.getId());
-        if (proDetailId != null){
-            //如果项目详情ID存在  则先全部删除内容，重新添加
-            ProPoolExample example =new ProPoolExample();
-            example.createCriteria().andProDetailIdEqualTo(proDetailId);
-            proPoolMapper.deleteByExample(example);
-        }
+
+//        //根据审核ID查询出询价ID 再查询出项目详情ID
+//        if (proDetailId != null){
+//            //如果项目详情ID存在  则先全部删除内容，重新添加
+//            ProPoolExample example =new ProPoolExample();
+//            example.createCriteria().andProDetailIdEqualTo(proDetailId);
+//            proPoolMapper.deleteByExample(example);
+//        }
 
         SysProCheck proCheck = new SysProCheck();
         // 更新选中比价
