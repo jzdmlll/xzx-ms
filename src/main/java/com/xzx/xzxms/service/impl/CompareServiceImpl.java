@@ -80,6 +80,10 @@ public class CompareServiceImpl implements ICompareService {
         proCheck.setOperator(userId);
         proCheck.setTime(time);
         for (long id : otherCompareIds) {
+            SysProCheck sysProCheck = sysProCheckMapper.selectByPrimaryKey(id);
+            if (0 != sysProCheck.getFinallyAudit()){
+                throw new CustomerException("该报价已终审，请勿再修改拟比价!");
+            }
             proCheck.setId(id);
             sysProCheckMapper.updateByPrimaryKeySelective(proCheck);
         }
