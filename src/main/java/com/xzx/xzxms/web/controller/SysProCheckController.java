@@ -1,6 +1,7 @@
 package com.xzx.xzxms.web.controller;
 
 import com.xzx.xzxms.bean.SysProCheck;
+import com.xzx.xzxms.bean.extend.SysCheckExtend;
 import com.xzx.xzxms.service.ISysProCheckService;
 import com.xzx.xzxms.utils.Message;
 import com.xzx.xzxms.utils.MessageUtil;
@@ -39,27 +40,27 @@ public class SysProCheckController {
 
 
     @ApiOperation("技术审核更改状态")
-    @GetMapping("updateTechnicalStatus")
-    public Message updateTechnicalStatus(List<SysProCheck> sysProChecks) {
+    @PostMapping("updateTechnicalStatus")
+    public Message updateTechnicalStatus(@RequestBody List<SysProCheck> sysProChecks) {
 
         sysProCheckServiceImpl.updateTechnicalStatus(sysProChecks);
-        return MessageUtil.success("success");
+        return MessageUtil.success("操作成功");
     }
 
     @ApiOperation("查询技术审核")
     @GetMapping("findTechnicalCheck")
-    public Message findTechnicalCheck(Integer status, long proDetailId) {
+    public Message findTechnicalCheck(@RequestParam(defaultValue = "-1")Integer status,@RequestParam(defaultValue = "-1") long proDetailId) {
 
-        sysProCheckServiceImpl.findTechnicalCheck(status, proDetailId);
-        return MessageUtil.success("success");
+        List<SysCheckExtend> technicalCheck = sysProCheckServiceImpl.findTechnicalCheck(status, proDetailId);
+        return MessageUtil.success("success", technicalCheck);
     }
 
     @ApiOperation("查询商务审核")
     @GetMapping("findBusinessCheck")
-    public Message findBusinessCheck(Integer status, long proDetailId) {
+    public Message findBusinessCheck(@RequestParam(defaultValue = "-1") Integer status,@RequestParam(defaultValue = "-1") long proDetailId) {
 
-        sysProCheckServiceImpl.findBusinessCheck(status, proDetailId);
-        return MessageUtil.success("success");
+        List<SysCheckExtend> businessCheck = sysProCheckServiceImpl.findBusinessCheck(status, proDetailId);
+        return MessageUtil.success("success", businessCheck);
     }
 
 

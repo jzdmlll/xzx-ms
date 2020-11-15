@@ -16,7 +16,7 @@
         <where>
              q.is_active = 1 and i.is_active = 1
             <if test="status!=null and status!=-1">
-                AND spc.technical_audit = status
+                AND spc.technical_audit = #{status}
             </if>
             <if test="proDetailId!=null and proDetailId!=-1">
                 AND spd.id = #{proDetailId,jdbcType=BIGINT}
@@ -46,7 +46,7 @@
         <where>
             q.is_active = 1 and i.is_active = 1
             <if test="status!=null and status!=-1">
-                AND spc.business_audit = status
+                AND spc.business_audit = #{status}
             </if>
             <if test="proDetailId!=null and proDetailId!=-1">
                 AND spd.id = #{proDetailId,jdbcType=BIGINT}
