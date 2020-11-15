@@ -123,7 +123,7 @@ public class InquiryServiceImpl implements IInquiryService{
 
         for (long id : ids){
             QuoteExample example = new QuoteExample();
-            example.createCriteria().andInquiryIdEqualTo(id);
+            example.createCriteria().andInquiryIdEqualTo(id).andIsActiveEqualTo(1);
             List<Quote> list = quoteMapper.selectByExample(example);
             if (list.size() > 0){
                 Inquiry inq = inquiryMapper.selectByPrimaryKey(id);
@@ -148,6 +148,16 @@ public class InquiryServiceImpl implements IInquiryService{
 
     @Override
     public void inquiryChoosePool(long inquiryId, long proPoolId, long operator) {
+
+        QuoteExample example = new QuoteExample();
+        example.createCriteria().andInquiryIdEqualTo(inquiryId);
+        List<Quote> quotes = quoteMapper.selectByExample(example);
+        if(quotes.size() > 0){
+            for(Quote q : quotes){
+                quoteMapper.deleteByPrimaryKey(q.getId());
+            }
+        }
+
         ProPool proPool = proPoolMapper.selectByPrimaryKey(proPoolId);
         Quote quote = new Quote();
         quote.setId(IDUtils.getId());

@@ -65,7 +65,7 @@ public class InquiryController {
     public Message batchSetIsNotInquiry(long[] ids, Integer status){
 
         iInquiryServiceImpl.batchSetIsNotInquiry(ids, status);
-        return MessageUtil.success("success");
+        return MessageUtil.success("操作成功");
     }
 
     @ApiOperation(value = "此条询价被否决")
@@ -73,15 +73,15 @@ public class InquiryController {
     public Message setVeto(long id){
 
         iInquiryServiceImpl.setVeto(id);
-        return MessageUtil.success("success");
+        return MessageUtil.success("操作成功");
     }
 
     @ApiOperation(value = "此条询价选用此条产品池数据")
-    @GetMapping(value = "inquiryChoosePool")
+    @PostMapping(value = "inquiryChoosePool")
     public Message inquiryChoosePool(long inquiryId, long proPoolId, long operator){
 
         iInquiryServiceImpl.inquiryChoosePool(inquiryId,proPoolId,operator);
-        return MessageUtil.success("success");
+        return MessageUtil.success("操作成功");
     }
 
 }

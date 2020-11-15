@@ -47,30 +47,9 @@ public class QuoteServiceImpl implements IQuoteService {
     @Override
     public List<Quote> findByInquiryId(long inquiryId) {
 
-        List<Quote> list = null;
-        Inquiry inquiry = inquiryMapper.selectByPrimaryKey(inquiryId);
-        //若不需要询价  则相关报价信息从产品池中选用的产品查询  反之从报价表中查询
-        if (inquiry.getIsinquiry() == 0){
-            ProPoolExample example = new ProPoolExample();
-            example.createCriteria().andNameEqualTo(inquiry.getName()).andChooseEqualTo(1);
-            List<ProPool> proPools = proPoolMapper.selectByExample(example);
-            Quote quote = new Quote();
-            for (ProPool p : proPools) {
-                quote.setId(p.getId());
-                quote.setSupplier(p.getSupplier());
-                quote.setSuModel(p.getModel());
-                quote.setSuBrand(p.getBrand());
-                quote.setSuParams(p.getParams());
-                quote.setSuPrice(p.getPrice());
-                quote.setSuDelivery(p.getDelivery());
-                quote.setSuRemark(p.getRemark());
-                list.add(quote);
-            }
-        }else {
-            QuoteExample example = new QuoteExample();
-            example.createCriteria().andInquiryIdEqualTo(inquiryId).andIsActiveEqualTo(1);
-            list = quoteMapper.selectByExample(example);
-        }
+        QuoteExample example = new QuoteExample();
+        example.createCriteria().andInquiryIdEqualTo(inquiryId).andIsActiveEqualTo(1);
+        List<Quote> list = quoteMapper.selectByExample(example);
 
         return list;
     }
