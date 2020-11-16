@@ -30,11 +30,11 @@
 
     <select id="cascadeFindAllByParams" resultType="com.xzx.xzxms.vm.FinallyQuoteInquiryVM">
         select q.*,
-        i.model model,i.name name,i.number number,i.params params,i.unit unit,i.price price,i.total_price total_price,i.sort sort,
+        i.model model,i.name name,i.number number,i.params params,i.unit unit,i.price price,i.total_price total_price,i.sort sort,i.veto veto,
         spc.id compare_id,
         spc.technical_audit technical_audit,spc.technical_remark technical_remark,
         spc.business_audit business_audit,spc.business_remark business_remark,
-        spc.compare_audit compare_audit,spc.compare_remark compare_remark,
+        spc.compare_audit compareStatus,spc.compare_remark compare_remark,
         spc.finally_audit finally_audit,spc.finally_remark finally_remark
         from inquiry i
         left join sys_pro_detail pro on pro.id = i.pro_detail_id

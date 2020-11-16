@@ -1,5 +1,7 @@
 package com.xzx.xzxms.service;
 
+import com.xzx.xzxms.bean.Inquiry;
+
 import java.util.List;
 import java.util.Map;
 
@@ -19,4 +21,10 @@ public interface IFinallyCheckService {
      * @param userId 提交人ID
      */
     void FinallyCheckCommit(long[] checkIds, long[] unCheckIds, List<Map> remarks, long userId);
+
+    /**
+     * 终审拒绝一条询价（重新询价）
+     * @param inquiry
+     */
+    void refuseInquiry(Inquiry inquiry);
 }

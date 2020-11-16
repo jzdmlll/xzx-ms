@@ -3,17 +3,20 @@ package com.xzx.xzxms.service.impl;
 import com.xzx.xzxms.bean.*;
 import com.xzx.xzxms.bean.extend.QuoteExtendInquiry;
 import com.xzx.xzxms.bean.extend.SysCheckExtend;
+import com.xzx.xzxms.dao.InquiryMapper;
 import com.xzx.xzxms.dao.ProPoolMapper;
 import com.xzx.xzxms.dao.SysProCheckMapper;
 import com.xzx.xzxms.dao.extend.FinallyCheckExtendMapper;
 import com.xzx.xzxms.dao.extend.QuoteAndInquiryExtendMapper;
 import com.xzx.xzxms.dao.extend.SysProDetailExtendMapper;
 import com.xzx.xzxms.service.IFinallyCheckService;
+import com.xzx.xzxms.utils.BeanHelper;
 import com.xzx.xzxms.utils.IDUtils;
 import com.xzx.xzxms.vm.FinallyCheckCompareVM;
 import com.xzx.xzxms.vm.FinallyQuoteInquiryVM;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -22,6 +25,16 @@ import java.util.*;
 public class FinallyCheckServiceImpl implements IFinallyCheckService {
     @Resource
     private FinallyCheckExtendMapper finallyCheckExtendMapper;
+    @Resource
+    private SysProCheckMapper sysProCheckMapper;
+    @Resource
+    private ProPoolMapper proPoolMapper;
+    @Resource
+    private QuoteAndInquiryExtendMapper quoteAndInquiryExtendMapper;
+    @Resource
+    private SysProDetailExtendMapper sysProDetailExtendMapper;
+    @Resource
+    private InquiryMapper inquiryMapper;
 
     @Override
     public List<Map> cascadeFindAllByParams(long proDetailId) {
@@ -73,15 +86,6 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
         return maps;
     }
 
-    @Resource
-    private SysProCheckMapper sysProCheckMapper;
-    @Resource
-    private ProPoolMapper proPoolMapper;
-    @Resource
-    private QuoteAndInquiryExtendMapper quoteAndInquiryExtendMapper;
-    @Resource
-    private SysProDetailExtendMapper sysProDetailExtendMapper;
-
     @Transactional
     @Override
     public void FinallyCheckCommit(long[] checkIds, long[] unCheckIds, List<Map> remarks, long userId) {
@@ -125,7 +129,16 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
             proPool.setIsUseful(0);
             proPool.setOperator(userId);
             proPool.setTime(time);
-            proPoolMapper.insert(proPool);
+            // 防止空指针异常
+            BeanHelper.nullToEmpty(proPool);
+            ProPoolExample example = new ProPoolExample();
+            example.createCriteria().andNameEqualTo(proPool.getName()).andBrandEqualTo(proPool.getBrand()).andSupplierEqualTo(proPool.getSupplier())
+                    .andModelEqualTo(proPool.getModel()).andParamsEqualTo(proPool.getParams()).andPriceEqualTo(proPool.getPrice()).andDeliveryEqualTo(proPool.getDelivery())
+                    .andQuoteEqualTo(proPool.getQuote()).andRemarkEqualTo(proPool.getRemark()).andProDetailIdEqualTo(proPool.getProDetailId());
+            long num = proPoolMapper.countByExample(example);
+            if(num == 0){
+                proPoolMapper.insert(proPool);
+            }
         }
         // 更新备注
         proCheck = new SysProCheck();
@@ -165,5 +178,11 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
             proPool.setTime(time);
             proPoolMapper.insert(proPool);
         }
+    }
+
+    @Override
+    public void refuseInquiry(Inquiry inquiry) {
+        inquiry.setVeto(1);
+        inquiryMapper.updateByPrimaryKeySelective(inquiry);
     }
 }

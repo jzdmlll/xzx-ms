@@ -1,5 +1,6 @@
 package com.xzx.xzxms.web.controller;
 
+import com.xzx.xzxms.bean.Inquiry;
 import com.xzx.xzxms.service.IFinallyCheckService;
 import com.xzx.xzxms.utils.Message;
 import com.xzx.xzxms.utils.MessageUtil;
@@ -26,6 +27,12 @@ public class FinallyCheckController {
     @PostMapping("saveFinallyCheckMessage")
     public Message saveFinallyCheckMessage(@RequestBody FinallyCheckReqVM finallyCheckReqVM){
         finallyCheckServiceImpl.FinallyCheckCommit(finallyCheckReqVM.getCheckCompareIds(), finallyCheckReqVM.getUncheckCompareIds(), finallyCheckReqVM.getRemarks(), finallyCheckReqVM.getUserId());
+        return MessageUtil.success("操作成功");
+    }
+
+    @PostMapping("refuseInquiry")
+    public Message refuseInquiry(Inquiry inquiry){
+        finallyCheckServiceImpl.refuseInquiry(inquiry);
         return MessageUtil.success("操作成功");
     }
 }

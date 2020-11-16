@@ -15,6 +15,6 @@ public interface SysProDetailExtendMapper {
 
     @Select("select a.id from sys_pro_detail a RIGHT JOIN inquiry b on a.id=b.pro_detail_id " +
             "RIGHT JOIN quote c on b.id=c.inquiry_id  " +
-            "RIGHT JOIN sys_pro_check d on c.id=d.content_id where d.id = #{0} GROUP BY a.id")
+            "RIGHT JOIN sys_pro_check d on c.id=d.quote_id where d.id = #{0} GROUP BY a.id")
     Long isExistsProDetailId(long proCheckId);
 }

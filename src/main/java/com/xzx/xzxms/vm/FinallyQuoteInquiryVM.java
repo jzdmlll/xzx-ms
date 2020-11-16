@@ -4,10 +4,10 @@ import com.xzx.xzxms.bean.Inquiry;
 import com.xzx.xzxms.bean.Quote;
 
 public class FinallyQuoteInquiryVM extends Quote {
-
+    private int veto;
     private int technicalAudit;
     private int businessAudit;
-    private int compareAudit;
+    private int compareStatus;
     private int finallyAudit;
     private String technicalRemark;
     private String businessRemark;
@@ -23,8 +23,16 @@ public class FinallyQuoteInquiryVM extends Quote {
     private String totalPrice;
     private String sort;
     private String compareId;
-
     private int minPrice;
+
+
+    public int getVeto() {
+        return veto;
+    }
+
+    public void setVeto(int veto) {
+        this.veto = veto;
+    }
 
     public int getMinPrice() {
         return minPrice;
@@ -114,12 +122,12 @@ public class FinallyQuoteInquiryVM extends Quote {
         this.businessAudit = businessAudit;
     }
 
-    public int getCompareAudit() {
-        return compareAudit;
+    public int getCompareStatus() {
+        return compareStatus;
     }
 
-    public void setCompareAudit(int compareAudit) {
-        this.compareAudit = compareAudit;
+    public void setCompareStatus(int compareStatus) {
+        this.compareStatus = compareStatus;
     }
 
     public int getFinallyAudit() {
