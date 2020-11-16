@@ -10,7 +10,6 @@ import com.xzx.xzxms.service.ICompareService;
 import com.xzx.xzxms.utils.CustomerException;
 import com.xzx.xzxms.vm.CompareReqVM;
 import com.xzx.xzxms.vm.QuoteRespVM;
-import io.swagger.models.auth.In;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,9 +27,7 @@ public class CompareServiceImpl implements ICompareService {
 
     @Override
     public List<QuoteRespVM> cascadeFindAllByParams(long inquiryId) {
-
         List<QuoteRespVM> quoteRespVM = compareExtendMapper.cascadeFindAllByParams(inquiryId);
-
         return quoteRespVM;
     }
 
