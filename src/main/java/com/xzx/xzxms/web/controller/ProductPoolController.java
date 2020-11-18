@@ -1,6 +1,7 @@
 package com.xzx.xzxms.web.controller;
 
 import com.xzx.xzxms.bean.ProPool;
+import com.xzx.xzxms.bean.extend.ProPoolExtend;
 import com.xzx.xzxms.service.IProductPoolService;
 import com.xzx.xzxms.utils.Message;
 import com.xzx.xzxms.utils.MessageUtil;
@@ -35,7 +36,7 @@ public class ProductPoolController {
     @ApiOperation(value = "查询")
     @GetMapping(value = "findByParams")
     public Message findByParams(@RequestParam(value="name", required=false, defaultValue = "")String name, @RequestParam(value="brand", required=false, defaultValue = "")String brand){
-        List<ProPool> list = productPoolServiceImpl.findByParams(name, brand);
+        List<ProPoolExtend> list = productPoolServiceImpl.findByParams(name, brand);
         return MessageUtil.success("success", list);
     }
 

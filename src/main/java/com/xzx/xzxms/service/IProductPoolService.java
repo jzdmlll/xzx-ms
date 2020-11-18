@@ -1,5 +1,7 @@
 package com.xzx.xzxms.service;
 import com.xzx.xzxms.bean.ProPool;
+import com.xzx.xzxms.bean.extend.ProPoolExtend;
+
 import java.util.List;
 
 public interface IProductPoolService {
@@ -17,7 +19,7 @@ public interface IProductPoolService {
      //* @param choose 选用标识
      * @return
      */
-    List<ProPool> findByParams(String name, String brand);
+    List<ProPoolExtend> findByParams(String name, String brand);
 
     /**
      * 批量置为无效（假删）
