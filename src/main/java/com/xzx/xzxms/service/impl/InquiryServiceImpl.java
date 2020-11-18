@@ -203,4 +203,13 @@ public class InquiryServiceImpl implements IInquiryService{
         sysProCheck.setTime(time);
         sysProCheckMapper.insertSelective(sysProCheck);
     }
+
+    @Override
+    public void insertOrUpdateInquiry(Inquiry inquiry) {
+
+        inquiry.setId(IDUtils.getId());
+        inquiry.setVeto(0);
+        inquiry.setTime(new Date().getTime());
+        inquiryMapper.insert(inquiry);
+    }
 }

@@ -13,6 +13,7 @@ import com.xzx.xzxms.utils.Base64Util;
 import com.xzx.xzxms.utils.CustomerException;
 import com.xzx.xzxms.utils.IDUtils;
 import com.xzx.xzxms.utils.POIExcelUtils;
+import io.swagger.models.auth.In;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,8 @@ public class QuoteServiceImpl implements IQuoteService {
     private QuoteAndInquiryExtendMapper quoteAndInquiry;
     @Resource
     private ProPoolMapper proPoolMapper;
+    @Resource
+    private InquiryPoolMapper inquiryPoolMapper;
 
     @Override
     public List<Quote> findByInquiryId(long inquiryId) {
@@ -200,6 +203,9 @@ public class QuoteServiceImpl implements IQuoteService {
                 SysFile sysFile = new SysFile();
                 String notFound = "";
                 int key = 0;
+
+                InquiryPool inquiryPool = new InquiryPool();
+
                 for (Map<String, Object> item : dataFromExcel) {
                     key ++;
                     String imgUrl = "";
@@ -220,6 +226,17 @@ public class QuoteServiceImpl implements IQuoteService {
                             if (inquiry.getIsinquiry() == 0){
                                 throw new CustomerException("文件中:  ["+name+"   :"+params+"]  已被设定为不需询价，无法导入报价单,如需导入请修改!");
                             }
+
+                            //询价内容添加到询价池中
+                            inquiryPool.setId(IDUtils.getId());
+                            inquiryPool.setEquipmentName(inquiry.getName());
+                            inquiryPool.setBrand(inquiry.getBrand());
+                            inquiryPool.setModel(inquiry.getModel());
+                            inquiryPool.setUnit(inquiry.getUnit());
+                            inquiryPool.setTechnicalRequire(inquiry.getParams());
+                            inquiryPool.setIsActive(1);
+                            inquiryPool.setOperator(operator);
+                            inquiryPool.setTime(time);
 
                         }else {
                             notFound += "["+name+" "+params+"]----";
@@ -243,15 +260,22 @@ public class QuoteServiceImpl implements IQuoteService {
                             q.setIsUseful(0);
                             q.setOperator(operator);
                             q.setSuDelivery(item.get("货期").toString().trim());
+                            inquiryPool.setDelivery(item.get("货期").toString().trim());
                             q.setSuModel(item.get("报价型号").toString().trim());
+                            inquiryPool.setQuoteModel(item.get("报价型号").toString().trim());
                             q.setSuBrand(item.get("报价品牌").toString().trim());
+                            inquiryPool.setQuoteBrand(item.get("报价品牌").toString().trim());
                             q.setSuParams(item.get("实际技术参数").toString().trim());
+                            inquiryPool.setTechnicalParams(item.get("实际技术参数").toString().trim());
                             q.setSupplier(supplier);
+                            inquiryPool.setSupplier(supplier);
 
                             if(StringUtils.isEmpty(item.get("设备单价").toString().trim())){
                                 q.setSuPrice(0D);
+                                inquiryPool.setPrice(0D);
                             }else{
                                 q.setSuPrice(Double.parseDouble(item.get("设备单价").toString().trim()));
+                                inquiryPool.setPrice(Double.parseDouble(item.get("设备单价").toString().trim()));
                             }
                             if(StringUtils.isEmpty(item.get("设备总价").toString().trim())){
                                 q.setSuTotalPrice(0D);
@@ -259,8 +283,10 @@ public class QuoteServiceImpl implements IQuoteService {
                                 q.setSuTotalPrice(Double.parseDouble(item.get("设备总价").toString().trim()));
                             }
                             q.setSuRemark(item.get("备注").toString().trim());
+                            inquiryPool.setRemark(item.get("备注").toString().trim());
                             q.setTime(time);
                             q.setWarranty(item.get("质保期/售后").toString().trim());
+                            inquiryPool.setWarranty(item.get("质保期/售后").toString().trim());
                             q.setInquiryId(inquiryId);
                             //数据来源于外部数据  标志为1
                             q.setDataSource(1);
@@ -282,6 +308,7 @@ public class QuoteServiceImpl implements IQuoteService {
                         }
                         q.setImage(imgUrl);
                         quoteMapper.insert(q);
+                        inquiryPoolMapper.insert(inquiryPool);
 
                         //3.报价信息存入文件表
                         sysFile.setId(IDUtils.getId());

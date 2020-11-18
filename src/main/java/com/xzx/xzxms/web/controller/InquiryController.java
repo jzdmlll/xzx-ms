@@ -84,4 +84,11 @@ public class InquiryController {
         return MessageUtil.success("操作成功");
     }
 
+    @ApiOperation(value = "重新询价")
+    @PostMapping(value = "insertOrUpdateInquiry")
+    public Message insertOrUpdateInquiry(Inquiry inquiry){
+
+        iInquiryServiceImpl.insertOrUpdateInquiry(inquiry);
+        return MessageUtil.success("success");
+    }
 }

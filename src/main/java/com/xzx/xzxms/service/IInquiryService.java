@@ -68,4 +68,10 @@ public interface IInquiryService {
      * @param operator 操作人
      */
     void inquiryChoosePool(long inquiryId, long proPoolId, long operator);
+
+    /**
+     * 新增或修改询价
+     * @param inquiry 询价对象
+     */
+    void insertOrUpdateInquiry(Inquiry inquiry);
 }
