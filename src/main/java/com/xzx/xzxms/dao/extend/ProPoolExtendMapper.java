@@ -2,6 +2,7 @@ package com.xzx.xzxms.dao.extend;
 
 import com.xzx.xzxms.bean.extend.ProPoolExtend;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -25,5 +26,5 @@ public interface ProPoolExtendMapper {
             "and pc.type=\"最终审核\" and pc.check_status != 0")
     int isFinalCheck(long proCheckId);
 
-    List<ProPoolExtend> findByParams(String name,String brand);
+    List<ProPoolExtend> findByParams(@Param("name") String name,@Param("brand") String brand);
 }

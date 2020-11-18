@@ -156,27 +156,6 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
         for (long id : unCheckIds) {
             proCheck.setId(id);
             sysProCheckMapper.updateByPrimaryKeySelective(proCheck);
-
-            //未选中信息插入产品池中
-            QuoteExtendInquiry quoteExtendInquiry = quoteAndInquiryExtendMapper.findByQuoteId(id);
-            ProPool proPool = new ProPool();
-            proPool.setId(IDUtils.getId());
-            proPool.setName(quoteExtendInquiry.getInquiry().getName());
-            proPool.setBrand(quoteExtendInquiry.getInquiry().getBrand());
-            proPool.setSupplier(quoteExtendInquiry.getSupplier());
-            proPool.setModel(quoteExtendInquiry.getSuModel());
-            proPool.setParams(quoteExtendInquiry.getSuParams());
-            proPool.setPrice(quoteExtendInquiry.getSuPrice());
-            proPool.setDelivery(quoteExtendInquiry.getSuDelivery());
-            proPool.setQuote(quoteExtendInquiry.getInquiry().getPrice().toString());
-            proPool.setRemark(quoteExtendInquiry.getSuRemark());
-            proPool.setProDetailId(proDetailId);
-            proPool.setChoose(0);
-            proPool.setIsActive(1);
-            proPool.setIsUseful(0);
-            proPool.setOperator(userId);
-            proPool.setTime(time);
-            proPoolMapper.insert(proPool);
         }
     }
 

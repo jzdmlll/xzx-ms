@@ -7,10 +7,10 @@
         product_pool p LEFT JOIN sys_pro_detail s ON s.id = p.pro_detail_id
         <where>
           p.is_active = 1
-          <if test="name != null and name = ''">
+          <if test="name != null and name != ''">
             and p.name = #{name}
           </if>
-          <if test="brand != null and brand = ''">
+          <if test="brand != null and brand != ''">
               and p.brand = #{brand}
           </if>
         </where>
