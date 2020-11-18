@@ -85,8 +85,8 @@ public class InquiryController {
     }
 
     @ApiOperation(value = "重新询价")
-    @PostMapping(value = "insertOrUpdateInquiry")
-    public Message insertOrUpdateInquiry(Inquiry inquiry){
+    @PostMapping(value = "saveOrUpdate")
+    public Message saveOrUpdate(Inquiry inquiry){
 
         iInquiryServiceImpl.insertOrUpdateInquiry(inquiry);
         return MessageUtil.success("success");
