@@ -218,7 +218,7 @@ public class QuoteServiceImpl implements IQuoteService {
                         name = item.get("设备名称").toString();
                         params = item.get("技术要求").toString();
                         InquiryExample example = new InquiryExample();
-                        example.createCriteria().andNameEqualTo(name).andParamsEqualTo(params).andIsActiveEqualTo(1).andProDetailIdEqualTo(proDetailId);
+                        example.createCriteria().andNameEqualTo(name).andParamsEqualTo(params).andIsActiveEqualTo(1).andProDetailIdEqualTo(proDetailId).andVetoEqualTo(0);
                         List<Inquiry> inquiries = inquiryMapper.selectByExample(example);
                         if (inquiries.size() > 0) {
                             Inquiry inquiry = inquiries.get(0);
