@@ -406,6 +406,13 @@ public class QuoteServiceImpl implements IQuoteService {
                 }
                 quote.setIsActive(0);
                 quoteMapper.updateByPrimaryKeySelective(quote);
+                //删除报价的同时删除询价池对应的内容
+                InquiryPoolExample example1 = new InquiryPoolExample();
+                example1.createCriteria().andQuoteBrandEqualTo(quote.getSuBrand()).andQuoteModelEqualTo(quote.getSuModel()).andTechnicalParamsEqualTo(quote.getSuParams());
+                List<InquiryPool> inquiryPools = inquiryPoolMapper.selectByExample(example1);
+                for (InquiryPool pool : inquiryPools){
+                    inquiryPoolMapper.deleteByPrimaryKey(pool.getId());
+                }
                 // 报价逻辑删除时，将对应审核删除
                 SysProCheckExample example = new SysProCheckExample();
                 example.createCriteria().andQuoteIdEqualTo(quote.getId());
