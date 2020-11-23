@@ -87,8 +87,10 @@ public class SysIndexServiceImpl implements ISysIndexService {
     }
 
     @Override
-    public List<ProjectSchedule> findProDetailSchedule(long proId) {
-        return null;
+    public List<SysCheckAndScheduleExtend> findProDetailSchedule(long proId) {
+
+        List<SysCheckAndScheduleExtend> list = sysIndexExtendMapper.findProDetailSchedule(proId);
+        return list;
     }
 }
 

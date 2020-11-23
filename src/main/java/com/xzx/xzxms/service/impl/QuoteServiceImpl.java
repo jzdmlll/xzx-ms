@@ -206,12 +206,12 @@ public class QuoteServiceImpl implements IQuoteService {
                 long inquiryId = -1L;
                 SysFile sysFile = new SysFile();
                 String notFound = "";
-                int key = 0;
+                //int key = 0;
 
                 InquiryPool inquiryPool = new InquiryPool();
 
                 for (Map<String, Object> item : dataFromExcel) {
-                    key ++;
+                    //key ++;
                     String imgUrl = "";
                     String nameExcel = item.get("设备名称").toString();
                     String paramsExcel = item.get("技术要求").toString();
@@ -252,7 +252,7 @@ public class QuoteServiceImpl implements IQuoteService {
                         quoteExample.createCriteria().andSupplierEqualTo(supplier).andInquiryIdEqualTo(inquiryId).andIsActiveEqualTo(1);
                         List<Quote> quotes = quoteMapper.selectByExample(quoteExample);
 
-                        if (quotes.size() > 0 && key == 0) {
+                        if (quotes.size() > 0) {
                             //该条报价存在则不能重复插入，正好限制该条报价不能发生修改  无需再判断该条报价是否被审核过
                             throw new CustomerException("文件中： ["+supplier+"]  数据已存在");
                         }

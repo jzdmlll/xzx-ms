@@ -81,8 +81,8 @@ ftpclient:
   basePath: /home/lzc
   filePath: /
 
-  dictory: D:\images\
-  #dictory: /home/images/
+  dictory: C:\images\
+#  dictory: /home/images/
 
 
 pagehelper:

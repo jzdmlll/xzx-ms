@@ -4,11 +4,13 @@ import com.xzx.xzxms.bean.*;
 import com.xzx.xzxms.bean.extend.InquiryAndProDetailExtend;
 import com.xzx.xzxms.bean.extend.InquiryCompareExtend;
 import com.xzx.xzxms.bean.extend.InquiryExtend;
+import com.xzx.xzxms.bean.extend.InquiryQuoteCheckExtend;
 import com.xzx.xzxms.dao.InquiryMapper;
 import com.xzx.xzxms.dao.ProPoolMapper;
 import com.xzx.xzxms.dao.QuoteMapper;
 import com.xzx.xzxms.dao.SysProCheckMapper;
 import com.xzx.xzxms.dao.extend.InquiryExtendMapper;
+import com.xzx.xzxms.dao.extend.InquiryQuoteCheckExtendMapper;
 import com.xzx.xzxms.service.IInquiryService;
 import com.xzx.xzxms.utils.CustomerException;
 import com.xzx.xzxms.utils.IDUtils;
@@ -35,6 +37,8 @@ public class InquiryServiceImpl implements IInquiryService{
     private ProPoolMapper proPoolMapper;
     @Resource
     private SysProCheckMapper sysProCheckMapper;
+    @Resource
+    private InquiryQuoteCheckExtendMapper inquiryQuoteCheckExtendMapper;
 
     @Override
     public List<InquiryExtend> findByProDetailId(long proDetailId) {
@@ -88,6 +92,11 @@ public class InquiryServiceImpl implements IInquiryService{
 
     @Override
     public void rowSave(Inquiry inquiry) {
+
+        List<InquiryQuoteCheckExtend> list = inquiryQuoteCheckExtendMapper.findCheckStatus(inquiry.getId());
+        if (list.size() == 0){
+            throw new CustomerException("该报价信息已被终审，禁止再修改拟定报价!");
+        }
         inquiry.setTime(new Date().getTime());
         inquiryMapper.updateByPrimaryKeySelective(inquiry);
     }

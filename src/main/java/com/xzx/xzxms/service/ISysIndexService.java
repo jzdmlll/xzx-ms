@@ -1,5 +1,6 @@
 package com.xzx.xzxms.service;
 
+import com.xzx.xzxms.bean.extend.SysCheckAndScheduleExtend;
 import com.xzx.xzxms.vm.ProjectSchedule;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public interface ISysIndexService {
      * @param proId
      * @return
      */
-    List<ProjectSchedule> findProDetailSchedule(long proId);
+    List<SysCheckAndScheduleExtend> findProDetailSchedule(long proId);
 
 
 }

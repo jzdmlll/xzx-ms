@@ -10,5 +10,5 @@ public interface SysIndexExtendMapper {
 
     List<SysCheckAndScheduleExtend> findAllProjectSchedule();
 
-    List<SysCheckAndScheduleExtend> findProDetailSchedule();
+    List<SysCheckAndScheduleExtend> findProDetailSchedule(long proDetailId);
 }

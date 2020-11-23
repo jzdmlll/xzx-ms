@@ -8,7 +8,9 @@
         LEFT JOIN sys_pro_check che on q.id = che.quote_id
       <where>
           q.is_active = 1 and i.is_active = 1 and pro.is_active = 1
-
+          <if test="proDetailId != null and proDetail != -1">
+              and pro.id = #{proDetailId}
+          </if>
       </where>
         ORDER BY time,pro.id
     </select>
