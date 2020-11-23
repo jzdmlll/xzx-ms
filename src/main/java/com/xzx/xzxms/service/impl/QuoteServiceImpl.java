@@ -405,7 +405,12 @@ public class QuoteServiceImpl implements IQuoteService {
         for (long id : ids){
             Quote quote=quoteMapper.selectByPrimaryKey(id);
             if (quote != null || quote.getIsActive() != 0){
-                if(quote.getIsUseful() == 1){
+                SysProCheckExample sysProCheckExample = new SysProCheckExample();
+                sysProCheckExample.createCriteria().andQuoteIdEqualTo(id);
+                List<SysProCheck> list = sysProCheckMapper.selectByExample(sysProCheckExample);
+                SysProCheck sysProCheck = list.get(0);
+                if (sysProCheck.getBusinessAudit() != 0 || sysProCheck.getTechnicalAudit() != 0){
+
                     throw new CustomerException("该报价信息已经被审核，无法删除");
                 }
                 quote.setIsActive(0);

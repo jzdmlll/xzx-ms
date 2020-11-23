@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzx.xzxms.dao.extend.SysIndexExtendMapper">
+    <select id="findProDetailSchedule" resultType="com.xzx.xzxms.bean.extend.SysCheckAndScheduleExtend">
+        select che.*,pro.id as sys_detail_id, pro.name as name, i.id as inquiry_id from sys_pro_detail pro
+        LEFT JOIN inquiry i on pro.id = i.pro_detail_id
+        LEFT JOIN quote q on i.id = q.inquiry_id
+        LEFT JOIN sys_pro_check che on q.id = che.quote_id
+      <where>
+          q.is_active = 1 and i.is_active = 1 and pro.is_active = 1
+
+      </where>
+        ORDER BY time,pro.id
+    </select>
+</mapper>
