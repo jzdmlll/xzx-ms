@@ -195,6 +195,10 @@ public class QuoteServiceImpl implements IQuoteService {
                 //清除redis该文件缓存
                 jedisDaoImpl.del(file.getId().toString());
                 String excelUrl = excelUploadMap.get("url").toString();
+
+                if(dataFromExcel.size() == 0) {
+                    throw new CustomerException("excel 为空，可能内容格式异常（序号不能为空）");
+                }
                 //2.报价信息存入数据库报价表
 
                 String name = "";
