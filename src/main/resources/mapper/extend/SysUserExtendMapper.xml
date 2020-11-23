@@ -16,5 +16,4 @@
     SELECT *
     FROM sys_user
   </select>
-
 </mapper>
