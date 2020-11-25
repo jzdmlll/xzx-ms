@@ -12,6 +12,7 @@ import com.xzx.xzxms.service.ISysIndexService;
 import com.xzx.xzxms.utils.BeanHelper;
 import com.xzx.xzxms.vm.ProIsFinallyVM;
 import com.xzx.xzxms.vm.ProjectSchedule;
+import io.swagger.models.auth.In;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 import org.springframework.stereotype.Service;
@@ -120,49 +121,41 @@ public class SysIndexServiceImpl implements ISysIndexService {
 
     @Override
     public int[] findYearPro(String year) {
-        int[] temp = new int[12];
+
         List<Map<String,Integer>> list = sysIndexExtendMapper.findYearPro(year);
-        int i;
-        int j = 1;
-        for (Map map : list){
-
-            int t =Integer.parseInt(map.get("t").toString());
-            for (i = j; i < t; i++){
-
-                temp[i-1] = 0;
-            }
-            if (i == t){
-                temp[i-1] = Integer.parseInt(map.get("total").toString());
-            }
-            for (int z = i; i < z && z <= 12; z++){
-                temp[z-1] = 0;
-            }
-            j = i;
-        }
-        return temp;
+        return deal(list,year);
     }
 
     @Override
     public int[] findYearSupplier(String year) {
 
-        int[] temp = new int[12];
         List<Map<String,Integer>> list = sysIndexExtendMapper.findYearSupplier(year);
-        int i;
-        int j = 1;
-        for (Map map : list){
+        return deal(list,year);
+    }
 
-            int t =Integer.parseInt(map.get("t").toString());
-            for (i = j; i < t; i++){
 
-                temp[i-1] = 0;
+    public int[] deal(List<Map<String,Integer>> list,String year){
+
+        int[] temp;
+
+        Integer time = Integer.parseInt(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
+        Integer _year = Integer.parseInt(year);
+
+        if (_year < time){
+
+            temp = new int[12];
+            for (Map map : list){
+
+                int t =Integer.parseInt(map.get("t").toString());
+                temp[t-1] = Integer.parseInt(map.get("total").toString());
             }
-            if (i == t){
-                temp[i-1] = Integer.parseInt(map.get("total").toString());
+        }else {
+            temp = new int[list.size()];
+            for (Map map : list){
+
+                int t =Integer.parseInt(map.get("t").toString());
+                temp[t-1] = Integer.parseInt(map.get("total").toString());
             }
-            for (int z = i; i < z && z <= 12; z++){
-                temp[z-1] = 0;
-            }
-            j = i;
         }
         return temp;
     }
