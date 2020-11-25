@@ -11,13 +11,9 @@ import com.xzx.xzxms.dao.SysProDetailMapper;
 import com.xzx.xzxms.dao.extend.SysIndexExtendMapper;
 import com.xzx.xzxms.dao.extend.SysProCheckExtendMapper;
 import com.xzx.xzxms.service.ISysIndexService;
-import com.xzx.xzxms.utils.BeanHelper;
 import com.xzx.xzxms.vm.ProIsFinallyVM;
 import com.xzx.xzxms.vm.ProjectSchedule;
-import com.xzx.xzxms.vm.toDoList;
-import io.swagger.models.auth.In;
-import org.apache.commons.lang.StringUtils;
-import org.junit.Test;
+import com.xzx.xzxms.vm.ToDoList;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -139,27 +135,27 @@ public class SysIndexServiceImpl implements ISysIndexService {
     }
 
     @Override
-    public List<toDoList> findTechnicalAuditDeal() {
-        List<toDoList> toDoLists = sysProCheckExtendMapper.findTechnicalAuditDeal();
-        return toDoLists;
+    public List<ToDoList> findTechnicalAuditDeal() {
+        List<ToDoList> ToDoLists = sysProCheckExtendMapper.findTechnicalAuditDeal();
+        return ToDoLists;
     }
 
     @Override
-    public List<toDoList> findBusinessAuditDeal() {
-        List<toDoList> toDoLists = sysProCheckExtendMapper.findBusinessAuditDeal();
-        return toDoLists;
+    public List<ToDoList> findBusinessAuditDeal() {
+        List<ToDoList> ToDoLists = sysProCheckExtendMapper.findBusinessAuditDeal();
+        return ToDoLists;
     }
 
     @Override
-    public List<toDoList> findCompareAuditDeal() {
-        List<toDoList> toDoLists = sysProCheckExtendMapper.findCompareAuditDeal();
-        return toDoLists;
+    public List<ToDoList> findCompareAuditDeal() {
+        List<ToDoList> ToDoLists = sysProCheckExtendMapper.findCompareAuditDeal();
+        return ToDoLists;
     }
 
     @Override
-    public List<toDoList> findFinallyAuditDeal() {
-        List<toDoList> toDoLists = sysProCheckExtendMapper.findFinallyAuditDeal();
-        return toDoLists;
+    public List<ToDoList> findFinallyAuditDeal() {
+        List<ToDoList> ToDoLists = sysProCheckExtendMapper.findFinallyAuditDeal();
+        return ToDoLists;
     }
 
 

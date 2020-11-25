@@ -1,11 +1,10 @@
 package com.xzx.xzxms.web.controller;
 
 import com.xzx.xzxms.bean.extend.SysCheckAndScheduleExtend;
-import com.xzx.xzxms.bean.extend.SysCheckExtend;
 import com.xzx.xzxms.service.ISysIndexService;
 import com.xzx.xzxms.utils.Message;
 import com.xzx.xzxms.utils.MessageUtil;
-import com.xzx.xzxms.vm.toDoList;
+import com.xzx.xzxms.vm.ToDoList;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
@@ -60,28 +59,28 @@ public class SysIndexController {
     @ApiOperation(value = "查询技术审核待办事项")
     @GetMapping(value = "findTechnicalAuditDeal")
     public Message findTechnicalAuditDeal(){
-        List<toDoList> toDoLists = sysIndexServiceImpl.findTechnicalAuditDeal();
+        List<ToDoList> toDoLists = sysIndexServiceImpl.findTechnicalAuditDeal();
         return MessageUtil.success("success",toDoLists);
     }
 
     @ApiOperation(value = "查询商务审核待办事项")
-    @GetMapping(value = "findTechnicalAuditDeal")
+    @GetMapping(value = "findBusinessAuditDeal")
     public Message findBusinessAuditDeal(){
-        List<toDoList> toDoLists = sysIndexServiceImpl.findBusinessAuditDeal();
+        List<ToDoList> toDoLists = sysIndexServiceImpl.findBusinessAuditDeal();
         return MessageUtil.success("success",toDoLists);
     }
 
     @ApiOperation(value = "查询比价待办事项")
     @GetMapping(value = "findCompareAuditDeal")
     public Message findCompareAuditDeal(){
-        List<toDoList> toDoLists = sysIndexServiceImpl.findCompareAuditDeal();
+        List<ToDoList> toDoLists = sysIndexServiceImpl.findCompareAuditDeal();
         return MessageUtil.success("success",toDoLists);
     }
 
     @ApiOperation(value = "查询终审待办事项")
     @GetMapping(value = "findFinallyAuditDeal")
     public Message findFinallyAuditDeal(){
-        List<toDoList> toDoLists = sysIndexServiceImpl.findFinallyAuditDeal();
+        List<ToDoList> toDoLists = sysIndexServiceImpl.findFinallyAuditDeal();
         return MessageUtil.success("success",toDoLists);
     }
 

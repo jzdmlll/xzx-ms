@@ -65,7 +65,7 @@
     </select>
 
 
-    <select id="findBusinessAuditDeal" resultType="com.xzx.xzxms.vm.toDoList">
+    <select id="findBusinessAuditDeal" resultType="com.xzx.xzxms.vm.ToDoList">
         SELECT 	pro.`name` as pro_name,
 				i.`name` as inquiry_name,
 				q.supplier as quote_supplier,
@@ -78,11 +78,11 @@
 				FROM inquiry i LEFT JOIN quote q on i.id = q.inquiry_id
 				LEFT JOIN sys_pro_check c on q.id = c.quote_id
 				LEFT JOIN sys_pro_detail pro on pro.id = i.pro_detail_id
-				WHERE i.is_active = 1 and q.is_active = 1 AND pro.is_active = 1 AND c.business_audit = 1
+				WHERE i.is_active = 1 and q.is_active = 1 AND pro.is_active = 1 AND c.business_audit = 0
 				ORDER BY pro.time desc
     </select>
 
-    <select id="findTechnicalAuditDeal" resultType="com.xzx.xzxms.vm.toDoList">
+    <select id="findTechnicalAuditDeal" resultType="com.xzx.xzxms.vm.ToDoList">
         SELECT 	pro.`name` as pro_name,
 				i.`name` as inquiry_name,
 				q.supplier as quote_supplier,
@@ -99,7 +99,7 @@
 				ORDER BY pro.time desc
     </select>
 
-    <select id="findCompareAuditDeal" resultType="com.xzx.xzxms.vm.toDoList">
+    <select id="findCompareAuditDeal" resultType="com.xzx.xzxms.vm.ToDoList">
         SELECT 	pro.`name` as pro_name,
 				i.`name` as inquiry_name,
 				q.supplier as quote_supplier,
@@ -118,7 +118,7 @@
 				ORDER BY pro.time desc
     </select>
 
-    <select id="findFinallyAuditDeal" resultType="com.xzx.xzxms.vm.toDoList">
+    <select id="findFinallyAuditDeal" resultType="com.xzx.xzxms.vm.ToDoList">
         SELECT 	pro.`name` as pro_name,
 				i.`name` as inquiry_name,
 				q.supplier as quote_supplier,
