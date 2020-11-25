@@ -68,4 +68,16 @@ public interface ISysIndexService {
      */
     List<toDoList> findBusinessAuditDeal();
 
+    /**
+     * 查询比价待办事项
+     * @return
+     */
+    List<toDoList> findCompareAuditDeal();
+
+    /**
+     * 查询终审待办事项
+     * @return
+     */
+    List<toDoList> findFinallyAuditDeal();
+
 }

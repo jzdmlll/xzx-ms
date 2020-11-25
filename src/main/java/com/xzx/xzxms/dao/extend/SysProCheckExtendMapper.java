@@ -1,6 +1,5 @@
 package com.xzx.xzxms.dao.extend;
 
-import com.xzx.xzxms.bean.SysProCheck;
 import com.xzx.xzxms.bean.extend.SysCheckExtend;
 import com.xzx.xzxms.vm.toDoList;
 import org.apache.ibatis.annotations.Param;
@@ -28,5 +27,7 @@ public interface SysProCheckExtendMapper {
     //待办
     List<toDoList> findTechnicalAuditDeal();
     List<toDoList> findBusinessAuditDeal();
+    List<toDoList> findCompareAuditDeal();
+    List<toDoList> findFinallyAuditDeal();
 
 }

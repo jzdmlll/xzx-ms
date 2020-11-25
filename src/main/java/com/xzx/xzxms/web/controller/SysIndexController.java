@@ -60,15 +60,29 @@ public class SysIndexController {
     @ApiOperation(value = "查询技术审核待办事项")
     @GetMapping(value = "findTechnicalAuditDeal")
     public Message findTechnicalAuditDeal(){
-        List<toDoList> sysCheckExtends = sysIndexServiceImpl.findTechnicalAuditDeal();
-        return MessageUtil.success("success",sysCheckExtends);
+        List<toDoList> toDoLists = sysIndexServiceImpl.findTechnicalAuditDeal();
+        return MessageUtil.success("success",toDoLists);
     }
 
     @ApiOperation(value = "查询商务审核待办事项")
     @GetMapping(value = "findTechnicalAuditDeal")
     public Message findBusinessAuditDeal(){
-        List<toDoList> sysCheckExtends = sysIndexServiceImpl.findBusinessAuditDeal();
-        return MessageUtil.success("success",sysCheckExtends);
+        List<toDoList> toDoLists = sysIndexServiceImpl.findBusinessAuditDeal();
+        return MessageUtil.success("success",toDoLists);
+    }
+
+    @ApiOperation(value = "查询比价待办事项")
+    @GetMapping(value = "findCompareAuditDeal")
+    public Message findCompareAuditDeal(){
+        List<toDoList> toDoLists = sysIndexServiceImpl.findCompareAuditDeal();
+        return MessageUtil.success("success",toDoLists);
+    }
+
+    @ApiOperation(value = "查询终审待办事项")
+    @GetMapping(value = "findFinallyAuditDeal")
+    public Message findFinallyAuditDeal(){
+        List<toDoList> toDoLists = sysIndexServiceImpl.findFinallyAuditDeal();
+        return MessageUtil.success("success",toDoLists);
     }
 
 

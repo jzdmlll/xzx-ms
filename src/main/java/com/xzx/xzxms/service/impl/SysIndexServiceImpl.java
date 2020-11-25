@@ -140,14 +140,26 @@ public class SysIndexServiceImpl implements ISysIndexService {
 
     @Override
     public List<toDoList> findTechnicalAuditDeal() {
-        List<toDoList> sysCheckExtends = sysProCheckExtendMapper.findTechnicalAuditDeal();
-        return sysCheckExtends;
+        List<toDoList> toDoLists = sysProCheckExtendMapper.findTechnicalAuditDeal();
+        return toDoLists;
     }
 
     @Override
     public List<toDoList> findBusinessAuditDeal() {
-        List<toDoList> sysCheckExtends = sysProCheckExtendMapper.findBusinessAuditDeal();
-        return sysCheckExtends;
+        List<toDoList> toDoLists = sysProCheckExtendMapper.findBusinessAuditDeal();
+        return toDoLists;
+    }
+
+    @Override
+    public List<toDoList> findCompareAuditDeal() {
+        List<toDoList> toDoLists = sysProCheckExtendMapper.findCompareAuditDeal();
+        return toDoLists;
+    }
+
+    @Override
+    public List<toDoList> findFinallyAuditDeal() {
+        List<toDoList> toDoLists = sysProCheckExtendMapper.findFinallyAuditDeal();
+        return toDoLists;
     }
 
 
