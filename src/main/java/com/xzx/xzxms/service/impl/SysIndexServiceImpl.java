@@ -1,12 +1,6 @@
 package com.xzx.xzxms.service.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.xzx.xzxms.bean.SysProDetail;
-import com.xzx.xzxms.bean.SysProDetailExample;
-import com.xzx.xzxms.bean.SysProDetailWithBLOBs;
 import com.xzx.xzxms.bean.extend.SysCheckAndScheduleExtend;
-import com.xzx.xzxms.bean.extend.SysCheckExtend;
 import com.xzx.xzxms.dao.SysProDetailMapper;
 import com.xzx.xzxms.dao.extend.SysIndexExtendMapper;
 import com.xzx.xzxms.dao.extend.SysProCheckExtendMapper;
@@ -18,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class SysIndexServiceImpl implements ISysIndexService {

@@ -4,6 +4,7 @@ import com.xzx.xzxms.bean.Inquiry;
 import com.xzx.xzxms.bean.extend.InquiryAndProDetailExtend;
 import com.xzx.xzxms.bean.extend.InquiryCompareExtend;
 import com.xzx.xzxms.bean.extend.InquiryExtend;
+import io.swagger.models.auth.In;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -74,4 +75,16 @@ public interface IInquiryService {
      * @param inquiry 询价对象
      */
     void insertOrUpdateInquiry(Inquiry inquiry);
+
+    /**
+     * 比价修改拟定报价
+     * @param inquiry
+     */
+    void compareUpdateDraft(Inquiry inquiry);
+
+    /**
+     * 终审修改拟定报价
+     * @param inquiry
+     */
+    void finallyUpdateDraft(Inquiry inquiry);
 }

@@ -1,7 +1,6 @@
 package com.xzx.xzxms.service;
 
 import com.xzx.xzxms.bean.extend.SysCheckAndScheduleExtend;
-import com.xzx.xzxms.bean.extend.SysCheckExtend;
 import com.xzx.xzxms.vm.ProIsFinallyVM;
 import com.xzx.xzxms.vm.ProjectSchedule;
 import com.xzx.xzxms.vm.ToDoList;
