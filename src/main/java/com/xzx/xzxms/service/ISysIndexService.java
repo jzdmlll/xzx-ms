@@ -47,5 +47,11 @@ public interface ISysIndexService {
      */
     int[] findYearPro(String year);
 
+    /**
+     * 查询当前年份下个月的供应商数
+     * @param year
+     * @return
+     */
+    int[] findYearSupplier(String year);
 
 }

@@ -34,6 +34,13 @@ public class SysIndexController {
         return MessageUtil.success("success",temp);
     }
 
+    @ApiOperation(value = "查询当前年份个月供应商数")
+    @GetMapping(value = "findYearSupplier")
+    public Message findYearSupplier(String year){
+        int[] temp = sysIndexServiceImpl.findYearSupplier(year);
+        return MessageUtil.success("success",temp);
+    }
+
     @ApiOperation(value = "查询项目是否已完成")
     @GetMapping(value = "findProIsFinally")
     public Message findProIsFinally(String proName){

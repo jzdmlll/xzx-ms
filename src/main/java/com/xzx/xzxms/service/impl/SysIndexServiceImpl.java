@@ -126,11 +126,41 @@ public class SysIndexServiceImpl implements ISysIndexService {
         int j = 1;
         for (Map map : list){
 
-            for (i = j; i < (Integer) map.get("t"); i++){
-                temp[i] = 0;
+            int t =Integer.parseInt(map.get("t").toString());
+            for (i = j; i < t; i++){
+
+                temp[i-1] = 0;
             }
-            if (i == (Integer) map.get("t")){
-                temp[i] = (Integer) map.get("total");
+            if (i == t){
+                temp[i-1] = Integer.parseInt(map.get("total").toString());
+            }
+            for (int z = i; i < z && z <= 12; z++){
+                temp[z-1] = 0;
+            }
+            j = i;
+        }
+        return temp;
+    }
+
+    @Override
+    public int[] findYearSupplier(String year) {
+
+        int[] temp = new int[12];
+        List<Map<String,Integer>> list = sysIndexExtendMapper.findYearSupplier(year);
+        int i;
+        int j = 1;
+        for (Map map : list){
+
+            int t =Integer.parseInt(map.get("t").toString());
+            for (i = j; i < t; i++){
+
+                temp[i-1] = 0;
+            }
+            if (i == t){
+                temp[i-1] = Integer.parseInt(map.get("total").toString());
+            }
+            for (int z = i; i < z && z <= 12; z++){
+                temp[z-1] = 0;
             }
             j = i;
         }
