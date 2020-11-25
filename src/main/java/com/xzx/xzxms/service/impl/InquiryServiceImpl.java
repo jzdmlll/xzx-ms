@@ -217,7 +217,8 @@ public class InquiryServiceImpl implements IInquiryService{
     public void insertOrUpdateInquiry(Inquiry inquiry) {
 
         InquiryExample example = new InquiryExample();
-        example.createCriteria().andNameEqualTo(inquiry.getName()).andParamsEqualTo(inquiry.getParams()).andVetoEqualTo(0);
+        example.createCriteria().andNameEqualTo(inquiry.getName()).andParamsEqualTo(inquiry.getParams()).andVetoEqualTo(0)
+                .andProDetailIdEqualTo(inquiry.getProDetailId()).andIsActiveEqualTo(1);
         List<Inquiry> inquiries = inquiryMapper.selectByExample(example);
         if (inquiries.size() > 0){
             throw new CustomerException(inquiry.getName() + ":询价内容已存在，勿重复添加!");

@@ -126,11 +126,11 @@ public class SysIndexServiceImpl implements ISysIndexService {
         int j = 1;
         for (Map map : list){
 
-            for (i = j; i < (Integer) map.get("t"); i++){
+            for (i = j; i < Integer.parseInt(map.get("t").toString()); i++){
                 temp[i] = 0;
             }
-            if (i == (Integer) map.get("t")){
-                temp[i] = (Integer) map.get("total");
+            if (i == Integer.parseInt(map.get("t").toString())){
+                temp[i] = Integer.parseInt(map.get("total").toString());
             }
             j = i;
         }
