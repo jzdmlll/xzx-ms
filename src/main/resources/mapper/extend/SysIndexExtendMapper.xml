@@ -14,4 +14,19 @@
       </where>
         ORDER BY time,pro.id
     </select>
+
+    <select id="findProIsFinally" resultType="com.xzx.xzxms.bean.extend.SysCheckAndScheduleExtend">
+        select che.*,pro.id as sys_detail_id, pro.name as name, i.id as inquiry_id, pro.time as pro_time from sys_pro_detail pro
+        LEFT JOIN inquiry i on pro.id = i.pro_detail_id
+        LEFT JOIN quote q on i.id = q.inquiry_id
+        LEFT JOIN sys_pro_check che on q.id = che.quote_id
+        <where>
+            q.is_active = 1 and i.is_active = 1 and pro.is_active = 1
+            <if test="proName != null and proName != ''">
+                and pro.name = #{proName}
+            </if>
+        </where>
+        ORDER BY time,pro.id
+    </select>
+
 </mapper>

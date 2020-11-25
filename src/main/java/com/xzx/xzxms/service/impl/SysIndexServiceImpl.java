@@ -10,6 +10,7 @@ import com.xzx.xzxms.dao.SysProDetailMapper;
 import com.xzx.xzxms.dao.extend.SysIndexExtendMapper;
 import com.xzx.xzxms.service.ISysIndexService;
 import com.xzx.xzxms.utils.BeanHelper;
+import com.xzx.xzxms.vm.ProIsFinallyVM;
 import com.xzx.xzxms.vm.ProjectSchedule;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
@@ -79,6 +80,30 @@ public class SysIndexServiceImpl implements ISysIndexService {
 //    }
 
     @Override
+    public Map<String, Integer> findProAndSupplier() {
+
+        Map<String,Integer> map = new HashMap<>();
+        int proTotal = sysIndexExtendMapper.findPro();
+        int supTotal = sysIndexExtendMapper.findSupplier();
+        map.put("proTotal",proTotal);
+        map.put("supTotal",supTotal);
+        return map;
+    }
+
+    @Override
+    public List<ProIsFinallyVM> findProIsFinally(String proName) {
+
+        List<ProIsFinallyVM> proIsFinallyVMList = new ArrayList<>();
+        List<SysCheckAndScheduleExtend> list = sysIndexExtendMapper.findProIsFinally(proName);
+        for (SysCheckAndScheduleExtend s : list){
+
+
+        }
+        return proIsFinallyVMList;
+
+    }
+
+    @Override
     public List<ProjectSchedule> findAllProjectSchedule(String proName, int pageNum) {
 
 
@@ -91,6 +116,25 @@ public class SysIndexServiceImpl implements ISysIndexService {
 
         List<SysCheckAndScheduleExtend> list = sysIndexExtendMapper.findProDetailSchedule(proId);
         return list;
+    }
+
+    @Override
+    public int[] findYearPro(String year) {
+        int[] temp = new int[12];
+        List<Map<String,Integer>> list = sysIndexExtendMapper.findYearPro(year);
+        int i;
+        int j = 1;
+        for (Map map : list){
+
+            for (i = j; i < (Integer) map.get("t"); i++){
+                temp[i] = 0;
+            }
+            if (i == (Integer) map.get("t")){
+                temp[i] = (Integer) map.get("total");
+            }
+            j = i;
+        }
+        return temp;
     }
 }
 

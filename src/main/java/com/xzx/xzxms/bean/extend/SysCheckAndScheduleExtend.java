@@ -7,6 +7,15 @@ public class SysCheckAndScheduleExtend extends SysProCheck {
     private long sysDetailId;
     private long inquiryId;
     private String name;
+    private long proTime;
+
+    public long getProTime() {
+        return proTime;
+    }
+
+    public void setProTime(long proTime) {
+        this.proTime = proTime;
+    }
 
     public String getName() {
         return name;
