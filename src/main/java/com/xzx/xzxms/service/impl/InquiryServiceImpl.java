@@ -98,6 +98,14 @@ public class InquiryServiceImpl implements IInquiryService{
         if (count > 0){
             throw new CustomerException("该询价信息已存在报价，请勿修改询价内容!，如需修改请先删除报价!");
         }
+
+        InquiryExample example = new InquiryExample();
+        example.createCriteria().andNameEqualTo(inquiry.getName()).andParamsEqualTo(inquiry.getParams()).andIsActiveEqualTo(1).andVetoEqualTo(0);
+        List<Inquiry> inquiries = inquiryMapper.selectByExample(example);
+        if (inquiries.size() > 1){
+            throw new CustomerException("此条询价内容已存在(询价名、询价技术参数相同则视为一样)!");
+        }
+
         inquiry.setTime(new Date().getTime());
         inquiryMapper.updateByPrimaryKeySelective(inquiry);
     }
