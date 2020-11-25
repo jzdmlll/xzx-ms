@@ -1,10 +1,9 @@
 package com.xzx.xzxms.service;
 
 import com.xzx.xzxms.bean.extend.SysCheckAndScheduleExtend;
-import com.xzx.xzxms.bean.extend.SysCheckExtend;
 import com.xzx.xzxms.vm.ProIsFinallyVM;
 import com.xzx.xzxms.vm.ProjectSchedule;
-import com.xzx.xzxms.vm.toDoList;
+import com.xzx.xzxms.vm.ToDoList;
 
 import java.util.List;
 import java.util.Map;
@@ -60,24 +59,24 @@ public interface ISysIndexService {
      * 查询技术审核待办事项
      * @return
      */
-    List<toDoList> findTechnicalAuditDeal();
+    List<ToDoList> findTechnicalAuditDeal();
 
     /**
      * 查询商务审核待办事项
      * @return
      */
-    List<toDoList> findBusinessAuditDeal();
+    List<ToDoList> findBusinessAuditDeal();
 
     /**
      * 查询比价待办事项
      * @return
      */
-    List<toDoList> findCompareAuditDeal();
+    List<ToDoList> findCompareAuditDeal();
 
     /**
      * 查询终审待办事项
      * @return
      */
-    List<toDoList> findFinallyAuditDeal();
+    List<ToDoList> findFinallyAuditDeal();
 
 }

@@ -65,7 +65,7 @@
     </select>
 
 
-    <select id="findBusinessAuditDeal" resultType="com.xzx.xzxms.vm.toDoList">
+    <select id="findBusinessAuditDeal" resultType="com.xzx.xzxms.vm.ToDoList">
         SELECT 	pro.`name` as pro_name,
 				i.`name` as inquiry_name,
 				q.supplier as quote_supplier,
@@ -82,7 +82,7 @@
 				ORDER BY pro.time desc
     </select>
 
-    <select id="findTechnicalAuditDeal" resultType="com.xzx.xzxms.vm.toDoList">
+    <select id="findTechnicalAuditDeal" resultType="com.xzx.xzxms.vm.ToDoList">
         SELECT 	pro.`name` as pro_name,
 				i.`name` as inquiry_name,
 				q.supplier as quote_supplier,
@@ -99,7 +99,7 @@
 				ORDER BY pro.time desc
     </select>
 
-    <select id="findCompareAuditDeal" resultType="com.xzx.xzxms.vm.toDoList">
+    <select id="findCompareAuditDeal" resultType="com.xzx.xzxms.vm.ToDoList">
         SELECT 	pro.`name` as pro_name,
 				i.`name` as inquiry_name,
 				q.supplier as quote_supplier,
@@ -118,7 +118,7 @@
 				ORDER BY pro.time desc
     </select>
 
-    <select id="findFinallyAuditDeal" resultType="com.xzx.xzxms.vm.toDoList">
+    <select id="findFinallyAuditDeal" resultType="com.xzx.xzxms.vm.ToDoList">
         SELECT 	pro.`name` as pro_name,
 				i.`name` as inquiry_name,
 				q.supplier as quote_supplier,

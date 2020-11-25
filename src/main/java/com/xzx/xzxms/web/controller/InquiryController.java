@@ -30,8 +30,25 @@ public class InquiryController {
     @ApiOperation("行内编辑保存")
     @PostMapping("rowSave")
     public Message rowSave(@RequestBody Inquiry inquiry) {
+
         iInquiryServiceImpl.rowSave(inquiry);
         return MessageUtil.success("保存成功");
+    }
+
+    @ApiOperation("比价修改拟定报价")
+    @PostMapping("compareUpdateDraft")
+    public Message compareUpdateDraft(@RequestBody Inquiry inquiry){
+
+        iInquiryServiceImpl.compareUpdateDraft(inquiry);
+        return MessageUtil.success("success");
+    }
+
+    @ApiOperation("终审修改拟定报价")
+    @PostMapping("finallyUpdateDraft")
+    public Message finallyUpdateDraft(@RequestBody Inquiry inquiry){
+
+        iInquiryServiceImpl.finallyUpdateDraft(inquiry);
+        return MessageUtil.success("success");
     }
 
     @ApiOperation("查询所有询价")

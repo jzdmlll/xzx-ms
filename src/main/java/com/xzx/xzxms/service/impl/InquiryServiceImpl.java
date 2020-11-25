@@ -11,6 +11,7 @@ import com.xzx.xzxms.dao.QuoteMapper;
 import com.xzx.xzxms.dao.SysProCheckMapper;
 import com.xzx.xzxms.dao.extend.InquiryExtendMapper;
 import com.xzx.xzxms.dao.extend.InquiryQuoteCheckExtendMapper;
+import com.xzx.xzxms.dao.extend.QuoteAndInquiryExtendMapper;
 import com.xzx.xzxms.service.IInquiryService;
 import com.xzx.xzxms.utils.CustomerException;
 import com.xzx.xzxms.utils.IDUtils;
@@ -38,7 +39,7 @@ public class InquiryServiceImpl implements IInquiryService{
     @Resource
     private SysProCheckMapper sysProCheckMapper;
     @Resource
-    private InquiryQuoteCheckExtendMapper inquiryQuoteCheckExtendMapper;
+    private QuoteAndInquiryExtendMapper quoteAndInquiryExtendMapper;
 
     @Override
     public List<InquiryExtend> findByProDetailId(long proDetailId) {
@@ -93,9 +94,9 @@ public class InquiryServiceImpl implements IInquiryService{
     @Override
     public void rowSave(Inquiry inquiry) {
 
-        List<InquiryQuoteCheckExtend> list = inquiryQuoteCheckExtendMapper.findCheckStatus(inquiry.getId());
-        if (list.size() == 0){
-            throw new CustomerException("该报价信息已被终审，禁止再修改拟定报价!");
+        int count = quoteAndInquiryExtendMapper.findIsExistQuote(inquiry.getId());
+        if (count > 0){
+            throw new CustomerException("该询价信息已存在报价，请勿修改询价内容!，如需修改请先删除报价!");
         }
         inquiry.setTime(new Date().getTime());
         inquiryMapper.updateByPrimaryKeySelective(inquiry);
@@ -228,4 +229,22 @@ public class InquiryServiceImpl implements IInquiryService{
         inquiry.setTime(new Date().getTime());
         inquiryMapper.insert(inquiry);
     }
+
+    @Override
+    public void compareUpdateDraft(Inquiry inquiry) {
+        int count = quoteAndInquiryExtendMapper.findIsExistFinally(inquiry.getId());
+        if (count > 0){
+            throw new CustomerException("该询价内容已被终审，请勿再修改拟定报价!");
+        }
+        inquiry.setTime(new Date().getTime());
+        inquiryMapper.updateByPrimaryKeySelective(inquiry);
+    }
+
+    @Override
+    public void finallyUpdateDraft(Inquiry inquiry) {
+        inquiry.setTime(new Date().getTime());
+        inquiryMapper.updateByPrimaryKeySelective(inquiry);
+    }
+
+
 }
