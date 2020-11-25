@@ -1,6 +1,8 @@
 package com.xzx.xzxms.dao.extend;
 
+import com.xzx.xzxms.bean.SysProCheck;
 import com.xzx.xzxms.bean.extend.SysCheckExtend;
+import com.xzx.xzxms.vm.toDoList;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -21,5 +23,10 @@ public interface SysProCheckExtendMapper {
     List<SysCheckExtend> cascadeFindCompare(@Param("status")Integer status, @Param("proDetailId") long proDetailId);
 
     List<SysCheckExtend> cascadeFindFinally(@Param("status")Integer status, @Param("proDetailId") long proDetailId);
+
+
+    //待办
+    List<toDoList> findTechnicalAuditDeal();
+    List<toDoList> findBusinessAuditDeal();
 
 }

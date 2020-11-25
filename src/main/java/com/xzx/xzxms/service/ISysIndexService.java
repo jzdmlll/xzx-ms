@@ -1,8 +1,10 @@
 package com.xzx.xzxms.service;
 
 import com.xzx.xzxms.bean.extend.SysCheckAndScheduleExtend;
+import com.xzx.xzxms.bean.extend.SysCheckExtend;
 import com.xzx.xzxms.vm.ProIsFinallyVM;
 import com.xzx.xzxms.vm.ProjectSchedule;
+import com.xzx.xzxms.vm.toDoList;
 
 import java.util.List;
 import java.util.Map;
@@ -53,5 +55,17 @@ public interface ISysIndexService {
      * @return
      */
     int[] findYearSupplier(String year);
+
+    /**
+     * 查询技术审核待办事项
+     * @return
+     */
+    List<toDoList> findTechnicalAuditDeal();
+
+    /**
+     * 查询商务审核待办事项
+     * @return
+     */
+    List<toDoList> findBusinessAuditDeal();
 
 }

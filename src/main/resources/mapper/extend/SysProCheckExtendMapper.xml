@@ -64,4 +64,39 @@
         where a.id = #{proDetailId,jdbcType=BIGINT}
     </select>
 
+
+    <select id="findBusinessAuditDeal" resultType="com.xzx.xzxms.vm.toDoList">
+        SELECT 	pro.`name` as pro_name,
+				i.`name` as inquiry_name,
+				q.supplier as quote_supplier,
+				q.su_model as quote_su_model,
+				q.su_brand as quote_su_brand,
+				q.su_price as quote_su_price,
+				q.su_params as quote_su_params,
+				c.technical_audit as technical_audit,
+				c.business_audit as business_audit
+				FROM inquiry i LEFT JOIN quote q on i.id = q.inquiry_id
+				LEFT JOIN sys_pro_check c on q.id = c.quote_id
+				LEFT JOIN sys_pro_detail pro on pro.id = i.pro_detail_id
+				WHERE i.is_active = 1 and q.is_active = 1 AND pro.is_active = 1 AND c.business_audit = 1
+				ORDER BY pro.time desc
+    </select>
+
+    <select id="findTechnicalAuditDeal" resultType="com.xzx.xzxms.vm.toDoList">
+        SELECT 	pro.`name` as pro_name,
+				i.`name` as inquiry_name,
+				q.supplier as quote_supplier,
+				q.su_model as quote_su_model,
+				q.su_brand as quote_su_brand,
+				q.su_price as quote_su_price,
+				q.su_params as quote_su_params,
+				c.technical_audit as technical_audit,
+				c.business_audit as business_audit
+				FROM inquiry i LEFT JOIN quote q on i.id = q.inquiry_id
+				LEFT JOIN sys_pro_check c on q.id = c.quote_id
+				LEFT JOIN sys_pro_detail pro on pro.id = i.pro_detail_id
+				WHERE i.is_active = 1 and q.is_active = 1 AND pro.is_active = 1 AND c.technical_audit = 0
+				ORDER BY pro.time desc
+    </select>
+
 </mapper>

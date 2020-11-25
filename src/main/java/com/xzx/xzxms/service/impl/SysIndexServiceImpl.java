@@ -6,12 +6,15 @@ import com.xzx.xzxms.bean.SysProDetail;
 import com.xzx.xzxms.bean.SysProDetailExample;
 import com.xzx.xzxms.bean.SysProDetailWithBLOBs;
 import com.xzx.xzxms.bean.extend.SysCheckAndScheduleExtend;
+import com.xzx.xzxms.bean.extend.SysCheckExtend;
 import com.xzx.xzxms.dao.SysProDetailMapper;
 import com.xzx.xzxms.dao.extend.SysIndexExtendMapper;
+import com.xzx.xzxms.dao.extend.SysProCheckExtendMapper;
 import com.xzx.xzxms.service.ISysIndexService;
 import com.xzx.xzxms.utils.BeanHelper;
 import com.xzx.xzxms.vm.ProIsFinallyVM;
 import com.xzx.xzxms.vm.ProjectSchedule;
+import com.xzx.xzxms.vm.toDoList;
 import io.swagger.models.auth.In;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
@@ -28,6 +31,8 @@ public class SysIndexServiceImpl implements ISysIndexService {
     private SysIndexExtendMapper sysIndexExtendMapper;
     @Resource
     private SysProDetailMapper sysProDetailMapper;
+    @Resource
+    private SysProCheckExtendMapper sysProCheckExtendMapper;
 
 //    @Override
 //    public List<ProjectSchedule> findAllProjectSchedule(int pageNum) {
@@ -131,6 +136,18 @@ public class SysIndexServiceImpl implements ISysIndexService {
 
         List<Map<String,String>> list = sysIndexExtendMapper.findYearSupplier(year);
         return deal(list,year);
+    }
+
+    @Override
+    public List<toDoList> findTechnicalAuditDeal() {
+        List<toDoList> sysCheckExtends = sysProCheckExtendMapper.findTechnicalAuditDeal();
+        return sysCheckExtends;
+    }
+
+    @Override
+    public List<toDoList> findBusinessAuditDeal() {
+        List<toDoList> sysCheckExtends = sysProCheckExtendMapper.findBusinessAuditDeal();
+        return sysCheckExtends;
     }
 
 

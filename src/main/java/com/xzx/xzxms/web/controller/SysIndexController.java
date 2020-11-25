@@ -1,9 +1,11 @@
 package com.xzx.xzxms.web.controller;
 
 import com.xzx.xzxms.bean.extend.SysCheckAndScheduleExtend;
+import com.xzx.xzxms.bean.extend.SysCheckExtend;
 import com.xzx.xzxms.service.ISysIndexService;
 import com.xzx.xzxms.utils.Message;
 import com.xzx.xzxms.utils.MessageUtil;
+import com.xzx.xzxms.vm.toDoList;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,4 +56,21 @@ public class SysIndexController {
         List<SysCheckAndScheduleExtend> list = sysIndexServiceImpl.findProDetailSchedule(proDetailId);
         return MessageUtil.success("success",list);
     }
+
+    @ApiOperation(value = "查询技术审核待办事项")
+    @GetMapping(value = "findTechnicalAuditDeal")
+    public Message findTechnicalAuditDeal(){
+        List<toDoList> sysCheckExtends = sysIndexServiceImpl.findTechnicalAuditDeal();
+        return MessageUtil.success("success",sysCheckExtends);
+    }
+
+    @ApiOperation(value = "查询商务审核待办事项")
+    @GetMapping(value = "findTechnicalAuditDeal")
+    public Message findBusinessAuditDeal(){
+        List<toDoList> sysCheckExtends = sysIndexServiceImpl.findBusinessAuditDeal();
+        return MessageUtil.success("success",sysCheckExtends);
+    }
+
+
+
 }
