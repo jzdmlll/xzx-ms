@@ -122,19 +122,19 @@ public class SysIndexServiceImpl implements ISysIndexService {
     @Override
     public int[] findYearPro(String year) {
 
-        List<Map<String,Integer>> list = sysIndexExtendMapper.findYearPro(year);
+        List<Map<String,String>> list = sysIndexExtendMapper.findYearPro(year);
         return deal(list,year);
     }
 
     @Override
     public int[] findYearSupplier(String year) {
 
-        List<Map<String,Integer>> list = sysIndexExtendMapper.findYearSupplier(year);
+        List<Map<String,String>> list = sysIndexExtendMapper.findYearSupplier(year);
         return deal(list,year);
     }
 
 
-    public int[] deal(List<Map<String,Integer>> list,String year){
+    public int[] deal(List<Map<String,String>> list,String year){
 
         int[] temp;
 
@@ -150,7 +150,9 @@ public class SysIndexServiceImpl implements ISysIndexService {
                 temp[t-1] = Integer.parseInt(map.get("total").toString());
             }
         }else {
-            temp = new int[list.size()];
+
+            Integer t1 = Integer.parseInt(list.get(list.size()-1).get("t"));
+            temp = new int[t1];
             for (Map map : list){
 
                 int t =Integer.parseInt(map.get("t").toString());
