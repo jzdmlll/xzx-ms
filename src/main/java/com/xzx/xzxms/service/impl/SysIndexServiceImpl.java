@@ -156,27 +156,32 @@ public class SysIndexServiceImpl implements ISysIndexService {
 
         int[] temp;
 
-        Integer time = Integer.parseInt(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
-        Integer _year = Integer.parseInt(year);
+        if(list.size() == 0){
+            temp = new int[0];
+        }else{
+            Integer time = Integer.parseInt(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
+            Integer _year = Integer.parseInt(year);
 
-        if (_year < time){
+            if (_year < time){
 
-            temp = new int[12];
-            for (Map map : list){
+                temp = new int[12];
+                for (Map map : list){
 
-                int t =Integer.parseInt(map.get("t").toString());
-                temp[t-1] = Integer.parseInt(map.get("total").toString());
-            }
-        }else {
+                    int t =Integer.parseInt(map.get("t").toString());
+                    temp[t-1] = Integer.parseInt(map.get("total").toString());
+                }
+            }else {
 
-            Integer t1 = Integer.parseInt(list.get(list.size()-1).get("t"));
-            temp = new int[t1];
-            for (Map map : list){
+                Integer t1 = Integer.parseInt(list.get(list.size()-1).get("t"));
+                temp = new int[t1];
+                for (Map map : list){
 
-                int t =Integer.parseInt(map.get("t").toString());
-                temp[t-1] = Integer.parseInt(map.get("total").toString());
+                    int t =Integer.parseInt(map.get("t").toString());
+                    temp[t-1] = Integer.parseInt(map.get("total").toString());
+                }
             }
         }
+
         return temp;
     }
 }
