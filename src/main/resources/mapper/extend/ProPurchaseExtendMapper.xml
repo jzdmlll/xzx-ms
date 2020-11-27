@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzx.xzxms.dao.extend.ProPurchaseExtendMapper">
+    <select id="findProPurchase" resultMap="InquiryAndQuoteMap">
+        SELECT pro.name,
+        i.name as i_name,
+        q.supplier as q_supplier,q.su_model as q_su_model,q.su_brand as q_su_brand,q.su_params as q_su_params,q.su_price as q_su_price,q.su_total_price as q_su_total_price,
+        q.su_delivery as q_su_delivery,q.warranty as q_warranty,q.su_remark q_su_remark
+        from sys_pro_detail pro
+        LEFT JOIN inquiry i on pro.id = i.pro_detail_id
+        LEFT JOIN quote q on i.id = q.inquiry_id
+        LEFT JOIN sys_pro_check c on q.id = c.quote_id
+      <where>
+          pro.is_active = 1 AND i.is_active = 1 AND q.is_active = 1 AND c.finally_audit = 1
+          <if test="proDetailId != null and proDetailId != -1">
+              and pro.id = #{proDetailId}
+          </if>
+      </where>
+        order by i.sort
+    </select>
+
+    <resultMap id="InquiryAndQuoteMap" type="com.xzx.xzxms.vm.ProPurchase" extends="com.xzx.xzxms.dao.SysProDetailMapper.BaseResultMap">
+        <collection property="inquiry" ofType="com.xzx.xzxms.bean.Inquiry" autoMapping="true" columnPrefix="i_"></collection>
+        <collection property="quote" ofType="com.xzx.xzxms.bean.Quote" autoMapping="true" columnPrefix="q_"></collection>
+    </resultMap>
+</mapper>
