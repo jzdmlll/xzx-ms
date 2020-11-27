@@ -3,7 +3,6 @@ package com.xzx.xzxms.dao.extend;
 import com.xzx.xzxms.bean.extend.SysProDetailExtend;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
-
 import java.util.List;
 
 @Mapper
