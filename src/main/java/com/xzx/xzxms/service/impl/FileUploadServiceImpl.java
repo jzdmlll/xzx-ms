@@ -51,8 +51,8 @@ public class FileUploadServiceImpl implements IFileUploadService {
                 map.put("url", "http://"+realHost+":8006"+"/images/"+fileName);
             }else{
                 map.put("error", 1);
-                map.put("msg", "图片上传失败!");
-                throw new CustomerException("图片上传失败!");
+                map.put("msg", "文件上传失败!");
+                throw new CustomerException("文件上传失败!");
             }
         }
         return map;
@@ -111,8 +111,8 @@ public class FileUploadServiceImpl implements IFileUploadService {
                 map.put("fileName", fileName);
             }else{
                 map.put("error", 1);
-                map.put("msg", "图片上传失败!");
-                throw new CustomerException("图片上传失败!");
+                map.put("msg", "文件上传失败!");
+                throw new CustomerException("文件上传失败!");
             }
             if(os!=null){
                 try {

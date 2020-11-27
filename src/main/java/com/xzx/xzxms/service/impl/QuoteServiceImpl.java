@@ -239,6 +239,7 @@ public class QuoteServiceImpl implements IQuoteService {
                             inquiryPool.setUnit(inquiry.getUnit());
                             inquiryPool.setTechnicalRequire(inquiry.getParams());
                             inquiryPool.setIsActive(1);
+                            inquiryPool.setProDetailId(proDetailId);
                             inquiryPool.setOperator(operator);
                             inquiryPool.setTime(time);
 
