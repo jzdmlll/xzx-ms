@@ -8,7 +8,7 @@
         <where>
           p.is_active = 1
           <if test="name != null and name != ''">
-            and p.name like CONCAT(CONCAT('%',#{name}),'%')
+            and p.equipment_name like CONCAT(CONCAT('%',#{name}),'%')
           </if>
           <if test="brand != null and brand != ''">
               and p.brand like CONCAT(CONCAT('%',#{brand}),'%')

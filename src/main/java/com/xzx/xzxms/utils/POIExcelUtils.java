@@ -76,7 +76,7 @@ public class POIExcelUtils {
                 break;
             }
             Map<String, Object> map = new HashMap<>();
-            for (int j = 1; j < totalColNum; j ++) {
+            for (int j = 0; j < totalColNum; j ++) {
                 cell = row.getCell(j);
                 if (cell != null){
 
@@ -243,7 +243,7 @@ public class POIExcelUtils {
     }
     // 测试
     public static void main(String[] args) throws Exception {
-        File file = new File("C:\\Users\\10376\\Desktop\\询价模板.xls");
+        File file = new File("C:\\Users\\10376\\Desktop\\PLC询价景轩11.5.xls");
         FileInputStream fis = new FileInputStream(file);
         List<Map<String, Object>> dataFromExcel = getDataFromExcel(fis);
         for (Map<String, Object> map:dataFromExcel) {

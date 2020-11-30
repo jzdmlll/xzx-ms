@@ -58,8 +58,9 @@ public class QuoteController {
     @GetMapping("findBySupplierOrPro")
     public Message findBySupplierOrPro(@RequestParam(value = "supplier",required = false) String supplier,
                                        @RequestParam(value = "proId",required = false,defaultValue = "-1") long proId,
-                                       @RequestParam(value = "pageNum",required = false,defaultValue = "1")int pageNum){
-        PageHelper.startPage(pageNum, 50);
+                                       @RequestParam(value = "pageNum",required = false,defaultValue = "1")int pageNum,
+                                       @RequestParam(value = "pageSize",required = false,defaultValue = "50")int pageSize){
+        PageHelper.startPage(pageNum, pageSize);
         List<QuoteExtendInquiry> list = iQuoteServiceImpl.findBySupplierOrPro(supplier,proId);
         PageInfo<QuoteExtendInquiry> pageInfo = new PageInfo<>(list);
         return MessageUtil.success("success",pageInfo);

@@ -18,4 +18,10 @@ public interface ISysProTypeService {
      */
     void saveOrUpdate(SysProType proType);
 
+    /**
+     * 逻辑删除项目分类
+     * @param proTypeId
+     */
+    void logicDeleteById(long proTypeId);
+
 }

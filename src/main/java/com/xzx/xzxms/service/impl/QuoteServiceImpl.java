@@ -17,6 +17,7 @@ import io.swagger.models.auth.In;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
@@ -203,6 +204,7 @@ public class QuoteServiceImpl implements IQuoteService {
 
                 String name = "";
                 String params = "";
+                int sort = 0;
                 long inquiryId = -1L;
                 SysFile sysFile = new SysFile();
                 String notFound = "";
@@ -213,16 +215,22 @@ public class QuoteServiceImpl implements IQuoteService {
                 for (Map<String, Object> item : dataFromExcel) {
                     //key ++;
                     String imgUrl = "";
-                    String nameExcel = item.get("设备名称").toString();
-                    String paramsExcel = item.get("技术要求").toString();
+                    String nameExcel = item.get("设备名称").toString().trim();
+                    String paramsExcel = item.get("型号").toString().trim();
+                    int sortExcel = Integer.parseInt(item.get("序号").toString().trim());
 
-                    if (name.equals(nameExcel) && params.equals(paramsExcel)){
+                    if (name.equals(nameExcel) && params.equals(paramsExcel) && sort == sortExcel){
 
                     }else {
-                        name = item.get("设备名称").toString();
-                        params = item.get("技术要求").toString();
+                        name = item.get("设备名称").toString().trim();
+                        params = item.get("型号").toString().trim();
+                        sort = Integer.parseInt(item.get("序号").toString().trim());
                         InquiryExample example = new InquiryExample();
-                        example.createCriteria().andNameEqualTo(name).andParamsEqualTo(params).andIsActiveEqualTo(1).andProDetailIdEqualTo(proDetailId).andVetoEqualTo(0);
+                        if("".equals(params) || params == null) {
+                            example.createCriteria().andNameEqualTo(name).andModelIsNull().andIsActiveEqualTo(1).andProDetailIdEqualTo(proDetailId).andVetoEqualTo(0).andSortEqualTo(sort);
+                        }else {
+                            example.createCriteria().andNameEqualTo(name).andModelEqualTo(params).andIsActiveEqualTo(1).andProDetailIdEqualTo(proDetailId).andVetoEqualTo(0).andSortEqualTo(sort);
+                        }
                         List<Inquiry> inquiries = inquiryMapper.selectByExample(example);
                         if (inquiries.size() > 0) {
                             Inquiry inquiry = inquiries.get(0);

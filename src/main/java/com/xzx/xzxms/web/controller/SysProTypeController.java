@@ -25,7 +25,7 @@ public class SysProTypeController {
 
         sysProTypeServiceImpl.saveOrUpdate(sysProType);
         System.out.println(sysProType);
-        return MessageUtil.success("更新成功");
+        return MessageUtil.success("操作成功");
     }
 
     @ApiOperation(value = "查询")
@@ -35,4 +35,10 @@ public class SysProTypeController {
         return MessageUtil.success("查询成功",list);
     }
 
+    @ApiOperation(value = "逻辑删除项目分类")
+    @PostMapping(value="logicDeleteById")
+    public Message logicDeleteById(long proTypeId){
+        sysProTypeServiceImpl.logicDeleteById(proTypeId);
+        return MessageUtil.success("操作成功");
+    }
 }

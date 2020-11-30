@@ -29,7 +29,7 @@ public class SysProDetailController {
 
     @ApiOperation(value = "查询所有项目的类型和来源")
     @GetMapping(value = "findByAll")
-    public Message findById(){
+    public Message findByAll(){
         List<SysProDetailExtend> sysProDetailExtend = sysProDetailServiceImpl.findById();
         return MessageUtil.success("success",sysProDetailExtend);
     }

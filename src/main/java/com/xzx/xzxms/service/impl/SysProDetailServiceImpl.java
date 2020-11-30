@@ -42,7 +42,9 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
     private SysProCheckExtendMapper sysProCheckExtendMapper;
 
     @Override
-    public List<SysProDetailExtend> findById() { return sysProDetailExtendMapper.findById(); }
+    public List<SysProDetailExtend> findById() {
+        return sysProDetailExtendMapper.findById();
+    }
     @Transactional
     @Override
     public void saveOrUpdate(SysProDetailWithBLOBs proDetail, List<SysFile> files) {
@@ -122,7 +124,7 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
     @Override
     public boolean verifyExistence(String proName) {
         SysProDetailExample sysProDetailExample=new SysProDetailExample();
-        sysProDetailExample.createCriteria().andNameEqualTo(proName);
+        sysProDetailExample.createCriteria().andNameEqualTo(proName).andIsActiveEqualTo(1);
         List<SysProDetail> sysProDetail = sysProDetailMapper.selectByExample(sysProDetailExample);
         if (sysProDetail.size() > 0){
             return true;
