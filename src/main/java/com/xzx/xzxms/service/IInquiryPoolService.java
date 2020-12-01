@@ -13,5 +13,5 @@ public interface IInquiryPoolService {
      //* @param choose 选用标识
      * @return
      */
-    List<InquiryPool> findByParams(String name, String brand);
+    List<InquiryPool> findByParams(String name, String brand, Long proDetailId, String model);
 }

@@ -40,7 +40,7 @@ public class InquiryController {
     public Message compareUpdateDraft(@RequestBody Inquiry inquiry){
 
         iInquiryServiceImpl.compareUpdateDraft(inquiry);
-        return MessageUtil.success("success");
+        return MessageUtil.success("操作成功");
     }
 
     @ApiOperation("终审修改拟定报价")
@@ -48,7 +48,7 @@ public class InquiryController {
     public Message finallyUpdateDraft(@RequestBody Inquiry inquiry){
 
         iInquiryServiceImpl.finallyUpdateDraft(inquiry);
-        return MessageUtil.success("success");
+        return MessageUtil.success("操作成功");
     }
 
     @ApiOperation("查询所有询价")

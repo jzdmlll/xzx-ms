@@ -6,13 +6,19 @@
         from
         inquiry_pool p LEFT JOIN sys_pro_detail d ON d.id = p.pro_detail_id
         <where>
-          p.is_active = 1
-          <if test="name != null and name != ''">
-            and p.equipment_name like CONCAT(CONCAT('%',#{name}),'%')
-          </if>
-          <if test="brand != null and brand != ''">
-              and p.brand like CONCAT(CONCAT('%',#{brand}),'%')
-          </if>
+            p.is_active = 1
+            <if test="name != null and name != ''">
+                and p.equipment_name like CONCAT(CONCAT('%',#{name}),'%')
+            </if>
+            <if test="brand != null and brand != ''">
+                and p.brand like CONCAT(CONCAT('%',#{brand}),'%')
+            </if>
+            <if test="proDetailId != null and proDetailId != ''">
+                and d.id = #{proDetailId}
+            </if>
+            <if test="model != null and model != ''">
+                and p.model like CONCAT(CONCAT('%',#{model}),'%')
+            </if>
         </where>
     </select>
 

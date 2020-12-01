@@ -19,8 +19,11 @@ public class InquiryPoolController {
 
     @ApiOperation(value = "查询")
     @GetMapping(value = "findByParams")
-    public Message findByParams(@RequestParam(value="name", required=false, defaultValue = "")String name, @RequestParam(value="brand", required=false, defaultValue = "")String brand){
-        List<InquiryPool> list = inquiryPoolServiceImpl.findByParams(name, brand);
+    public Message findByParams(@RequestParam(value="name", required=false, defaultValue = "")String name,
+                                @RequestParam(value="brand", required=false, defaultValue = "")String brand,
+                                @RequestParam(value="proDetailId", required=false, defaultValue = "")Long proDetailId,
+                                @RequestParam(value="model", required=false, defaultValue = "")String model){
+        List<InquiryPool> list = inquiryPoolServiceImpl.findByParams(name, brand, proDetailId, model);
         return MessageUtil.success("success", list);
     }
 
