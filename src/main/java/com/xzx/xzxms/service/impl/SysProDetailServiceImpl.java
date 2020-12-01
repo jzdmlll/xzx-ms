@@ -11,7 +11,6 @@ import com.xzx.xzxms.dao.redis.JedisDao;
 import com.xzx.xzxms.service.IFileUploadService;
 import com.xzx.xzxms.service.ISysProDetailService;
 import com.xzx.xzxms.utils.Base64Util;
-import com.xzx.xzxms.utils.CustomerException;
 import com.xzx.xzxms.utils.IDUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,7 +50,45 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
         long time = new Date().getTime();
         long operatorId = proDetail.getOperator();
         if (proDetail.getId() != null){
+            SysFileExample example = new SysFileExample();
+            example.createCriteria().andOtherIdEqualTo(proDetail.getId());
+            List<SysFile> sysFiles = sysFileMapper.selectByExample(example);
+            for(SysFile file:sysFiles){
+                file.setIsActive(0);
+            }
+            //文件上传
+            for (SysFile file : files) {
+                //如果redis中存在该文件
+                if (jedisDaoImpl.exists(file.getId().toString())) {
+                    //从redis中取出base64文件码
+                    String base64File = jedisDaoImpl.get(file.getId().toString());
+                    //解码，还原成输入流
+                    InputStream inputStream = Base64Util.decodeBase64File(base64File);
+                    System.out.println("redis");
+                    //清除redis该文件缓存
+                    jedisDaoImpl.del(file.getId().toString());
+                    //上传到Nginx
+                    Map<String, Object> map = fileUploadServiceImpl.uploadByStream(inputStream, file.getName());
 
+                    //文件信息持久化到数据库
+                    file.setType(SysFileExtend.TYPE_PRODETAIL);
+                    file.setOtherId(proDetail.getId());
+                    file.setTime(time);
+                    file.setIsActive(1);
+                    file.setIsUseful(1);
+                    file.setOperator(operatorId);
+                    sysFileMapper.insert(file);
+                    System.out.println("数据库");
+                }
+            }
+            proDetail.setProRate(proDetail.getProRate()*1000);
+          sysProDetailMapper.updateByPrimaryKey(proDetail);
+           /* SysProDetailExample example2 = new SysProDetailExample();
+            example2.createCriteria().andIdEqualTo(proDetail.getId());
+            List<SysProDetail> sysProDetails = sysProDetailMapper.selectByExample(example2);
+            for(SysProDetail sysProDetail:sysProDetails){
+                sysProDetailMapper.updateByExample(example2);
+            }*/
             /*int size = sysProCheckExtendMapper.findExistsCheck(proDetail.getId());
             if (size > 0){
                 throw  new CustomerException("审核流程修改失败, 需将项目的所有报价单数据删除才可修改审核流程");
