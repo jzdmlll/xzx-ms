@@ -108,4 +108,11 @@ public class InquiryController {
         iInquiryServiceImpl.insertOrUpdateInquiry(inquiry);
         return MessageUtil.success("success");
     }
+
+    @ApiOperation(value = "新增或修改询价设备类型")
+    @PostMapping(value = "modifyDeviceType")
+    public Message modifyDeviceType(long[] inquiryIds,String code){
+        iInquiryServiceImpl.modifyDeviceType(inquiryIds, code);
+        return MessageUtil.success("success");
+    }
 }

@@ -18,7 +18,7 @@ public interface CompareExtendMapper {
             "SELECT  " +
             "i.id " +
             "FROM  " +
-            "\tsys_pro_check spc  " +
+            "sys_pro_check spc  " +
             "LEFT JOIN quote q on q.id=spc.content_id " +
             "LEFT JOIN inquiry i on q.inquiry_id = i.id " +
             " " +

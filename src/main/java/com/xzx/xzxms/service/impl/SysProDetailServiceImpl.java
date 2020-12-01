@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.io.InputStream;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -37,8 +38,6 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
     private IFileUploadService fileUploadServiceImpl;
     @Resource
     private SysFileMapper sysFileMapper;
-    @Resource
-    private SysProCheckExtendMapper sysProCheckExtendMapper;
 
     @Override
     public List<SysProDetailExtend> findById() {
@@ -53,8 +52,9 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
             SysFileExample example = new SysFileExample();
             example.createCriteria().andOtherIdEqualTo(proDetail.getId());
             List<SysFile> sysFiles = sysFileMapper.selectByExample(example);
-            for(SysFile file:sysFiles){
+            for(SysFile file : sysFiles){
                 file.setIsActive(0);
+                sysFileMapper.updateByPrimaryKeySelective(file);
             }
             //文件上传
             for (SysFile file : files) {
@@ -82,7 +82,7 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
                 }
             }
             proDetail.setProRate(proDetail.getProRate()*1000);
-          sysProDetailMapper.updateByPrimaryKey(proDetail);
+            sysProDetailMapper.updateByPrimaryKeySelective(proDetail);
            /* SysProDetailExample example2 = new SysProDetailExample();
             example2.createCriteria().andIdEqualTo(proDetail.getId());
             List<SysProDetail> sysProDetails = sysProDetailMapper.selectByExample(example2);
@@ -140,22 +140,31 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
                     System.out.println("数据库");
                 }
             }
+
+            Calendar cal = Calendar.getInstance();
+            int year = cal.get(Calendar.YEAR);
+            int month = cal.get(Calendar.MONTH) + 1;
+            String _month = String.valueOf(month);
+            if (month < 10){
+                _month = "0" + month;
+            }
+            StringBuffer currentTime = new StringBuffer();
+            currentTime.append(year);
+            currentTime.append(_month);
+            //查询项目编号当前应为多少
+            int current = sysProDetailExtendMapper.findCurrentExists(currentTime.toString());
+            StringBuffer temp = new StringBuffer();
+            temp.append(currentTime);
+            temp.append("-");
+            temp.append(current + 1);
+
             //项目信息插入数据库
             proDetail.setId(proDetailId);
+            proDetail.setProNo(temp.toString());
             proDetail.setTime(time);
             proDetail.setIsActive(1);
             proDetail.setIsUseful(0);
             sysProDetailMapper.insert(proDetail);
-
-            //审核信息插入数据库
-            /*for (SysProDetailCheck proDetailCheck : proChecks) {
-                proDetailCheck.setCheckStatus(0);
-                proDetailCheck.setProDetailId(proDetailId);
-                proDetailCheck.setTime(time);
-                proDetailCheck.setId(IDUtils.getId());
-                proDetailCheck.setOperator(operatorId);
-                sysProDetailCheckMapper.insert(proDetailCheck);
-            }*/
         }
     }
 

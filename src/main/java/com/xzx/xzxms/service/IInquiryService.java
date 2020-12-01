@@ -87,4 +87,11 @@ public interface IInquiryService {
      * @param inquiry
      */
     void finallyUpdateDraft(Inquiry inquiry);
+
+    /**
+     * 修改询价设备类型
+     * @param inquiryIds 询价ids
+     * @param code  设备编码
+     */
+    void modifyDeviceType(long[] inquiryIds,String code);
 }

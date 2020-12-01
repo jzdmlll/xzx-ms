@@ -254,5 +254,13 @@ public class InquiryServiceImpl implements IInquiryService{
         inquiryMapper.updateByPrimaryKeySelective(inquiry);
     }
 
-
+    @Override
+    public void modifyDeviceType(long[] inquiryIds, String code) {
+        Inquiry inquiry = new Inquiry();
+        for (long id : inquiryIds){
+            inquiry.setId(id);
+            inquiry.setCode(code);
+            inquiryMapper.updateByPrimaryKeySelective(inquiry);
+        }
+    }
 }
