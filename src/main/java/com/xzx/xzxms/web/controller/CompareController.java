@@ -1,6 +1,5 @@
 package com.xzx.xzxms.web.controller;
 
-
 import com.xzx.xzxms.bean.extend.InquiryAndProDetailExtend;
 import com.xzx.xzxms.service.ICompareService;
 import com.xzx.xzxms.service.IInquiryService;
@@ -63,3 +62,5 @@ public class CompareController {
         return MessageUtil.success("操作成功");
     }
 }
+
+

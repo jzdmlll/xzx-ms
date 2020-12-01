@@ -6,7 +6,6 @@ import com.xzx.xzxms.utils.Message;
 import com.xzx.xzxms.utils.MessageUtil;
 import com.xzx.xzxms.vm.ProPurchase;
 import io.swagger.annotations.ApiOperation;
-import org.junit.Test;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;

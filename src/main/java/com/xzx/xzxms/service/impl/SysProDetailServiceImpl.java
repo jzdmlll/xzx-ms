@@ -75,6 +75,7 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
                 check.setOperator(operatorId);
                 sysProDetailCheckMapper.insert(check);
             }*/
+
         }else {
             long proDetailId = IDUtils.getId();
             //文件上传
