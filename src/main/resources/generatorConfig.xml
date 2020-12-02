@@ -84,7 +84,7 @@
 -->
 <!--        <table tableName="inquiry" domainObjectName="Inquiry" ></table>-->
 <!--        <table tableName="sys_pro_detail" domainObjectName="SysProDetail" ></table>-->
-    <!--    <table tableName="product_pool" domainObjectName="ProPool" ></table>-->
+<!--        <table tableName="product_pool" domainObjectName="ProPool" ></table>-->
     <!--    <table tableName="sys_pro_check" domainObjectName="SysProCheck" ></table>-->
     <!--    <table tableName="quote" domainObjectName="Quote" ></table>-->
 
