@@ -190,7 +190,7 @@ public class InquiryServiceImpl implements IInquiryService{
         Quote quote = new Quote();
         quote.setId(quoteId);
         quote.setSupplier(proPool.getSupplier());
-        quote.setSuModel(proPool.getSupplier());
+        quote.setSuModel(proPool.getModel());
         quote.setSuBrand(proPool.getBrand());
         quote.setSuParams(proPool.getParams());
         quote.setSuPrice(proPool.getPrice());
