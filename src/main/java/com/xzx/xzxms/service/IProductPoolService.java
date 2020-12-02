@@ -39,4 +39,12 @@ public interface IProductPoolService {
      * @return
      */
     List<ProPool> findHistoryPrices(String name, String model);
+
+    /**
+     * 询价界面模糊查询产品池存在数据
+     * @param name
+     * @param model
+     * @return
+     */
+    List<ProPool> fuzzyQueryByNameOrModel(String name, String model);
 }

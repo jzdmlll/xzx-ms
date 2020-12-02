@@ -1,5 +1,6 @@
 package com.xzx.xzxms.dao.extend;
 
+import com.xzx.xzxms.bean.ProPool;
 import com.xzx.xzxms.bean.extend.ProPoolExtend;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -27,4 +28,7 @@ public interface ProPoolExtendMapper {
     int isFinalCheck(long proCheckId);
 
     List<ProPoolExtend> findByParams(@Param("name") String name,@Param("brand") String brand);
+
+    List<ProPool> fuzzyQueryByNameOrModel(@Param("name") String name, @Param("model") String model);
+
 }
