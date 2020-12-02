@@ -48,7 +48,7 @@ public class ProductPoolController {
                                 @RequestParam(value="brand", required=false, defaultValue = "")String brand,
                                 @RequestParam(value = "pageNum",required = false,defaultValue = "1")int pageNum,
                                 @RequestParam(value = "pageSize",required = false,defaultValue = "50")int pageSize){
-        PageHelper.startPage(pageNum, pageSize);
+        PageHelper.startPage(pageNum, pageSize, "time desc");
         List<ProPoolExtend> list = productPoolServiceImpl.findByParams(name, brand);
         PageInfo<ProPoolExtend> pageInfo = new PageInfo<>(list);
 

@@ -14,7 +14,6 @@
               and p.brand like CONCAT(CONCAT('%',#{brand}),'%')
           </if>
         </where>
-        order by time desc
     </select>
 
 
