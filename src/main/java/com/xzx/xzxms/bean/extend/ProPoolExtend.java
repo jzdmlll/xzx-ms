@@ -4,13 +4,13 @@ import com.xzx.xzxms.bean.ProPool;
 
 public class ProPoolExtend extends ProPool {
 
-    private String proName;
+    private String productName;
 
-    public String getProName() {
-        return proName;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setProName(String proName) {
-        this.proName = proName;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 }

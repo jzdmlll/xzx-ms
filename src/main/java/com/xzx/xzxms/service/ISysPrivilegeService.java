@@ -51,5 +51,9 @@ public interface ISysPrivilegeService {
      */
     List<SysPrivilegeExtend> findMenuByUserId(long id);
 
+    /**
+     *
+     * @param id
+     */
     void deleteById(long id);
 }

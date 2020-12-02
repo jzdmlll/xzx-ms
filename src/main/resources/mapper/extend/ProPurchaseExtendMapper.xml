@@ -3,8 +3,8 @@
 <mapper namespace="com.xzx.xzxms.dao.extend.ProPurchaseExtendMapper">
     <select id="findProPurchase" resultMap="InquiryAndQuoteMap">
         SELECT pro.name,
-        i.name as i_name,
-        q.supplier as q_supplier,q.su_model as q_su_model,q.su_brand as q_su_brand,q.su_params as q_su_params,q.su_price as q_su_price,q.su_total_price as q_su_total_price,
+        i.name as i_name,i.unit as i_unit,i.number as i_number,i.price as i_price,i.total_price as i_total_price,i.params as i_params,
+        q.supplier as q_supplier,q.id as q_id,q.su_brand as q_su_brand,q.su_params as q_su_params,q.su_price as q_su_price,q.su_total_price as q_su_total_price,
         q.su_delivery as q_su_delivery,q.warranty as q_warranty,q.su_remark q_su_remark
         from sys_pro_detail pro
         LEFT JOIN inquiry i on pro.id = i.pro_detail_id

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xzx.xzxms.dao.extend.ProPoolExtendMapper">
     <select id="findByParams" resultType="com.xzx.xzxms.bean.extend.ProPoolExtend">
-        select p.*,s.name pro_name
+        select p.*,s.name product_name
         from
         product_pool p LEFT JOIN sys_pro_detail s ON s.id = p.pro_detail_id
         <where>
@@ -14,6 +14,7 @@
               and p.brand like CONCAT(CONCAT('%',#{brand}),'%')
           </if>
         </where>
+        order by time desc
     </select>
 
 
