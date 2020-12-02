@@ -61,4 +61,12 @@ public class ProductPoolController {
         List<ProPool> list = productPoolServiceImpl.findHistoryPrices(name, model);
         return MessageUtil.success("success", list);
     }
+
+    @ApiOperation(value = "询价界面模糊查询产品池存在数据")
+    @GetMapping(value = "fuzzyQueryByNameOrModel")
+    public Message fuzzyQueryByNameOrModel(@RequestParam(value="name", required=false, defaultValue = "") String name,@RequestParam(value="model", required=false, defaultValue = "") String model){
+
+        List<ProPool> proPools = productPoolServiceImpl.fuzzyQueryByNameOrModel(name, model);
+        return MessageUtil.success("success",proPools);
+    }
 }
