@@ -10,6 +10,12 @@ public interface IProductPoolService {
      * 修改
      * @param proPool
      */
+    void addProductPool(ProPool proPool);
+
+    /**
+     * 修改
+     * @param proPool
+     */
     void updateMessage(ProPool proPool);
 
     /**

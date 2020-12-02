@@ -4,7 +4,6 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xzx.xzxms.bean.ProPool;
 import com.xzx.xzxms.bean.extend.ProPoolExtend;
-import com.xzx.xzxms.bean.extend.QuoteExtendInquiry;
 import com.xzx.xzxms.service.IProductPoolService;
 import com.xzx.xzxms.utils.Message;
 import com.xzx.xzxms.utils.MessageUtil;
@@ -20,6 +19,13 @@ public class ProductPoolController {
 
     @Resource
     private IProductPoolService productPoolServiceImpl;
+
+    @ApiOperation(value = "产品池数据新增")
+    @PostMapping(value = "addProductPool")
+    public Message addProductPool(ProPool proPool){
+        productPoolServiceImpl.addProductPool(proPool);
+        return MessageUtil.success("success");
+    }
 
     @ApiOperation(value="批量删除")
     @PostMapping(value="batchSetInvalid")
