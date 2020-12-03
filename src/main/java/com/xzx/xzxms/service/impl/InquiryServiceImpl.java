@@ -172,16 +172,12 @@ public class InquiryServiceImpl implements IInquiryService{
     public void inquiryChoosePool(long inquiryId, long proPoolId, long operator) {
 
         QuoteExample example = new QuoteExample();
-        example.createCriteria().andInquiryIdEqualTo(inquiryId);
+        example.createCriteria().andInquiryIdEqualTo(inquiryId).andIsActiveEqualTo(1);
         List<Quote> quotes = quoteMapper.selectByExample(example);
 
-        if(1 == quotes.get(0).getIsUseful()){
-            throw new CustomerException("此条询价内容以被审核，无法修改!");
-        }
         if(quotes.size() > 0){
-            for(Quote q : quotes){
-                quoteMapper.deleteByPrimaryKey(q.getId());
-            }
+
+            throw new CustomerException("此条询价已存在报价内容，如需修改请先删除报价!");
         }
         long quoteId = IDUtils.getId();
         long time = new Date().getTime();
