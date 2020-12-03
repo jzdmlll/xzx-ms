@@ -118,6 +118,12 @@
             <if test="proDetailId != -1 and proDetailId != null">
                 and b.pro_detail_id = #{proDetailId,jdbcType=BIGINT}
             </if>
+            <if test="name != '' and name != null">
+                and b.name like CONCAT(CONCAT('%',#{name}),'%')
+            </if>
+            <if test="model != '' and model != null">
+                and b.model like CONCAT(CONCAT('%',#{model}),'%')
+            </if>
 
         </where>
 

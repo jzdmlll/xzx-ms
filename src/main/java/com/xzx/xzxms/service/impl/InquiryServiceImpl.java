@@ -42,14 +42,14 @@ public class InquiryServiceImpl implements IInquiryService{
     private QuoteAndInquiryExtendMapper quoteAndInquiryExtendMapper;
 
     @Override
-    public List<InquiryExtend> findByProDetailId(long proDetailId) {
+    public List<InquiryExtend> findByProDetailId(Long proDetailId, String name, String model) {
 
-        return inquiryExtendMapper.findInquiryAndQuoteNum(proDetailId);
+        return inquiryExtendMapper.findInquiryAndQuoteNum(proDetailId, name, model);
     }
 
     @Override
     public List<InquiryExtend> findAll() {
-        return inquiryExtendMapper.findInquiryAndQuoteNum(-1L);
+        return inquiryExtendMapper.findInquiryAndQuoteNum(null, null, null);
     }
 
     /**

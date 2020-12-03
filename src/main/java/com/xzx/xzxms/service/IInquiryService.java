@@ -14,7 +14,7 @@ public interface IInquiryService {
      * 根据项目id查询所有询价
      * @return
      */
-    List<InquiryExtend> findByProDetailId(long proDetailId);
+    List<InquiryExtend> findByProDetailId(Long proDetailId, String name, String model);
 
     /**
      * 查询所有询价

@@ -21,8 +21,10 @@ public class InquiryController {
 
     @ApiOperation("根据项目id查询所有询价")
     @GetMapping("findByProDetailId")
-    public Message findByProDetailId(long proDetailId) {
-        List<InquiryExtend> inquiryList = iInquiryServiceImpl.findByProDetailId(proDetailId);
+    public Message findByProDetailId(@RequestParam(value="name", required=false, defaultValue = "")String name,
+                                     @RequestParam(value="proDetailId", required=false, defaultValue = "")Long proDetailId,
+                                     @RequestParam(value="model", required=false, defaultValue = "")String model) {
+        List<InquiryExtend> inquiryList = iInquiryServiceImpl.findByProDetailId(proDetailId, name, model);
 
         return MessageUtil.success("success", inquiryList);
     }
