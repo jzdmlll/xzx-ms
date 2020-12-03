@@ -10,10 +10,7 @@ import com.xzx.xzxms.dao.extend.SysProCheckExtendMapper;
 import com.xzx.xzxms.dao.redis.JedisDao;
 import com.xzx.xzxms.service.IFileUploadService;
 import com.xzx.xzxms.service.IQuoteService;
-import com.xzx.xzxms.utils.Base64Util;
-import com.xzx.xzxms.utils.CustomerException;
-import com.xzx.xzxms.utils.IDUtils;
-import com.xzx.xzxms.utils.POIExcelUtils;
+import com.xzx.xzxms.utils.*;
 import io.swagger.models.auth.In;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -386,6 +383,7 @@ public class QuoteServiceImpl implements IQuoteService {
                 quoteMapper.updateByPrimaryKeySelective(quote);
                 //删除报价的同时删除询价池对应的内容
                 InquiryPoolExample example1 = new InquiryPoolExample();
+                BeanHelper.nullToEmpty(quote);
                 example1.createCriteria().andQuoteBrandEqualTo(quote.getSuBrand()).andQuoteModelEqualTo(quote.getSuModel()).andTechnicalParamsEqualTo(quote.getSuParams());
                 List<InquiryPool> inquiryPools = inquiryPoolMapper.selectByExample(example1);
                 for (InquiryPool pool : inquiryPools){

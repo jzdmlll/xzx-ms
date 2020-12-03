@@ -1,5 +1,8 @@
 package com.xzx.xzxms.web.controller;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xzx.xzxms.bean.extend.SysCheckAndScheduleExtend;
 import com.xzx.xzxms.service.ISysIndexService;
 import com.xzx.xzxms.utils.Message;
@@ -58,32 +61,46 @@ public class SysIndexController {
 
     @ApiOperation(value = "查询技术审核待办事项")
     @GetMapping(value = "findTechnicalAuditDeal")
-    public Message findTechnicalAuditDeal(){
+    public Message findTechnicalAuditDeal(@RequestParam(value = "pageNum",required = false,defaultValue = "1")int pageNum,
+                                          @RequestParam(value = "pageSize",required = false,defaultValue = "15")int pageSize){
+        PageHelper.startPage(pageNum, pageSize);
         List<ToDoList> ToDoLists = sysIndexServiceImpl.findTechnicalAuditDeal();
-        return MessageUtil.success("success", ToDoLists);
+
+        PageInfo<ToDoList> pageInfo = new PageInfo<>(ToDoLists);
+        return MessageUtil.success("success", pageInfo);
     }
 
     @ApiOperation(value = "查询商务审核待办事项")
     @GetMapping(value = "findBusinessAuditDeal")
-    public Message findBusinessAuditDeal(){
+    public Message findBusinessAuditDeal(@RequestParam(value = "pageNum",required = false,defaultValue = "1")int pageNum,
+                                         @RequestParam(value = "pageSize",required = false,defaultValue = "15")int pageSize){
+        PageHelper.startPage(pageNum, pageSize);
         List<ToDoList> ToDoLists = sysIndexServiceImpl.findBusinessAuditDeal();
-        return MessageUtil.success("success", ToDoLists);
+
+        PageInfo<ToDoList> pageInfo = new PageInfo<>(ToDoLists);
+        return MessageUtil.success("success", pageInfo);
     }
 
     @ApiOperation(value = "查询比价待办事项")
     @GetMapping(value = "findCompareAuditDeal")
-    public Message findCompareAuditDeal(){
+    public Message findCompareAuditDeal(@RequestParam(value = "pageNum",required = false,defaultValue = "1")int pageNum,
+                                        @RequestParam(value = "pageSize",required = false,defaultValue = "15")int pageSize){
+        PageHelper.startPage(pageNum, pageSize);
         List<ToDoList> ToDoLists = sysIndexServiceImpl.findCompareAuditDeal();
-        return MessageUtil.success("success", ToDoLists);
+
+        PageInfo<ToDoList> pageInfo = new PageInfo<>(ToDoLists);
+        return MessageUtil.success("success", pageInfo);
     }
 
     @ApiOperation(value = "查询终审待办事项")
     @GetMapping(value = "findFinallyAuditDeal")
-    public Message findFinallyAuditDeal(){
+    public Message findFinallyAuditDeal(@RequestParam(value = "pageNum",required = false,defaultValue = "1")int pageNum,
+                                        @RequestParam(value = "pageSize",required = false,defaultValue = "15")int pageSize){
+        PageHelper.startPage(pageNum, pageSize);
         List<ToDoList> ToDoLists = sysIndexServiceImpl.findFinallyAuditDeal();
-        return MessageUtil.success("success", ToDoLists);
+
+        PageInfo<ToDoList> pageInfo = new PageInfo<>(ToDoLists);
+        return MessageUtil.success("success", pageInfo);
     }
-
-
 
 }
