@@ -6,6 +6,7 @@ import com.xzx.xzxms.bean.extend.QuoteExtendInquiry;
 import com.xzx.xzxms.bean.extend.SysFileExtend;
 import com.xzx.xzxms.dao.*;
 import com.xzx.xzxms.dao.extend.QuoteAndInquiryExtendMapper;
+import com.xzx.xzxms.dao.extend.SysProCheckExtendMapper;
 import com.xzx.xzxms.dao.redis.JedisDao;
 import com.xzx.xzxms.service.IFileUploadService;
 import com.xzx.xzxms.service.IQuoteService;
@@ -47,6 +48,8 @@ public class QuoteServiceImpl implements IQuoteService {
     private ProPoolMapper proPoolMapper;
     @Resource
     private InquiryPoolMapper inquiryPoolMapper;
+    @Resource
+    private SysProCheckExtendMapper sysProCheckExtendMapper;
 
     @Override
     public List<Quote> findByInquiryId(long inquiryId) {
@@ -256,15 +259,23 @@ public class QuoteServiceImpl implements IQuoteService {
                         }
                     }
                     if("".equals(notFound)){
-                        QuoteExample quoteExample = new QuoteExample();
                         String supplier = item.get("供应商").toString().trim();
-                        quoteExample.createCriteria().andSupplierEqualTo(supplier).andInquiryIdEqualTo(inquiryId).andIsActiveEqualTo(1);
-                        List<Quote> quotes = quoteMapper.selectByExample(quoteExample);
 
-                        if (quotes.size() > 0) {
-                            //该条报价存在则不能重复插入，正好限制该条报价不能发生修改  无需再判断该条报价是否被审核过
-                            throw new CustomerException("文件中： ["+supplier+"]  数据已存在");
+//                        QuoteExample quoteExample = new QuoteExample();
+//                        quoteExample.createCriteria().andSupplierEqualTo(supplier).andInquiryIdEqualTo(inquiryId).andIsActiveEqualTo(1);
+//                        List<Quote> quotes = quoteMapper.selectByExample(quoteExample);
+//
+//                        if (quotes.size() > 0) {
+//                            //该条报价存在则不能重复插入，正好限制该条报价不能发生修改  无需再判断该条报价是否被审核过
+//                            throw new CustomerException("文件中： ["+supplier+"]  数据已存在");
+//                        }
+
+                        //判断报价是否被审核过
+                        int count = sysProCheckExtendMapper.findQuoteIsChecked(inquiryId);
+                        if (count > 0){
+                            throw new CustomerException("该条询价内容已被审核，无法修改!");
                         }
+
                         Quote q = new Quote();
                         long quoteId = IDUtils.getId();
                         try {
