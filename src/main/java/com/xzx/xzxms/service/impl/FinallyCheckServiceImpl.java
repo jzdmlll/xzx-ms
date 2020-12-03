@@ -39,7 +39,7 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
     @Override
     public List<Map> cascadeFindAllByParams(long proDetailId) {
 
-        String name = "";
+        String sort = "";
         double minPrice = 0;
         double price = 0;
         List<Map> maps = new ArrayList<Map>();
@@ -51,8 +51,7 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
             if (finallyCheckCompareVMS.get(i).getSuPrice() != null){
                 price = finallyCheckCompareVMS.get(i).getSuPrice();
             }
-            String inquiryName = finallyCheckCompareVMS.get(i).getName();
-            if (name.equals(finallyCheckCompareVMS.get(i).getName())) {
+            if (sort.equals(finallyCheckCompareVMS.get(i).getSort())) {
                 if (price < minPrice) {
                     minPrice = price;
                     //将之前的那个询价最低价标志置为0
@@ -71,7 +70,7 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
 
                 minPrice = price;
                 finallyCheckCompareVMS.get(i).setMinPrice(1);
-                name = finallyCheckCompareVMS.get(i).getName();
+                sort = finallyCheckCompareVMS.get(i).getSort();
                 map.put("inquiry", finallyCheckCompareVMS.get(i));
                 Map _map = new HashMap();
                 _map.put("price", finallyCheckCompareVMS.get(i).getPrice());
