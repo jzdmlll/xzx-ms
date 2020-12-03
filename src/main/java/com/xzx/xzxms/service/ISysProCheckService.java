@@ -49,19 +49,4 @@ public interface ISysProCheckService {
      */
     List<SysCheckExtend> findBusinessCheck(Integer status, long proDetailId);
 
-    /**
-     * 查询比较审核内容
-     * @param status 审核状态
-     * @param proDetailId 项目详情ID
-     * @return
-     */
-    List<SysCheckExtend> findCompareCheck(Integer status, long proDetailId);
-
-    /**
-     * 查询最终审核内容
-     * @param status 审核状态
-     * @param proDetailId 项目详情ID
-     * @return
-     */
-    List<SysCheckExtend> findFinallyCheck(Integer status, long proDetailId);
 }

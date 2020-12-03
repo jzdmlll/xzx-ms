@@ -180,6 +180,7 @@ public class QuoteServiceImpl implements IQuoteService {
             long operator = quote.getOperator();
             long time = new Date().getTime();
             long proDetailId = quote.getProDetailId();
+
             SysFile file = files.get(0);
             //如果redis中存在该文件
             if(jedisDaoImpl.exists(file.getId().toString())) {
@@ -200,78 +201,56 @@ public class QuoteServiceImpl implements IQuoteService {
                 if(dataFromExcel.size() == 0) {
                     throw new CustomerException("excel 为空，可能内容格式异常（序号不能为空）");
                 }
-                //2.报价信息存入数据库报价表
 
+                //2.报价信息存入数据库报价表
                 String name = "";
                 String params = "";
                 int sort = 0;
                 long inquiryId = -1L;
                 SysFile sysFile = new SysFile();
                 String notFound = "";
-                //int key = 0;
 
                 InquiryPool inquiryPool = new InquiryPool();
 
                 for (Map<String, Object> item : dataFromExcel) {
-                    //key ++;
-                    String imgUrl = "";
-                    String nameExcel = item.get("设备名称").toString().trim();
-                    String paramsExcel = item.get("型号").toString().trim();
-                    int sortExcel = Integer.parseInt(item.get("序号").toString().trim());
 
-                    if (name.equals(nameExcel) && params.equals(paramsExcel) && sort == sortExcel){
+                    String imgUrl = "";
+
+                    name = item.get("设备名称").toString().trim();
+                    params = item.get("型号").toString().trim();
+                    sort = Integer.parseInt(item.get("序号").toString().trim());
+                    InquiryExample example = new InquiryExample();
+                    if("".equals(params) || params == null) {
+                        example.createCriteria().andNameEqualTo(name).andModelIsNull().andIsActiveEqualTo(1).andProDetailIdEqualTo(proDetailId).andVetoEqualTo(0).andSortEqualTo(sort);
+                    }else {
+                        example.createCriteria().andNameEqualTo(name).andModelEqualTo(params).andIsActiveEqualTo(1).andProDetailIdEqualTo(proDetailId).andVetoEqualTo(0).andSortEqualTo(sort);
+                    }
+                    List<Inquiry> inquiries = inquiryMapper.selectByExample(example);
+                    if (inquiries.size() > 0) {
+                        Inquiry inquiry = inquiries.get(0);
+                        inquiryId = inquiry.getId();
+
+//                            if (inquiry.getIsinquiry() == 0){
+//                                throw new CustomerException("文件中:  ["+name+"   :"+params+"]  已被设定为不需询价，无法导入报价单,如需导入请修改!");
+//                            }
+                        //询价内容添加到询价池中
+                        inquiryPool.setId(IDUtils.getId());
+                        inquiryPool.setEquipmentName(inquiry.getName());
+                        inquiryPool.setBrand(inquiry.getBrand());
+                        inquiryPool.setModel(inquiry.getModel());
+                        inquiryPool.setUnit(inquiry.getUnit());
+                        inquiryPool.setTechnicalRequire(inquiry.getParams());
+                        inquiryPool.setIsActive(1);
+                        inquiryPool.setProDetailId(proDetailId);
+                        inquiryPool.setOperator(operator);
+                        inquiryPool.setTime(time);
 
                     }else {
-                        name = item.get("设备名称").toString().trim();
-                        params = item.get("型号").toString().trim();
-                        sort = Integer.parseInt(item.get("序号").toString().trim());
-                        InquiryExample example = new InquiryExample();
-                        if("".equals(params) || params == null) {
-                            example.createCriteria().andNameEqualTo(name).andModelIsNull().andIsActiveEqualTo(1).andProDetailIdEqualTo(proDetailId).andVetoEqualTo(0).andSortEqualTo(sort);
-                        }else {
-                            example.createCriteria().andNameEqualTo(name).andModelEqualTo(params).andIsActiveEqualTo(1).andProDetailIdEqualTo(proDetailId).andVetoEqualTo(0).andSortEqualTo(sort);
-                        }
-                        List<Inquiry> inquiries = inquiryMapper.selectByExample(example);
-                        if (inquiries.size() > 0) {
-                            Inquiry inquiry = inquiries.get(0);
-                            inquiryId = inquiry.getId();
-                            if (inquiry.getIsinquiry() == 0){
-                                throw new CustomerException("文件中:  ["+name+"   :"+params+"]  已被设定为不需询价，无法导入报价单,如需导入请修改!");
-                            }
-
-                            //询价内容添加到询价池中
-                            inquiryPool.setId(IDUtils.getId());
-                            inquiryPool.setEquipmentName(inquiry.getName());
-                            inquiryPool.setBrand(inquiry.getBrand());
-                            inquiryPool.setModel(inquiry.getModel());
-                            inquiryPool.setUnit(inquiry.getUnit());
-                            inquiryPool.setTechnicalRequire(inquiry.getParams());
-                            inquiryPool.setIsActive(1);
-                            inquiryPool.setProDetailId(proDetailId);
-                            inquiryPool.setOperator(operator);
-                            inquiryPool.setTime(time);
-
-                        }else {
-                            notFound += "["+name+" "+params+"]----";
-                        }
+                        notFound += "["+name+" "+params+"]----";
                     }
+
                     if("".equals(notFound)){
                         String supplier = item.get("供应商").toString().trim();
-
-//                        QuoteExample quoteExample = new QuoteExample();
-//                        quoteExample.createCriteria().andSupplierEqualTo(supplier).andInquiryIdEqualTo(inquiryId).andIsActiveEqualTo(1);
-//                        List<Quote> quotes = quoteMapper.selectByExample(quoteExample);
-//
-//                        if (quotes.size() > 0) {
-//                            //该条报价存在则不能重复插入，正好限制该条报价不能发生修改  无需再判断该条报价是否被审核过
-//                            throw new CustomerException("文件中： ["+supplier+"]  数据已存在");
-//                        }
-
-                        //判断报价是否被审核过
-                        int count = sysProCheckExtendMapper.findQuoteIsChecked(inquiryId);
-                        if (count > 0){
-                            throw new CustomerException("该条询价内容已被审核，无法修改!");
-                        }
 
                         Quote q = new Quote();
                         long quoteId = IDUtils.getId();
@@ -312,7 +291,6 @@ public class QuoteServiceImpl implements IQuoteService {
                             //数据来源于外部数据  标志为1
                             q.setDataSource(1);
 
-
                         }catch (NumberFormatException exception) {
                             throw new CustomerException("失败，存在数据格式不正确"+exception.getMessage());
                         }
@@ -343,36 +321,7 @@ public class QuoteServiceImpl implements IQuoteService {
                         sysFile.setUrl(excelUrl);
                         sysFileMapper.insert(sysFile);
 
-                        //4.给每条报价添加审核记录
-                        //查询所属项目的审核流程
-                        /*SysProDetailCheckExample example = new SysProDetailCheckExample();
-                        example.createCriteria().andProDetailIdEqualTo(proDetailId);
-                        List<SysProDetailCheck> sysProDetailChecks = sysProDetailCheckMapper.selectByExample(example);*/
-                        // 根据项目审核流程插入报价审核流程
-                        /*SysProCheck proCheck = new SysProCheck();
-                        if (sysProDetailChecks.size() > 0) {
-                            for (SysProDetailCheck sysProDetailCheck : sysProDetailChecks ) {
-                                proCheck.setId(IDUtils.getId());
-                                proCheck.setOperator(operator);
-                                proCheck.setTime(time);
-                                proCheck.setType(sysProDetailCheck.getCheckName());
-                                proCheck.setCheckStatus(0);
-                                proCheck.setContentId(quoteId);
-                                sysProCheckMapper.insertSelective(proCheck);
-                            }
-                            //还需添加比价审核
-                            proCheck.setId(IDUtils.getId());
-                            proCheck.setId(IDUtils.getId());
-                            proCheck.setOperator(operator);
-                            proCheck.setTime(time);
-                            proCheck.setType("比价审核");
-                            proCheck.setCheckStatus(0);
-                            proCheck.setContentId(quoteId);
-                            sysProCheckMapper.insertSelective(proCheck);
-                        }else {
-                            throw new CustomerException("所属项目没有添加审核");
-                        }*/
-                        //逐条插入审核
+                        /* 逐条插入审核 */
                         SysProCheck sysProCheck = new SysProCheck();
                         sysProCheck.setId(IDUtils.getId());
                         sysProCheck.setTechnicalAudit(0);
