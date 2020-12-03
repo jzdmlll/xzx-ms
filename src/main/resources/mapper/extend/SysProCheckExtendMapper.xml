@@ -5,7 +5,7 @@
         SELECT
         spc.*,
         q.id q_id,q.image q_image, q.supplier q_supplier, q.su_delivery q_su_delivery,q.su_model q_su_model,q.su_params q_su_params,
-        q.su_price q_su_price,q.su_total_price q_su_total_price,q.warranty q_warranty,
+        q.su_price q_su_price,q.su_total_price q_su_total_price,q.warranty q_warranty,q.data_source q_data_source,
         i.model i_model,i.name i_name,i.number i_number,i.params i_params,i.sort i_sort,i.unit i_unit
         FROM
         sys_pro_detail spd
@@ -35,7 +35,7 @@
         SELECT
         spc.*,
         q.id q_id,q.image q_image, q.supplier q_supplier, q.su_delivery q_su_delivery,q.su_model q_su_model,q.su_params q_su_params,
-        q.su_price q_su_price,q.su_total_price q_su_total_price,q.warranty q_warranty,
+        q.su_price q_su_price,q.su_total_price q_su_total_price,q.warranty q_warranty,q.data_source q_data_source,
         i.model i_model,i.name i_name,i.number i_number,i.params i_params,i.sort i_sort,i.unit i_unit
         FROM
         sys_pro_detail spd
