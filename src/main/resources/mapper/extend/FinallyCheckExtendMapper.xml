@@ -46,7 +46,7 @@
                 and i.pro_detail_id = #{proDetailId,jdbcType=BIGINT}
             </if>
         </where>
-        order by i.name
+        order by i.sort,i.name
     </select>
 
 </mapper>
