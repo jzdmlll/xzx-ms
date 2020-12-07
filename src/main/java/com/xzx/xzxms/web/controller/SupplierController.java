@@ -1,6 +1,5 @@
 package com.xzx.xzxms.web.controller;
 
-import com.xzx.xzxms.bean.Subclass;
 import com.xzx.xzxms.bean.Supplier;
 import com.xzx.xzxms.service.ISupplierService;
 import com.xzx.xzxms.utils.Message;

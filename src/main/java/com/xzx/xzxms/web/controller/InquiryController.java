@@ -113,7 +113,7 @@ public class InquiryController {
 
     @ApiOperation(value = "新增或修改询价设备类型")
     @PostMapping(value = "modifyDeviceType")
-    public Message modifyDeviceType(long[] inquiryIds, String code){
+    public Message modifyDeviceType(long[] inquiryIds, Long code){
         iInquiryServiceImpl.modifyDeviceType(inquiryIds, code);
         return MessageUtil.success("success");
     }

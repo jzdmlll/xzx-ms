@@ -91,5 +91,5 @@ public interface IInquiryService {
      * @param inquiryIds 询价ids
      * @param codeId  设备编码ID
      */
-    void modifyDeviceType(long[] inquiryIds,long codeId);
+    void modifyDeviceType(long[] inquiryIds, long codeId);
 }
