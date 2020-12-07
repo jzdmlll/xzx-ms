@@ -25,7 +25,7 @@ public interface IProductPoolService {
      //* @param choose 选用标识
      * @return
      */
-    List<ProPoolExtend> findByParams(String name, String brand);
+    List<ProPoolExtend> findByParams(String name, String brand, String proName, String model);
 
     /**
      * 批量置为无效（假删）

@@ -13,6 +13,12 @@
           <if test="brand != null and brand != ''">
               and p.brand like CONCAT(CONCAT('%',#{brand}),'%')
           </if>
+          <if test="proName != null and proName != ''">
+            and p.pro_name like CONCAT(CONCAT('%',#{proName}),'%')
+          </if>
+          <if test="model != null and model != ''">
+            and p.model like CONCAT(CONCAT('%',#{model}),'%')
+          </if>
         </where>
     </select>
 

@@ -27,7 +27,8 @@ public interface ProPoolExtendMapper {
             "and pc.type=\"最终审核\" and pc.check_status != 0")
     int isFinalCheck(long proCheckId);
 
-    List<ProPoolExtend> findByParams(@Param("name") String name,@Param("brand") String brand);
+    List<ProPoolExtend> findByParams(@Param("name") String name,@Param("brand") String brand,
+                                     @Param("proName") String proName,@Param("model") String model);
 
     List<ProPool> fuzzyQueryByNameOrModel(@Param("name") String name, @Param("model") String model);
 

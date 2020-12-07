@@ -46,10 +46,12 @@ public class ProductPoolController {
     @GetMapping(value = "findByParams")
     public Message findByParams(@RequestParam(value="name", required=false, defaultValue = "")String name,
                                 @RequestParam(value="brand", required=false, defaultValue = "")String brand,
+                                @RequestParam(value="proName", required=false, defaultValue = "")String proName,
+                                @RequestParam(value="model", required=false, defaultValue = "")String model,
                                 @RequestParam(value = "pageNum",required = false,defaultValue = "1")int pageNum,
                                 @RequestParam(value = "pageSize",required = false,defaultValue = "50")int pageSize){
         PageHelper.startPage(pageNum, pageSize, "time desc");
-        List<ProPoolExtend> list = productPoolServiceImpl.findByParams(name, brand);
+        List<ProPoolExtend> list = productPoolServiceImpl.findByParams(name, brand, proName, model);
         PageInfo<ProPoolExtend> pageInfo = new PageInfo<>(list);
 
         return MessageUtil.success("success", pageInfo);
