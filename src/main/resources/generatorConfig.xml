@@ -10,7 +10,7 @@
 <generatorConfiguration>
 
   <!--<classPathEntry location="D:\gg\repository\mysql\mysql-connector-java\8.0.16\mysql-connector-java-8.0.16.jar" />-->
-  <classPathEntry location="C:\Maven\repository\mysql\mysql-connector-java\5.1.6\mysql-connector-java-5.1.6.jar" />
+  <classPathEntry location="D:\Maven\repository\mysql\mysql-connector-java\5.1.6\mysql-connector-java-5.1.6.jar" />
   <context id="DB2Tables" targetRuntime="MyBatis3">
 
     <jdbcConnection driverClass="com.mysql.jdbc.Driver"
@@ -94,5 +94,6 @@
     <!--
     mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
    -->
+    <table tableName="sys_device_type" domainObjectName="SysDeviceType" ></table>
   </context>
 </generatorConfiguration>

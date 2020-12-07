@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzx.xzxms.dao.extend.SubclassExtendMapper">
+<select id="findAllLike" resultType="com.xzx.xzxms.bean.Subclass">
+    select * from supplier
+
+
+    <where>
+    is_active = 1
+        <if test="name!=null and name!=''">
+        and like '%'#{name,jdbcType=VARCHAR}'%'
+    </if>
+    </where>
+</select>
+</mapper>
