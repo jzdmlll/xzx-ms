@@ -3,6 +3,7 @@ package com.xzx.xzxms.service.impl;
 import com.xzx.xzxms.bean.Supplier;
 import com.xzx.xzxms.bean.SupplierExample;
 import com.xzx.xzxms.dao.SupplierMapper;
+import com.xzx.xzxms.dao.extend.SupplierExtendMapper;
 import com.xzx.xzxms.service.ISupplierService;
 import com.xzx.xzxms.utils.CustomerException;
 import com.xzx.xzxms.utils.IDUtils;
@@ -17,6 +18,8 @@ public class SupplierServiceImpl implements ISupplierService {
 
     @Resource
     private SupplierMapper supplierMapper;
+    @Resource
+    private SupplierExtendMapper supplierExtendMapper;
     @Override
     public List<Supplier> findById(Long id) {
         SupplierExample example = new SupplierExample();
@@ -49,5 +52,11 @@ public class SupplierServiceImpl implements ISupplierService {
         }else{
             throw new CustomerException("该数据已不存在");
         }
+    }
+
+    @Override
+    public List<Supplier> findAllLike(String name) {
+        List<Supplier> suppliers = supplierExtendMapper.findAllLike(name);
+        return suppliers;
     }
 }

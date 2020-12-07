@@ -1,5 +1,6 @@
 package com.xzx.xzxms.web.controller;
 
+import com.xzx.xzxms.bean.Subclass;
 import com.xzx.xzxms.bean.Supplier;
 import com.xzx.xzxms.service.ISupplierService;
 import com.xzx.xzxms.utils.Message;
@@ -37,6 +38,13 @@ public class SupplierController {
     public Message deleteById(long id) {
         iSupplierServiceImpl.deleteById(id);
         return MessageUtil.success("success");
+    }
+
+    @ApiOperation(value = "模糊查询")
+    @GetMapping(value = "findAllLike")
+    public Message findAllLike(String name){
+        List<Supplier> suppliers = iSupplierServiceImpl.findAllLike(name);
+        return MessageUtil.success("success",suppliers);
     }
 
 }

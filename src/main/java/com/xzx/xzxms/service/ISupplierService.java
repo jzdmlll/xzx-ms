@@ -23,4 +23,11 @@ public interface ISupplierService {
      * @param id
      */
     void deleteById(long id);
+
+    /**
+     * 根据供应商名称模糊查询
+     * @param name
+     * @return
+     */
+    List<Supplier> findAllLike(String name);
 }
