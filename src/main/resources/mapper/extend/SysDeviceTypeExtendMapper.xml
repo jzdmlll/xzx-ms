@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xzx.xzxms.dao.extend.SysDeviceTypeExtendMapper">
-    <select id="findAllLike" resultType="com.xzx.xzxms.bean.SysDeviceType">
-      select * from sys_device_type
-      <where>
-        <if test="name!=null and name!=''">
-          name like '%'#{name,jdbcType=VARCHAR}'%'
-        </if>
-        <if test="code!=null and code!=''">
-          and code like %#{code,jdbcType=VARCHAR}%
-        </if>
-      </where>
+
+    <select id="selectByParentId" resultType="com.xzx.xzxms.bean.SysPrivilege">
+      SELECT *
+      FROM sys_device_type
+      WHERE parent_id = #{id,jdbcType=BIGINT}
     </select>
+    <select id="findPrivilegeTree" resultMap="PrivilegeTree">
+      select
+        sdt.*
+      from
+        sys_device_type sdt
+      where
+        sdt.parent_id is null
+    </select>
+    <resultMap id="PrivilegeTree" type="com.xzx.xzxms.vm.SysDeviceTypeTree" extends="com.xzx.xzxms.dao.SysDeviceTypeMapper.BaseResultMap">
+      <collection property="children" column="id" select="selectByParentId"></collection>
+    </resultMap>
 </mapper>

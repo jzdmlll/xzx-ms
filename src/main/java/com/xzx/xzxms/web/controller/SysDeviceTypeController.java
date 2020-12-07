@@ -5,8 +5,8 @@ import com.xzx.xzxms.bean.SysDeviceType;
 import com.xzx.xzxms.service.ISysDeviceTypeService;
 import com.xzx.xzxms.utils.Message;
 import com.xzx.xzxms.utils.MessageUtil;
+import com.xzx.xzxms.vm.SysDeviceTypeTree;
 import io.swagger.annotations.ApiOperation;
-import org.omg.PortableInterceptor.SUCCESSFUL;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -19,22 +19,30 @@ public class SysDeviceTypeController {
     @Resource
     private ISysDeviceTypeService sysDeviceTypeServiceImpl;
 
-    @ApiOperation(value = "模糊查询")
-    @GetMapping(value = "findAllLike")
-    public Message findAllLike(String name,String code){
-
-        List<SysDeviceType> deviceTypeList = sysDeviceTypeServiceImpl.findAllLike(name, code);
-        return MessageUtil.success("success",deviceTypeList);
-    }
-
     @ApiOperation(value = "根据ID查询内容")
     @GetMapping(value = "findById")
     private Message findById(long id){
 
-        SysDeviceType sysDeviceType=sysDeviceTypeServiceImpl.findById(id);
+        SysDeviceType sysDeviceType = sysDeviceTypeServiceImpl.findById(id);
         return MessageUtil.success("success",sysDeviceType);
     }
 
+    @ApiOperation(value = "根据parentId模糊查询内容")
+    @GetMapping(value = "findByParentId")
+    private Message findByParentId(Long parentId,
+                                   @RequestParam(defaultValue = "", required = false, name = "name") String name,
+                                   @RequestParam(defaultValue = "", required = false, name = "code") String code){
+
+        List<SysDeviceType> deviceTypeList = sysDeviceTypeServiceImpl.findByParentId(parentId, name, code);
+        return MessageUtil.success("success", deviceTypeList);
+    }
+
+    @ApiOperation(value = "查询设备类型树")
+    @GetMapping(value = "findDeviceTypeTree")
+    public Message findDeviceTypeTree(){
+        List<SysDeviceTypeTree> list = sysDeviceTypeServiceImpl.findDeviceTypeTree();
+        return MessageUtil.success("success", list);
+    }
     @ApiOperation(value="更新或新增")
     @PostMapping(value = "saveOrUpdate")
     private Message saveOrUpdate(SysDeviceType sysDeviceType){

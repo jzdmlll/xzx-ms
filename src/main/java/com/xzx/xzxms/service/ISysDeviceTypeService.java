@@ -2,18 +2,25 @@ package com.xzx.xzxms.service;
 
 
 import com.xzx.xzxms.bean.SysDeviceType;
+import com.xzx.xzxms.vm.SysDeviceTypeTree;
 
 import java.util.List;
 
 public interface ISysDeviceTypeService {
 
     /**
-     * 根据设备名称、代码模糊查询
-     * @param name
-     * @param code
-     * @return
+     * @Description: 查询设备分类树
+     * @Param: []
+     * @return: java.util.List<SysDeviceTypeTree>
      */
-    List<SysDeviceType> findAllLike(String name,String code);
+    List<SysDeviceTypeTree> findDeviceTypeTree();
+
+    /**
+     * @Description: 通过parentId查询设备分类
+     * @Param: [parentId]
+     * @return: java.util.List<SysDeviceType>
+     */
+    List<SysDeviceType> findByParentId(Long parentId, String name, String code);
 
     /**
      * 根据设备类别的ID查询相对应的内容
