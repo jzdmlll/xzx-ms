@@ -22,6 +22,7 @@
                 AND spd.id = #{proDetailId,jdbcType=BIGINT}
             </if>
         </where>
+        order by i.name, i.model
     </select>
     <resultMap id="ProCheckExtendMap" type="com.xzx.xzxms.bean.extend.SysCheckExtend" extends="com.xzx.xzxms.dao.SysProCheckMapper.BaseResultMap">
         <collection property="quote" ofType="com.xzx.xzxms.bean.Quote" autoMapping="true" columnPrefix="q_">
@@ -52,6 +53,7 @@
                 AND spd.id = #{proDetailId,jdbcType=BIGINT}
             </if>
         </where>
+        order by i.name, i.model
     </select>
 
 

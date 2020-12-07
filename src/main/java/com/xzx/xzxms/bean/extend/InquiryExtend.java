@@ -5,7 +5,25 @@ import com.xzx.xzxms.bean.Inquiry;
 public class InquiryExtend extends Inquiry {
     private int checkStatus;
     private int quoteNum;
+    private int poolNum;
+    private int refuseNum;
     private String deviceModel;
+
+    public int getRefuseNum() {
+        return refuseNum;
+    }
+
+    public void setRefuseNum(int refuseNum) {
+        this.refuseNum = refuseNum;
+    }
+
+    public int getPoolNum() {
+        return poolNum;
+    }
+
+    public void setPoolNum(int poolNum) {
+        this.poolNum = poolNum;
+    }
 
     public String getDeviceModel() {
         return deviceModel;

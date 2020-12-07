@@ -106,7 +106,7 @@
     <resultMap id="compareResultMap" type="com.xzx.xzxms.bean.extend.InquiryCompareExtend" extends="com.xzx.xzxms.dao.InquiryMapper.BaseResultMap">
     </resultMap>
 
-    <select id="findInquiryAndQuoteNum" resultType="com.xzx.xzxms.bean.extend.InquiryExtend">
+    <select id="findInquiryAndQuoteNum" resultMap="FindInquiryAndQuoteNumMap">
         SELECT
           b.*,a.num quote_num,dev.name device_model
         from
@@ -128,6 +128,34 @@
             </if>
         </where>
 
+    </select>
+    <resultMap id="FindInquiryAndQuoteNumMap" type="com.xzx.xzxms.bean.extend.InquiryExtend" extends="com.xzx.xzxms.dao.InquiryMapper.BaseResultMap">
+        <result column="quote_num" jdbcType="VARCHAR" property="quoteNum" />
+        <result column="device_model" jdbcType="VARCHAR" property="deviceModel"/>
+        <association property="poolNum" column="id" select="selectById"></association>
+        <association property="refuseNum" column="id" select="selectRefuseNumById"></association>
+    </resultMap>
+    <select id="selectById" resultType="int">
+      select
+        count(1)
+      from
+        inquiry i left join quote q on i.id = q.inquiry_id
+      where
+        q.data_source = 0 and q.is_active = 1
+      and
+        i.id = #{id}
+    </select>
+    <select id="selectRefuseNumById" resultType="int">
+      select
+        count(1)
+      from
+        inquiry i
+        left join quote q on i.id = q.inquiry_id
+        left join sys_pro_check spc on q.id = spc.quote_id
+      where
+        (spc.technical_audit = 2 or spc.business_audit = 2)  and q.is_active = 1
+      and
+        i.id = #{id}
     </select>
 
 </mapper>
