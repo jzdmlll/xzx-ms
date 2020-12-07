@@ -23,16 +23,15 @@ public class SupplierServiceImpl implements ISupplierService {
     @Override
     public List<Supplier> findById(Long id) {
         SupplierExample example = new SupplierExample();
-        example.createCriteria().andIdEqualTo(id);
+        example.createCriteria().andIdEqualTo(id).andIsActiveEqualTo(1);
         List<Supplier> list = supplierMapper.selectByExample(example);
         return list;
     }
 
-
     @Override
     public void saveOrUpdate(Supplier supplier) {
         long time = new Date().getTime();
-        if (supplier.getId()!=null){
+        if (supplier.getId() != null){
             supplier.setTime(time);
             supplierMapper.updateByPrimaryKeySelective(supplier);
         }else {
@@ -45,9 +44,11 @@ public class SupplierServiceImpl implements ISupplierService {
 
     @Override
     public void deleteById(long id) {
+        long time = new Date().getTime();
         Supplier supplier = supplierMapper.selectByPrimaryKey(id);
-        if (supplier!=null||!supplier.getIsActive().equals(0)){
+        if (supplier != null ||supplier.getIsActive().equals(1)){
             supplier.setIsActive(0);
+            supplier.setTime(time);
             supplierMapper.updateByPrimaryKeySelective(supplier);
         }else{
             throw new CustomerException("该数据已不存在");

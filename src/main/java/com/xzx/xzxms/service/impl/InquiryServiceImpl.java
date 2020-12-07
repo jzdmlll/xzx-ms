@@ -114,6 +114,7 @@ public class InquiryServiceImpl implements IInquiryService{
     @Override
     public void batchSetInvalid(long[] ids) {
 
+        long time = new Date().getTime();
         for (long id : ids){
             Inquiry inquiry=inquiryMapper.selectByPrimaryKey(id);
             QuoteExample example = new QuoteExample();
@@ -124,6 +125,7 @@ public class InquiryServiceImpl implements IInquiryService{
             }
             if (inquiry != null || !inquiry.getIsActive().equals(0)){
                 inquiry.setIsActive(0);
+                inquiry.setTime(time);
                 inquiryMapper.updateByPrimaryKeySelective(inquiry);
             }else {
                 throw new CustomerException("该数据已不存在");
