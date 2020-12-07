@@ -3,6 +3,7 @@ package com.xzx.xzxms.service;
 import com.xzx.xzxms.bean.Quote;
 import com.xzx.xzxms.bean.extend.QuoteExtend;
 import com.xzx.xzxms.bean.extend.QuoteExtendInquiry;
+import com.xzx.xzxms.bean.extend.QuoteProCheckExtend;
 
 import java.io.IOException;
 import java.util.List;
@@ -13,7 +14,7 @@ public interface IQuoteService {
      * @param inquiryId 询价id
      * @return 所有报价
      */
-    List<Quote> findByInquiryId(long inquiryId);
+    List<QuoteProCheckExtend> findByInquiryId(long inquiryId);
     /**
      * 新增或更改报价内容
      * @param quote

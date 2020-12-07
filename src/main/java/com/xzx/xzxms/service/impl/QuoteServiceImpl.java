@@ -3,8 +3,10 @@ package com.xzx.xzxms.service.impl;
 import com.xzx.xzxms.bean.*;
 import com.xzx.xzxms.bean.extend.QuoteExtend;
 import com.xzx.xzxms.bean.extend.QuoteExtendInquiry;
+import com.xzx.xzxms.bean.extend.QuoteProCheckExtend;
 import com.xzx.xzxms.bean.extend.SysFileExtend;
 import com.xzx.xzxms.dao.*;
+import com.xzx.xzxms.dao.extend.InquiryQuoteCheckExtendMapper;
 import com.xzx.xzxms.dao.extend.QuoteAndInquiryExtendMapper;
 import com.xzx.xzxms.dao.extend.SysProCheckExtendMapper;
 import com.xzx.xzxms.dao.redis.JedisDao;
@@ -46,16 +48,13 @@ public class QuoteServiceImpl implements IQuoteService {
     @Resource
     private InquiryPoolMapper inquiryPoolMapper;
     @Resource
-    private SysProCheckExtendMapper sysProCheckExtendMapper;
+    private InquiryQuoteCheckExtendMapper inquiryQuoteCheckExtendMapper;
 
     @Override
-    public List<Quote> findByInquiryId(long inquiryId) {
+    public List<QuoteProCheckExtend> findByInquiryId(long inquiryId) {
 
-        QuoteExample example = new QuoteExample();
-        example.createCriteria().andInquiryIdEqualTo(inquiryId).andIsActiveEqualTo(1);
-        List<Quote> list = quoteMapper.selectByExample(example);
-
-        return list;
+        List<QuoteProCheckExtend> quoteProCheckExtends = inquiryQuoteCheckExtendMapper.findQuoteAndCheck(inquiryId);
+        return quoteProCheckExtends;
     }
     @Transactional
     @Override

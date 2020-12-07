@@ -90,10 +90,11 @@
 
     <!--    <table tableName="quote" domainObjectName="Quote" ></table>-->
 <!--        <table tableName="inquiry_pool" domainObjectName="InquiryPool" ></table>-->
-<!--        <table tableName="product_pool" domainObjectName="ProPool" ></table>-->
+    <!--        <table tableName="product_pool" domainObjectName="ProPool" ></table>-->
+<!--            <table tableName="supplier" domainObjectName="Supplier" ></table>-->
     <!--
     mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
    -->
-    <table tableName="sys_device_type" domainObjectName="SysDeviceType" ></table>
+<!--    <table tableName="sys_device_type" domainObjectName="SysDeviceType" ></table>-->
   </context>
 </generatorConfiguration>
