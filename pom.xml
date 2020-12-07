@@ -224,11 +224,11 @@
             <version>5.1.6</version>
         </dependency>
         <!-- MyBatisPlus-->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.4.1</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.baomidou</groupId>-->
+<!--            <artifactId>mybatis-plus-boot-starter</artifactId>-->
+<!--            <version>3.4.1</version>-->
+<!--        </dependency>-->
 
     </dependencies>
     <build>

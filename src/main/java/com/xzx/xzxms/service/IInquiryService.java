@@ -2,9 +2,7 @@ package com.xzx.xzxms.service;
 
 import com.xzx.xzxms.bean.Inquiry;
 import com.xzx.xzxms.bean.extend.InquiryAndProDetailExtend;
-import com.xzx.xzxms.bean.extend.InquiryCompareExtend;
 import com.xzx.xzxms.bean.extend.InquiryExtend;
-import io.swagger.models.auth.In;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -91,7 +89,7 @@ public interface IInquiryService {
     /**
      * 修改询价设备类型
      * @param inquiryIds 询价ids
-     * @param code  设备编码
+     * @param codeId  设备编码ID
      */
-    void modifyDeviceType(long[] inquiryIds,String code);
+    void modifyDeviceType(long[] inquiryIds,long codeId);
 }

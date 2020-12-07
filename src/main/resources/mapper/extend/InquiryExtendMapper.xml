@@ -108,11 +108,13 @@
 
     <select id="findInquiryAndQuoteNum" resultType="com.xzx.xzxms.bean.extend.InquiryExtend">
         SELECT
-          b.*,a.num quote_num
+          b.*,a.num quote_num,dev.name device_model
         from
           inquiry b left join (SELECT inquiry_id,count(1) num from quote where inquiry_id=inquiry_id and is_active = 1 group by inquiry_id)a
         ON
           b.id = a.inquiry_id
+        LEFT JOIN
+          sys_device_type dev on b.device_type_id = dev.id
         <where>
             b.is_active = 1
             <if test="proDetailId != -1 and proDetailId != null">
@@ -124,7 +126,6 @@
             <if test="model != '' and model != null">
                 and b.model like CONCAT(CONCAT('%',#{model}),'%')
             </if>
-
         </where>
 
     </select>
