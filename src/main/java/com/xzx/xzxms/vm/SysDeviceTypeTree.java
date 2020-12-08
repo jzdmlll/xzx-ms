@@ -2,14 +2,16 @@ package com.xzx.xzxms.vm;
 
 import com.xzx.xzxms.bean.SysDeviceType;
 
-public class SysDeviceTypeTree extends SysDeviceType {
-    private SysDeviceType children;
+import java.util.List;
 
-    public SysDeviceType getChildren() {
+public class SysDeviceTypeTree extends SysDeviceType {
+    private List<SysDeviceType> children;
+
+    public List<SysDeviceType> getChildren() {
         return children;
     }
 
-    public void setChildren(SysDeviceType children) {
+    public void setChildren(List<SysDeviceType> children) {
         this.children = children;
     }
 }
