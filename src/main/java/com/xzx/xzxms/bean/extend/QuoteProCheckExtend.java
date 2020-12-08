@@ -6,6 +6,8 @@ public class QuoteProCheckExtend extends Quote {
 
     private int technicalAudit;
     private int businessAudit;
+    private String technicalRemark;
+    private String businessRemark;
 
     public int getTechnicalAudit() {
         return technicalAudit;
@@ -21,5 +23,21 @@ public class QuoteProCheckExtend extends Quote {
 
     public void setBusinessAudit(int businessAudit) {
         this.businessAudit = businessAudit;
+    }
+
+    public String getTechnicalRemark() {
+        return technicalRemark;
+    }
+
+    public void setTechnicalRemark(String technicalRemark) {
+        this.technicalRemark = technicalRemark;
+    }
+
+    public String getBusinessRemark() {
+        return businessRemark;
+    }
+
+    public void setBusinessRemark(String businessRemark) {
+        this.businessRemark = businessRemark;
     }
 }

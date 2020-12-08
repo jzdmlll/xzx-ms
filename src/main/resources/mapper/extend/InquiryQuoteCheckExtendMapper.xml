@@ -14,7 +14,7 @@
 
 
     <select id="findQuoteAndCheck" resultType="com.xzx.xzxms.bean.extend.QuoteProCheckExtend">
-        select q.*,c.technical_audit technical_audit,c.business_audit business_audit
+        select q.*,c.*
         from inquiry i
         LEFT JOIN quote q on i.id = q.inquiry_id
         LEFT JOIN sys_pro_check c on q.id = c.quote_id
