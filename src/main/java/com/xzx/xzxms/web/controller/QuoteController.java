@@ -82,5 +82,13 @@ public class QuoteController {
         iQuoteServiceImpl.chooseProductPoolSupplier(inquiryId,productPoolId,operator);
         return MessageUtil.success("选用成功");
     }*/
+
+    @ApiOperation("新增报价")
+    @PostMapping("addQuote")
+    public Message addQuote(Quote quote){
+
+        iQuoteServiceImpl.addQuote(quote);
+        return MessageUtil.success("success");
+    }
 }
 
