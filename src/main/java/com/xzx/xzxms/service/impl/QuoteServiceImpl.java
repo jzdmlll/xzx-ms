@@ -454,4 +454,34 @@ public class QuoteServiceImpl implements IQuoteService {
         sysProCheck.setTime(time);
         sysProCheckMapper.insertSelective(sysProCheck);
     }
+
+    @Transactional
+    @Override
+    public void addQuote(Quote quote) {
+
+        long quoteId = IDUtils.getId();
+        long time = new Date().getTime();
+
+        quote.setId(quoteId);
+        quote.setDataSource(1);
+        quote.setIsActive(1);
+        quote.setIsUseful(0);
+        quote.setTime(time);
+        quoteMapper.insert(quote);
+
+        SysProCheck sysProCheck = new SysProCheck();
+        sysProCheck.setId(IDUtils.getId());
+        sysProCheck.setTechnicalAudit(0);
+        sysProCheck.setBusinessAudit(0);
+        sysProCheck.setCompareAudit(0);
+        sysProCheck.setFinallyAudit(0);
+        sysProCheck.setTechnicalRemark("");
+        sysProCheck.setBusinessRemark("");
+        sysProCheck.setCompareRemark("");
+        sysProCheck.setFinallyRemark("");
+        sysProCheck.setQuoteId(quoteId);
+        sysProCheck.setOperator(quote.getOperator());
+        sysProCheck.setTime(time);
+        sysProCheckMapper.insertSelective(sysProCheck);
+    }
 }

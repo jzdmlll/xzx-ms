@@ -49,4 +49,10 @@ public interface IQuoteService {
      * @param productPoolId 产品池ID
      */
     void chooseProductPoolSupplier(long inquiryId, long productPoolId, long operator);
+
+    /**
+     * 新增报价
+     * @param quote 报价对象
+     */
+    void addQuote(Quote quote);
 }
