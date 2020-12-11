@@ -13,6 +13,7 @@ import com.xzx.xzxms.dao.extend.InquiryExtendMapper;
 import com.xzx.xzxms.dao.extend.InquiryQuoteCheckExtendMapper;
 import com.xzx.xzxms.dao.extend.QuoteAndInquiryExtendMapper;
 import com.xzx.xzxms.service.IInquiryService;
+import com.xzx.xzxms.utils.BeanHelper;
 import com.xzx.xzxms.utils.CustomerException;
 import com.xzx.xzxms.utils.IDUtils;
 import io.swagger.models.auth.In;
@@ -185,6 +186,7 @@ public class InquiryServiceImpl implements IInquiryService{
         long time = new Date().getTime();
 
         ProPool proPool = proPoolMapper.selectByPrimaryKey(proPoolId);
+        BeanHelper.nullToEmpty(proPool);
         Quote quote = new Quote();
         quote.setId(quoteId);
         quote.setSupplier(proPool.getSupplier());
@@ -195,6 +197,7 @@ public class InquiryServiceImpl implements IInquiryService{
         quote.setSuDelivery(proPool.getDelivery());
         quote.setSuRemark(proPool.getRemark());
         quote.setImage(proPool.getImage());
+        quote.setSupplierId(proPool.getSupplierId());
         //数据来源于产品池
         quote.setDataSource(0);
         quote.setInquiryId(inquiryId);
