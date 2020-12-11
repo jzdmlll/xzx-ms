@@ -92,6 +92,23 @@
 <!--        <table tableName="inquiry_pool" domainObjectName="InquiryPool" ></table>-->
     <!--        <table tableName="product_pool" domainObjectName="ProPool" ></table>-->
 <!--            <table tableName="supplier" domainObjectName="Supplier" ></table>-->
+
+
+
+
+
+<!--    <table tableName="purchase" domainObjectName="Purchase" ></table>-->
+<!--    <table tableName="purchase_contract" domainObjectName="PurchaseContract" ></table>-->
+<!--    <table tableName="purchase_contract_attribute" domainObjectName="PurchaseContractAttribute" ></table>-->
+<!--    <table tableName="purchase_demand" domainObjectName="PurchaseDemand" ></table>-->
+<!--    <table tableName="purchase_invoice" domainObjectName="PurchaseInvoice" ></table>-->
+<!--    <table tableName="purchase_items" domainObjectName="PurchaseItems" ></table>-->
+<!--    <table tableName="purchase_payment" domainObjectName="PurchasePayment" ></table>-->
+<!--    <table tableName="purchase_project" domainObjectName="PurchaseProject" ></table>-->
+<!--    <table tableName="purchase_supply" domainObjectName="PurchaseSupply" ></table>-->
+
+
+
     <!--
     mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
    -->

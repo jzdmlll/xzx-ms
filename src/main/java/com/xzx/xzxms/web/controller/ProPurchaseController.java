@@ -23,4 +23,6 @@ public class ProPurchaseController {
         List<ProPurchase> proPurchases = proPurchaseServiceImpl.findProPurchase(proDetailId);
         return MessageUtil.success("success", proPurchases);
     }
+
+
 }
