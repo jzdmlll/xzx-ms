@@ -104,7 +104,7 @@ public class QuoteController {
     public Message initiateAudit(long inquiryId){
 
         iQuoteServiceImpl.initiateAudit(inquiryId);
-        return MessageUtil.success("success");
+        return MessageUtil.success("送审成功");
     }
 }
 

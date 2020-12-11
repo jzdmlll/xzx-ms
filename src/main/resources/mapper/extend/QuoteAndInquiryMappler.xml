@@ -4,7 +4,7 @@
     <select id="findBySupplierOrPro" resultMap="QuoteExtendMap">
         select
           q.*,
-        i.model i_model,i.name i_name,i.number i_number,i.params i_params,i.sort i_sort,i.unit i_unit,
+        i.model i_model,i.name i_name,i.number i_number,i.params i_params,i.sort i_sort,i.unit i_unit,i.real_brand i_real_brand,
         d.id spd_id
         from quote q
             left join inquiry i on q.inquiry_id=i.id
