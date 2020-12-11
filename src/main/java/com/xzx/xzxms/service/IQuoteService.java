@@ -44,6 +44,12 @@ public interface IQuoteService {
     void batchSetInvalid(long[] ids);
 
     /**
+     * 单个置为无效（删除）
+     * @param id
+     */
+    void quoteSetInvalid(long id);
+
+    /**
      * 选择产品池中的供应商（不需询价的内容）
      * @param inquiryId 询价ID
      * @param productPoolId 产品池ID
@@ -55,4 +61,10 @@ public interface IQuoteService {
      * @param quote 报价对象
      */
     void addQuote(Quote quote);
+
+    /**
+     * 报价发起审核
+     * @param inquiryId 询价ID
+     */
+    void initiateAudit(long inquiryId);
 }

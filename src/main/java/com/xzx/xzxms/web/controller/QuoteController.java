@@ -90,5 +90,21 @@ public class QuoteController {
         iQuoteServiceImpl.addQuote(quote);
         return MessageUtil.success("success");
     }
+
+    @ApiOperation("报价单个删除")
+    @GetMapping("quoteSetInvalid")
+    public Message quoteSetInvalid(long id){
+
+        iQuoteServiceImpl.quoteSetInvalid(id);
+        return MessageUtil.success("success");
+    }
+
+    @ApiOperation("报价手动发起审核")
+    @GetMapping("initiateAudit")
+    public Message initiateAudit(long inquiryId){
+
+        iQuoteServiceImpl.initiateAudit(inquiryId);
+        return MessageUtil.success("success");
+    }
 }
 

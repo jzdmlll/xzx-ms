@@ -179,6 +179,7 @@ public class InquiryServiceImpl implements IInquiryService{
         long time = new Date().getTime();
 
         ProPool proPool = proPoolMapper.selectByPrimaryKey(proPoolId);
+        BeanHelper.nullToEmpty(proPool);
         Quote quote = new Quote();
         quote.setId(quoteId);
         quote.setSupplier(proPool.getSupplier());
@@ -189,6 +190,7 @@ public class InquiryServiceImpl implements IInquiryService{
         quote.setSuDelivery(proPool.getDelivery());
         quote.setSuRemark(proPool.getRemark());
         quote.setImage(proPool.getImage());
+        quote.setSupplierId(proPool.getSupplierId());
         //数据来源于产品池
         quote.setDataSource(0);
         quote.setInquiryId(inquiryId);
