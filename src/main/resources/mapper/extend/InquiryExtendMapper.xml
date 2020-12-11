@@ -127,7 +127,7 @@
                 and b.model like CONCAT(CONCAT('%',#{model}),'%')
             </if>
         </where>
-
+        order by b.sort
     </select>
     <resultMap id="FindInquiryAndQuoteNumMap" type="com.xzx.xzxms.bean.extend.InquiryExtend" extends="com.xzx.xzxms.dao.InquiryMapper.BaseResultMap">
         <result column="quote_num" jdbcType="VARCHAR" property="quoteNum" />
