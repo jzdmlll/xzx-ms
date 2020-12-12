@@ -1,0 +1,11 @@
+com\xzx\xzxms\system\dao\extend\SysRoleExtendMapper.class
+com\xzx\xzxms\system\dao\SysPrivilegeMapper.class
+com\xzx\xzxms\system\dao\extend\SysFileExtendMapper.class
+com\xzx\xzxms\system\dao\SysUserRoleMapper.class
+com\xzx\xzxms\system\dao\extend\SysPrivilegeExtendMapper.class
+com\xzx\xzxms\system\dao\SysLogMapper.class
+com\xzx\xzxms\system\dao\SysRolePrivilegeMapper.class
+com\xzx\xzxms\system\dao\SysUserMapper.class
+com\xzx\xzxms\system\dao\SysRoleMapper.class
+com\xzx\xzxms\system\dao\extend\SysUserExtendMapper.class
+com\xzx\xzxms\system\dao\SysFileMapper.class

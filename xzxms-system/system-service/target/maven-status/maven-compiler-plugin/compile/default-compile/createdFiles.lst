@@ -1,0 +1,12 @@
+com\xzx\xzxms\system\service\ISysUserService.class
+com\xzx\xzxms\system\service\IFileUploadService.class
+com\xzx\xzxms\system\service\impl\SysUserServiceImpl.class
+com\xzx\xzxms\system\service\impl\FileUploadServiceImpl.class
+com\xzx\xzxms\system\service\impl\SysRoleServiceImpl.class
+com\xzx\xzxms\system\service\impl\SysFileServiceImpl.class
+com\xzx\xzxms\system\service\ISysRoleService.class
+com\xzx\xzxms\system\service\impl\SysLogServiceImpl.class
+com\xzx\xzxms\system\service\ISysPrivilegeService.class
+com\xzx\xzxms\system\service\ISysLogService.class
+com\xzx\xzxms\system\service\impl\SysPrivilegeServiceImpl.class
+com\xzx\xzxms\system\service\ISysFileService.class

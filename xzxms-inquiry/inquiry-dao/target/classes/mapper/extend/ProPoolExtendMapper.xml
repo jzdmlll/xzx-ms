@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzx.xzxms.inquiry.dao.extend.ProPoolExtendMapper">
+    <select id="findByParams" resultType="com.xzx.xzxms.inquiry.bean.extend.ProPoolExtend">
+        select p.*,s.name product_name
+        from
+        product_pool p LEFT JOIN sys_pro_detail s ON s.id = p.pro_detail_id
+        <where>
+          p.is_active = 1
+          <if test="name != null and name != ''">
+            and p.name like CONCAT(CONCAT('%',#{name}),'%')
+          </if>
+          <if test="brand != null and brand != ''">
+              and p.brand like CONCAT(CONCAT('%',#{brand}),'%')
+          </if>
+          <if test="proName != null and proName != ''">
+            and p.pro_name like CONCAT(CONCAT('%',#{proName}),'%')
+          </if>
+          <if test="model != null and model != ''">
+            and p.model like CONCAT(CONCAT('%',#{model}),'%')
+          </if>
+        </where>
+    </select>
+
+    <select id="fuzzyQueryByNameOrModel" resultType="com.xzx.xzxms.inquiry.bean.ProPool">
+        select p.*
+        from
+        product_pool p
+        <where>
+            p.is_active = 1
+            <if test="name != null and name != ''">
+                and p.name like CONCAT(CONCAT('%',#{name}),'%')
+            </if>
+            <if test="model != null and model != ''">
+                and p.model like CONCAT(CONCAT('%',#{model}),'%')
+            </if>
+        </where>
+        order by time
+    </select>
+</mapper>

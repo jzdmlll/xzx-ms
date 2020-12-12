@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzx.xzxms.inquiry.dao.extend.InquiryQuoteCheckExtendMapper">
+    <select id="findCheckStatus" resultType="com.xzx.xzxms.inquiry.bean.extend.InquiryQuoteCheckExtend">
+        select *
+        from inquiry i
+        LEFT JOIN quote q on i.id = q.inquiry_id
+        LEFT JOIN sys_pro_check c on q.id = c.quote_id
+      <where>
+          q.is_active = 1 and i.is_active = 1 and c.finally_audit = 0
+          and i.id = #{inquiryId,jdbcType=BIGINT}
+      </where>
+    </select>
+
+
+    <select id="findQuoteAndCheck" resultType="com.xzx.xzxms.inquiry.bean.extend.QuoteProCheckExtend">
+        select q.*,c.*
+        from inquiry i
+        LEFT JOIN quote q on i.id = q.inquiry_id
+        LEFT JOIN sys_pro_check c on q.id = c.quote_id
+        <where>
+            q.is_active = 1 and i.is_active = 1
+            and i.id = #{inquiryId,jdbcType=BIGINT}
+        </where>
+    </select>
+</mapper>
