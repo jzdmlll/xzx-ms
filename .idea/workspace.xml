@@ -1,7 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a705bd28-8040-41c3-87b0-d9e12b78d839" name="Default" comment="" />
+    <list default="true" id="a705bd28-8040-41c3-87b0-d9e12b78d839" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/inquiry-bean/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-bean/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/inquiry-bean/src/main/java/com/xzx/xzxms/inquiry/bean/SysDeviceType.java" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-bean/src/main/java/com/xzx/xzxms/inquiry/bean/SysDeviceType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/inquiry-bean/src/main/java/com/xzx/xzxms/inquiry/bean/SysDeviceTypeExample.java" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-bean/src/main/java/com/xzx/xzxms/inquiry/bean/SysDeviceTypeExample.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/inquiry-controller/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-controller/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/java/com/xzx/xzxms/inquiry/dao/SysDeviceTypeMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/java/com/xzx/xzxms/inquiry/dao/SysDeviceTypeMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/InquiryMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/InquiryMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/InquiryPoolMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/InquiryPoolMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/ProPoolMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/ProPoolMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/QuoteMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/QuoteMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/SupplierMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/SupplierMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/SysDeviceTypeMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/SysDeviceTypeMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/SysProCheckMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/SysProCheckMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/SysProDetailMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/SysProDetailMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/SysProOriginMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/SysProOriginMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/SysProTypeMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/SysProTypeMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/inquiry-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/src/main/resources/generatorConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/src/main/resources/generatorConfig.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xzxms-purchase/purchase-bean/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-purchase/purchase-bean/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xzxms-purchase/purchase-controller/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-purchase/purchase-controller/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xzxms-purchase/purchase-dao/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-purchase/purchase-dao/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xzxms-purchase/purchase-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-purchase/purchase-service/pom.xml" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/xzxms-system/target/" />
@@ -34,75 +58,93 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="application-dev.yml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/xzxms-boot/src/main/resources/application-dev.yml">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="53" column="30" selection-start-line="53" selection-start-column="30" selection-end-line="53" selection-end-column="30" />
+            <state relative-caret-position="256">
+              <caret line="30" column="32" selection-start-line="30" selection-start-column="32" selection-end-line="30" selection-end-column="32" />
             </state>
           </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="application-prod.yml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/xzxms-boot/src/main/resources/application-prod.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="231">
-              <caret line="53" column="30" selection-start-line="53" selection-start-column="30" selection-end-line="53" selection-end-column="30" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="application-test.yml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/xzxms-boot/src/main/resources/application-test.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1176">
-              <caret line="69" column="22" lean-forward="true" selection-start-line="69" selection-start-column="22" selection-end-line="69" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CompareController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-controller/src/main/java/com/xzx/xzxms/inquiry/controller/CompareController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="25" column="13" lean-forward="true" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="workspace.xml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
-          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/xzxms-inquiry/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="438">
+            <state relative-caret-position="394">
               <caret line="29" selection-start-line="29" selection-end-line="29" />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/pom.xml">
-          <provider selected="true" editor-type-id="text-editor" />
+        <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-controller/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="228">
+              <caret line="29" column="4" selection-start-line="29" selection-start-column="4" selection-end-line="40" selection-end-column="12" />
+            </state>
+          </provider>
         </entry>
       </file>
       <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/xzxms-system/system-dao/pom.xml">
-          <provider selected="true" editor-type-id="text-editor" />
+        <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-service/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="473">
+              <caret line="51" column="12" selection-start-line="40" selection-start-column="4" selection-end-line="51" selection-end-column="12" />
+            </state>
+          </provider>
         </entry>
       </file>
-      <file leaf-file-name="SysProTypeMapper.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/SysProTypeMapper.xml">
-          <provider selected="true" editor-type-id="text-editor" />
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/xzxms-purchase/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-115" />
+          </provider>
         </entry>
       </file>
-      <file leaf-file-name="SysProTypeExtendMapper.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/extend/SysProTypeExtendMapper.xml">
-          <provider selected="true" editor-type-id="text-editor" />
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/xzxms-purchase/purchase-service/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="525">
+              <caret line="25" column="12" selection-start-line="25" selection-start-column="12" selection-end-line="25" selection-end-column="12" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/xzxms-purchase/purchase-dao/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="525">
+              <caret line="25" column="12" selection-start-line="25" selection-start-column="12" selection-end-line="25" selection-end-column="12" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/xzxms-purchase/purchase-controller/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="441">
+              <caret line="21" column="34" selection-start-line="21" selection-start-column="34" selection-end-line="21" selection-end-column="34" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/xzxms-purchase/purchase-bean/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="525">
+              <caret line="25" column="12" lean-forward="true" selection-start-line="25" selection-start-column="12" selection-end-line="25" selection-end-column="12" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-bean/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="340">
+              <caret line="33" selection-start-line="33" selection-end-line="33" />
+            </state>
+          </provider>
         </entry>
       </file>
     </leaf>
@@ -143,13 +185,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/xzxms-inquiry/inquiry-service/src/main/java/com/xzx/xzxms/inquiry/service/impl/SysDeviceTypeServiceImpl.java" />
-        <option value="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/java/com/xzx/xzxms/inquiry/dao/extend/SysIndexExtendMapper.java" />
-        <option value="$PROJECT_DIR$/xzxms-inquiry/inquiry-service/src/main/java/com/xzx/xzxms/inquiry/service/impl/SysIndexServiceImpl.java" />
-        <option value="$PROJECT_DIR$/xzxms-inquiry/inquiry-service/src/main/java/com/xzx/xzxms/inquiry/service/impl/SysProDetailServiceImpl.java" />
-        <option value="$PROJECT_DIR$/xzxms-inquiry/inquiry-service/src/main/java/com/xzx/xzxms/inquiry/service/impl/SysProOriginServiceImpl.java" />
-        <option value="$PROJECT_DIR$/xzxms-inquiry/inquiry-service/src/main/java/com/xzx/xzxms/inquiry/service/impl/SysProTypeServiceImpl.java" />
-        <option value="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/extend/CompareExtendMapper.xml" />
         <option value="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/extend/FinallyCheckExtendMapper.xml" />
         <option value="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/extend/InquiryExtendMapper.xml" />
         <option value="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/extend/InquiryPoolExtendMapper.xml" />
@@ -162,7 +197,6 @@
         <option value="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/extend/SysProDetailExtendMapper.xml" />
         <option value="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/extend/SysProOriginExtendMapper.xml" />
         <option value="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/extend/SysProTypeExtendMapper.xml" />
-        <option value="$PROJECT_DIR$/xzxms-inquiry/inquiry-controller/pom.xml" />
         <option value="$PROJECT_DIR$/xzxms-inquiry/inquiry-controller/src/main/java/com/xzx/xzxms/inquiry/controller/CompareController.java" />
         <option value="$PROJECT_DIR$/xzxms-inquiry/inquiry-controller/src/main/java/com/xzx/xzxms/inquiry/controller/FinallyCheckController.java" />
         <option value="$PROJECT_DIR$/xzxms-inquiry/inquiry-controller/src/main/java/com/xzx/xzxms/inquiry/controller/InquiryController.java" />
@@ -177,8 +211,6 @@
         <option value="$PROJECT_DIR$/xzxms-inquiry/inquiry-controller/src/main/java/com/xzx/xzxms/inquiry/controller/SysProOriginController.java" />
         <option value="$PROJECT_DIR$/xzxms-inquiry/inquiry-controller/src/main/java/com/xzx/xzxms/inquiry/controller/SysProTypeController.java" />
         <option value="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/extend/SysProCheckExtendMapper.xml" />
-        <option value="$PROJECT_DIR$/xzxms-inquiry/pom.xml" />
-        <option value="$PROJECT_DIR$/xzxms-inquiry/src/main/resources/generatorConfig.xml" />
         <option value="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/java/com/xzx/xzxms/purchase/dao/InquiryMapper.java" />
         <option value="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/java/com/xzx/xzxms/purchase/dao/SysDeviceTypeMapper.java" />
         <option value="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/java/com/xzx/xzxms/purchase/dao/SysProOriginMapper.java" />
@@ -194,6 +226,16 @@
         <option value="$PROJECT_DIR$/xzxms-boot/src/main/resources/application-dev.yml" />
         <option value="$PROJECT_DIR$/xzxms-boot/src/main/resources/application-prod.yml" />
         <option value="$PROJECT_DIR$/xzxms-boot/src/main/resources/application-test.yml" />
+        <option value="$PROJECT_DIR$/xzxms-inquiry/src/main/resources/generatorConfig.xml" />
+        <option value="$PROJECT_DIR$/xzxms-inquiry/pom.xml" />
+        <option value="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/pom.xml" />
+        <option value="$PROJECT_DIR$/xzxms-inquiry/inquiry-bean/pom.xml" />
+        <option value="$PROJECT_DIR$/xzxms-inquiry/inquiry-controller/pom.xml" />
+        <option value="$PROJECT_DIR$/xzxms-inquiry/inquiry-service/pom.xml" />
+        <option value="$PROJECT_DIR$/xzxms-purchase/purchase-service/pom.xml" />
+        <option value="$PROJECT_DIR$/xzxms-purchase/purchase-dao/pom.xml" />
+        <option value="$PROJECT_DIR$/xzxms-purchase/purchase-controller/pom.xml" />
+        <option value="$PROJECT_DIR$/xzxms-purchase/purchase-bean/pom.xml" />
       </list>
     </option>
   </component>
@@ -213,14 +255,39 @@
   </component>
   <component name="MavenProjectNavigator">
     <treeState>
-      <expand />
+      <expand>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="inquiry-bean" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="inquiry-bean" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Plugins" type="7aea1407:MavenProjectsStructure$PluginsNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="xzxms-inquiry" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="xzxms-inquiry" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Plugins" type="7aea1407:MavenProjectsStructure$PluginsNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="xzxms-inquiry" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Plugins" type="7aea1407:MavenProjectsStructure$PluginsNode" />
+          <item name="mybatis-generator" type="36feed69:MavenProjectsStructure$PluginNode" />
+        </path>
+      </expand>
       <select />
     </treeState>
   </component>
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-10" />
     <option name="width" value="1140" />
     <option name="height" value="1100" />
@@ -231,6 +298,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="AndroidView" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -242,14 +310,59 @@
             <path>
               <item name="xzxms-parent" type="b2602c69:ProjectViewProjectNode" />
               <item name="xzxms-parent" type="462c0819:PsiDirectoryNode" />
-              <item name="xzxms-inquiry" type="462c0819:PsiDirectoryNode" />
+              <item name="xzxms-purchase" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="xzxms-parent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="xzxms-parent" type="462c0819:PsiDirectoryNode" />
+              <item name="xzxms-purchase" type="462c0819:PsiDirectoryNode" />
+              <item name="purchase-bean" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="xzxms-parent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="xzxms-parent" type="462c0819:PsiDirectoryNode" />
+              <item name="xzxms-purchase" type="462c0819:PsiDirectoryNode" />
+              <item name="purchase-bean" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="xzxms-parent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="xzxms-parent" type="462c0819:PsiDirectoryNode" />
+              <item name="xzxms-purchase" type="462c0819:PsiDirectoryNode" />
+              <item name="purchase-controller" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="xzxms-parent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="xzxms-parent" type="462c0819:PsiDirectoryNode" />
+              <item name="xzxms-purchase" type="462c0819:PsiDirectoryNode" />
+              <item name="purchase-controller" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="xzxms-parent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="xzxms-parent" type="462c0819:PsiDirectoryNode" />
+              <item name="xzxms-purchase" type="462c0819:PsiDirectoryNode" />
+              <item name="purchase-controller" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="xzxms-parent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="xzxms-parent" type="462c0819:PsiDirectoryNode" />
+              <item name="xzxms-purchase" type="462c0819:PsiDirectoryNode" />
+              <item name="purchase-dao" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="xzxms-parent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="xzxms-parent" type="462c0819:PsiDirectoryNode" />
+              <item name="xzxms-purchase" type="462c0819:PsiDirectoryNode" />
+              <item name="purchase-service" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -267,26 +380,26 @@
     <property name="settings.editor.selected.configurable" value="MavenSettings" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.xzx.xzxms.config" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\10376\Desktop\xzxms-parent\xzxms-purchase\purchase-bean\src\main" />
+      <recent name="C:\Users\10376\Desktop\xzxms-parent\xzxms-purchase\purchase-dao\src\main" />
+      <recent name="C:\Users\10376\Desktop\xzxms-parent\xzxms-system\system-dao\src\main\resources" />
+      <recent name="C:\Users\10376\Desktop\xzxms-parent\xzxms-inquiry\inquiry-dao\src\main\resources" />
+      <recent name="C:\Users\10376\Desktop\xzxms-parent\xzxms-inquiry\inquiry-controller\src\main\java\com\xzx\xzxms\inquiry\controller" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.xzx.xzxms.config" />
+      <recent name="com.xzx.xzxms.system.config" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\10376\Desktop\xzxms-parent\xzxms-inquiry\inquiry-dao\src\main\java\com\xzx\xzxms\inquiry\dao\extend" />
       <recent name="C:\Users\10376\Desktop\xzxms-parent\xzxms-inquiry\inquiry-dao\src\main\java\com\xzx\xzxms\inquiry\dao" />
       <recent name="C:\Users\10376\Desktop\xzxms-parent\xzxms-purchase\purchase-service\src\main" />
       <recent name="C:\Users\10376\Desktop\xzxms-parent\xzxms-purchase\purchase-dao\src\main" />
       <recent name="C:\Users\10376\Desktop\xzxms-parent\xzxms-purchase\purchase-controller\src\main" />
-    </key>
-    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="com.xzx.xzxms.config" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.xzx.xzxms.config" />
-      <recent name="com.xzx.xzxms.system.config" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\10376\Desktop\xzxms-parent\xzxms-system\system-dao\src\main\resources" />
-      <recent name="C:\Users\10376\Desktop\xzxms-parent\xzxms-inquiry\inquiry-dao\src\main\resources" />
-      <recent name="C:\Users\10376\Desktop\xzxms-parent\xzxms-inquiry\inquiry-controller\src\main\java\com\xzx\xzxms\inquiry\controller" />
-      <recent name="C:\Users\10376\Desktop\xzxms-parent\xzxms-inquiry\inquiry-service\src\main\java\com\xzx\xzxms\inquiry\service\impl" />
-      <recent name="C:\Users\10376\Desktop\xzxms-parent\xzxms-inquiry\inquiry-service\src\main\java\com\xzx\xzxms\inquiry\service" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -358,48 +471,49 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1607734365558</updated>
-      <workItem from="1607734368431" duration="22332000" />
+      <workItem from="1607734368431" duration="23804000" />
+      <workItem from="1607907450960" duration="2131000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="22332000" />
+    <option name="totallyTimeSpent" value="25935000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="878" extended-state="7" />
     <layout>
-      <window_info anchor="right" id="Palette" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info anchor="right" id="Maven Projects" visible="true" weight="0.24396783" />
-      <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
-      <window_info id="Capture Tool" />
-      <window_info id="Designer" />
-      <window_info anchor="right" id="Database" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info anchor="right" id="Maven Projects" order="3" visible="true" weight="0.13941018" />
+      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info id="Capture Tool" order="2" />
+      <window_info id="Designer" order="2" />
+      <window_info anchor="right" id="Database" order="3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info id="UI Designer" />
+      <window_info id="UI Designer" order="2" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Messages" weight="0.12398922" />
-      <window_info anchor="right" id="Palette&#9;" />
-      <window_info id="Image Layers" />
-      <window_info anchor="bottom" id="Java Enterprise" />
-      <window_info anchor="right" id="Capture Analysis" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.16869096" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Spring" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23525469" />
-      <window_info anchor="right" id="Bean Validation" />
-      <window_info id="Web" side_tool="true" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32884097" />
-      <window_info anchor="right" id="Theme Preview" />
-      <window_info id="Favorites" side_tool="true" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Palette&#9;" order="3" />
+      <window_info id="Image Layers" order="2" />
+      <window_info anchor="bottom" id="Java Enterprise" order="7" />
+      <window_info anchor="right" id="Capture Analysis" order="3" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.07692308" />
+      <window_info anchor="bottom" id="Spring" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2841823" />
+      <window_info anchor="right" id="Bean Validation" order="3" />
+      <window_info id="Web" order="2" side_tool="true" />
+      <window_info anchor="right" id="Theme Preview" order="3" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" order="7" weight="0.12398922" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32884097" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -409,55 +523,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/java/com/xzx/xzxms/inquiry/dao/extend/SysProCheckExtendMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-bean/src/main/java/com/xzx/xzxms/inquiry/bean/extend/SysCheckExtend.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/extend/SysProCheckExtendMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="103">
-          <caret line="26" column="151" lean-forward="true" selection-start-line="26" selection-start-column="151" selection-end-line="26" selection-end-column="151" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-bean/src/main/java/com/xzx/xzxms/inquiry/bean/SysProCheck.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/SysProCheckMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="2" column="53" selection-start-line="2" selection-start-column="53" selection-end-line="2" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/java/com/xzx/xzxms/inquiry/dao/SysProCheckMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="7" selection-start-line="7" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://D:/Maven/repository/org/mybatis/mybatis/3.5.3/mybatis-3.5.3.jar!/org/apache/ibatis/binding/MapperMethod.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="131">
-          <caret line="309" selection-start-line="309" selection-end-line="309" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/xzxms-boot/src/main/resources/application.yml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -506,16 +571,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/xzxms-inquiry/src/main/resources/generatorConfig.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="41" column="79" selection-start-line="41" selection-start-column="79" selection-end-line="41" selection-end-column="79" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-bean/pom.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/InquiryMapper.xml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -523,9 +578,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="87">
           <caret line="17" column="17" selection-start-line="17" selection-start-column="17" selection-end-line="17" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -536,106 +588,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/java/com/xzx/xzxms/purchase/dao/InquiryMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="777">
-          <caret line="38" column="18" selection-start-line="38" selection-start-column="18" selection-end-line="38" selection-end-column="18" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/java/com/xzx/xzxms/purchase/dao/SysDeviceTypeMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-315">
-          <caret line="39" column="25" selection-start-line="39" selection-start-column="25" selection-end-line="39" selection-end-column="25" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/java/com/xzx/xzxms/purchase/dao/SysProOriginMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-645">
-          <caret line="39" column="22" selection-start-line="39" selection-start-column="22" selection-end-line="39" selection-end-column="22" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/java/com/xzx/xzxms/purchase/dao/ProPoolMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-645">
-          <caret line="39" column="17" selection-start-line="39" selection-start-column="17" selection-end-line="39" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/java/com/xzx/xzxms/purchase/dao/SysProDetailMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1149">
-          <caret line="40" column="28" selection-start-line="40" selection-start-column="28" selection-end-line="40" selection-end-column="28" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/java/com/xzx/xzxms/purchase/dao/QuoteMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-645">
-          <caret line="39" column="19" selection-start-line="39" selection-start-column="19" selection-end-line="39" selection-end-column="19" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/java/com/xzx/xzxms/purchase/dao/SysProTypeMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-645">
-          <caret line="39" column="21" selection-start-line="39" selection-start-column="21" selection-end-line="39" selection-end-column="21" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/java/com/xzx/xzxms/purchase/dao/SupplierMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-189">
-          <caret line="39" column="20" selection-start-line="39" selection-start-column="20" selection-end-line="39" selection-end-column="20" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/java/com/xzx/xzxms/purchase/dao/InquiryPoolMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="47" column="33" selection-start-line="47" selection-start-column="33" selection-end-line="47" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/java/com/xzx/xzxms/purchase/dao/SysProCheckMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-645">
-          <caret line="39" column="22" selection-start-line="39" selection-start-column="22" selection-end-line="39" selection-end-column="22" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/java/com/xzx/xzxms/purchase/dao/InquiryMapper.java" />
+    <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/java/com/xzx/xzxms/purchase/dao/SysDeviceTypeMapper.java" />
+    <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/java/com/xzx/xzxms/purchase/dao/SysProOriginMapper.java" />
+    <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/java/com/xzx/xzxms/purchase/dao/ProPoolMapper.java" />
+    <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/java/com/xzx/xzxms/purchase/dao/SysProDetailMapper.java" />
+    <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/java/com/xzx/xzxms/purchase/dao/QuoteMapper.java" />
+    <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/java/com/xzx/xzxms/purchase/dao/SysProTypeMapper.java" />
+    <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/java/com/xzx/xzxms/purchase/dao/SupplierMapper.java" />
+    <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/java/com/xzx/xzxms/purchase/dao/InquiryPoolMapper.java" />
+    <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/java/com/xzx/xzxms/purchase/dao/SysProCheckMapper.java" />
     <entry file="file://$PROJECT_DIR$/xzxms-system/system-dao/src/main/resources/mapper/extend/SysFileExtendMapper.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="63">
@@ -678,9 +640,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="230">
           <caret line="118" column="66" selection-start-line="118" selection-start-column="66" selection-end-line="118" selection-end-column="66" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -688,13 +647,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
           <caret line="25" column="29" selection-start-line="25" selection-start-column="29" selection-end-line="25" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="417">
-          <caret line="305" column="12" selection-start-line="289" selection-start-column="4" selection-end-line="305" selection-end-column="12" />
         </state>
       </provider>
     </entry>
@@ -712,19 +664,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-controller/pom.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xzxms-inquiry/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="438">
-          <caret line="29" selection-start-line="29" selection-end-line="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/pom.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/xzxms-system/system-dao/pom.xml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -736,34 +675,123 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/xzxms-boot/src/main/resources/application-dev.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
+        <state relative-caret-position="1113">
           <caret line="53" column="30" selection-start-line="53" selection-start-column="30" selection-end-line="53" selection-end-column="30" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/xzxms-boot/src/main/resources/application-prod.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
+        <state relative-caret-position="1113">
           <caret line="53" column="30" selection-start-line="53" selection-start-column="30" selection-end-line="53" selection-end-column="30" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/xzxms-boot/src/main/resources/application-test.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1176">
-          <caret line="69" column="22" lean-forward="true" selection-start-line="69" selection-start-column="22" selection-end-line="69" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-controller/src/main/java/com/xzx/xzxms/inquiry/controller/CompareController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="25" column="13" lean-forward="true" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
+        <state relative-caret-position="1449">
+          <caret line="69" column="22" selection-start-line="69" selection-start-column="22" selection-end-line="69" selection-end-column="22" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-controller/src/main/java/com/xzx/xzxms/inquiry/controller/CompareController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-225">
+          <caret line="40" column="78" selection-start-line="40" selection-start-column="78" selection-end-line="40" selection-end-column="78" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="291">
+          <caret line="302" column="27" selection-start-line="302" selection-start-column="27" selection-end-line="302" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xzxms-inquiry/src/main/resources/generatorConfig.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="426">
+          <caret line="92" column="26" selection-start-line="92" selection-start-column="26" selection-end-line="92" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/maven/lib/maven.jar!/schemas/maven-4.0.0.xsd">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="1811" column="6" selection-start-line="1811" selection-start-column="6" selection-end-line="1811" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="30" column="32" selection-start-line="30" selection-start-column="32" selection-end-line="30" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xzxms-inquiry/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="394">
+          <caret line="29" selection-start-line="29" selection-end-line="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-bean/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="33" selection-start-line="33" selection-end-line="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-controller/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="29" column="4" selection-start-line="29" selection-start-column="4" selection-end-line="40" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xzxms-inquiry/inquiry-service/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="473">
+          <caret line="51" column="12" selection-start-line="40" selection-start-column="4" selection-end-line="51" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xzxms-purchase/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-115" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xzxms-purchase/purchase-service/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="25" column="12" selection-start-line="25" selection-start-column="12" selection-end-line="25" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xzxms-purchase/purchase-dao/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="25" column="12" selection-start-line="25" selection-start-column="12" selection-end-line="25" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xzxms-purchase/purchase-controller/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="441">
+          <caret line="21" column="34" selection-start-line="21" selection-start-column="34" selection-end-line="21" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xzxms-purchase/purchase-bean/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="25" column="12" lean-forward="true" selection-start-line="25" selection-start-column="12" selection-end-line="25" selection-end-column="12" />
+        </state>
+      </provider>
     </entry>
   </component>
   <component name="masterDetails">
@@ -819,11 +847,12 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>inquiry-bean</last-edited>
+          <last-edited>purchase-dao</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
                 <option value="0.2" />
+                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>
