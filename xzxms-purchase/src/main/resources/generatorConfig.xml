@@ -10,7 +10,7 @@
 <generatorConfiguration>
 
   <!--<classPathEntry location="D:\gg\repository\mysql\mysql-connector-java\8.0.16\mysql-connector-java-8.0.16.jar" />-->
-  <classPathEntry location="D:\Maven\repository\mysql\mysql-connector-java\5.1.6\mysql-connector-java-5.1.6.jar" />
+  <classPathEntry location="C:\Maven\repository\mysql\mysql-connector-java\5.1.6\mysql-connector-java-5.1.6.jar" />
   <context id="DB2Tables" targetRuntime="MyBatis3">
 
     <jdbcConnection driverClass="com.mysql.jdbc.Driver"
@@ -45,56 +45,19 @@
 
 
 	<!-- 映射配置 -->
-    <!---->
-    <!--<table tableName="ej_category" domainObjectName="Category" ></table>-->
-    <!--<table tableName="ej_product" domainObjectName="Product" ></table>-->
-    <!--<table tableName="ej_waiter" domainObjectName="Waiter" ></table>-->
-    <!--<table tableName="ej_customer" domainObjectName="Customer" ></table>-->
-    <!--<table tableName="ej_address" domainObjectName="Address" ></table>-->
-    <!--<table tableName="ej_order" domainObjectName="Order" ></table>-->
-    <!--<table tableName="ej_order_line" domainObjectName="OrderLine" ></table>-->
-    <!--<table tableName="ej_comment" domainObjectName="Comment" ></table>-->
-    <!--<table tableName="base_file" domainObjectName="BaseFile" ></table>-->
-    <!--
-        <table tableName="lf_article" domainObjectName="Article" ></table>
-        <table tableName="lf_category" domainObjectName="Category" ></table>
-        <table tableName="lf_privilege" domainObjectName="Privilege" ></table>
-        <table tableName="lf_record" domainObjectName="Record" ></table>
-        <table tableName="lf_role" domainObjectName="Role" ></table>
-        <table tableName="lf_role_privilege" domainObjectName="RolePrivilege" ></table>
-        <table tableName="lf_user" domainObjectName="User" ></table>
-        <table tableName="lf_user_role" domainObjectName="UserRole" ></table>
+      <table tableName="purchase" domainObjectName="Purchase" ></table>
+      <table tableName="purchase_contract" domainObjectName="PurchaseContract" ></table>
+      <table tableName="purchase_contract_attribute" domainObjectName="PurchaseContractAttribute" ></table>
+      <table tableName="purchase_demand" domainObjectName="PurchaseDemand" ></table>
+      <table tableName="purchase_invoice" domainObjectName="PurchaseInvoice" ></table>
+      <table tableName="purchase_items" domainObjectName="PurchaseItems" ></table>
+      <table tableName="purchase_payment" domainObjectName="PurchasePayment" ></table>
+      <table tableName="purchase_project" domainObjectName="PurchaseProject" ></table>
+      <table tableName="purchase_supply" domainObjectName="PurchaseSupply" ></table>
 
-        <table tableName="lf_comment" domainObjectName="Comment" ></table>
-        <table tableName="lf_logs" domainObjectName="Logs" ></table>
-        -->
-   <!-- <table tableName="sys_user_role" domainObjectName="SysUserRole" ></table>
-    <table tableName="sys_user" domainObjectName="SysUser" ></table>
-    <table tableName="sys_role_privilege" domainObjectName="SysRolePrivilege" ></table>
-    <table tableName="sys_role" domainObjectName="SysRole" ></table>
-    <table tableName="sys_pro_type" domainObjectName="SysProType" ></table>
-    <table tableName="sys_pro_origin" domainObjectName="SysProOrigin" ></table>
-    <table tableName="sys_privilege" domainObjectName="SysPrivilege" ></table>
-    <table tableName="sys_log" domainObjectName="SysLog" ></table>
-    <table tableName="sys_file" domainObjectName="SysFile" ></table>
-    <table tableName="inquiry" domainObjectName="Inquiry" ></table>
-    <table tableName="quote" domainObjectName="Quote" ></table>
-    <table tableName="sys_device_type" domainObjectName="SysDeviceType" ></table>
-    <table tableName="sys_pro_detail_check" domainObjectName="SysProDetailCheck" ></table>
--->
-<!--        <table tableName="inquiry" domainObjectName="Inquiry" ></table>-->
-<!--        <table tableName="sys_pro_detail" domainObjectName="SysProDetail" ></table>-->
-<!--        <table tableName="product_pool" domainObjectName="ProPool" ></table>-->
-    <!--    <table tableName="sys_pro_check" domainObjectName="SysProCheck" ></table>-->
-    <!--    <table tableName="quote" domainObjectName="Quote" ></table>-->
-
-    <!--    <table tableName="quote" domainObjectName="Quote" ></table>-->
-<!--        <table tableName="inquiry_pool" domainObjectName="InquiryPool" ></table>-->
-    <!--        <table tableName="product_pool" domainObjectName="ProPool" ></table>-->
-<!--            <table tableName="supplier" domainObjectName="Supplier" ></table>-->
-    <!--
-    mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
-   -->
+      <!--
+      mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
+     -->
 <!--    <table tableName="sys_device_type" domainObjectName="SysDeviceType" ></table>-->
   </context>
 </generatorConfiguration>
