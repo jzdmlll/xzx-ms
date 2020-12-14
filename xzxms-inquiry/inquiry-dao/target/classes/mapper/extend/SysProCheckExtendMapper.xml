@@ -29,7 +29,7 @@
         </collection>
         <collection property="inquiry" ofType="com.xzx.xzxms.inquiry.bean.Inquiry" autoMapping="true" columnPrefix="i_">
         </collection>
-        <collection property="files" column="q_id" select="com.xzx.xzxms.inquiry.dao.extend.SysFileExtendMapper.selectByOtherId" />
+        <collection property="files" column="q_id" select="com.xzx.xzxms.system.dao.extend.SysFileExtendMapper.selectByOtherId" />
     </resultMap>
 
     <select id="cascadeFindBusiness" resultMap="ProCheckExtendMap">

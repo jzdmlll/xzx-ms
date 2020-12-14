@@ -67,6 +67,18 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <port>6666</port>
+                    <path>/xzxms_api</path>
+                    <username>root</username>
+                    <password>jzdmlll@1217</password>
+                    <url>http://10.70.0.113:6666/manager/text</url>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
