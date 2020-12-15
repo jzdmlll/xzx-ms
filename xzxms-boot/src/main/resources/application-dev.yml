@@ -95,6 +95,9 @@ logging:
   level:
     com.xzx.xzxms.dao: debug
 
+webconfig:
+  test: true
+
 
 
 

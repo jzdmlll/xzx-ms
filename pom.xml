@@ -222,11 +222,11 @@
             <version>2.6</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.mysql.jdbc/com.springsource.com.mysql.jdbc -->
-        <dependency>
+        <!--<dependency>
             <groupId>com.mysql.jdbc</groupId>
             <artifactId>com.springsource.com.mysql.jdbc</artifactId>
             <version>5.1.6</version>
-        </dependency>
+        </dependency>-->
         <!-- MyBatisPlus-->
         <!--<dependency>
             <groupId>com.baomidou</groupId>
