@@ -106,5 +106,13 @@ public class QuoteController {
         iQuoteServiceImpl.initiateAudit(inquiryId);
         return MessageUtil.success("送审成功");
     }
+
+    @ApiOperation("报价手动发往比价")
+    @GetMapping("sendCompare")
+    public Message sendCompare(long inquiryId){
+
+        iQuoteServiceImpl.sendCompare(inquiryId);
+        return MessageUtil.success("比价发送成功");
+    }
 }
 
