@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="xzxms-boot" />
+        <module name="purchase-controller" />
+        <module name="system-bean" />
+        <module name="purchase-service" />
+        <module name="purchase-dao" />
+        <module name="system-service" />
+        <module name="xzxms-commons" />
+        <module name="inquiry-service" />
+        <module name="inquiry-dao" />
+        <module name="inquiry-controller" />
+        <module name="purchase-bean" />
+        <module name="system-dao" />
+        <module name="system-controller" />
+        <module name="inquiry-bean" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="inquiry-bean" target="1.8" />
+      <module name="inquiry-controller" target="1.8" />
+      <module name="inquiry-dao" target="1.8" />
+      <module name="inquiry-service" target="1.8" />
+      <module name="purchase-bean" target="1.8" />
+      <module name="purchase-controller" target="1.8" />
+      <module name="purchase-dao" target="1.8" />
+      <module name="purchase-service" target="1.8" />
+      <module name="system-bean" target="1.8" />
+      <module name="system-controller" target="1.8" />
+      <module name="system-dao" target="1.8" />
+      <module name="system-service" target="1.8" />
+      <module name="xzx-ms" target="1.8" />
+      <module name="xzxms-boot" target="1.8" />
+      <module name="xzxms-boot (2)" target="1.8" />
+      <module name="xzxms-commons" target="1.8" />
+      <module name="xzxms-inquiry" target="1.8" />
+      <module name="xzxms-purchase" target="1.8" />
+      <module name="xzxms-system" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="inquiry-bean" options="-parameters" />
+      <module name="inquiry-controller" options="-parameters" />
+      <module name="inquiry-dao" options="-parameters" />
+      <module name="inquiry-service" options="-parameters" />
+      <module name="purchase-bean" options="-parameters" />
+      <module name="purchase-controller" options="-parameters" />
+      <module name="purchase-dao" options="-parameters" />
+      <module name="purchase-service" options="-parameters" />
+      <module name="system-bean" options="-parameters" />
+      <module name="system-controller" options="-parameters" />
+      <module name="system-dao" options="-parameters" />
+      <module name="system-service" options="-parameters" />
+      <module name="xzx-ms" options="-parameters" />
+      <module name="xzxms-boot" options="-parameters" />
+      <module name="xzxms-boot (1)" options="-parameters" />
+      <module name="xzxms-commons" options="-parameters" />
+    </option>
+  </component>
+</project>
