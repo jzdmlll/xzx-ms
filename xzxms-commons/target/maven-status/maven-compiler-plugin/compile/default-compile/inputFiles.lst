@@ -1,3 +1,4 @@
+C:\Users\10376\Desktop\xzxms-parent\xzxms-commons\src\main\java\com\xzx\xzxms\commons\aspect\annotation\AutoLog.java
 C:\Users\10376\Desktop\xzxms-parent\xzxms-commons\src\main\java\com\xzx\xzxms\commons\utils\POIExcelUtils.java
 C:\Users\10376\Desktop\xzxms-parent\xzxms-commons\src\main\java\com\xzx\xzxms\commons\utils\JsonUtils.java
 C:\Users\10376\Desktop\xzxms-parent\xzxms-commons\src\main\java\com\xzx\xzxms\commons\utils\SFTPUtil.java
@@ -9,7 +10,9 @@ C:\Users\10376\Desktop\xzxms-parent\xzxms-commons\src\main\java\com\xzx\xzxms\co
 C:\Users\10376\Desktop\xzxms-parent\xzxms-commons\src\main\java\com\xzx\xzxms\commons\utils\Base64Util.java
 C:\Users\10376\Desktop\xzxms-parent\xzxms-commons\src\main\java\com\xzx\xzxms\commons\utils\FtpUtil.java
 C:\Users\10376\Desktop\xzxms-parent\xzxms-commons\src\main\java\com\xzx\xzxms\commons\dao\redis\JedisDao.java
+C:\Users\10376\Desktop\xzxms-parent\xzxms-commons\src\main\java\com\xzx\xzxms\commons\aspect\AutoLogAspect.java
 C:\Users\10376\Desktop\xzxms-parent\xzxms-commons\src\main\java\com\xzx\xzxms\commons\utils\IDUtils.java
+C:\Users\10376\Desktop\xzxms-parent\xzxms-commons\src\main\java\com\xzx\xzxms\commons\constant\CommonConstant.java
 C:\Users\10376\Desktop\xzxms-parent\xzxms-commons\src\main\java\com\xzx\xzxms\commons\utils\JwtTokenUtil.java
 C:\Users\10376\Desktop\xzxms-parent\xzxms-commons\src\main\java\com\xzx\xzxms\commons\utils\Message.java
 C:\Users\10376\Desktop\xzxms-parent\xzxms-commons\src\main\java\com\xzx\xzxms\commons\utils\MessageUtil.java
