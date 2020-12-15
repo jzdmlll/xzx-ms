@@ -68,4 +68,10 @@ public interface IQuoteService {
      * @param inquiryId 询价ID
      */
     void initiateAudit(long inquiryId);
+
+    /**
+     * 报价发送比价
+     * @param inquiryId
+     */
+    void sendCompare(long inquiryId);
 }
