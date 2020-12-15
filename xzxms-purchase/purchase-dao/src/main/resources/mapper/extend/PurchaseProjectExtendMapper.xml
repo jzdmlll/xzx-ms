@@ -6,7 +6,7 @@
     <where>
     is_active = 1
         <if test="name!=null and name!=''">
-        and name like "%"#{name}"%"
+        and project_name like "%"#{name}"%"
     </if>
     </where>
 </select>
