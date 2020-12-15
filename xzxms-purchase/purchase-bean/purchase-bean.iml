@@ -162,7 +162,5 @@
     <orderEntry type="library" name="Maven: stax:stax-api:1.0.1" level="project" />
     <orderEntry type="library" name="Maven: com.github.virtuald:curvesapi:1.04" level="project" />
     <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.6" level="project" />
-    <orderEntry type="library" name="Maven: com.mysql.jdbc:com.springsource.com.mysql.jdbc:5.1.6" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.commons:com.springsource.org.apache.commons.logging:1.1.1" level="project" />
   </component>
 </module>
