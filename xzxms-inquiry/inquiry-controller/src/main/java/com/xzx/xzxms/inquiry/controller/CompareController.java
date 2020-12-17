@@ -5,9 +5,8 @@ import com.xzx.xzxms.commons.utils.MessageUtil;
 import com.xzx.xzxms.inquiry.service.ICompareService;
 import com.xzx.xzxms.inquiry.service.IInquiryService;
 import com.xzx.xzxms.inquiry.bean.extend.InquiryAndProDetailExtend;
-import com.xzx.xzxms.inquiry.vm.CompareReqVM;
-import com.xzx.xzxms.inquiry.vm.CompareRespVM;
-import com.xzx.xzxms.inquiry.vm.QuoteRespVM;
+import com.xzx.xzxms.inquiry.service.IQuoteService;
+import com.xzx.xzxms.inquiry.vm.*;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +24,8 @@ public class CompareController {
     private IInquiryService inquiryServiceImpl;
     @Resource
     private ICompareService compareServiceImpl;
+    @Resource
+    private IQuoteService iQuoteServiceImpl;
 
     @ApiOperation("根据项目或比价状态查询")
     @GetMapping("findByProIdOrCompareStatus")
@@ -60,6 +61,22 @@ public class CompareController {
         compareServiceImpl.completeCompare(compareRespVM.getCheckCompareIds(), compareRespVM.getOtherCompareIds(), compareRespVM.getRemarks(), compareRespVM.getUserId(), compareRespVM.getInquiries());
         //compareServiceImpl.completeCompare(compareRespVM.getCheckCompareIds(), compareRespVM.getOtherCompareIds(), compareRespVM.getRemarks());
         return MessageUtil.success("操作成功");
+    }
+
+    @ApiOperation("根据项目详情ID查询出所有询价需求")
+    @GetMapping("findInquiryByProDetailId")
+    public Message findInquiryByProDetailId(long proDetailId){
+
+        List<InquiryVM> list = iQuoteServiceImpl.findInquiryByProDetailId(proDetailId);
+        return MessageUtil.success("查询成功",list);
+    }
+
+    @ApiOperation("根据询价ID查询出比价")
+    @GetMapping("findQuoteByInquiryId")
+    public Message findQuoteByInquiryId(long[] inquiryIds){
+
+        List<FinallyQuoteInquiryVM> list = iQuoteServiceImpl.findQuoteByInquiryId(inquiryIds);
+        return MessageUtil.success("查询成功",list);
     }
 }
 

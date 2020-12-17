@@ -1,0 +1,1 @@
+package com.xzx.xzxms.inquiry.vm;import com.xzx.xzxms.inquiry.bean.Inquiry;public class InquiryVM extends Inquiry {    private int compareAudit;    public int getCompareAudit() {        return compareAudit;    }    public void setCompareAudit(int compareAudit) {        this.compareAudit = compareAudit;    }}

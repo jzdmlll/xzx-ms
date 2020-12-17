@@ -12,6 +12,7 @@ import com.xzx.xzxms.inquiry.bean.extend.QuoteExtend;
 import com.xzx.xzxms.inquiry.bean.extend.QuoteExtendInquiry;
 import com.xzx.xzxms.inquiry.bean.extend.QuoteProCheckExtend;
 import com.xzx.xzxms.inquiry.vm.FinallyQuoteInquiryVM;
+import com.xzx.xzxms.inquiry.vm.InquiryVM;
 import com.xzx.xzxms.system.bean.SysFile;
 import com.xzx.xzxms.system.bean.SysFileExample;
 import com.xzx.xzxms.system.bean.extend.SysFileExtend;
@@ -514,11 +515,23 @@ public class QuoteServiceImpl implements IQuoteService {
     }
 
     @Override
-    public List<Inquiry> findInquiryByProDetailId(long proDetailId) {
+    public List<InquiryVM> findInquiryByProDetailId(long proDetailId) {
+
+        List<InquiryVM> inquiryVMS = new ArrayList<>();
         InquiryExample example = new InquiryExample();
         example.createCriteria().andProDetailIdEqualTo(proDetailId).andIsActiveEqualTo(CommonConstant.EFFECTIVE).andVetoEqualTo(CommonConstant.NOT_VETOED);
         List<Inquiry> inquiries = inquiryMapper.selectByExample(example);
-        return inquiries;
+        for(Inquiry inquiry : inquiries){
+            List<QuoteProCheckExtend> quoteProCheckExtends = inquiryQuoteCheckExtendMapper.findQuoteAndCheck(inquiry.getId());
+            boolean status = quoteProCheckExtends.stream().filter(x->x.getCompareAudit() == 0).findAny().isPresent();
+            InquiryVM inquiryVM = (InquiryVM) inquiry;
+            if (status){
+                inquiryVM.setCompareAudit(0);
+            }
+            inquiryVMS.add(inquiryVM);
+        }
+
+        return inquiryVMS;
     }
 
     @Override
