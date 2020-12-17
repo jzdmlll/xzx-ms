@@ -60,6 +60,26 @@
             <artifactId>inquiry-bean</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.xzx.xzxms.purchase</groupId>
+            <artifactId>purchase-dao</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.xzx.xzxms.purchase</groupId>
+            <artifactId>purchase-service</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.xzx.xzxms.purchase</groupId>
+            <artifactId>purchase-controller</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.xzx.xzxms.purchase</groupId>
+            <artifactId>purchase-bean</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

@@ -2,7 +2,6 @@ package com.xzx.xzxms.commons.aspect.annotation;
 
 
 import com.xzx.xzxms.commons.constant.CommonConstant;
-import sun.security.pkcs11.Secmod;
 
 import java.lang.annotation.*;
 
