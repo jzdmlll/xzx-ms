@@ -10,7 +10,7 @@
 <generatorConfiguration>
 
   <!--<classPathEntry location="D:\gg\repository\mysql\mysql-connector-java\8.0.16\mysql-connector-java-8.0.16.jar" />-->
-  <classPathEntry location="D:\Maven\repository\mysql\mysql-connector-java\5.1.6\mysql-connector-java-5.1.6.jar" />
+  <classPathEntry location="C:\Maven\repository\mysql\mysql-connector-java\5.1.6\mysql-connector-java-5.1.6.jar" />
   <context id="DB2Tables" targetRuntime="MyBatis3">
 
     <jdbcConnection driverClass="com.mysql.jdbc.Driver"
@@ -82,16 +82,16 @@
     <table tableName="sys_device_type" domainObjectName="SysDeviceType" ></table>
     <table tableName="sys_pro_detail_check" domainObjectName="SysProDetailCheck" ></table>
 -->
-        <!--<table tableName="inquiry" domainObjectName="Inquiry" ></table>
-        <table tableName="sys_pro_detail" domainObjectName="SysProDetail" ></table>
-        <table tableName="sys_pro_origin" domainObjectName="SysProOrigin" ></table>
-        <table tableName="sys_pro_type" domainObjectName="SysProType" ></table>
-        <table tableName="sys_pro_check" domainObjectName="SysProCheck" ></table>
-        <table tableName="quote" domainObjectName="Quote" ></table>
+<!--        <table tableName="inquiry" domainObjectName="Inquiry" ></table>-->
+<!--        <table tableName="sys_pro_detail" domainObjectName="SysProDetail" ></table>-->
+<!--        <table tableName="sys_pro_origin" domainObjectName="SysProOrigin" ></table>-->
+<!--        <table tableName="sys_pro_type" domainObjectName="SysProType" ></table>-->
+<!--        <table tableName="sys_pro_check" domainObjectName="SysProCheck" ></table>-->
+<!--        <table tableName="quote" domainObjectName="Quote" ></table>-->
 
-        <table tableName="inquiry_pool" domainObjectName="InquiryPool" ></table>
-        <table tableName="product_pool" domainObjectName="ProPool" ></table>
-        <table tableName="supplier" domainObjectName="Supplier" ></table>-->
-        <table tableName="sys_device_type" domainObjectName="SysDeviceType" ></table>
+<!--        <table tableName="inquiry_pool" domainObjectName="InquiryPool" ></table>-->
+<!--        <table tableName="product_pool" domainObjectName="ProPool" ></table>-->
+<!--        <table tableName="supplier" domainObjectName="Supplier" ></table>-->
+<!--    <table tableName="sys_device_type" domainObjectName="SysDeviceType" ></table>-->
   </context>
 </generatorConfiguration>

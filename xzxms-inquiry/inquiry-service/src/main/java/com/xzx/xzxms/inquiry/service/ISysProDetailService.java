@@ -57,4 +57,5 @@ public interface ISysProDetailService {
      * @param id
      */
     void setInvalid(long id);
+
 }

@@ -1,10 +1,12 @@
 package com.xzx.xzxms.inquiry.service;
 
 
+import com.xzx.xzxms.inquiry.bean.Inquiry;
 import com.xzx.xzxms.inquiry.bean.Quote;
 import com.xzx.xzxms.inquiry.bean.extend.QuoteExtend;
 import com.xzx.xzxms.inquiry.bean.extend.QuoteExtendInquiry;
 import com.xzx.xzxms.inquiry.bean.extend.QuoteProCheckExtend;
+import com.xzx.xzxms.inquiry.vm.FinallyQuoteInquiryVM;
 
 import java.io.IOException;
 import java.util.List;
@@ -74,4 +76,17 @@ public interface IQuoteService {
      * @param inquiryId
      */
     void sendCompare(long inquiryId);
+
+    /**
+     * 根据项目详情ID查询出所有询价需求
+     * @param proDetailId
+     */
+    List<Inquiry> findInquiryByProDetailId(long proDetailId);
+
+    /**
+     * 根据询价ID查询出比价
+     * @param inquiryIds
+     * @return
+     */
+    List<FinallyQuoteInquiryVM> findQuoteByInquiryId(long[] inquiryIds);
 }

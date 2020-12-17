@@ -22,9 +22,8 @@
                     and c.compare_audit = #{compare_audit}
                 </if>
             </where>
-            GROUP BY i.id
+            GROUP BY i.sort
         )
-
 
         <!--select i.*,s.pro_rate rate
             from inquiry i

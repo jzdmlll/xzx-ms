@@ -1,6 +1,7 @@
 package com.xzx.xzxms.inquiry.service;
 
 
+import com.xzx.xzxms.inquiry.bean.Inquiry;
 import com.xzx.xzxms.inquiry.vm.CompareReqVM;
 import com.xzx.xzxms.inquiry.vm.QuoteRespVM;
 
@@ -29,4 +30,5 @@ public interface ICompareService {
      * @param remarks
      */
     void completeCompare(long[] checkCompareIds, long[] otherCompareIds, List<Map> remarks, long userId, List<Map> inquiries);
+
 }

@@ -1,5 +1,6 @@
 package com.xzx.xzxms.inquiry.service.impl;
 
+import com.xzx.xzxms.commons.constant.CommonConstant;
 import com.xzx.xzxms.commons.dao.redis.JedisDao;
 import com.xzx.xzxms.commons.utils.*;
 import com.xzx.xzxms.inquiry.dao.*;
@@ -10,6 +11,7 @@ import com.xzx.xzxms.inquiry.bean.*;
 import com.xzx.xzxms.inquiry.bean.extend.QuoteExtend;
 import com.xzx.xzxms.inquiry.bean.extend.QuoteExtendInquiry;
 import com.xzx.xzxms.inquiry.bean.extend.QuoteProCheckExtend;
+import com.xzx.xzxms.inquiry.vm.FinallyQuoteInquiryVM;
 import com.xzx.xzxms.system.bean.SysFile;
 import com.xzx.xzxms.system.bean.SysFileExample;
 import com.xzx.xzxms.system.bean.extend.SysFileExtend;
@@ -23,9 +25,8 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class QuoteServiceImpl implements IQuoteService {
@@ -510,6 +511,29 @@ public class QuoteServiceImpl implements IQuoteService {
                 throw new CustomerException("请先送审，等待审核结果后再提交比价!");
             }
         }
+    }
+
+    @Override
+    public List<Inquiry> findInquiryByProDetailId(long proDetailId) {
+        InquiryExample example = new InquiryExample();
+        example.createCriteria().andProDetailIdEqualTo(proDetailId).andIsActiveEqualTo(CommonConstant.EFFECTIVE).andVetoEqualTo(CommonConstant.NOT_VETOED);
+        List<Inquiry> inquiries = inquiryMapper.selectByExample(example);
+        return inquiries;
+    }
+
+    @Override
+    public List<FinallyQuoteInquiryVM> findQuoteByInquiryId(long[] inquiryIds) {
+
+        List<FinallyQuoteInquiryVM> list = new ArrayList<>();
+        for (long id : inquiryIds){
+
+            List<FinallyQuoteInquiryVM> finallyCheckCompareVMS = quoteAndInquiry.findQuoteByInquiryId(id);
+            //查询按升序排的，所以第一个报价商价格最低，设置标志为1
+            finallyCheckCompareVMS.get(0).setMinPrice(1);
+            list.addAll(finallyCheckCompareVMS);
+        }
+        list.stream().sorted(Comparator.comparing(FinallyQuoteInquiryVM::getSupplier)).collect(Collectors.toList());
+        return list;
     }
 
 
