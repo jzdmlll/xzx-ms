@@ -4,6 +4,7 @@ import com.xzx.xzxms.commons.constant.CommonConstant;
 import com.xzx.xzxms.commons.dao.redis.JedisDao;
 import com.xzx.xzxms.commons.utils.*;
 import com.xzx.xzxms.inquiry.dao.*;
+import com.xzx.xzxms.inquiry.dao.extend.InquiryExtendMapper;
 import com.xzx.xzxms.inquiry.dao.extend.InquiryQuoteCheckExtendMapper;
 import com.xzx.xzxms.inquiry.dao.extend.QuoteAndInquiryExtendMapper;
 import com.xzx.xzxms.inquiry.service.IQuoteService;
@@ -51,6 +52,8 @@ public class QuoteServiceImpl implements IQuoteService {
     private InquiryPoolMapper inquiryPoolMapper;
     @Resource
     private InquiryQuoteCheckExtendMapper inquiryQuoteCheckExtendMapper;
+    @Resource
+    private InquiryExtendMapper inquiryExtendMapper;
 
     @Override
     public List<QuoteProCheckExtend> findByInquiryId(long inquiryId) {
@@ -517,7 +520,8 @@ public class QuoteServiceImpl implements IQuoteService {
     @Override
     public List<InquiryVM> findInquiryByProDetailId(long proDetailId) {
 
-        List<InquiryVM> inquiryVMS = new ArrayList<>();
+        List<InquiryVM> inquiryVMS = inquiryExtendMapper.findInquiryByProId(proDetailId);
+        /*List<InquiryVM> inquiryVMS = new ArrayList<>();
         InquiryExample example = new InquiryExample();
         example.createCriteria().andProDetailIdEqualTo(proDetailId).andIsActiveEqualTo(CommonConstant.EFFECTIVE).andVetoEqualTo(CommonConstant.NOT_VETOED);
         List<Inquiry> inquiries = inquiryMapper.selectByExample(example);
@@ -526,10 +530,10 @@ public class QuoteServiceImpl implements IQuoteService {
             boolean status = quoteProCheckExtends.stream().filter(x->x.getCompareAudit() == 0).findAny().isPresent();
             InquiryVM inquiryVM = (InquiryVM) inquiry;
             if (status){
-                inquiryVM.setCompareAudit(0);
+                inquiryVM.setCompareNum(0);
             }
             inquiryVMS.add(inquiryVM);
-        }
+        }*/
 
         return inquiryVMS;
     }
