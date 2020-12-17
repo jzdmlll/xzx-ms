@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.xzx.xzxms.commons.utils.CustomerException;
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
+import com.xzx.xzxms.inquiry.bean.Inquiry;
 import com.xzx.xzxms.inquiry.service.IQuoteService;
 import com.xzx.xzxms.inquiry.bean.Quote;
 import com.xzx.xzxms.inquiry.bean.extend.QuoteExtend;
@@ -119,8 +120,8 @@ public class QuoteController {
     @GetMapping("findInquiryByProDetailId")
     public Message findInquiryByProDetailId(long proDetailId){
 
-        iQuoteServiceImpl.findInquiryByProDetailId(proDetailId);
-        return MessageUtil.success("查询成功");
+        List<Inquiry> inquiryByProDetailId = iQuoteServiceImpl.findInquiryByProDetailId(proDetailId);
+        return MessageUtil.success("查询成功", inquiryByProDetailId);
     }
 
 

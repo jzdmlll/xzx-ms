@@ -8,13 +8,13 @@
         q.su_price q_su_price,q.su_total_price q_su_total_price,q.warranty q_warranty,q.data_source q_data_source,q.su_remark q_su_remark,
         i.model i_model,i.name i_name,i.number i_number,i.params i_params,i.sort i_sort,i.unit i_unit
         FROM
-        sys_pro_detail spd
-        RIGHT JOIN inquiry i ON i.pro_detail_id = spd.id
-        LEFT JOIN quote q ON q.inquiry_id = i.id
-        LEFT JOIN sys_pro_check spc ON spc.quote_id = q.id
+        sys_pro_check spc
+        LEFT JOIN quote q ON spc.quote_id = q.id
+        LEFT JOIN inquiry i on q.inquiry_id = i.id
+        LEFT JOIN sys_pro_detail spd ON i.pro_detail_id = spd.id
         LEFT JOIN sys_file sf ON sf.other_id = q.id
         <where>
-             q.is_active = 1 and i.is_active = 1
+            q.is_active = 1 and i.is_active = 1
             <if test="status!=null and status!=-1">
                 AND spc.technical_audit = #{status}
             </if>
@@ -39,10 +39,10 @@
         q.su_price q_su_price,q.su_total_price q_su_total_price,q.warranty q_warranty,q.data_source q_data_source,q.su_remark q_su_remark,
         i.model i_model,i.name i_name,i.number i_number,i.params i_params,i.sort i_sort,i.unit i_unit
         FROM
-        sys_pro_detail spd
-        RIGHT JOIN inquiry i ON i.pro_detail_id = spd.id
-        LEFT JOIN quote q ON q.inquiry_id = i.id
-        LEFT JOIN sys_pro_check spc ON spc.quote_id = q.id
+        sys_pro_check spc
+        LEFT JOIN quote q ON spc.quote_id = q.id
+        LEFT JOIN inquiry i on q.inquiry_id = i.id
+        LEFT JOIN sys_pro_detail spd ON i.pro_detail_id = spd.id
         LEFT JOIN sys_file sf ON sf.other_id = q.id
         <where>
             q.is_active = 1 and i.is_active = 1
