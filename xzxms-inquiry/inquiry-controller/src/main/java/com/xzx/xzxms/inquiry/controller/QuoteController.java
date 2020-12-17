@@ -114,15 +114,5 @@ public class QuoteController {
         iQuoteServiceImpl.sendCompare(inquiryId);
         return MessageUtil.success("比价发送成功");
     }
-
-    @ApiOperation("根据项目详情ID查询出所有询价需求")
-    @GetMapping("findInquiryByProDetailId")
-    public Message findInquiryByProDetailId(long proDetailId){
-
-        iQuoteServiceImpl.findInquiryByProDetailId(proDetailId);
-        return MessageUtil.success("查询成功");
-    }
-
-
 }
 
