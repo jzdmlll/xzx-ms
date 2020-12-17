@@ -1,5 +1,6 @@
 package com.xzx.xzxms.inquiry.service.impl;
 
+import com.xzx.xzxms.commons.constant.CommonConstant;
 import com.xzx.xzxms.commons.dao.redis.JedisDao;
 import com.xzx.xzxms.commons.utils.*;
 import com.xzx.xzxms.inquiry.dao.*;
@@ -10,6 +11,7 @@ import com.xzx.xzxms.inquiry.bean.*;
 import com.xzx.xzxms.inquiry.bean.extend.QuoteExtend;
 import com.xzx.xzxms.inquiry.bean.extend.QuoteExtendInquiry;
 import com.xzx.xzxms.inquiry.bean.extend.QuoteProCheckExtend;
+import com.xzx.xzxms.inquiry.vm.FinallyQuoteInquiryVM;
 import com.xzx.xzxms.system.bean.SysFile;
 import com.xzx.xzxms.system.bean.SysFileExample;
 import com.xzx.xzxms.system.bean.extend.SysFileExtend;
@@ -23,9 +25,8 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class QuoteServiceImpl implements IQuoteService {
@@ -461,15 +462,16 @@ public class QuoteServiceImpl implements IQuoteService {
             if (proChecks.size() > 0){
                 continue;
             }else {
+                //发送审核,添加商审、技审的默认值
                 sysProCheck.setId(IDUtils.getId());
                 sysProCheck.setTechnicalAudit(0);
                 sysProCheck.setBusinessAudit(0);
-                sysProCheck.setCompareAudit(0);
-                sysProCheck.setFinallyAudit(0);
+//                sysProCheck.setCompareAudit(0);
+//                sysProCheck.setFinallyAudit(0);
                 sysProCheck.setTechnicalRemark("");
                 sysProCheck.setBusinessRemark("");
-                sysProCheck.setCompareRemark("");
-                sysProCheck.setFinallyRemark("");
+//                sysProCheck.setCompareRemark("");
+//                sysProCheck.setFinallyRemark("");
                 sysProCheck.setQuoteId(quote.getId());
                 sysProCheck.setOperator(quote.getOperator());
                 sysProCheck.setTime(time);
@@ -477,6 +479,63 @@ public class QuoteServiceImpl implements IQuoteService {
             }
         }
     }
+
+    @Transactional
+    @Override
+    public void sendCompare(long inquiryId) {
+
+        QuoteExample example = new QuoteExample();
+        example.createCriteria().andInquiryIdEqualTo(inquiryId).andIsActiveEqualTo(1);
+        List<Quote> list = quoteMapper.selectByExample(example);
+
+        SysProCheckExample proCheckExample = new SysProCheckExample();
+
+        for (Quote quote : list){
+            proCheckExample.createCriteria().andQuoteIdEqualTo(quote.getId());
+            List<SysProCheck> proChecks = sysProCheckMapper.selectByExample(proCheckExample);
+            if (proChecks.size() > 0){
+                SysProCheck sysProCheck = proChecks.get(0);
+                if (sysProCheck.getBusinessAudit() == 0 || sysProCheck.getTechnicalAudit() == 0){
+                    throw new CustomerException("未审核，勿发往比价!");
+                }else {
+                    if (sysProCheck.getCompareAudit() == null){
+                        //发往比价；比价状态初始化
+                        sysProCheck.setCompareAudit(0);
+                        sysProCheck.setCompareRemark("");
+                        sysProCheckMapper.updateByPrimaryKeySelective(sysProCheck);
+                    }else {
+                        throw new CustomerException("已提交发往比价，勿重复操作!");
+                    }
+                }
+            }else {
+                throw new CustomerException("请先送审，等待审核结果后再提交比价!");
+            }
+        }
+    }
+
+    @Override
+    public List<Inquiry> findInquiryByProDetailId(long proDetailId) {
+        InquiryExample example = new InquiryExample();
+        example.createCriteria().andProDetailIdEqualTo(proDetailId).andIsActiveEqualTo(CommonConstant.EFFECTIVE).andVetoEqualTo(CommonConstant.NOT_VETOED);
+        List<Inquiry> inquiries = inquiryMapper.selectByExample(example);
+        return inquiries;
+    }
+
+    @Override
+    public List<FinallyQuoteInquiryVM> findQuoteByInquiryId(long[] inquiryIds) {
+
+        List<FinallyQuoteInquiryVM> list = new ArrayList<>();
+        for (long id : inquiryIds){
+
+            List<FinallyQuoteInquiryVM> finallyCheckCompareVMS = quoteAndInquiry.findQuoteByInquiryId(id);
+            //查询按升序排的，所以第一个报价商价格最低，设置标志为1
+            finallyCheckCompareVMS.get(0).setMinPrice(1);
+            list.addAll(finallyCheckCompareVMS);
+        }
+        list.stream().sorted(Comparator.comparing(FinallyQuoteInquiryVM::getSupplier)).collect(Collectors.toList());
+        return list;
+    }
+
 
     /**
      * 报价逻辑删
