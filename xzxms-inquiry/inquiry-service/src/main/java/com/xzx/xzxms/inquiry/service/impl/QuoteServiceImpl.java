@@ -521,20 +521,6 @@ public class QuoteServiceImpl implements IQuoteService {
     public List<InquiryVM> findInquiryByProDetailId(long proDetailId) {
 
         List<InquiryVM> inquiryVMS = inquiryExtendMapper.findInquiryByProId(proDetailId);
-        /*List<InquiryVM> inquiryVMS = new ArrayList<>();
-        InquiryExample example = new InquiryExample();
-        example.createCriteria().andProDetailIdEqualTo(proDetailId).andIsActiveEqualTo(CommonConstant.EFFECTIVE).andVetoEqualTo(CommonConstant.NOT_VETOED);
-        List<Inquiry> inquiries = inquiryMapper.selectByExample(example);
-        for(Inquiry inquiry : inquiries){
-            List<QuoteProCheckExtend> quoteProCheckExtends = inquiryQuoteCheckExtendMapper.findQuoteAndCheck(inquiry.getId());
-            boolean status = quoteProCheckExtends.stream().filter(x->x.getCompareAudit() == 0).findAny().isPresent();
-            InquiryVM inquiryVM = (InquiryVM) inquiry;
-            if (status){
-                inquiryVM.setCompareNum(0);
-            }
-            inquiryVMS.add(inquiryVM);
-        }*/
-
         return inquiryVMS;
     }
 
