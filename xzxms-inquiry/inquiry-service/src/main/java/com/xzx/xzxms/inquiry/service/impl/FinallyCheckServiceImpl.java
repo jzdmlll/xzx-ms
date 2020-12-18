@@ -112,6 +112,7 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
             sysProCheckMapper.updateByPrimaryKeySelective(proCheck);
             //选中信息插入产品池中
             QuoteExtendInquiry quoteExtendInquiry = quoteAndInquiryExtendMapper.findByQuoteId(id);
+
             ProPool proPool = new ProPool();
             proPool.setId(IDUtils.getId());
             proPool.setName(quoteExtendInquiry.getInquiry().getName());

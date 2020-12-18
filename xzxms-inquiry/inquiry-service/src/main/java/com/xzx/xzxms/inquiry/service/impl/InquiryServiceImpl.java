@@ -228,16 +228,6 @@ public class InquiryServiceImpl implements IInquiryService {
     }
 
     @Override
-    public void compareUpdateDraft(Inquiry inquiry) {
-        int count = quoteAndInquiryExtendMapper.findIsExistFinally(inquiry.getId());
-        if (count > 0){
-            throw new CustomerException("该询价内容已被终审，请勿再修改拟定报价!");
-        }
-        inquiry.setTime(new Date().getTime());
-        inquiryMapper.updateByPrimaryKeySelective(inquiry);
-    }
-
-    @Override
     public void finallyUpdateDraft(Inquiry inquiry) {
         inquiry.setTime(new Date().getTime());
         inquiryMapper.updateByPrimaryKeySelective(inquiry);

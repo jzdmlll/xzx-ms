@@ -2,10 +2,10 @@ package com.xzx.xzxms.inquiry.controller;
 
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
+import com.xzx.xzxms.inquiry.bean.Inquiry;
 import com.xzx.xzxms.inquiry.service.ICompareService;
 import com.xzx.xzxms.inquiry.service.IInquiryService;
 import com.xzx.xzxms.inquiry.bean.extend.InquiryAndProDetailExtend;
-import com.xzx.xzxms.inquiry.service.IQuoteService;
 import com.xzx.xzxms.inquiry.vm.*;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +24,6 @@ public class CompareController {
     private IInquiryService inquiryServiceImpl;
     @Resource
     private ICompareService compareServiceImpl;
-    @Resource
-    private IQuoteService iQuoteServiceImpl;
 
     @ApiOperation("根据项目或比价状态查询")
     @GetMapping("findByProIdOrCompareStatus")
@@ -67,7 +65,7 @@ public class CompareController {
     @GetMapping("findInquiryByProDetailId")
     public Message findInquiryByProDetailId(long proDetailId){
 
-        List<InquiryVM> list = iQuoteServiceImpl.findInquiryByProDetailId(proDetailId);
+        List<InquiryVM> list = compareServiceImpl.findInquiryByProDetailId(proDetailId);
         return MessageUtil.success("查询成功",list);
     }
 
@@ -75,9 +73,27 @@ public class CompareController {
     @GetMapping("findQuoteByInquiryId")
     public Message findQuoteByInquiryId(long[] inquiryIds){
 
-        List<FinallyQuoteInquiryVM> list = iQuoteServiceImpl.findQuoteByInquiryId(inquiryIds);
+        List<CompareQuoteListVM> list = compareServiceImpl.findQuoteByInquiryId(inquiryIds);
         return MessageUtil.success("查询成功",list);
     }
+
+    @ApiOperation("设置项目下所有询价的利率")
+    @PostMapping("setInquiryRate")
+    public Message setInquiryRate(long proDetailId,Integer rate){
+
+        compareServiceImpl.setInquiryRate(proDetailId,rate);
+        return MessageUtil.success("查询成功");
+    }
+
+    @ApiOperation("比价修改拟定报价")
+    @PostMapping("compareUpdateDraft")
+    public Message compareUpdateDraft(@RequestBody Inquiry inquiry){
+
+        compareServiceImpl.compareUpdateDraft(inquiry);
+        return MessageUtil.success("操作成功");
+    }
+
+
 }
 
 

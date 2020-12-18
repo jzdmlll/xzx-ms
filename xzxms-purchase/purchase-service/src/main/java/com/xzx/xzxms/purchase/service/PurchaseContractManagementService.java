@@ -13,7 +13,7 @@ import java.util.List;
  * @修改时间：2020/12/15 20:01
  * @修改描述：默认描述
  */
-@Repository
+
 public interface PurchaseContractManagementService {
 
     /**

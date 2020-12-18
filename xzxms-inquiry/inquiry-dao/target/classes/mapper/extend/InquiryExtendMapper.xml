@@ -150,11 +150,11 @@
     <select id="findInquiryByProId" resultMap="InquiryCompareNumMap">
         select i.* from inquiry i where pro_detail_id = #{proDetailId} and i.is_active = 1
     </select>
+    <resultMap id="InquiryCompareNumMap" type="com.xzx.xzxms.inquiry.vm.InquiryVM" extends="com.xzx.xzxms.inquiry.dao.InquiryMapper.BaseResultMap">
+        <association property="unCompareNum" column="id" select="findCompareNumByInquiryId"></association>
+    </resultMap>
     <select id="findCompareNumByInquiryId" resultType="int">
         select count(1) from quote q left join sys_pro_check spc on q.id = spc.quote_id
         where q.inquiry_id = #{id} and q.is_active = 1 and spc.compare_audit = 0
     </select>
-    <resultMap id="InquiryCompareNumMap" type="com.xzx.xzxms.inquiry.vm.InquiryVM" extends="com.xzx.xzxms.inquiry.dao.InquiryMapper.BaseResultMap">
-        <association property="unCompareNum" column="id" select="findCompareNumByInquiryId"></association>
-    </resultMap>
 </mapper>

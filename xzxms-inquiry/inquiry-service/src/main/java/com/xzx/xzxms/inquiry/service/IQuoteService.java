@@ -75,17 +75,4 @@ public interface IQuoteService {
      * @param inquiryId
      */
     void sendCompare(long inquiryId);
-
-    /**
-     * 根据项目详情ID查询出所有询价需求
-     * @param proDetailId
-     */
-    List<InquiryVM> findInquiryByProDetailId(long proDetailId);
-
-    /**
-     * 根据询价ID查询出比价
-     * @param inquiryIds
-     * @return
-     */
-    List<FinallyQuoteInquiryVM> findQuoteByInquiryId(long[] inquiryIds);
 }

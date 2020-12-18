@@ -1,20 +1,24 @@
 package com.xzx.xzxms.inquiry.service.impl;
 
 import com.xzx.xzxms.commons.utils.CustomerException;
+import com.xzx.xzxms.inquiry.bean.InquiryExample;
 import com.xzx.xzxms.inquiry.dao.InquiryMapper;
 import com.xzx.xzxms.inquiry.dao.SysProCheckMapper;
 import com.xzx.xzxms.inquiry.dao.extend.CompareExtendMapper;
+import com.xzx.xzxms.inquiry.dao.extend.InquiryExtendMapper;
+import com.xzx.xzxms.inquiry.dao.extend.InquiryQuoteCheckExtendMapper;
+import com.xzx.xzxms.inquiry.dao.extend.QuoteAndInquiryExtendMapper;
 import com.xzx.xzxms.inquiry.service.ICompareService;
 import com.xzx.xzxms.inquiry.bean.Inquiry;
 import com.xzx.xzxms.inquiry.bean.SysProCheck;
 import com.xzx.xzxms.inquiry.bean.extend.SysCheckExtend;
-import com.xzx.xzxms.inquiry.vm.CompareReqVM;
-import com.xzx.xzxms.inquiry.vm.QuoteRespVM;
+import com.xzx.xzxms.inquiry.vm.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class CompareServiceImpl implements ICompareService {
@@ -24,6 +28,12 @@ public class CompareServiceImpl implements ICompareService {
     private SysProCheckMapper sysProCheckMapper;
     @Resource
     private InquiryMapper inquiryMapper;
+    @Resource
+    private InquiryExtendMapper inquiryExtendMapper;
+    @Resource
+    private QuoteAndInquiryExtendMapper quoteAndInquiry;
+    @Resource
+    private QuoteAndInquiryExtendMapper quoteAndInquiryExtendMapper;
 
     @Override
     public List<QuoteRespVM> cascadeFindAllByParams(long inquiryId) {
@@ -97,5 +107,49 @@ public class CompareServiceImpl implements ICompareService {
             inquiry.setTotalPrice(Double.parseDouble(map.get("totalPrice").toString()));
             inquiryMapper.updateByPrimaryKeySelective(inquiry);
         }
+    }
+
+    @Override
+    public void setInquiryRate(long proDetailId,Integer rate) {
+        InquiryExample example = new InquiryExample();
+        Inquiry inquiry = new Inquiry();
+        inquiry.setProDetailId(proDetailId);
+        inquiry.setInquiryRate(rate);
+        example.createCriteria().andProDetailIdEqualTo(proDetailId);
+        inquiryMapper.updateByExampleSelective(inquiry,example);
+    }
+
+    @Override
+    public List<InquiryVM> findInquiryByProDetailId(long proDetailId) {
+
+        List<InquiryVM> inquiryVMS = inquiryExtendMapper.findInquiryByProId(proDetailId);
+        return inquiryVMS;
+    }
+
+    @Override
+    public List<CompareQuoteListVM> findQuoteByInquiryId(long[] inquiryIds) {
+
+        List<CompareQuoteListVM> list = compareExtendMapper.findQuoteListByInquiry(inquiryIds);
+
+//        List<FinallyQuoteInquiryVM> list = new ArrayList<>();
+//        for (long id : inquiryIds){
+//
+//            List<FinallyQuoteInquiryVM> finallyCheckCompareVMS = quoteAndInquiry.findQuoteByInquiryId(id);
+//            //查询按升序排的，所以第一个报价商价格最低，设置标志为1
+//            finallyCheckCompareVMS.get(0).setMinPrice(1);
+//            list.addAll(finallyCheckCompareVMS);
+//        }
+//        list.stream().sorted(Comparator.comparing(FinallyQuoteInquiryVM::getSupplier)).collect(Collectors.toList());
+        return list;
+    }
+
+    @Override
+    public void compareUpdateDraft(Inquiry inquiry) {
+        int count = quoteAndInquiryExtendMapper.findIsExistFinally(inquiry.getId());
+        if (count > 0){
+            throw new CustomerException("该询价内容已被终审，请勿再修改拟定报价!");
+        }
+        inquiry.setTime(new Date().getTime());
+        inquiryMapper.updateByPrimaryKeySelective(inquiry);
     }
 }

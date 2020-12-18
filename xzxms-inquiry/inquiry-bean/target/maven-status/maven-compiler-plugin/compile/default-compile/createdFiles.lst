@@ -4,6 +4,7 @@ com\xzx\xzxms\inquiry\bean\SysProCheckExample$Criteria.class
 com\xzx\xzxms\inquiry\vm\ProDetailReqVM.class
 com\xzx\xzxms\inquiry\bean\SysProOrigin.class
 com\xzx\xzxms\inquiry\bean\SysProCheck.class
+com\xzx\xzxms\inquiry\vm\InquiryVM.class
 com\xzx\xzxms\inquiry\bean\ProPoolExample.class
 com\xzx\xzxms\inquiry\vm\FinallyCheckReqVM.class
 com\xzx\xzxms\inquiry\bean\SupplierExample$Criteria.class
@@ -72,5 +73,6 @@ com\xzx\xzxms\inquiry\bean\ProPoolExample$GeneratedCriteria.class
 com\xzx\xzxms\inquiry\bean\SysProType.class
 com\xzx\xzxms\inquiry\bean\InquiryExample.class
 com\xzx\xzxms\inquiry\bean\SysProCheckExample$GeneratedCriteria.class
+com\xzx\xzxms\inquiry\vm\CompareQuoteListVM.class
 com\xzx\xzxms\inquiry\vm\QuoteRespVM.class
 com\xzx\xzxms\inquiry\bean\QuoteExample$GeneratedCriteria.class

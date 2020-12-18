@@ -1,5 +1,6 @@
 package com.xzx.xzxms.inquiry.dao.extend;
 
+import com.xzx.xzxms.inquiry.vm.CompareQuoteListVM;
 import com.xzx.xzxms.inquiry.vm.QuoteRespVM;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -27,4 +28,6 @@ public interface CompareExtendMapper {
             ") " +
             "and pc.type=\"最终审核\" and pc.check_status != 0")
     int isFinalCheck(long proCheckId);
+
+    List<CompareQuoteListVM> findQuoteListByInquiry(long[] inquiryIds);
 }

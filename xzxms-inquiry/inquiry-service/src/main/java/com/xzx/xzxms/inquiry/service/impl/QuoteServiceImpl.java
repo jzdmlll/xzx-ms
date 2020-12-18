@@ -1,10 +1,8 @@
 package com.xzx.xzxms.inquiry.service.impl;
 
-import com.xzx.xzxms.commons.constant.CommonConstant;
 import com.xzx.xzxms.commons.dao.redis.JedisDao;
 import com.xzx.xzxms.commons.utils.*;
 import com.xzx.xzxms.inquiry.dao.*;
-import com.xzx.xzxms.inquiry.dao.extend.InquiryExtendMapper;
 import com.xzx.xzxms.inquiry.dao.extend.InquiryQuoteCheckExtendMapper;
 import com.xzx.xzxms.inquiry.dao.extend.QuoteAndInquiryExtendMapper;
 import com.xzx.xzxms.inquiry.service.IQuoteService;
@@ -12,8 +10,6 @@ import com.xzx.xzxms.inquiry.bean.*;
 import com.xzx.xzxms.inquiry.bean.extend.QuoteExtend;
 import com.xzx.xzxms.inquiry.bean.extend.QuoteExtendInquiry;
 import com.xzx.xzxms.inquiry.bean.extend.QuoteProCheckExtend;
-import com.xzx.xzxms.inquiry.vm.FinallyQuoteInquiryVM;
-import com.xzx.xzxms.inquiry.vm.InquiryVM;
 import com.xzx.xzxms.system.bean.SysFile;
 import com.xzx.xzxms.system.bean.SysFileExample;
 import com.xzx.xzxms.system.bean.extend.SysFileExtend;
@@ -28,7 +24,6 @@ import javax.annotation.Resource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class QuoteServiceImpl implements IQuoteService {
@@ -52,8 +47,7 @@ public class QuoteServiceImpl implements IQuoteService {
     private InquiryPoolMapper inquiryPoolMapper;
     @Resource
     private InquiryQuoteCheckExtendMapper inquiryQuoteCheckExtendMapper;
-    @Resource
-    private InquiryExtendMapper inquiryExtendMapper;
+
 
     @Override
     public List<QuoteProCheckExtend> findByInquiryId(long inquiryId) {
@@ -516,29 +510,6 @@ public class QuoteServiceImpl implements IQuoteService {
             }
         }
     }
-
-    @Override
-    public List<InquiryVM> findInquiryByProDetailId(long proDetailId) {
-
-        List<InquiryVM> inquiryVMS = inquiryExtendMapper.findInquiryByProId(proDetailId);
-        return inquiryVMS;
-    }
-
-    @Override
-    public List<FinallyQuoteInquiryVM> findQuoteByInquiryId(long[] inquiryIds) {
-
-        List<FinallyQuoteInquiryVM> list = new ArrayList<>();
-        for (long id : inquiryIds){
-
-            List<FinallyQuoteInquiryVM> finallyCheckCompareVMS = quoteAndInquiry.findQuoteByInquiryId(id);
-            //查询按升序排的，所以第一个报价商价格最低，设置标志为1
-            finallyCheckCompareVMS.get(0).setMinPrice(1);
-            list.addAll(finallyCheckCompareVMS);
-        }
-        list.stream().sorted(Comparator.comparing(FinallyQuoteInquiryVM::getSupplier)).collect(Collectors.toList());
-        return list;
-    }
-
 
     /**
      * 报价逻辑删

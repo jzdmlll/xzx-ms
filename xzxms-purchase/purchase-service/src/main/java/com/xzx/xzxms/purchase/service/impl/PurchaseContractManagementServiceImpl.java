@@ -17,7 +17,6 @@ import java.util.List;
  * @修改描述：默认描述
  */
 @Service
-@Repository
 public class PurchaseContractManagementServiceImpl implements PurchaseContractManagementService {
 
     @Autowired
