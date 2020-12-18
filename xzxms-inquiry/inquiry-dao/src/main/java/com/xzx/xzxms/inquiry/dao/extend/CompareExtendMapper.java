@@ -29,5 +29,5 @@ public interface CompareExtendMapper {
             "and pc.type=\"最终审核\" and pc.check_status != 0")
     int isFinalCheck(long proCheckId);
 
-    List<CompareQuoteListVM> findQuoteListByInquiry(long[] inquiryIds);
+    List<CompareQuoteListVM> findQuoteListByInquiry(@Param("inquiryIds") long[] inquiryIds);
 }

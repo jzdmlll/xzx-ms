@@ -7,6 +7,7 @@ import com.xzx.xzxms.inquiry.service.ICompareService;
 import com.xzx.xzxms.inquiry.service.IInquiryService;
 import com.xzx.xzxms.inquiry.bean.extend.InquiryAndProDetailExtend;
 import com.xzx.xzxms.inquiry.vm.*;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
@@ -70,7 +71,8 @@ public class CompareController {
     }
 
     @ApiOperation("根据询价ID查询出比价")
-    @GetMapping("findQuoteByInquiryId")
+
+    @PostMapping("findQuoteByInquiryId")
     public Message findQuoteByInquiryId(long[] inquiryIds){
 
         List<CompareQuoteListVM> list = compareServiceImpl.findQuoteByInquiryId(inquiryIds);
@@ -81,8 +83,8 @@ public class CompareController {
     @PostMapping("setInquiryRate")
     public Message setInquiryRate(long proDetailId,Integer rate){
 
-        compareServiceImpl.setInquiryRate(proDetailId,rate);
-        return MessageUtil.success("查询成功");
+        compareServiceImpl.setInquiryRate(proDetailId, rate);
+        return MessageUtil.success("设置成功");
     }
 
     @ApiOperation("比价修改拟定报价")

@@ -45,19 +45,19 @@
         order by spc.quote_id
     </select>
 
-<!--    id id,i.name name,i,code code,i.real_brand i_real_brand,i.brand,i.params params,i.model model,i.unit unit,i.number number,i.totalPrice-->
+<!--    id i_id,i.name i_name,i,code i_code,i.real_brand i_real_brand,i.brand i_brand,i.params i_params,i.model i_model,i.unit i_unit,i.number i_number,i.total_price i_total_price-->
     <select id="findQuoteListByInquiry" resultMap="compareInquiry">
         select i.*
         from inquiry i where i.is_active = 1 and i.id in
-        <foreach collection="list" item="inquiryIds" index="index" open = "(" close = ")" separator=",">
-            #{inquiryIds}
+        <foreach collection="inquiryIds" item="inquiryId" index="index" open = "(" close = ")" separator=",">
+            #{inquiryId}
         </foreach>
     </select>
     <resultMap id="compareInquiry" type="com.xzx.xzxms.inquiry.vm.CompareQuoteListVM">
-        <association property="inquiry" javaType="com.xzx.xzxms.inquiry.bean.Inquiry" autoMapping="true" columnPrefix="i_"></association>
+        <association property="inquiry" javaType="com.xzx.xzxms.inquiry.bean.Inquiry" autoMapping="true" columnPrefix=""></association>
         <collection property="quotes" column="id" select="findQuote"/>
     </resultMap>
-    <select id="findQuote">
+    <select id="findQuote" resultType="com.xzx.xzxms.inquiry.bean.Quote">
         select * from quote where is_active = 1 and inquiry_id = #{id}
     </select>
 </mapper>
