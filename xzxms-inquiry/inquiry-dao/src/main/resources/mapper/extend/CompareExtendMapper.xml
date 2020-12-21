@@ -55,9 +55,10 @@
     </select>
     <resultMap id="compareInquiry" type="com.xzx.xzxms.inquiry.vm.CompareQuoteListVM">
         <association property="inquiry" javaType="com.xzx.xzxms.inquiry.bean.Inquiry" autoMapping="true" columnPrefix=""></association>
-        <collection property="quotes" column="id" select="findQuote"/>
+        <collection property="quotes" column="id" select="cascadeFindAllByParams"/>
     </resultMap>
-    <select id="findQuote" resultType="com.xzx.xzxms.inquiry.bean.Quote">
+
+    <!--<select id="findQuote" resultType="com.xzx.xzxms.inquiry.bean.Quote">
         select * from quote where is_active = 1 and inquiry_id = #{id}
-    </select>
+    </select>-->
 </mapper>
