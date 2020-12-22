@@ -206,7 +206,7 @@ public class CompareServiceImpl implements ICompareService {
 
     @Transactional
     @Override
-    public void compareResultCommit(compareVM compareVM) {
+    public void compareResultCommit(CompareVM compareVM) {
 
         List<Long> longs = new ArrayList<>();
 

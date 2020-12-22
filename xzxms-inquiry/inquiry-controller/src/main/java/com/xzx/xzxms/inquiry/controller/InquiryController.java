@@ -5,7 +5,9 @@ import com.xzx.xzxms.commons.utils.MessageUtil;
 import com.xzx.xzxms.inquiry.service.IInquiryService;
 import com.xzx.xzxms.inquiry.bean.Inquiry;
 import com.xzx.xzxms.inquiry.bean.extend.InquiryExtend;
+import com.xzx.xzxms.inquiry.service.IProPurchaseService;
 import com.xzx.xzxms.inquiry.vm.BatchInquiryVM;
+import com.xzx.xzxms.inquiry.vm.ProPurchase;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +20,8 @@ import java.util.List;
 public class InquiryController {
     @Resource
     private IInquiryService iInquiryServiceImpl;
+    @Resource
+    private IProPurchaseService proPurchaseServiceImpl;
 
     @ApiOperation("根据项目id查询所有询价")
     @GetMapping("findByProDetailId")
@@ -108,5 +112,12 @@ public class InquiryController {
     public Message modifyDeviceType(long[] inquiryIds, Long code){
         iInquiryServiceImpl.modifyDeviceType(inquiryIds, code);
         return MessageUtil.success("success");
+    }
+
+    @ApiOperation("查询项目采购内容")
+    @GetMapping("findProPurchase")
+    public Message findProPurchase(@RequestParam(value = "proDetailId",required = false,defaultValue = "-1") long proDetailId){
+        List<ProPurchase> proPurchases = proPurchaseServiceImpl.findProPurchase(proDetailId);
+        return MessageUtil.success("success", proPurchases);
     }
 }

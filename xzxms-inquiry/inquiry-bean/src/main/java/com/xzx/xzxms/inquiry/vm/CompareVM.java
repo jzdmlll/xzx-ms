@@ -2,7 +2,7 @@ package com.xzx.xzxms.inquiry.vm;
 
 import java.util.List;
 
-public class compareVM {
+public class CompareVM {
     private List<QuoteExtend> quoteList;
 
     public List<QuoteExtend> getQuoteList() {

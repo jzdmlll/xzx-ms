@@ -3,12 +3,10 @@ package com.xzx.xzxms.inquiry.controller;
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
 import com.xzx.xzxms.inquiry.bean.Inquiry;
-import com.xzx.xzxms.inquiry.bean.extend.QuoteExtend;
 import com.xzx.xzxms.inquiry.service.ICompareService;
 import com.xzx.xzxms.inquiry.service.IInquiryService;
 import com.xzx.xzxms.inquiry.bean.extend.InquiryAndProDetailExtend;
 import com.xzx.xzxms.inquiry.vm.*;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
@@ -97,8 +95,7 @@ public class CompareController {
 
     @ApiOperation("比价结果提交")
     @PostMapping("compareResultCommit")
-    public Message compareResultCommit(@RequestBody compareVM compareVM){
-
+    public Message compareResultCommit(@RequestBody CompareVM compareVM){
         compareServiceImpl.compareResultCommit(compareVM);
         return MessageUtil.success("操作成功");
     }
