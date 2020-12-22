@@ -2,6 +2,8 @@ package com.xzx.xzxms.purchase.service.impl;
 
 import com.xzx.xzxms.purchase.dao.extend.PurchaseContractManagementExtendMapper;
 import com.xzx.xzxms.purchase.service.PurchaseContractManagementService;
+import com.xzx.xzxms.purchase.vm.PurchaseContractVM;
+import com.xzx.xzxms.purchase.vm.PurchaseProjectVM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import java.util.List;
  * @修改描述：默认描述
  */
 @Service
+@Repository
 public class PurchaseContractManagementServiceImpl implements PurchaseContractManagementService {
 
     @Autowired
@@ -24,12 +27,37 @@ public class PurchaseContractManagementServiceImpl implements PurchaseContractMa
 
     /**
      * 查找所有符合条件的项目
-     * @param project_name
+     * @param projectName
      * @return
      */
     @Override
-    public List<String> FindAllProjectsService(String project_name) {
-        List<String> allProjects = purchaseContractManagementExtendMapper.FindAllProjects(project_name);
+    public List<PurchaseProjectVM> findAllProjectsService(String projectName) {
+        List<PurchaseProjectVM> allProjects = purchaseContractManagementExtendMapper.findAllProjects(projectName);
         return allProjects;
+    }
+
+    /**
+     * 根据项目id去查找其所有相关的合同信息
+     * @param project_id
+     * @return
+     */
+    @Override
+    public List<PurchaseContractVM> findContractByProjectId(Long project_id) {
+        List<PurchaseContractVM> contractList = purchaseContractManagementExtendMapper.findContractByProjectId(project_id);
+        return contractList;
+    }
+
+    /**
+     * 根据合同id修改合同审核级别
+     * @param firstAudit
+     * @param secondAudit
+     * @param threeAudit
+     * @param id
+     * @return
+     */
+    @Override
+    public String updateContractAuditByIdService(Integer firstAudit, Integer secondAudit, Integer threeAudit, Long id) {
+        purchaseContractManagementExtendMapper.updateContractAuditById(firstAudit, secondAudit, threeAudit, id);
+        return "success";
     }
 }

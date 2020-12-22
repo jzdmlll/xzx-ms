@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzx.xzxms.purchase.dao.extend.PurchasePlanExtendMapper">
+
+    <resultMap id="PurchaseItemsVM" type="com.xzx.xzxms.purchase.vm.PurchaseItemsVM">
+        <result column="id" property="id" jdbcType="BIGINT" />
+        <result column="contract_id" property="contractId" jdbcType="BIGINT" />
+        <result column="project_id" property="projectId" jdbcType="VARCHAR" />
+        <result column="serial_number" property="serialNumber" jdbcType="INTEGER" />
+        <result column="item" property="item" jdbcType="VARCHAR" />
+        <result column="brand" property="brand" jdbcType="VARCHAR" />
+        <result column="params" property="params" jdbcType="VARCHAR" />
+        <result column="model" property="model" jdbcType="VARCHAR" />
+        <result column="unit" property="unit" jdbcType="VARCHAR" />
+        <result column="number" property="number" jdbcType="INTEGER" />
+        <result column="is_inquiry" property="isInquiry" jdbcType="INTEGER" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="is_active" property="isActive" jdbcType="INTEGER" />
+        <result column="operator" property="operator" jdbcType="BIGINT" />
+        <result column="time" property="time" jdbcType="BIGINT" />
+    </resultMap>
+
+    <select id="findItemsByProjectId" parameterType="string" resultMap="PurchaseItemsVM">
+        select id,contract_id,project_id,serial_number,item,brand,params,model,unit,number,is_inquiry,remark,is_active,operator,time
+        from purchase_items
+        where project_id=#{projectId}
+    </select>
+</mapper>

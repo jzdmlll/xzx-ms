@@ -65,6 +65,7 @@ public class Swagger {
 			for (String strPackage : basePackage.split(splitor)) {
 				boolean isMatch = input.getPackage().getName().startsWith(strPackage);
 				if (isMatch) {
+					//System.out.println(input.getPackage().getName());
 					return true;
 				}
 			}
