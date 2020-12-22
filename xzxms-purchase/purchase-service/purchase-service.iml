@@ -20,7 +20,12 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="purchase-bean" />
+    <orderEntry type="module" module-name="inquiry-bean" />
     <orderEntry type="module" module-name="purchase-dao" />
+    <orderEntry type="module" module-name="xzxms-commons" />
+    <orderEntry type="module" module-name="system-bean" />
+    <orderEntry type="module" module-name="system-dao" />
+    <orderEntry type="library" name="Maven: com.alibaba:fastjson:1.2.72" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-web:2.2.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter:2.2.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-logging:2.2.1.RELEASE" level="project" />

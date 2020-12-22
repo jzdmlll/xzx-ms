@@ -2,65 +2,30 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f009ff52-4370-45f8-9b7c-07e6aa11fab6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/xzxms-commons/src/main/java/com/xzx/xzxms/commons/aspect/AutoLogAspect.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xzxms-commons/src/main/java/com/xzx/xzxms/commons/aspect/annotation/AutoLog.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xzxms-commons/src/main/java/com/xzx/xzxms/commons/constant/CommonConstant.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xzxms-commons/src/main/java/com/xzx/xzxms/commons/model/base/service/BaseCommonService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xzxms-commons/src/main/java/com/xzx/xzxms/commons/model/base/service/impl/BaseCommonServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xzxms-commons/src/main/java/com/xzx/xzxms/commons/utils/IPUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xzxms-commons/src/main/java/com/xzx/xzxms/commons/utils/SpringContextUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-bean/src/main/java/com/xzx/xzxms/inquiry/vm/CompareQuoteListVM.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-bean/src/main/java/com/xzx/xzxms/inquiry/vm/InquiryVM.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xzxms-purchase/purchase-bean/src/main/java/com/xzx/xzxms/purchase/bean/vm/PurchaseProjectVM.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xzxms-purchase/purchase-controller/src/main/java/com/xzx/xzxms/purchase/controller/PurchaseContractManagementController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xzxms-purchase/purchase-dao/src/main/java/com/xzx/xzxms/purchase/dao/extend/PurchaseContractManagementExtendMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xzxms-purchase/purchase-dao/src/main/resources/mapper/extend/PurchaseContractManagementExtendMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xzxms-purchase/purchase-dao/src/main/resources/mapper/extend/PurchaseProjectExtendMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xzxms-purchase/purchase-service/src/main/java/com/xzx/xzxms/purchase/service/PurchaseContractManagementService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/xzxms-purchase/purchase-service/src/main/java/com/xzx/xzxms/purchase/service/impl/PurchaseContractManagementServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xzxms-boot/src/test/java/com/xzx/xzxms/XzxmsBootApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-boot/src/test/java/com/xzx/xzxms/XzxmsBootApplicationTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xzxms-commons/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-commons/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/inquiry-bean/src/main/java/com/xzx/xzxms/inquiry/bean/Inquiry.java" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-bean/src/main/java/com/xzx/xzxms/inquiry/bean/Inquiry.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/inquiry-bean/src/main/java/com/xzx/xzxms/inquiry/bean/InquiryExample.java" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-bean/src/main/java/com/xzx/xzxms/inquiry/bean/InquiryExample.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/inquiry-bean/src/main/java/com/xzx/xzxms/inquiry/bean/extend/QuoteProCheckExtend.java" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-bean/src/main/java/com/xzx/xzxms/inquiry/bean/extend/QuoteProCheckExtend.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/inquiry-controller/src/main/java/com/xzx/xzxms/inquiry/controller/CompareController.java" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-controller/src/main/java/com/xzx/xzxms/inquiry/controller/CompareController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/inquiry-controller/src/main/java/com/xzx/xzxms/inquiry/controller/InquiryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-controller/src/main/java/com/xzx/xzxms/inquiry/controller/InquiryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/java/com/xzx/xzxms/inquiry/dao/InquiryMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/java/com/xzx/xzxms/inquiry/dao/InquiryMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/java/com/xzx/xzxms/inquiry/dao/extend/CompareExtendMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/java/com/xzx/xzxms/inquiry/dao/extend/CompareExtendMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/java/com/xzx/xzxms/inquiry/dao/extend/InquiryExtendMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/java/com/xzx/xzxms/inquiry/dao/extend/InquiryExtendMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/java/com/xzx/xzxms/inquiry/dao/extend/QuoteAndInquiryExtendMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/java/com/xzx/xzxms/inquiry/dao/extend/QuoteAndInquiryExtendMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/InquiryMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/InquiryMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/extend/CompareExtendMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/extend/CompareExtendMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/extend/InquiryExtendMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/extend/InquiryExtendMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/extend/QuoteAndInquiryMappler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-dao/src/main/resources/mapper/extend/QuoteAndInquiryMappler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/inquiry-service/src/main/java/com/xzx/xzxms/inquiry/service/ICompareService.java" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-service/src/main/java/com/xzx/xzxms/inquiry/service/ICompareService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/inquiry-service/src/main/java/com/xzx/xzxms/inquiry/service/IFinallyCheckService.java" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-service/src/main/java/com/xzx/xzxms/inquiry/service/IFinallyCheckService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/inquiry-service/src/main/java/com/xzx/xzxms/inquiry/service/IInquiryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-service/src/main/java/com/xzx/xzxms/inquiry/service/IInquiryService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/inquiry-service/src/main/java/com/xzx/xzxms/inquiry/service/IQuoteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-service/src/main/java/com/xzx/xzxms/inquiry/service/IQuoteService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/inquiry-service/src/main/java/com/xzx/xzxms/inquiry/service/ISysProDetailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-service/src/main/java/com/xzx/xzxms/inquiry/service/ISysProDetailService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/inquiry-service/src/main/java/com/xzx/xzxms/inquiry/service/impl/CompareServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-service/src/main/java/com/xzx/xzxms/inquiry/service/impl/CompareServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/inquiry-service/src/main/java/com/xzx/xzxms/inquiry/service/impl/FinallyCheckServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-service/src/main/java/com/xzx/xzxms/inquiry/service/impl/FinallyCheckServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/inquiry-service/src/main/java/com/xzx/xzxms/inquiry/service/impl/InquiryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-service/src/main/java/com/xzx/xzxms/inquiry/service/impl/InquiryServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/inquiry-service/src/main/java/com/xzx/xzxms/inquiry/service/impl/QuoteServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/inquiry-service/src/main/java/com/xzx/xzxms/inquiry/service/impl/QuoteServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xzxms-inquiry/src/main/resources/generatorConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-inquiry/src/main/resources/generatorConfig.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xzxms-parent.iml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/xzxms-purchase/purchase-bean/src/main/java/com/xzx/xzxms/purchase/bean/vm/PurchaseContractAndContractAttributeVM.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xzxms-purchase/purchase-bean/src/main/java/com/xzx/xzxms/purchase/bean/vm/PurchaseItemsAndPurchaseSupplyVM.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xzxms-purchase/purchase-bean/src/main/java/com/xzx/xzxms/purchase/bean/vm/PurchaseItemsAndSupplyVM.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xzxms-purchase/purchase-controller/src/main/java/com/xzx/xzxms/purchase/controller/ArrivalStatusController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xzxms-purchase/purchase-controller/src/main/java/com/xzx/xzxms/purchase/controller/GeneratePurchaseContractController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xzxms-purchase/purchase-dao/src/main/java/com/xzx/xzxms/purchase/dao/extend/ArrivalStatusExtendMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xzxms-purchase/purchase-dao/src/main/java/com/xzx/xzxms/purchase/dao/extend/GeneratePurchaseContractExtendMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xzxms-purchase/purchase-dao/src/main/java/com/xzx/xzxms/purchase/dao/extend/PurchaseContractExtendMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xzxms-purchase/purchase-dao/src/main/resources/mapper/extend/ArrivalStatusExtendMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xzxms-purchase/purchase-dao/src/main/resources/mapper/extend/GeneratePurchaseContractExtendMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xzxms-purchase/purchase-dao/src/main/resources/mapper/extend/PurchaseContractExtendMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xzxms-purchase/purchase-service/src/main/java/com/xzx/xzxms/purchase/service/IArrivalStatusService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xzxms-purchase/purchase-service/src/main/java/com/xzx/xzxms/purchase/service/IGeneratePurchaseContractService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xzxms-purchase/purchase-service/src/main/java/com/xzx/xzxms/purchase/service/IPurchaseContractService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xzxms-purchase/purchase-service/src/main/java/com/xzx/xzxms/purchase/service/impl/ArrivalStatusServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xzxms-purchase/purchase-service/src/main/java/com/xzx/xzxms/purchase/service/impl/GeneratePurchaseContractServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xzxms-purchase/purchase-service/src/main/java/com/xzx/xzxms/purchase/service/impl/PurchaseContractServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xzxms-purchase/purchase-bean/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-purchase/purchase-bean/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/xzxms-purchase/purchase-bean/purchase-bean.iml" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-purchase/purchase-bean/purchase-bean.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xzxms-purchase/purchase-controller/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-purchase/purchase-controller/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xzxms-purchase/purchase-controller/purchase-controller.iml" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-purchase/purchase-controller/purchase-controller.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xzxms-purchase/purchase-controller/src/main/java/com/xzx/xzxms/purchase/controller/PurchaseContractController.java" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-purchase/purchase-controller/src/main/java/com/xzx/xzxms/purchase/controller/PurchaseContractController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/xzxms-purchase/purchase-dao/purchase-dao.iml" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-purchase/purchase-dao/purchase-dao.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xzxms-purchase/purchase-dao/src/main/resources/mapper/extend/PurchaseProjectExtendMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xzxms-purchase/purchase-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-purchase/purchase-service/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/xzxms-purchase/purchase-service/purchase-service.iml" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-purchase/purchase-service/purchase-service.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xzxms-system/src/main/resources/generatorConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-system/src/main/resources/generatorConfig.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xzxms-system/system-bean/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-system/system-bean/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xzxms-system/system-bean/src/main/java/com/xzx/xzxms/system/bean/SysLog.java" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-system/system-bean/src/main/java/com/xzx/xzxms/system/bean/SysLog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xzxms-system/system-bean/src/main/java/com/xzx/xzxms/system/bean/SysLogExample.java" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-system/system-bean/src/main/java/com/xzx/xzxms/system/bean/SysLogExample.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xzxms-system/system-controller/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-system/system-controller/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xzxms-system/system-dao/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-system/system-dao/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xzxms-system/system-dao/src/main/java/com/xzx/xzxms/system/dao/SysLogMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-system/system-dao/src/main/java/com/xzx/xzxms/system/dao/SysLogMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xzxms-system/system-dao/src/main/resources/mapper/SysLogMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-system/system-dao/src/main/resources/mapper/SysLogMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xzxms-system/system-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-system/system-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xzxms-system/system-service/src/main/java/com/xzx/xzxms/system/service/impl/SysUserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/xzxms-system/system-service/src/main/java/com/xzx/xzxms/system/service/impl/SysUserServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,17 +75,25 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/xzxms-boot" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/xzxms-purchase/purchase-dao/src/main/resources/mapper/extend" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="MavenSettings" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.xzx.xzxms.purchase.bean.vm" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\11379\Desktop\xzx-parent\xzxms-purchase\purchase-dao\src\main\resources\mapper\extend" />
+    </key>
   </component>
   <component name="RunManager" selected="Spring Boot.XzxmsBootApplication">
     <configuration name="XzxMsApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
@@ -180,58 +153,78 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="223" y="71" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1607996161622" />
+    <state x="574" y="106" key="#com.intellij.ide.util.MemberChooser" timestamp="1608608929350">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="574" y="106" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1608608929350" />
     <state x="498" y="202" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1607995893297">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="498" y="202" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1536.824@0.0.1536.824" timestamp="1607995893297" />
-    <state x="549" y="113" key="FileChooserDialogImpl" timestamp="1607996066899">
+    <state x="499" y="162" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1608603116142">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="549" y="113" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1607996066899" />
-    <state width="1493" height="252" key="GridCell.Tab.0.bottom" timestamp="1608000106890">
+    <state x="499" y="162" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824@0.0.1536.824" timestamp="1608603116142" />
+    <state x="93" y="93" width="1350" height="638" key="DiffContextDialog" timestamp="1608602440385">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="252" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1608000106890" />
-    <state width="1493" height="252" key="GridCell.Tab.0.center" timestamp="1608000106890">
+    <state x="93" y="93" width="1350" height="638" key="DiffContextDialog/0.0.1536.824@0.0.1536.824" timestamp="1608602440385" />
+    <state x="549" y="113" key="FileChooserDialogImpl" timestamp="1608602867184">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="252" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1608000106890" />
-    <state width="1493" height="252" key="GridCell.Tab.0.left" timestamp="1608000106890">
+    <state x="549" y="113" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1608602867184" />
+    <state width="1493" height="497" key="GridCell.Tab.0.bottom" timestamp="1608609728683">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="252" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1608000106890" />
-    <state width="1493" height="252" key="GridCell.Tab.0.right" timestamp="1608000106890">
+    <state width="1493" height="497" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1608609728683" />
+    <state width="1493" height="497" key="GridCell.Tab.0.center" timestamp="1608609728683">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="252" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1608000106890" />
-    <state width="1493" height="252" key="GridCell.Tab.1.bottom" timestamp="1608000106890">
+    <state width="1493" height="497" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1608609728683" />
+    <state width="1493" height="497" key="GridCell.Tab.0.left" timestamp="1608609728683">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="252" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1608000106890" />
-    <state width="1493" height="252" key="GridCell.Tab.1.center" timestamp="1608000106890">
+    <state width="1493" height="497" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1608609728683" />
+    <state width="1493" height="497" key="GridCell.Tab.0.right" timestamp="1608609728683">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="252" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1608000106890" />
-    <state width="1493" height="252" key="GridCell.Tab.1.left" timestamp="1608000106890">
+    <state width="1493" height="497" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1608609728683" />
+    <state width="1493" height="497" key="GridCell.Tab.1.bottom" timestamp="1608609728683">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="252" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1608000106890" />
-    <state width="1493" height="252" key="GridCell.Tab.1.right" timestamp="1608000106890">
+    <state width="1493" height="497" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1608609728683" />
+    <state width="1493" height="497" key="GridCell.Tab.1.center" timestamp="1608609728683">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="252" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1608000106890" />
+    <state width="1493" height="497" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1608609728683" />
+    <state width="1493" height="497" key="GridCell.Tab.1.left" timestamp="1608609728683">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="497" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1608609728683" />
+    <state width="1493" height="497" key="GridCell.Tab.1.right" timestamp="1608609728683">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="497" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1608609728683" />
     <state x="431" y="116" key="NewModule_or_Project.wizard" timestamp="1607996068249">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="431" y="116" key="NewModule_or_Project.wizard/0.0.1536.824@0.0.1536.824" timestamp="1607996068249" />
-    <state x="272" y="0" key="SettingsEditor" timestamp="1607996104469">
+    <state x="272" y="0" key="SettingsEditor" timestamp="1608604626489">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="272" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1607996104469" />
-    <state x="564" y="331" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1608000263868">
+    <state x="272" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1608604626489" />
+    <state x="93" y="93" width="1350" height="638" key="com.intellij.dvcs.ui.CompareBranchesDialog" timestamp="1608602750799">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="564" y="331" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1608000263868" />
+    <state x="93" y="93" width="1350" height="638" key="com.intellij.dvcs.ui.CompareBranchesDialog/0.0.1536.824@0.0.1536.824" timestamp="1608602750799" />
+    <state x="93" y="93" width="1350" height="638" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1608602643345">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="93" y="93" width="1350" height="638" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1536.824@0.0.1536.824" timestamp="1608602643345" />
+    <state x="564" y="331" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1608602760318">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="564" y="331" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1608602760318" />
     <state x="201" y="120" key="new project wizard" timestamp="1607995931656">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
