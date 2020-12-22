@@ -2,6 +2,46 @@ package com.xzx.xzxms.commons.constant;
 
 public interface CommonConstant {
 
+    /**
+     * 有效的
+     */
+    public static final Integer EFFECTIVE = 1;
+
+    /**
+     * 无效的
+     */
+    public static final Integer INVALID = 0;
+
+    /**
+     * 否决的
+     */
+    public static final Integer VETOED = 1;
+
+    /**
+     * 未否决的
+     */
+    public static final Integer NOT_VETOED = 0;
+
+    /**
+     * 需询价的
+     */
+    public static final Integer IS_INQUIRY = 1;
+
+    /**
+     * 不需询价的
+     */
+    public static final Integer IS_NOT_INQUIRY = 0;
+
+    /**
+     * 使用过的
+     */
+    public static final Integer IS_USEFUL = 1;
+
+    /**
+     * 没使用过的
+     */
+    public static final Integer IS_NOT_USEFUL = 0;
+
 	/**
 	 * 正常状态
 	 */

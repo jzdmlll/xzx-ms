@@ -37,14 +37,6 @@ public class InquiryController {
         return MessageUtil.success("保存成功");
     }
 
-    @ApiOperation("比价修改拟定报价")
-    @PostMapping("compareUpdateDraft")
-    public Message compareUpdateDraft(@RequestBody Inquiry inquiry){
-
-        iInquiryServiceImpl.compareUpdateDraft(inquiry);
-        return MessageUtil.success("操作成功");
-    }
-
     @ApiOperation("终审修改拟定报价")
     @PostMapping("finallyUpdateDraft")
     public Message finallyUpdateDraft(@RequestBody Inquiry inquiry){

@@ -23,9 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class QuoteServiceImpl implements IQuoteService {
@@ -49,6 +47,7 @@ public class QuoteServiceImpl implements IQuoteService {
     private InquiryPoolMapper inquiryPoolMapper;
     @Resource
     private InquiryQuoteCheckExtendMapper inquiryQuoteCheckExtendMapper;
+
 
     @Override
     public List<QuoteProCheckExtend> findByInquiryId(long inquiryId) {
@@ -512,10 +511,6 @@ public class QuoteServiceImpl implements IQuoteService {
         }
     }
 
-//<<<<<<< HEAD
-//=======
-//
-//>>>>>>> origin/v.3.0
     /**
      * 报价逻辑删
      * @param id

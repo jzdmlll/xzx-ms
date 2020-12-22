@@ -28,4 +28,6 @@ public interface IFinallyCheckService {
      * @param inquiry
      */
     void refuseInquiry(Inquiry inquiry);
+
+
 }

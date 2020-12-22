@@ -1,6 +1,7 @@
 package com.xzx.xzxms.inquiry.dao.extend;
 
 import com.xzx.xzxms.inquiry.bean.extend.QuoteExtendInquiry;
+import com.xzx.xzxms.inquiry.vm.FinallyQuoteInquiryVM;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
@@ -37,4 +38,5 @@ public interface QuoteAndInquiryExtendMapper {
     int findIsExistFinally(long inquiryId);
 
 
+    List<FinallyQuoteInquiryVM> findQuoteByInquiryId(long inquiryId);
 }

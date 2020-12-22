@@ -9,6 +9,15 @@ public class QuoteProCheckExtend extends Quote {
     private int businessAudit;
     private String technicalRemark;
     private String businessRemark;
+    private int compareAudit;
+
+    public int getCompareAudit() {
+        return compareAudit;
+    }
+
+    public void setCompareAudit(int compareAudit) {
+        this.compareAudit = compareAudit;
+    }
 
     public int getTechnicalAudit() {
         return technicalAudit;

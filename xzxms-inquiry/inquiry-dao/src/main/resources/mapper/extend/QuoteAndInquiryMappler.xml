@@ -43,4 +43,24 @@
     <resultMap id="QuoteExtendMap1" type="com.xzx.xzxms.inquiry.bean.extend.QuoteExtendInquiry" extends="com.xzx.xzxms.inquiry.dao.QuoteMapper.BaseResultMap">
         <collection property="inquiry" ofType="com.xzx.xzxms.inquiry.bean.Inquiry" autoMapping="true" columnPrefix="i_"></collection>
     </resultMap>
+
+    <select id="findQuoteByInquiryId" resultType="com.xzx.xzxms.inquiry.vm.FinallyQuoteInquiryVM">
+        select q.*,
+        i.model model,i.name name,i.number number,i.params params,i.unit unit,i.price price,i.total_price total_price,i.sort sort,i.veto veto,
+        spc.id compare_id,
+        spc.technical_audit technical_audit,spc.technical_remark technical_remark,
+        spc.business_audit business_audit,spc.business_remark business_remark,
+        spc.compare_audit compareStatus,spc.compare_remark compare_remark,
+        spc.finally_audit finally_audit,spc.finally_remark finally_remark
+        from inquiry i
+        left join quote q on q.inquiry_id = i.id
+        left join sys_pro_check spc on q.id = spc.quote_id
+        <where>
+            i.is_active= 1 and q.is_active = 1
+            <if test="inquiryId!=null and inquiryId!=-1">
+                and i.id = #{inquiryId,jdbcType=BIGINT}
+            </if>
+        </where>
+        order by q.su_price asc
+    </select>
 </mapper>

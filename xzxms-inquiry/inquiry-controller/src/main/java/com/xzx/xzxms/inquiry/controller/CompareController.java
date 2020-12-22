@@ -2,12 +2,12 @@ package com.xzx.xzxms.inquiry.controller;
 
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
+import com.xzx.xzxms.inquiry.bean.Inquiry;
 import com.xzx.xzxms.inquiry.service.ICompareService;
 import com.xzx.xzxms.inquiry.service.IInquiryService;
 import com.xzx.xzxms.inquiry.bean.extend.InquiryAndProDetailExtend;
-import com.xzx.xzxms.inquiry.vm.CompareReqVM;
-import com.xzx.xzxms.inquiry.vm.CompareRespVM;
-import com.xzx.xzxms.inquiry.vm.QuoteRespVM;
+import com.xzx.xzxms.inquiry.vm.*;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
@@ -61,6 +61,41 @@ public class CompareController {
         //compareServiceImpl.completeCompare(compareRespVM.getCheckCompareIds(), compareRespVM.getOtherCompareIds(), compareRespVM.getRemarks());
         return MessageUtil.success("操作成功");
     }
+
+    @ApiOperation("根据项目详情ID查询出所有询价需求")
+    @GetMapping("findInquiryByProDetailId")
+    public Message findInquiryByProDetailId(long proDetailId){
+
+        List<InquiryVM> list = compareServiceImpl.findInquiryByProDetailId(proDetailId);
+        return MessageUtil.success("查询成功",list);
+    }
+
+    @ApiOperation("根据询价ID查询出比价")
+
+    @PostMapping("findQuoteByInquiryId")
+    public Message findQuoteByInquiryId(long[] inquiryIds){
+
+        List<CompareQuoteListVM> list = compareServiceImpl.findQuoteByInquiryId(inquiryIds);
+        return MessageUtil.success("查询成功",list);
+    }
+
+    @ApiOperation("设置项目下所有询价的利率")
+    @PostMapping("setInquiryRate")
+    public Message setInquiryRate(long proDetailId,Integer rate){
+
+        compareServiceImpl.setInquiryRate(proDetailId, rate);
+        return MessageUtil.success("设置成功");
+    }
+
+    @ApiOperation("比价修改拟定报价")
+    @PostMapping("compareUpdateDraft")
+    public Message compareUpdateDraft(@RequestBody Inquiry inquiry){
+
+        compareServiceImpl.compareUpdateDraft(inquiry);
+        return MessageUtil.success("操作成功");
+    }
+
+
 }
 
 

@@ -22,9 +22,8 @@
                     and c.compare_audit = #{compare_audit}
                 </if>
             </where>
-            GROUP BY i.id
+            GROUP BY i.sort
         )
-
 
         <!--select i.*,s.pro_rate rate
             from inquiry i
@@ -42,9 +41,6 @@
             </if>
         </where>-->
     </select>
-
-
-
     <select id="findByProIdOrCompareStatus_old" resultMap="compareResultMap">
         select
         i.*,pro.pro_rate rate
@@ -78,9 +74,6 @@
         </where>
         GROUP BY i.id
     </select>
-
-
-
     <select id="findByProIdOrCompareStatusToEquals" resultMap="compareResultMap">
         select
         i.id, i.name, i.params,i.number,i.price,i.total_price, i.pro_detail_id,
@@ -101,11 +94,8 @@
         GROUP BY i.id, i.name, i.params,i.number,i.price,i.total_price, i.pro_detail_id,
         che.type,che.check_status
     </select>
-
-
     <resultMap id="compareResultMap" type="com.xzx.xzxms.inquiry.bean.extend.InquiryCompareExtend" extends="com.xzx.xzxms.inquiry.dao.InquiryMapper.BaseResultMap">
     </resultMap>
-
     <select id="findInquiryAndQuoteNum" resultMap="FindInquiryAndQuoteNumMap">
         SELECT
           b.*,a.num quote_num,dev.name device_model
@@ -156,5 +146,15 @@
         (spc.technical_audit = 2 or spc.business_audit = 2)  and q.is_active = 1
       and
         i.id = #{id}
+    </select>
+    <select id="findInquiryByProId" resultMap="InquiryCompareNumMap">
+        select i.* from inquiry i where pro_detail_id = #{proDetailId} and i.is_active = 1
+    </select>
+    <resultMap id="InquiryCompareNumMap" type="com.xzx.xzxms.inquiry.vm.InquiryVM" extends="com.xzx.xzxms.inquiry.dao.InquiryMapper.BaseResultMap">
+        <association property="unCompareNum" column="id" select="findCompareNumByInquiryId"></association>
+    </resultMap>
+    <select id="findCompareNumByInquiryId" resultType="int">
+        select count(1) from quote q left join sys_pro_check spc on q.id = spc.quote_id
+        where q.inquiry_id = #{id} and q.is_active = 1 and spc.compare_audit = 0
     </select>
 </mapper>

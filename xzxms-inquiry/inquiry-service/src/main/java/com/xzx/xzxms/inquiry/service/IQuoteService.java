@@ -1,10 +1,11 @@
 package com.xzx.xzxms.inquiry.service;
 
-
 import com.xzx.xzxms.inquiry.bean.Quote;
 import com.xzx.xzxms.inquiry.bean.extend.QuoteExtend;
 import com.xzx.xzxms.inquiry.bean.extend.QuoteExtendInquiry;
 import com.xzx.xzxms.inquiry.bean.extend.QuoteProCheckExtend;
+import com.xzx.xzxms.inquiry.vm.FinallyQuoteInquiryVM;
+import com.xzx.xzxms.inquiry.vm.InquiryVM;
 
 import java.io.IOException;
 import java.util.List;
