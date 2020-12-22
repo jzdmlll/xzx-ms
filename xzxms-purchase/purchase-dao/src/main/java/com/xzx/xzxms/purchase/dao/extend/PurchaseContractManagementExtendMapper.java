@@ -1,5 +1,7 @@
 package com.xzx.xzxms.purchase.dao.extend;
 
+import com.xzx.xzxms.purchase.vm.PurchaseContractVM;
+import com.xzx.xzxms.purchase.vm.PurchaseProjectVM;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -18,6 +20,29 @@ import java.util.List;
 @Repository
 public interface PurchaseContractManagementExtendMapper {
 
-    List<String> FindAllProjects(@Param("project_name") String project_name);
+    /**
+     * 查询所有项目
+     * @param projectName
+     * @return
+     */
+    List<PurchaseProjectVM> findAllProjects(@Param("projectName") String projectName);
 
+    /**
+     * 根据项目编号查找其对应合同
+     * @param projectId
+     * @return
+     */
+    List<PurchaseContractVM> findContractByProjectId(@Param("projectId") Long projectId);
+
+    /**
+     * 根据合同id修改合同审核级别
+     * @param firstAudit
+     * @param secondAudit
+     * @param threeAudit
+     * @param id
+     */
+    void updateContractAuditById(@Param("firstAudit") Integer firstAudit,
+                                 @Param("secondAudit") Integer secondAudit,
+                                 @Param("threeAudit") Integer threeAudit,
+                                 @Param("id") Long id);
 }
