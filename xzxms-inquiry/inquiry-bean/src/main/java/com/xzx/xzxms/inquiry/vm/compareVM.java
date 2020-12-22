@@ -1,7 +1,5 @@
 package com.xzx.xzxms.inquiry.vm;
 
-import com.xzx.xzxms.inquiry.bean.Quote;
-
 import java.util.List;
 
 public class compareVM {
@@ -13,17 +11,5 @@ public class compareVM {
 
     public void setQuoteList(List<QuoteExtend> quoteList) {
         this.quoteList = quoteList;
-    }
-}
-
-class QuoteExtend extends Quote {
-    private String remark;
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
     }
 }

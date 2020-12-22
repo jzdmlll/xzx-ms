@@ -1,6 +1,7 @@
 package com.xzx.xzxms.inquiry.service;
 
 import com.xzx.xzxms.inquiry.bean.Inquiry;
+import com.xzx.xzxms.inquiry.bean.extend.QuoteExtend;
 import com.xzx.xzxms.inquiry.vm.*;
 
 import java.util.List;
@@ -54,4 +55,10 @@ public interface ICompareService {
      * @param inquiry
      */
     void compareUpdateDraft(Inquiry inquiry);
+
+    /**
+     * 比价结果提交
+     * @param compareVM
+     */
+    void compareResultCommit(compareVM compareVM);
 }
