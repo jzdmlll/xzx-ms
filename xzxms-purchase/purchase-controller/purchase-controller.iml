@@ -22,6 +22,8 @@
     <orderEntry type="module" module-name="purchase-service" />
     <orderEntry type="module" module-name="purchase-dao" />
     <orderEntry type="module" module-name="purchase-bean" />
+    <orderEntry type="module" module-name="inquiry-bean" />
+    <orderEntry type="module" module-name="system-bean" />
     <orderEntry type="module" module-name="xzxms-commons" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-web:2.2.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter:2.2.1.RELEASE" level="project" />

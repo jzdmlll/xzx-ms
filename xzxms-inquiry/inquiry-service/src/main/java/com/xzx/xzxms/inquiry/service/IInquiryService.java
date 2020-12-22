@@ -76,12 +76,6 @@ public interface IInquiryService {
     void insertOrUpdateInquiry(Inquiry inquiry);
 
     /**
-     * 比价修改拟定报价
-     * @param inquiry
-     */
-    void compareUpdateDraft(Inquiry inquiry);
-
-    /**
      * 终审修改拟定报价
      * @param inquiry
      */

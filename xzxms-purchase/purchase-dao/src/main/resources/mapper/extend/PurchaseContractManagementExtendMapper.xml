@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzx.xzxms.purchase.dao.extend.PurchaseContractManagementExtendMapper">
+
+    <resultMap id="PurchaseProjectVM" type="com.xzx.xzxms.purchase.bean.vm.PurchaseProjectVM">
+        <result column="project_name" property="project_name" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <select id="FindAllProjects" parameterType="string" resultType="string">
+        SELECT project_name FROM `purchase_project`
+        where is_active = 1
+        <if test="project_name != null">
+            and project_name like "%"#{project_name}"%"
+        </if>
+        ORDER BY time DESC
+    </select>
+</mapper>

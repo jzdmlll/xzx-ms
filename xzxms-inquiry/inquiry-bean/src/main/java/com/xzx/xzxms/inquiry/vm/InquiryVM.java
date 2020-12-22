@@ -1,0 +1,1 @@
+package com.xzx.xzxms.inquiry.vm;import com.xzx.xzxms.inquiry.bean.Inquiry;public class InquiryVM extends Inquiry {    private int unCompareNum;    public int getUnCompareNum() {        return unCompareNum;    }    public void setUnCompareNum(int unCompareNum) {        this.unCompareNum = unCompareNum;    }}

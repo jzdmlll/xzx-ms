@@ -96,5 +96,6 @@
     mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
    -->
 <!--    <table tableName="sys_device_type" domainObjectName="SysDeviceType" ></table>-->
+    <table tableName="sys_log" domainObjectName="SysLog" ></table>
   </context>
 </generatorConfiguration>
