@@ -512,6 +512,10 @@ public class QuoteServiceImpl implements IQuoteService {
         }
     }
 
+//<<<<<<< HEAD
+//=======
+//
+//>>>>>>> origin/v.3.0
     /**
      * 报价逻辑删
      * @param id

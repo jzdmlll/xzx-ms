@@ -6,6 +6,8 @@ com\xzx\xzxms\commons\utils\ObjectMapUtils.class
 com\xzx\xzxms\commons\utils\POIExcelUtils.class
 com\xzx\xzxms\commons\utils\SFTPUtil$1.class
 com\xzx\xzxms\commons\utils\JsonUtils.class
+com\xzx\xzxms\commons\constant\CommonConstant.class
+com\xzx\xzxms\commons\aspect\annotation\AutoLog.class
 com\xzx\xzxms\commons\utils\MessageUtil.class
 com\xzx\xzxms\commons\utils\Base64Util.class
 com\xzx\xzxms\commons\utils\JwtTokenUtil.class

@@ -1,5 +1,6 @@
 package com.xzx.xzxms.system.service.impl;
 
+import com.xzx.xzxms.commons.aspect.annotation.AutoLog;
 import com.xzx.xzxms.commons.utils.CustomerException;
 import com.xzx.xzxms.commons.utils.IDUtils;
 import com.xzx.xzxms.system.bean.SysUser;
@@ -31,6 +32,7 @@ public class SysUserServiceImpl implements ISysUserService {
     @Resource
     private JedisDao jedisDaoImpl;
 
+    @AutoLog(value = "登录成功！用户：")
     @Override
     public SysUser login(UserVM userVM) {
         String username = userVM.getUsername();
