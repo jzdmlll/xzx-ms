@@ -1,16 +1,15 @@
 package com.xzx.xzxms.inquiry.service.impl;
 
+import com.xzx.xzxms.commons.constant.CommonConstant;
 import com.xzx.xzxms.commons.utils.CustomerException;
-import com.xzx.xzxms.inquiry.bean.InquiryExample;
+import com.xzx.xzxms.inquiry.bean.*;
 import com.xzx.xzxms.inquiry.dao.InquiryMapper;
+import com.xzx.xzxms.inquiry.dao.QuoteMapper;
 import com.xzx.xzxms.inquiry.dao.SysProCheckMapper;
 import com.xzx.xzxms.inquiry.dao.extend.CompareExtendMapper;
 import com.xzx.xzxms.inquiry.dao.extend.InquiryExtendMapper;
-import com.xzx.xzxms.inquiry.dao.extend.InquiryQuoteCheckExtendMapper;
 import com.xzx.xzxms.inquiry.dao.extend.QuoteAndInquiryExtendMapper;
 import com.xzx.xzxms.inquiry.service.ICompareService;
-import com.xzx.xzxms.inquiry.bean.Inquiry;
-import com.xzx.xzxms.inquiry.bean.SysProCheck;
 import com.xzx.xzxms.inquiry.bean.extend.SysCheckExtend;
 import com.xzx.xzxms.inquiry.vm.*;
 import org.springframework.stereotype.Service;
@@ -18,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class CompareServiceImpl implements ICompareService {
@@ -31,9 +29,9 @@ public class CompareServiceImpl implements ICompareService {
     @Resource
     private InquiryExtendMapper inquiryExtendMapper;
     @Resource
-    private QuoteAndInquiryExtendMapper quoteAndInquiry;
-    @Resource
     private QuoteAndInquiryExtendMapper quoteAndInquiryExtendMapper;
+    @Resource
+    private QuoteMapper quoteMapper;
 
     @Override
     public List<QuoteRespVM> cascadeFindAllByParams(long inquiryId) {
@@ -63,6 +61,51 @@ public class CompareServiceImpl implements ICompareService {
     @Transactional
     @Override
     public void completeCompare(long[] checkCompareIds, long[] otherCompareIds, List<Map> remarks, long userId, List<Map> inquiries) {
+
+//        long time = new Date().getTime();
+//
+//        SysProCheck proCheck = new SysProCheck();
+//        // 更新选中比价
+//        proCheck.setCompareAudit(SysCheckExtend.PASS_STATUS); //1选用
+//        proCheck.setOperator(userId);
+//        proCheck.setTime(time);
+//        for (long id : checkCompareIds) {
+//            SysProCheck sysProCheck = sysProCheckMapper.selectByPrimaryKey(id);
+//            if (0 != sysProCheck.getFinallyAudit()){
+//                throw new CustomerException("该报价已终审，请勿再修改拟比价!");
+//            }
+//            proCheck.setId(id);
+//            sysProCheckMapper.updateByPrimaryKeySelective(proCheck);
+//        }
+//        // 更新备注
+//        proCheck = new SysProCheck();
+//        for(Map map :remarks){
+//            proCheck.setId(Long.parseLong(map.get("id").toString()));
+//            proCheck.setCompareRemark(map.get("remark").toString());
+//            sysProCheckMapper.updateByPrimaryKeySelective(proCheck);
+//        }
+//        // 更新未选中比价
+//        proCheck = new SysProCheck();
+//        proCheck.setCompareAudit(SysCheckExtend.REFUSE_STATUS); //2未选用
+//        proCheck.setOperator(userId);
+//        proCheck.setTime(time);
+//        for (long id : otherCompareIds) {
+//            SysProCheck sysProCheck = sysProCheckMapper.selectByPrimaryKey(id);
+//            if (0 != sysProCheck.getFinallyAudit()){
+//                throw new CustomerException("该报价已终审，请勿再修改拟比价!");
+//            }
+//            proCheck.setId(id);
+//            sysProCheckMapper.updateByPrimaryKeySelective(proCheck);
+//        }
+//
+//        Inquiry inquiry = new Inquiry();
+//        for (Map map : inquiries){
+//            inquiry.setId(Long.parseLong(map.get("id").toString()));
+//            inquiry.setPrice(Double.parseDouble(map.get("price").toString()));
+//            inquiry.setTotalPrice(Double.parseDouble(map.get("totalPrice").toString()));
+//            inquiryMapper.updateByPrimaryKeySelective(inquiry);
+//        }
+
 
         long time = new Date().getTime();
 
@@ -159,5 +202,38 @@ public class CompareServiceImpl implements ICompareService {
         }
         inquiry.setTime(new Date().getTime());
         inquiryMapper.updateByPrimaryKeySelective(inquiry);
+    }
+
+    @Transactional
+    @Override
+    public void compareResultCommit(compareVM compareVM) {
+
+        List<Long> longs = new ArrayList<>();
+
+        for (QuoteExtend quoteExtend : compareVM.getQuoteList()) {
+
+            QuoteExample quoteExample = new QuoteExample();
+            quoteExample.createCriteria().andIsActiveEqualTo(CommonConstant.EFFECTIVE).andInquiryIdEqualTo(quoteExtend.getInquiryId());
+            List<Quote> quotes = quoteMapper.selectByExample(quoteExample);
+            for (Quote quote : quotes){
+                longs.add(quote.getId());
+            }
+            SysProCheckExample sysProCheckExample = new SysProCheckExample();
+            sysProCheckExample.createCriteria().andQuoteIdIn(longs);
+            List<SysProCheck> sysProChecks = sysProCheckMapper.selectByExample(sysProCheckExample);
+            for (SysProCheck check : sysProChecks){
+                check.setCompareAudit(2);
+                check.setFinallyAudit(0);
+                sysProCheckMapper.updateByPrimaryKeySelective(check);
+            }
+
+            SysProCheckExample checkExample = new SysProCheckExample();
+            checkExample.createCriteria().andQuoteIdEqualTo(quoteExtend.getId());
+            List<SysProCheck> proChecks = sysProCheckMapper.selectByExample(checkExample);
+            SysProCheck proCheck = proChecks.get(0);
+            proCheck.setCompareAudit(1);
+            proCheck.setCompareRemark(quoteExtend.getRemark());
+            sysProCheckMapper.updateByPrimaryKeySelective(proCheck);
+        }
     }
 }

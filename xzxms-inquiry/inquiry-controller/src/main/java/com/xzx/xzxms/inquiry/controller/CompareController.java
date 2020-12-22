@@ -3,6 +3,7 @@ package com.xzx.xzxms.inquiry.controller;
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
 import com.xzx.xzxms.inquiry.bean.Inquiry;
+import com.xzx.xzxms.inquiry.bean.extend.QuoteExtend;
 import com.xzx.xzxms.inquiry.service.ICompareService;
 import com.xzx.xzxms.inquiry.service.IInquiryService;
 import com.xzx.xzxms.inquiry.bean.extend.InquiryAndProDetailExtend;
@@ -71,7 +72,6 @@ public class CompareController {
     }
 
     @ApiOperation("根据询价ID查询出比价")
-
     @PostMapping("findQuoteByInquiryId")
     public Message findQuoteByInquiryId(long[] inquiryIds){
 
@@ -95,7 +95,13 @@ public class CompareController {
         return MessageUtil.success("操作成功");
     }
 
+    @ApiOperation("比价结果提交")
+    @PostMapping("compareResultCommit")
+    public Message compareResultCommit(@RequestBody compareVM compareVM){
 
+        compareServiceImpl.compareResultCommit(compareVM);
+        return MessageUtil.success("操作成功");
+    }
 }
 
 
