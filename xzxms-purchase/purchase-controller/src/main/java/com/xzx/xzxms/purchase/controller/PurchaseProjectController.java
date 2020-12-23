@@ -17,11 +17,12 @@ import java.util.List;
 public class PurchaseProjectController {
     @Resource
     private IPurchaseProjectService iPurchaseProjectServiceImpl;
+
     @ApiOperation(value = "模糊查询")
     @GetMapping(value = "findAllLike")
     public Message findAllLike(String name){
         List<PurchaseProject> purchaseProjects = iPurchaseProjectServiceImpl.findAllLike(name);
-        return MessageUtil.success("success",purchaseProjects);
+        return MessageUtil.success("success", purchaseProjects);
     }
 
 

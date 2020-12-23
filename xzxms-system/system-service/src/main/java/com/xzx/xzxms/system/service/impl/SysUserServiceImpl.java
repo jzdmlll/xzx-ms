@@ -32,7 +32,7 @@ public class SysUserServiceImpl implements ISysUserService {
     @Resource
     private JedisDao jedisDaoImpl;
 
-    //AutoLog(value = "登录成功！用户：")
+    @AutoLog(value = "登录成功！用户：")
     @Override
     public SysUser login(UserVM userVM) {
         String username = userVM.getUsername();
