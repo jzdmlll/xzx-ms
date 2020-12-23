@@ -11,4 +11,10 @@ public interface IPurchaseProjectService {
      * @return
      */
     List<PurchaseProject> findAllLike(String name);
+
+    List<PurchaseProject> findById(Long id);
+
+    void deleteById(long id);
+
+    void saveOrUpdate(PurchaseProject purchaseProject);
 }
