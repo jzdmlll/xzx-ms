@@ -6,6 +6,7 @@ import com.xzx.xzxms.purchase.bean.PurchaseProject;
 import com.xzx.xzxms.purchase.service.IPurchaseProjectService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,5 +25,25 @@ public class PurchaseProjectController {
         return MessageUtil.success("success",purchaseProjects);
     }
 
+    @ApiOperation(value = "通过项目id进行查询")
+    @GetMapping(value ="findById")
+    public Message findById(Long id){
+        List<PurchaseProject> list = iPurchaseProjectServiceImpl.findById(id);
+        return MessageUtil.success("success",list);
+    }
+
+    @ApiOperation(value = "通过id进行假删")
+    @PostMapping(value = "deleteById")
+    public Message deleteById(long id){
+        iPurchaseProjectServiceImpl.deleteById(id);
+        return MessageUtil.success("success");
+    }
+
+    @ApiOperation(value = "新增或者修改")
+    @PostMapping(value = "saveOrUpdate")
+    public Message saveOrUpdate(PurchaseProject purchaseProject){
+        iPurchaseProjectServiceImpl.saveOrUpdate(purchaseProject);
+        return MessageUtil.success("success");
+    }
 
 }
