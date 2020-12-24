@@ -97,6 +97,7 @@ logging:
 
 webconfig:
   test: false
+  auto-add-privilege: false
 
 
 

@@ -14,7 +14,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
-@RequestMapping("/purchaseProject")
+@RequestMapping("/purchase/project")
 public class PurchaseProjectController {
     @Resource
     private IPurchaseProjectService iPurchaseProjectServiceImpl;

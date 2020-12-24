@@ -96,7 +96,8 @@ logging:
     com.xzx.xzxms.dao: debug
 
 webconfig:
-  test: true
+  test: false
+  auto-add-privilege: true
 
 
 
