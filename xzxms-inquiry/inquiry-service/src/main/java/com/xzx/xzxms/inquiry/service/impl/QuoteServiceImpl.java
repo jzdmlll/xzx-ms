@@ -463,7 +463,7 @@ public class QuoteServiceImpl implements IQuoteService {
                 //发送审核,添加商审、技审的默认值
                 sysProCheck.setId(IDUtils.getId());
                 sysProCheck.setTechnicalAudit(0);
-                sysProCheck.setBusinessAudit(0);
+                sysProCheck.setBusinessAudit(1);
 //                sysProCheck.setCompareAudit(0);
 //                sysProCheck.setFinallyAudit(0);
                 sysProCheck.setTechnicalRemark("");
