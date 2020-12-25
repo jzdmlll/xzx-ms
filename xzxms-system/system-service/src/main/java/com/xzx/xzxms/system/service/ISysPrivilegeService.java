@@ -53,7 +53,7 @@ public interface ISysPrivilegeService {
     List<SysPrivilegeExtend> findMenuByUserId(long id);
 
     /**
-     *
+     * 删除权限
      * @param id
      */
     void deleteById(long id);

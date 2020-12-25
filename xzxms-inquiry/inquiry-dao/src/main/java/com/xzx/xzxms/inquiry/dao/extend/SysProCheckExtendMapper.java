@@ -18,7 +18,7 @@ public interface SysProCheckExtendMapper {
 
     List<SysCheckExtend> cascadeFindTechnical(@Param("status") Integer status, @Param("proDetailId") long proDetailId);
 
-    List<SysCheckExtend> cascadeFindBusiness(@Param("status") Integer status, @Param("proDetailId") long proDetailId);
+    List<SysCheckExtend> cascadeFindBusiness(@Param("status") Integer status, @Param("proDetailId") long proDetailId,@Param("supplier") String supplier);
 
     List<SysCheckExtend> cascadeFindCompare(@Param("status") Integer status, @Param("proDetailId") long proDetailId);
 

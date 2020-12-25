@@ -41,8 +41,8 @@ public class ProCheckServiceImpl implements ISysProCheckService {
     }
 
     @Override
-    public List<SysCheckExtend> findBusinessCheck(Integer status, long proDetailId) {
-        List<SysCheckExtend> list = sysProCheckExtendMapper.cascadeFindBusiness(status, proDetailId);
+    public List<SysCheckExtend> findBusinessCheck(Integer status, long proDetailId, String supplier) {
+        List<SysCheckExtend> list = sysProCheckExtendMapper.cascadeFindBusiness(status, proDetailId, supplier);
         return list;
     }
 }

@@ -48,6 +48,6 @@ public interface ISysProCheckService {
      * @param proDetailId 项目详情ID
      * @return
      */
-    List<SysCheckExtend> findBusinessCheck(Integer status, long proDetailId);
+    List<SysCheckExtend> findBusinessCheck(Integer status, long proDetailId, String supplier);
 
 }

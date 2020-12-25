@@ -57,9 +57,11 @@ public class SysProCheckController {
 
     @ApiOperation("查询商务审核")
     @GetMapping("findBusinessCheck")
-    public Message findBusinessCheck(@RequestParam(defaultValue = "-1") Integer status,@RequestParam(defaultValue = "-1") long proDetailId) {
+    public Message findBusinessCheck(@RequestParam(defaultValue = "-1") Integer status,
+                                     @RequestParam(defaultValue = "-1") long proDetailId,
+                                     @RequestParam(defaultValue = "") String supplier) {
 
-        List<SysCheckExtend> businessCheck = sysProCheckServiceImpl.findBusinessCheck(status, proDetailId);
+        List<SysCheckExtend> businessCheck = sysProCheckServiceImpl.findBusinessCheck(status, proDetailId, supplier);
         return MessageUtil.success("success", businessCheck);
     }
 

@@ -90,10 +90,10 @@ pagehelper:
   reasonable: true
   support-methods-arguments: true
   params: count=countSql
-
-logging:
-  level:
-    com.xzx.xzxms.dao: debug
+# 生产环境移除日志打印 节约性能
+#logging:
+  #level:
+    #com.xzx.xzxms: debug
 
 webconfig:
   test: false

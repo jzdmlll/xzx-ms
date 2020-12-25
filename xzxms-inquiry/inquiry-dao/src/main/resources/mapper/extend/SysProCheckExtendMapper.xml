@@ -52,6 +52,9 @@
             <if test="proDetailId!=null and proDetailId!=-1">
                 AND spd.id = #{proDetailId,jdbcType=BIGINT}
             </if>
+            <if test="supplier!=null and supplier!=''">
+                AND q.supplier like "%"#{supplier,jdbcType=VARCHAR}"%"
+            </if>
         </where>
         order by i.name, i.model
     </select>

@@ -93,7 +93,7 @@ pagehelper:
 
 logging:
   level:
-    com.xzx.xzxms.dao: debug
+    com.xzx.xzxms: debug
 
 webconfig:
   test: false
