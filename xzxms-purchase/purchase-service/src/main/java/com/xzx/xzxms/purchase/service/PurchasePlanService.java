@@ -1,6 +1,9 @@
 package com.xzx.xzxms.purchase.service;
 
+import com.xzx.xzxms.inquiry.bean.SysProDetail;
+import com.xzx.xzxms.purchase.bean.PurchaseItems;
 import com.xzx.xzxms.purchase.vm.PurchaseItemsVM;
+import com.xzx.xzxms.purchase.vm.PurchaseSupplierVM;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -31,4 +34,20 @@ public interface PurchasePlanService {
      * @return
      */
     String updateItemsInquiryService(String projectId, List<Long> idList);
+
+    /**
+     * 当购买项购买数量拆分，新增一条该购买项信息
+     * @param purchaseItems
+     * @param itemNum
+     */
+    String insertItemService(PurchaseItems purchaseItems, int itemNum);
+
+    List<PurchaseSupplierVM> findPurchasingSupplierByItemIdService(Long id);
+
+    /**
+     * 新增询价项目
+     * @param sysProDetail
+     * @return
+     */
+    String insertSysProDetail(SysProDetail sysProDetail);
 }
