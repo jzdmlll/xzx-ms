@@ -2,6 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xzx.xzxms.purchase.dao.extend.PurchasePlanExtendMapper">
 
+    <resultMap id="PurchaseItems" type="com.xzx.xzxms.purchase.bean.PurchaseItems">
+        <result column="id" property="id" jdbcType="BIGINT" />
+        <result column="contract_id" property="contractId" jdbcType="BIGINT" />
+        <result column="project_id" property="projectId" jdbcType="VARCHAR" />
+        <result column="serial_number" property="serialNumber" jdbcType="INTEGER" />
+        <result column="item" property="item" jdbcType="VARCHAR" />
+        <result column="brand" property="brand" jdbcType="VARCHAR" />
+        <result column="params" property="params" jdbcType="VARCHAR" />
+        <result column="model" property="model" jdbcType="VARCHAR" />
+        <result column="unit" property="unit" jdbcType="VARCHAR" />
+        <result column="number" property="number" jdbcType="INTEGER" />
+        <result column="is_inquiry" property="isInquiry" jdbcType="INTEGER" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="is_active" property="isActive" jdbcType="INTEGER" />
+        <result column="operator" property="operator" jdbcType="BIGINT" />
+        <result column="time" property="time" jdbcType="BIGINT" />
+    </resultMap>
+
     <resultMap id="PurchaseItemsVM" type="com.xzx.xzxms.purchase.vm.PurchaseItemsVM">
         <result column="id" property="id" jdbcType="BIGINT" />
         <result column="contract_id" property="contractId" jdbcType="BIGINT" />
@@ -20,9 +38,49 @@
         <result column="time" property="time" jdbcType="BIGINT" />
     </resultMap>
 
+    <resultMap id="PurchaseSupplierVM" type="com.xzx.xzxms.purchase.vm.PurchaseSupplierVM">
+        <result column="serial_number" property="serialNumber" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <resultMap id="SysProDetail" type="com.xzx.xzxms.inquiry.bean.SysProDetail">
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="pro_no" property="proNo" jdbcType="VARCHAR" />
+    </resultMap>
+
     <select id="findItemsByProjectId" parameterType="string" resultMap="PurchaseItemsVM">
         select id,contract_id,project_id,serial_number,item,brand,params,model,unit,number,is_inquiry,remark,is_active,operator,time
         from purchase_items
-        where project_id=#{projectId}
+        where project_id=#{projectId} and is_active=1
+    </select>
+
+    <select id="findSerialNumbersByProjectId" parameterType="string" resultType="Integer">
+        select serial_number from purchase_items where project_id=#{projectId} and is_active=1
+    </select>
+
+    <insert id="insertItem" parameterType="com.xzx.xzxms.purchase.bean.PurchaseItems">
+        insert into purchase_items (id,contract_id,project_id,serial_number,item,brand,params,model,unit,number,is_inquiry,remark,is_active,operator,time)
+        values(#{id}, #{contractId}, #{projectId}, #{serialNumber}, #{item}, #{brand}, #{params}, #{model}, #{unit}, #{number}, #{isInquiry}, #{remark}, #{isActive}, #{operator}, #{time})
+    </insert>
+
+    <update id="updateItemNumber" parameterType="com.xzx.xzxms.purchase.bean.PurchaseItems">
+        update purchase_items set number=#{number} where id = #{id}
+    </update>
+
+    <select id="findPurchasingSupplierByItemId" parameterType="long" resultMap="PurchaseSupplierVM">
+        select purchase_items.serial_number, supplier.`name`
+        from purchase_items inner join purchase_supply inner join supplier on (purchase_items.id = purchase_supply.item_id and purchase_supply.supplier_id = supplier.id)
+        where purchase_supply.is_active=1
+        and supplier.is_active=1
+        and purchase_items.is_active=1
+        and purchase_items.id = #{id}
+    </select>
+
+    <select id="findProNameByProName" parameterType="string" resultType="int">
+        SELECT count(`name`) FROM `sys_pro_detail` where `name` = #{name}
+    </select>
+
+    <select id="findProNoByYM" parameterType="string" resultType="string">
+        select pro_no from sys_pro_detail where pro_no like "%"#{proNo}"%" GROUP BY pro_no
     </select>
 </mapper>

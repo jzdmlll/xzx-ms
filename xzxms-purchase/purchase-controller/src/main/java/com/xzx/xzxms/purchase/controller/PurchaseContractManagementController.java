@@ -23,7 +23,7 @@ import java.util.List;
  * @修改描述：默认描述
  */
 @RestController
-@RequestMapping("/ContractManagement")
+@RequestMapping("/purchase/contractManagement")
 public class PurchaseContractManagementController {
 
     @Autowired

@@ -38,6 +38,7 @@
                 first_remark, second_remark, three_remark, is_active, time, operator
         FROM `purchase_contract`
         where project_id=#{projectId}
+        and is_active=1
     </select>
 
     <update id="updateContractAuditById" parameterType="com.xzx.xzxms.purchase.vm.PurchaseContractVM">

@@ -13,7 +13,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
-@RequestMapping("/generatePurchaseContract")
+@RequestMapping("/purchase/generatePurchaseContract")
 public class GeneratePurchaseContractController {
     @Resource
     private IGeneratePurchaseContractService iGeneratePurchaseContractServiceImpl;

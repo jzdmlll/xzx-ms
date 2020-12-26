@@ -14,7 +14,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
-@RequestMapping("/arrivalStatus")
+@RequestMapping("/purchase/arrivalStatus")
 public class ArrivalStatusController {
     @Resource
     private IArrivalStatusService iArrivalStatusServiceImpl;

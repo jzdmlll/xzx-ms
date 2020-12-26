@@ -11,6 +11,7 @@ import com.xzx.xzxms.purchase.service.impl.PurchaseContractManagementServiceImpl
 import com.xzx.xzxms.purchase.service.impl.PurchasePlanServiceImpl;
 import com.xzx.xzxms.purchase.vm.PurchaseItemsVM;
 import com.xzx.xzxms.purchase.vm.PurchaseProjectVM;
+import com.xzx.xzxms.purchase.vm.PurchaseSupplierVM;
 import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ import java.util.List;
  * @修改描述：默认描述
  */
 @RestController
-@RequestMapping("/PurchasePlan")
+@RequestMapping("/purchase/purchasePlan")
 public class PurchasePlanController {
 
     @Autowired
@@ -60,6 +61,24 @@ public class PurchasePlanController {
         }else {
             return MessageUtil.error("error");
         }
+    }
+
+    @ApiOperation("当购买项需要拆分时")
+    @GetMapping("insertItem")
+    public Message insertItem(PurchaseItems purchaseItems, @Param("itemNum") int itemNum){
+        String result = purchasePlanService.insertItemService(purchaseItems, itemNum);
+        if (result.equals("success")){
+            return MessageUtil.success("success");
+        }else {
+            return MessageUtil.error("error");
+        }
+    }
+
+    @ApiOperation("根据购买项id查找其供应商")
+    @GetMapping("findPurchasingSupplierByItemId")
+    public Message findPurchasingSupplierByItemId(@Param("id") Long id){
+        List<PurchaseSupplierVM> supplierInfo = purchasePlanService.findPurchasingSupplierByItemIdService(id);
+        return MessageUtil.success("success",supplierInfo);
     }
 
 }
