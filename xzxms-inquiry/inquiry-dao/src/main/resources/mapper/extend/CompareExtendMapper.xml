@@ -61,4 +61,14 @@
     <!--<select id="findQuote" resultType="com.xzx.xzxms.inquiry.bean.Quote">
         select * from quote where is_active = 1 and inquiry_id = #{id}
     </select>-->
+
+    <select id="findCompareResult" resultType="com.xzx.xzxms.inquiry.bean.Quote">
+        select * from quote q
+            left join inquiry i on i.id = q.inquiry_id
+            left join sys_pro_check che on q.id = che.quote_id
+        <where>
+            q.is_active = 1 and i.is_active = 1 and che.compare_audit = 1
+            and i.id = #{inquiryId,jdbcType=BIGINT}
+        </where>
+    </select>
 </mapper>

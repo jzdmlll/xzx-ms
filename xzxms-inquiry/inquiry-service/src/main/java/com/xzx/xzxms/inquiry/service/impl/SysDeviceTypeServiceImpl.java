@@ -77,7 +77,6 @@ public class SysDeviceTypeServiceImpl implements ISysDeviceTypeService {
         if(sysDeviceType == null && sysDeviceType.getId() == null) {
             throw new CustomerException("失败");
         }
-
         sysDeviceType.setIsActive(CommonConstant.INVALID);
         sysDeviceType.setTime(new Date().getTime());
         sysDeviceTypeMapper.updateByPrimaryKeySelective(sysDeviceType);
