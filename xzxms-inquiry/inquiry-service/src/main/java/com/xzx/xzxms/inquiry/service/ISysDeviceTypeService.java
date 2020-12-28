@@ -37,13 +37,7 @@ public interface ISysDeviceTypeService {
 
     /**
      * 批量置为无效
-     * @param ids
+     * @param sysDeviceType
      */
-    void setInvalid(long[] ids);
-
-    /**
-     * 批量删除
-     * @param ids
-     */
-    void delete(long[] ids);
+    void setInvalid(SysDeviceType sysDeviceType);
 }
