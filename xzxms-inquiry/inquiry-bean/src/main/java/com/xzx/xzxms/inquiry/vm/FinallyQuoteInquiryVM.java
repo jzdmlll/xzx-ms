@@ -23,8 +23,26 @@ public class FinallyQuoteInquiryVM extends Quote {
     private String totalPrice;
     private String sort;
     private String compareId;
+    private String finallyPrice;
+    private String correctPrice;
     private int minPrice;
 
+
+    public String getFinallyPrice() {
+        return finallyPrice;
+    }
+
+    public void setFinallyPrice(String finallyPrice) {
+        this.finallyPrice = finallyPrice;
+    }
+
+    public String getCorrectPrice() {
+        return correctPrice;
+    }
+
+    public void setCorrectPrice(String correctPrice) {
+        this.correctPrice = correctPrice;
+    }
 
     public int getVeto() {
         return veto;

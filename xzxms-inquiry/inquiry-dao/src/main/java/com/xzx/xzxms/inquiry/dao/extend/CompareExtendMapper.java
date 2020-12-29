@@ -1,5 +1,6 @@
 package com.xzx.xzxms.inquiry.dao.extend;
 
+import com.xzx.xzxms.inquiry.bean.Quote;
 import com.xzx.xzxms.inquiry.vm.CompareQuoteListVM;
 import com.xzx.xzxms.inquiry.vm.QuoteRespVM;
 import org.apache.ibatis.annotations.Mapper;
@@ -30,4 +31,11 @@ public interface CompareExtendMapper {
     int isFinalCheck(long proCheckId);
 
     List<CompareQuoteListVM> findQuoteListByInquiry(@Param("inquiryIds") long[] inquiryIds);
+
+    /**
+     * 根据询价ID查询出该询价下报价的比价结果
+     * @param inquiryId
+     * @return
+     */
+    Quote findCompareResult(long inquiryId);
 }

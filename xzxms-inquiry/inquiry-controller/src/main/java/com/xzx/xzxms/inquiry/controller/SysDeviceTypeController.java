@@ -21,7 +21,7 @@ public class SysDeviceTypeController {
 
     @ApiOperation(value = "根据ID查询内容")
     @GetMapping(value = "findById")
-    private Message findById(long id){
+    public Message findById(Long id){
 
         SysDeviceType sysDeviceType = sysDeviceTypeServiceImpl.findById(id);
         return MessageUtil.success("success",sysDeviceType);
@@ -29,7 +29,7 @@ public class SysDeviceTypeController {
 
     @ApiOperation(value = "根据parentId模糊查询内容")
     @GetMapping(value = "findByParentId")
-    private Message findByParentId(Long parentId,
+    public Message findByParentId(Long parentId,
                                    @RequestParam(defaultValue = "", required = false, name = "name") String name,
                                    @RequestParam(defaultValue = "", required = false, name = "code") String code){
 
@@ -45,7 +45,7 @@ public class SysDeviceTypeController {
     }
     @ApiOperation(value="更新或新增")
     @PostMapping(value = "saveOrUpdate")
-    private Message saveOrUpdate(SysDeviceType sysDeviceType){
+    public Message saveOrUpdate(SysDeviceType sysDeviceType){
 
         sysDeviceTypeServiceImpl.saveOrUpdate(sysDeviceType);
         return MessageUtil.success("success");
@@ -53,15 +53,9 @@ public class SysDeviceTypeController {
 
     @ApiOperation(value = "批量置为无效")
     @PostMapping(value="setInvalid")
-    private Message setInvalid(long[] ids){
-        sysDeviceTypeServiceImpl.setInvalid(ids);
-        return MessageUtil.success("success");
-    }
+    public Message setInvalid(SysDeviceType sysDeviceType){
 
-    @ApiOperation(value = "批量删除")
-    @PostMapping(value = "delete")
-    private Message delete(long[] ids){
-        sysDeviceTypeServiceImpl.delete(ids);
+        sysDeviceTypeServiceImpl.setInvalid(sysDeviceType);
         return MessageUtil.success("success");
     }
 }

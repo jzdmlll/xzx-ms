@@ -152,14 +152,27 @@ public class CompareServiceImpl implements ICompareService {
         }
     }
 
+    @Transactional
     @Override
     public void setInquiryRate(long proDetailId,Integer rate) {
         InquiryExample example = new InquiryExample();
-        Inquiry inquiry = new Inquiry();
-        inquiry.setProDetailId(proDetailId);
-        inquiry.setInquiryRate(rate);
         example.createCriteria().andProDetailIdEqualTo(proDetailId);
-        inquiryMapper.updateByExampleSelective(inquiry,example);
+        List<Inquiry> inquiries = inquiryMapper.selectByExample(example);
+        for(Inquiry i : inquiries){
+            Quote quote = compareExtendMapper.findCompareResult(i.getId());
+            //如果该询价下没有比价选用的报价，则该询价的拟定报价为空，利率为设置值；如果存在选用的报价，则该询价的拟定报价为选用的报价乘以利率存入数据库中
+            if(quote != null){
+                Double draftPrice = quote.getSuPrice()*(rate/1000)+quote.getSuPrice();
+                Double draftTotalPrice = draftPrice*i.getNumber();
+                i.setPrice(draftPrice);
+                i.setTotalPrice(draftTotalPrice);
+                i.setInquiryRate(rate);
+                i.setTime(new Date().getTime());
+                inquiryMapper.updateByPrimaryKeySelective(i);
+            }else {
+                throw new CustomerException("该询价未选用合适的供货商，无法设置利润率，请选取供货商后再设置!");
+            }
+        }
     }
 
     @Override
@@ -221,19 +234,29 @@ public class CompareServiceImpl implements ICompareService {
             SysProCheckExample sysProCheckExample = new SysProCheckExample();
             sysProCheckExample.createCriteria().andQuoteIdIn(longs);
             List<SysProCheck> sysProChecks = sysProCheckMapper.selectByExample(sysProCheckExample);
+            //先将所有报价比价状态置为未选用
             for (SysProCheck check : sysProChecks){
                 check.setCompareAudit(2);
                 check.setFinallyAudit(0);
                 sysProCheckMapper.updateByPrimaryKeySelective(check);
             }
-
+            //再将选用的报价比价状态置为选用
             SysProCheckExample checkExample = new SysProCheckExample();
             checkExample.createCriteria().andQuoteIdEqualTo(quoteExtend.getId());
             List<SysProCheck> proChecks = sysProCheckMapper.selectByExample(checkExample);
-            SysProCheck proCheck = proChecks.get(0);
-            proCheck.setCompareAudit(1);
-            proCheck.setCompareRemark(quoteExtend.getRemark());
-            sysProCheckMapper.updateByPrimaryKeySelective(proCheck);
+            if (proChecks.size() > 0){
+                SysProCheck proCheck = proChecks.get(0);
+                proCheck.setCompareAudit(1);
+                proCheck.setCompareRemark(quoteExtend.getRemark());
+                sysProCheckMapper.updateByPrimaryKeySelective(proCheck);
+                Inquiry inquiry = inquiryMapper.selectByPrimaryKey(quoteExtend.getInquiryId());
+                Quote quote = quoteMapper.selectByPrimaryKey(quoteExtend.getId());
+                Integer inquiryRate = (int) ((inquiry.getPrice() - quote.getSuPrice())/quote.getSuPrice())*1000;
+                inquiry.setInquiryRate(inquiryRate);
+                inquiryMapper.updateByPrimaryKeySelective(inquiry);
+            }else {
+                throw new CustomerException("未选用一家供货商，提交失败!");
+            }
         }
     }
 }
