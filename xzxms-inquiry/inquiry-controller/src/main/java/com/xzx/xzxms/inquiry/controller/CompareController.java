@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -79,7 +80,7 @@ public class CompareController {
 
     @ApiOperation("设置项目下所有询价的利率")
     @PostMapping("setInquiryRate")
-    public Message setInquiryRate(long proDetailId,Integer rate){
+    public Message setInquiryRate(long proDetailId, Double rate){
 
         compareServiceImpl.setInquiryRate(proDetailId, rate);
         return MessageUtil.success("设置成功");
@@ -87,9 +88,8 @@ public class CompareController {
 
     @ApiOperation("比价修改拟定报价")
     @PostMapping("compareUpdateDraft")
-    public Message compareUpdateDraft(@RequestBody Inquiry inquiry){
-
-        compareServiceImpl.compareUpdateDraft(inquiry);
+    public Message compareUpdateDraft(@RequestBody InquirySuPriceVM inquirySuPriceVM){
+        compareServiceImpl.compareUpdateDraft(inquirySuPriceVM);
         return MessageUtil.success("操作成功");
     }
 

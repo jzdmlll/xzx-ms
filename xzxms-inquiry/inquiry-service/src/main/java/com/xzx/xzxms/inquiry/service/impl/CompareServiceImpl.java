@@ -1,5 +1,6 @@
 package com.xzx.xzxms.inquiry.service.impl;
 
+import com.google.common.math.LongMath;
 import com.xzx.xzxms.commons.constant.CommonConstant;
 import com.xzx.xzxms.commons.utils.CustomerException;
 import com.xzx.xzxms.inquiry.bean.*;
@@ -16,6 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.*;
 
 @Service
@@ -154,7 +157,7 @@ public class CompareServiceImpl implements ICompareService {
 
     @Transactional
     @Override
-    public void setInquiryRate(long proDetailId,Integer rate) {
+    public void setInquiryRate(long proDetailId,Double rate) {
         InquiryExample example = new InquiryExample();
         example.createCriteria().andProDetailIdEqualTo(proDetailId);
         List<Inquiry> inquiries = inquiryMapper.selectByExample(example);
@@ -162,11 +165,11 @@ public class CompareServiceImpl implements ICompareService {
             Quote quote = compareExtendMapper.findCompareResult(i.getId());
             //如果该询价下没有比价选用的报价，则该询价的拟定报价为空，利率为设置值；如果存在选用的报价，则该询价的拟定报价为选用的报价乘以利率存入数据库中
             if(quote != null){
-                Double draftPrice = quote.getSuPrice()*(rate/1000)+quote.getSuPrice();
+                Double draftPrice = quote.getSuPrice()*(rate/(1000*100))+quote.getSuPrice();
                 Double draftTotalPrice = draftPrice*i.getNumber();
                 i.setPrice(draftPrice);
                 i.setTotalPrice(draftTotalPrice);
-                i.setInquiryRate(rate);
+                i.setInquiryRate(rate.intValue());
                 i.setTime(new Date().getTime());
                 inquiryMapper.updateByPrimaryKeySelective(i);
             }else {
@@ -208,13 +211,24 @@ public class CompareServiceImpl implements ICompareService {
     }
 
     @Override
-    public void compareUpdateDraft(Inquiry inquiry) {
+    public void compareUpdateDraft(InquirySuPriceVM inquiry) {
         int count = quoteAndInquiryExtendMapper.findIsExistFinally(inquiry.getId());
         if (count > 0){
             throw new CustomerException("该询价内容已被终审，请勿再修改拟定报价!");
         }
-        inquiry.setTime(new Date().getTime());
-        inquiryMapper.updateByPrimaryKeySelective(inquiry);
+        try {
+            if (inquiry.getPrice() != null && inquiry.getSuPrice() != null) {
+                Integer rate = new Long(Math.round((inquiry.getPrice() - inquiry.getSuPrice()) / inquiry.getSuPrice() * 1000 * 100)).intValue();
+
+                inquiry.setInquiryRate(rate);
+                inquiry.setTime(new Date().getTime());
+                inquiryMapper.updateByPrimaryKeySelective(inquiry);
+            }else{
+                throw new CustomerException("供货商未选择!");
+            }
+        }catch (ArithmeticException ae) {
+            throw new CustomerException("供货商价格不能为0");
+        }
     }
 
     @Transactional
@@ -251,9 +265,16 @@ public class CompareServiceImpl implements ICompareService {
                 sysProCheckMapper.updateByPrimaryKeySelective(proCheck);
                 Inquiry inquiry = inquiryMapper.selectByPrimaryKey(quoteExtend.getInquiryId());
                 Quote quote = quoteMapper.selectByPrimaryKey(quoteExtend.getId());
-                Integer inquiryRate = (int) ((inquiry.getPrice() - quote.getSuPrice())/quote.getSuPrice())*1000;
-                inquiry.setInquiryRate(inquiryRate);
-                inquiryMapper.updateByPrimaryKeySelective(inquiry);
+                try {
+                    if (inquiry.getPrice() != null && quote.getSuPrice() != null) {
+                        Integer rate = new Long(Math.round((inquiry.getPrice() - quote.getSuPrice()) / quote.getSuPrice() * 1000 * 100)).intValue();
+
+                        inquiry.setInquiryRate(rate);
+                    }
+                    inquiryMapper.updateByPrimaryKeySelective(inquiry);
+                }catch (ArithmeticException ae) {
+                    throw new CustomerException("供货商价格不能为0");
+                }
             }else {
                 throw new CustomerException("未选用一家供货商，提交失败!");
             }

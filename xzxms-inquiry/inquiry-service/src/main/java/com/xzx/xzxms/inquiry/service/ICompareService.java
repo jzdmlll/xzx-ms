@@ -34,7 +34,7 @@ public interface ICompareService {
      * @param proDetailId
      * @param rate
      */
-    void setInquiryRate(long proDetailId,Integer rate);
+    void setInquiryRate(long proDetailId,Double rate);
 
     /**
      * 根据项目详情ID查询出所有询价需求
@@ -51,9 +51,9 @@ public interface ICompareService {
 
     /**
      * 比价修改拟定报价
-     * @param inquiry
+     * @param inquirySuPriceVM
      */
-    void compareUpdateDraft(Inquiry inquiry);
+    void compareUpdateDraft(InquirySuPriceVM inquirySuPriceVM);
 
     /**
      * 比价结果提交
