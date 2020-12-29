@@ -229,6 +229,7 @@ public class InquiryServiceImpl implements IInquiryService {
 
     @Override
     public void finallyUpdateDraft(Inquiry inquiry) {
+
         inquiry.setTime(new Date().getTime());
         inquiryMapper.updateByPrimaryKeySelective(inquiry);
     }

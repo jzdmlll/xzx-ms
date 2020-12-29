@@ -168,6 +168,7 @@ public class CompareServiceImpl implements ICompareService {
                 Double draftPrice = quote.getSuPrice()*(rate/(1000*100))+quote.getSuPrice();
                 Double draftTotalPrice = draftPrice*i.getNumber();
                 i.setPrice(draftPrice);
+                i.setFinallyPrice(draftPrice);
                 i.setTotalPrice(draftTotalPrice);
                 i.setInquiryRate(rate.intValue());
                 i.setTime(new Date().getTime());
@@ -219,8 +220,8 @@ public class CompareServiceImpl implements ICompareService {
         try {
             if (inquiry.getPrice() != null && inquiry.getSuPrice() != null) {
                 Integer rate = new Long(Math.round((inquiry.getPrice() - inquiry.getSuPrice()) / inquiry.getSuPrice() * 1000 * 100)).intValue();
-
                 inquiry.setInquiryRate(rate);
+                inquiry.setFinallyPrice(inquiry.getPrice());
                 inquiry.setTime(new Date().getTime());
                 inquiryMapper.updateByPrimaryKeySelective(inquiry);
             }else{
@@ -268,7 +269,6 @@ public class CompareServiceImpl implements ICompareService {
                 try {
                     if (inquiry.getPrice() != null && quote.getSuPrice() != null) {
                         Integer rate = new Long(Math.round((inquiry.getPrice() - quote.getSuPrice()) / quote.getSuPrice() * 1000 * 100)).intValue();
-
                         inquiry.setInquiryRate(rate);
                     }
                     inquiryMapper.updateByPrimaryKeySelective(inquiry);

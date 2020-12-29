@@ -1,5 +1,6 @@
 package com.xzx.xzxms.inquiry.controller;
 
+import com.xzx.xzxms.commons.utils.CustomerException;
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
 import com.xzx.xzxms.inquiry.bean.Inquiry;
@@ -57,9 +58,10 @@ public class CompareController {
     @ApiOperation("比价选用")
     @PostMapping("completeCompare")
     public Message completeCompare(@RequestBody CompareRespVM compareRespVM) {
-        compareServiceImpl.completeCompare(compareRespVM.getCheckCompareIds(), compareRespVM.getOtherCompareIds(), compareRespVM.getRemarks(), compareRespVM.getUserId(), compareRespVM.getInquiries());
+
+        //compareServiceImpl.completeCompare(compareRespVM.getCheckCompareIds(), compareRespVM.getOtherCompareIds(), compareRespVM.getRemarks(), compareRespVM.getUserId(), compareRespVM.getInquiries());
         //compareServiceImpl.completeCompare(compareRespVM.getCheckCompareIds(), compareRespVM.getOtherCompareIds(), compareRespVM.getRemarks());
-        return MessageUtil.success("操作成功");
+        throw new CustomerException("该接口维护中，无法使用");
     }
 
     @ApiOperation("根据项目详情ID查询出所有询价需求")
