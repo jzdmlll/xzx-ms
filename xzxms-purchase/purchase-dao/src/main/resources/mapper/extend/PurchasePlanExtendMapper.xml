@@ -51,7 +51,7 @@
     <select id="findItemsByProjectId" parameterType="string" resultMap="PurchaseItemsVM">
         select id,contract_id,project_id,serial_number,item,brand,params,model,unit,number,is_inquiry,remark,is_active,operator,time
         from purchase_items
-        where project_id=#{projectId} and is_active=1
+        where project_id=#{projectId} and is_active=1 order by serial_number
     </select>
 
     <select id="findSerialNumbersByProjectId" parameterType="string" resultType="Integer">
