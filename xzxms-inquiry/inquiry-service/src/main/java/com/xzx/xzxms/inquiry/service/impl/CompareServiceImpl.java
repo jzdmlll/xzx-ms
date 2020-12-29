@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.text.DecimalFormat;
 import java.util.*;
 
 @Service
@@ -251,7 +252,8 @@ public class CompareServiceImpl implements ICompareService {
                 sysProCheckMapper.updateByPrimaryKeySelective(proCheck);
                 Inquiry inquiry = inquiryMapper.selectByPrimaryKey(quoteExtend.getInquiryId());
                 Quote quote = quoteMapper.selectByPrimaryKey(quoteExtend.getId());
-                Integer inquiryRate = (int) ((inquiry.getPrice() - quote.getSuPrice())/quote.getSuPrice())*1000;
+                DecimalFormat df = new DecimalFormat("0.00");
+                Integer inquiryRate = new Double(Double.parseDouble(df.format((inquiry.getPrice() - quote.getSuPrice())/quote.getSuPrice()))*1000).intValue();
                 inquiry.setInquiryRate(inquiryRate);
                 inquiryMapper.updateByPrimaryKeySelective(inquiry);
             }else {
