@@ -2,6 +2,7 @@ package com.xzx.xzxms.inquiry.controller;
 import com.xzx.xzxms.commons.utils.CustomerException;
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
+import com.xzx.xzxms.inquiry.bean.Quote;
 import com.xzx.xzxms.inquiry.service.IInquiryService;
 import com.xzx.xzxms.inquiry.bean.Inquiry;
 import com.xzx.xzxms.inquiry.bean.extend.InquiryExtend;
@@ -119,5 +120,19 @@ public class InquiryController {
     public Message findProPurchase(@RequestParam(value = "proDetailId",required = false,defaultValue = "-1") long proDetailId){
         List<ProPurchase> proPurchases = proPurchaseServiceImpl.findProPurchase(proDetailId);
         return MessageUtil.success("success", proPurchases);
+    }
+
+    @ApiOperation("修正价格接口")
+    @PostMapping("updateCorrectPrice")
+    public Message updateCorrectPrice(Inquiry inquiry){
+        proPurchaseServiceImpl.updateCorrectPrice(inquiry);
+        return MessageUtil.success("success");
+    }
+
+    @ApiOperation("修改供货价")
+    @PostMapping("updateSupplyPrice")
+    public Message updateSupplyPrice(Quote quote){
+        proPurchaseServiceImpl.updateSupplyPrice(quote);
+        return MessageUtil.success("success");
     }
 }

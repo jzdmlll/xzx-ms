@@ -122,7 +122,7 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
             proPool.setParams(quoteExtendInquiry.getSuParams());
             proPool.setPrice(quoteExtendInquiry.getSuPrice());
             proPool.setDelivery(quoteExtendInquiry.getSuDelivery());
-            proPool.setQuote(quoteExtendInquiry.getInquiry().getPrice().toString());
+            proPool.setQuote(quoteExtendInquiry.getInquiry().getCorrectPrice().toString());
             proPool.setRemark(quoteExtendInquiry.getSuRemark());
             proPool.setProDetailId(proDetailId);
             proPool.setChoose(1);

@@ -230,6 +230,7 @@ public class InquiryServiceImpl implements IInquiryService {
     @Override
     public void finallyUpdateDraft(Inquiry inquiry) {
 
+        inquiry.setCorrectPrice(inquiry.getFinallyPrice());
         inquiry.setTime(new Date().getTime());
         inquiryMapper.updateByPrimaryKeySelective(inquiry);
     }
