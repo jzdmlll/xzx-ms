@@ -12,6 +12,12 @@ import java.util.List;
 public class GeneratePurchaseContractServiceImpl implements IGeneratePurchaseContractService {
     @Resource
     private GeneratePurchaseContractExtendMapper generatePurchaseContractExtendMapper;
+
+    /**
+     *通过项目id查询生成采购合同的内容
+     * @param projectId
+     * @return
+     */
     @Override
     public List<PurchaseItemsAndSupplyVM> findItemsAndSupplyByProjectId(long projectId) {
         List<PurchaseItemsAndSupplyVM> purchaseItemsAndSupplyVMS = generatePurchaseContractExtendMapper.findByProjectId(projectId);

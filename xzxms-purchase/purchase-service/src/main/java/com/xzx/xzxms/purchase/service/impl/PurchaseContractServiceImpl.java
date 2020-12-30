@@ -19,6 +19,11 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
     private PurchaseContractMapper purchaseContractMapper;
     @Resource
     private PurchaseContractExtendMapper purchaseContractExtendMapper;
+    /**
+     * 通过项目id进行查询
+     * @param projectId
+     * @return
+     */
     @Override
     public List<PurchaseContract> findByProjectId(Long projectId) {
         PurchaseContractExample example = new PurchaseContractExample();
@@ -31,6 +36,10 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
         return list;
     }
 
+    /**
+     * 逻辑假删
+     * @param id
+     */
     @Override
     public void deleteById(long id) {
         long time = new Date().getTime();
@@ -44,10 +53,14 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
         }
     }
 
+    /**
+     * 新增或者修改合同
+     * @param purchaseContract
+     */
     @Override
     public void saveOrUpdate(PurchaseContract purchaseContract) {
         long time = new Date().getTime();
-        if(purchaseContract.getId() != null){
+        if(purchaseContract.getId()!= null){
             purchaseContract.setTime(time);
             purchaseContractMapper.updateByPrimaryKeySelective(purchaseContract);
         }else {
@@ -61,6 +74,11 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
         }
     }
 
+    /**
+     * 根据合同编码进行模糊查询
+     * @param contractNo
+     * @return
+     */
     @Override
     public List<PurchaseContract> findAllLikeByContractNo(String contractNo) {
         List<PurchaseContract> purchaseContracts = purchaseContractExtendMapper.findAllLikeByContractNo(contractNo);

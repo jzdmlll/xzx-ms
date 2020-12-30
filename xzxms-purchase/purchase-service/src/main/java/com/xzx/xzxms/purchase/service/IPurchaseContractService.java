@@ -19,7 +19,7 @@ public interface IPurchaseContractService {
     void deleteById(long id);
 
     /**
-     * 新增或者修改项目
+     * 新增或者修改合同
      * @param purchaseContract
      */
     void saveOrUpdate(PurchaseContract purchaseContract);
