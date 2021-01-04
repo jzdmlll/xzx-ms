@@ -241,9 +241,9 @@ public class POIExcelUtils {
         }
         return cellValue;
     }
-    /*// 测试
+    // 测试
     public static void main(String[] args) throws Exception {
-        File file = new File("C:\\Users\\10376\\Desktop\\PLC询价景轩11.5.xls");
+        File file = new File("C:\\Users\\10376\\Desktop\\戴静购销合同1225(1).xls");
         FileInputStream fis = new FileInputStream(file);
         List<Map<String, Object>> dataFromExcel = getDataFromExcel(fis);
         for (Map<String, Object> map:dataFromExcel) {
@@ -253,5 +253,5 @@ public class POIExcelUtils {
             System.out.println("---------------------------");
         }
 
-    }*/
+    }
 }
