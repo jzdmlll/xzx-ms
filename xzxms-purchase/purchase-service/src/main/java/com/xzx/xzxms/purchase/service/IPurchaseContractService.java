@@ -1,6 +1,7 @@
 package com.xzx.xzxms.purchase.service;
 
 import com.xzx.xzxms.purchase.bean.PurchaseContract;
+import com.xzx.xzxms.purchase.vm.QuotePurchaseVM;
 
 import java.util.List;
 
@@ -30,4 +31,11 @@ public interface IPurchaseContractService {
      * @return
      */
     List<PurchaseContract> findAllLikeByContractNo(String contractNo);
+
+
+    /**
+     * 询价结果生成采购合同
+     * @param quotePurchaseVM
+     */
+    void generatePurchaseContract(QuotePurchaseVM quotePurchaseVM);
 }

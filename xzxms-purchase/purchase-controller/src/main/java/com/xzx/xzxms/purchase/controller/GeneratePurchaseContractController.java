@@ -24,4 +24,6 @@ public class GeneratePurchaseContractController {
         List<PurchaseItemsAndSupplyVM> purchaseItemsAndSupplyVMS = iGeneratePurchaseContractServiceImpl.findItemsAndSupplyByProjectId(projectId);
         return MessageUtil.success("success",purchaseItemsAndSupplyVMS);
     }
+
+
 }

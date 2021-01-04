@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xzx.xzxms.inquiry.dao.extend.ProPurchaseExtendMapper">
     <select id="findProPurchase" resultMap="InquiryAndQuoteMap">
-        SELECT pro.name,
-        i.name as i_name,i.unit as i_unit,i.number as i_number,i.finally_price as i_finally_price,i.params as i_params,i.id as i_id,
+        SELECT pro.name,i.sort as i_sort,
+        i.name as i_name,i.unit as i_unit,i.number as i_number,i.finally_price as i_finally_price,i.price as i_price,i.params as i_params,i.id as i_id,
         i.correct_price as i_correct_price,
         q.supplier as q_supplier,q.id as q_id,q.su_brand as q_su_brand,q.su_params as q_su_params,q.su_price as q_su_price,q.su_total_price as q_su_total_price,
         q.su_delivery as q_su_delivery,q.warranty as q_warranty,q.su_remark q_su_remark
