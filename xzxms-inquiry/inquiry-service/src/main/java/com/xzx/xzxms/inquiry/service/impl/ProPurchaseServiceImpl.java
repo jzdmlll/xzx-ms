@@ -1,5 +1,7 @@
 package com.xzx.xzxms.inquiry.service.impl;
 
+import com.xzx.xzxms.commons.constant.CommonConstant;
+import com.xzx.xzxms.commons.utils.IDUtils;
 import com.xzx.xzxms.inquiry.bean.Inquiry;
 import com.xzx.xzxms.inquiry.bean.Quote;
 import com.xzx.xzxms.inquiry.dao.InquiryMapper;

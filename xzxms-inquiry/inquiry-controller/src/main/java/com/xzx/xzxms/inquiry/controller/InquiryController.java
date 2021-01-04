@@ -115,7 +115,7 @@ public class InquiryController {
         return MessageUtil.success("success");
     }
 
-    @ApiOperation("查询项目采购内容")
+    @ApiOperation(value = "查询项目采购内容")
     @GetMapping("findProPurchase")
     public Message findProPurchase(@RequestParam(value = "proDetailId",required = false,defaultValue = "-1") long proDetailId){
         List<ProPurchase> proPurchases = proPurchaseServiceImpl.findProPurchase(proDetailId);

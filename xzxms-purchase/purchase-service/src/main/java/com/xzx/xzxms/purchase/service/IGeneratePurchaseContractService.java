@@ -6,7 +6,7 @@ import java.util.List;
 public interface IGeneratePurchaseContractService {
 
     /**
-     *
+     *通过项目id查询生成采购合同的内容
      * @param projectId
      * @return
      */
