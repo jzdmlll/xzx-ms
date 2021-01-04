@@ -21,8 +21,6 @@ public class ProPurchaseServiceImpl implements IProPurchaseService {
     private ProPurchaseExtendMapper proPurchaseExtendMapper;
     @Resource
     private InquiryMapper inquiryMapper;
-    @Resource
-    private QuoteMapper quoteMapper;
 
     @Override
     public List<ProPurchase> findProPurchase(long proDetailId) {
@@ -35,11 +33,5 @@ public class ProPurchaseServiceImpl implements IProPurchaseService {
     public void updateCorrectPrice(Inquiry inquiry) {
 
         inquiryMapper.updateByPrimaryKeySelective(inquiry);
-    }
-
-    @Override
-    public void updateSupplyPrice(Quote quote) {
-
-        quoteMapper.updateByPrimaryKeySelective(quote);
     }
 }
