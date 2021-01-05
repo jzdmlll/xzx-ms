@@ -77,7 +77,7 @@ class XzxmsBootApplicationTests {
         purchaseItems.setParams("1200dpi");
         purchaseItems.setModel("G304");
         purchaseItems.setUnit("个");
-        purchaseItems.setNumber(199);
+        purchaseItems.setNumber(199.0);
         purchaseItems.setIsInquiry(0);
         purchaseItems.setRemark("啦啦啦");
         purchaseItems.setIsActive(1);
