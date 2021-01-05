@@ -53,4 +53,11 @@ public class PurchaseContractGenerateController {
             return MessageUtil.error("error");
         }
     }
+
+    @ApiOperation("判断是否存在该合同编号")
+    @GetMapping("findContractNo")
+    public Message findContractNo(@Param("contractNo") String contractNo){
+        int contractNoNum = purchaseContractGenerateExtendMapper.findContractNoNumByContractNo(contractNo);
+        return MessageUtil.success("success", contractNoNum);
+    }
 }
