@@ -52,7 +52,7 @@ public class PurchasePlanController {
     }
 
     @ApiOperation("根据项目id及其详情项id修改其是否需要询价")
-    @GetMapping("updateItemsInquiry")
+    @PostMapping("updateItemsInquiry")
     public Message updateItemsInquiry(@Param("projectId") Long projectId, @Param("idList") List<Long> idList){
         String result = purchasePlanService.updateItemsInquiryService(projectId, idList);
         if (result.equals("success")){
@@ -63,7 +63,7 @@ public class PurchasePlanController {
     }
 
     @ApiOperation("当购买项需要拆分时")
-    @GetMapping("insertItem")
+    @PostMapping("insertItem")
     public Message insertItem(PurchaseItems purchaseItems, @Param("itemNum") int itemNum){
         String result = purchasePlanService.insertItemService(purchaseItems, itemNum);
         if (result.equals("success")){
@@ -81,7 +81,7 @@ public class PurchasePlanController {
     }
 
     @ApiOperation("添加询价信息")
-    @GetMapping("insertInquiryInfo")
+    @PostMapping("insertInquiryInfo")
     public Message insertInquiryInfo(PurchaseItemsListVM purchaseItemsList){
         String result = purchasePlanService.insertSysProDetailService(purchaseItemsList);
         if (result.equals("success")){

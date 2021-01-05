@@ -6,11 +6,11 @@ import com.xzx.xzxms.purchase.dao.extend.PurchaseContractGenerateExtendMapper;
 import com.xzx.xzxms.purchase.dto.PurchaseContractDTO;
 import com.xzx.xzxms.purchase.service.PurchaseContractGenerateService;
 import com.xzx.xzxms.purchase.vm.PurchaseContractGenerateVM;
-import com.xzx.xzxms.purchase.vm.PurchaseItemsVM;
 import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -42,7 +42,7 @@ public class PurchaseContractGenerateController {
     }
 
     @ApiOperation("新增合同以及为购买项绑定合同")
-    @GetMapping("insertContractInfo")
+    @PostMapping("insertContractInfo")
     public Message insertContractInfo(@Param("purchaseContractDTO") PurchaseContractDTO purchaseContractDTO){
         String result = purchaseContractGenerateService.insertContractInfoService(purchaseContractDTO);
         if (result.equals("success")){
@@ -52,5 +52,12 @@ public class PurchaseContractGenerateController {
         }else {
             return MessageUtil.error("error");
         }
+    }
+
+    @ApiOperation("判断是否存在该合同编号")
+    @GetMapping("findContractNo")
+    public Message findContractNo(@Param("contractNo") String contractNo){
+        int contractNoNum = purchaseContractGenerateExtendMapper.findContractNoNumByContractNo(contractNo);
+        return MessageUtil.success("success", contractNoNum);
     }
 }

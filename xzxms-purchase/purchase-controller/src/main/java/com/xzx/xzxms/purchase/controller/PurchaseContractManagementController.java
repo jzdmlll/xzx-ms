@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,7 +45,7 @@ public class PurchaseContractManagementController {
     }
 
     @ApiOperation("根据合同id修改合同审核级别")
-    @GetMapping("updateContractAuditById")
+    @PostMapping("updateContractAuditById")
     public Message updateContractAuditById(@Param("firstAudit") Integer firstAudit, @Param("secondAudit") Integer secondAudit, @Param("threeAudit") Integer threeAudit, @Param("id") Long id){
         String result = purchaseContractManagementService.updateContractAuditByIdService(firstAudit, secondAudit, threeAudit, id);
         if (result.equals("success")){
