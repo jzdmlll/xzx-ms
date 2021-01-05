@@ -51,7 +51,7 @@ public class PurchaseContractController {
 
     @ApiOperation("询价结果发往采购需求")
     @PostMapping("inquiryResultSendPurchase")
-    public Message inquiryResultSendPurchase(long[] quoteIds, long operator){
+    public Message inquiryResultSendPurchase(Long[] quoteIds, Long operator){
         iPurchaseContractServiceImpl.inquiryResultSendPurchase(quoteIds, operator);
         return MessageUtil.success("success");
     }

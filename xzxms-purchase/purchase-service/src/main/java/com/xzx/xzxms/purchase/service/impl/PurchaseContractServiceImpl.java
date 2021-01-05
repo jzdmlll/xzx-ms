@@ -117,7 +117,7 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
 
     @Transactional
     @Override
-    public void inquiryResultSendPurchase(long[] quoteIds, long operator) {
+    public void inquiryResultSendPurchase(Long[] quoteIds, Long operator) {
 
         for(long id : quoteIds){
             List<ProPurchase> proPurchases = proPurchaseExtendMapper.findInquiryResult(id);
@@ -198,6 +198,4 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
             }
         }
     }
-
-
 }

@@ -36,5 +36,5 @@ public interface IPurchaseContractService {
      * 询价结果发往采购
      * @param quoteIds
      */
-    void inquiryResultSendPurchase(long[] quoteIds, long operator);
+    void inquiryResultSendPurchase(Long[] quoteIds, Long operator);
 }
