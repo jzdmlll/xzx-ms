@@ -47,6 +47,7 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
             response.setStatus(HttpServletResponse.SC_OK);
             return true;
         }
+        System.out.println(request.getServletPath());
         // 获取请求头信息authorization信息
         final String token = request.getHeader(JwtTokenUtil.AUTH_HEADER_KEY);
         if(StringUtils.isEmpty(token)){

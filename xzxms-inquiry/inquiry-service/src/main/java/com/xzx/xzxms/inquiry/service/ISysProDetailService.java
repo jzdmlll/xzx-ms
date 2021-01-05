@@ -65,6 +65,6 @@ public interface ISysProDetailService {
      * @param overTime 结束时间
      * @return
      */
-    List<SysProDetail> inquiryResultFindPro(String proName, long startTime, long overTime);
+    List<SysProDetail> inquiryResultFindPro(String proName, Long startTime, Long overTime);
 
 }

@@ -137,7 +137,7 @@ public class InquiryController {
 
     @ApiOperation(value = "询价页面查询招投标项目")
     @PostMapping("inquiryResultFindPro")
-    public Message inquiryResultFindPro(@RequestParam(value = "proName", required = false, defaultValue = "") String proName, @RequestParam(value = "startTime",required = false,defaultValue = "0") long startTime, @RequestParam(value = "overTime",required = false,defaultValue = "0") long overTime){
+    public Message inquiryResultFindPro(@RequestParam(value = "proName", required = false, defaultValue = "") String proName, @RequestParam(value = "startTime",required = false,defaultValue = "0") Long startTime, @RequestParam(value = "overTime",required = false, defaultValue = "0") Long overTime){
         List<SysProDetail> list = iSysProDetailService.inquiryResultFindPro(proName, startTime, overTime);
         return MessageUtil.success("success", list);
     }
