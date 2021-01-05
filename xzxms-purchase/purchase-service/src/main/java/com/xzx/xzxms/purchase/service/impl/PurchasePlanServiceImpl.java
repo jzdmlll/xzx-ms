@@ -1,12 +1,18 @@
 package com.xzx.xzxms.purchase.service.impl;
 
 import com.xzx.xzxms.commons.utils.IDUtils;
+import com.xzx.xzxms.inquiry.bean.Inquiry;
 import com.xzx.xzxms.inquiry.bean.SysProDetail;
+import com.xzx.xzxms.inquiry.bean.SysProDetailWithBLOBs;
+import com.xzx.xzxms.inquiry.dao.InquiryMapper;
+import com.xzx.xzxms.inquiry.dao.SysProDetailMapper;
+import com.xzx.xzxms.inquiry.dao.extend.SysProDetailExtendMapper;
 import com.xzx.xzxms.purchase.bean.PurchaseItems;
 import com.xzx.xzxms.purchase.bean.PurchaseItemsExample;
 import com.xzx.xzxms.purchase.dao.PurchaseItemsMapper;
 import com.xzx.xzxms.purchase.dao.extend.PurchasePlanExtendMapper;
 import com.xzx.xzxms.purchase.service.PurchasePlanService;
+import com.xzx.xzxms.purchase.vm.PurchaseItemsListVM;
 import com.xzx.xzxms.purchase.vm.PurchaseItemsVM;
 import com.xzx.xzxms.purchase.vm.PurchaseSupplierVM;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,19 +44,25 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
     @Resource
     private PurchaseItemsMapper purchaseItemsMapper;
 
+    @Resource
+    private SysProDetailMapper sysProDetailMapper;
+
+    @Resource
+    private InquiryMapper inquiryMapper;
+
     /**
      * 根据项目id查询该项目下的所有购买项
      * @param projectId
      * @return
      */
     @Override
-    public List<PurchaseItemsVM> findItemsByProjectIdService(String projectId) {
+    public List<PurchaseItemsVM> findItemsByProjectIdService(Long projectId) {
         List<PurchaseItemsVM> itemsList = purchasePlanExtendMapper.findItemsByProjectId(projectId);
         return itemsList;
     }
 
     @Override
-    public String updateItemsInquiryService(String projectId, List<Long> idList) {
+    public String updateItemsInquiryService(Long projectId, List<Long> idList) {
         PurchaseItemsExample purchaseItemsExample = new PurchaseItemsExample();
         purchaseItemsExample.createCriteria().andProjectIdEqualTo(projectId).andIdIn(idList);
         PurchaseItems purchaseItems = new PurchaseItems();
@@ -108,42 +121,98 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
         return supplierInfo;
     }
 
+    @Transactional
     @Override
-    public String insertSysProDetail(SysProDetail sysProDetail) {
-        // 获取当前年月
-        SimpleDateFormat df = new SimpleDateFormat("yyyyMM");//设置日期格式
-        String YM = df.format(new Date());
-        
-        // 获取该年月所有项目编号
-        List<String> proNoByYM = purchasePlanExtendMapper.findProNoByYM(YM);
-        
-        // 将所得项目编号根据 " - " 分割 得到所有项目序号
-        List<Integer> No = new ArrayList();
-        for (String s : proNoByYM) {
-            No.add(Integer.parseInt(s.split("-")[1]));
-            System.out.println("===== " + s);
-        }
-        System.out.println(No.toString());
-        
-        // 将所得No集合进行排序得到最大值
-        // 给所有序号进行排序
-        Collections.sort(No);
+    public String insertSysProDetailService(PurchaseItemsListVM purchaseItemsList) {
+        // 获取项目id 判断该项目名是否已经存在
+        Long result = purchasePlanExtendMapper.findProNameByProName(purchaseItemsList.getSysProDetailWithBLOBs().getName());
+        // 当项目名称不重复
+        if (result == null){
+            // 获取当前年月
+            SimpleDateFormat df = new SimpleDateFormat("yyyyMM");//设置日期格式
+            String YM = df.format(new Date());
+            // 获取该年月所有项目编号
+            List<String> proNoByYM = purchasePlanExtendMapper.findProNoByYM(YM);
+            // 将所得项目编号根据 " - " 分割 得到所有项目序号
+            List<Integer> No = new ArrayList();
+            for (String s : proNoByYM) {
+                No.add(Integer.parseInt(s.split("-")[1]));
+            }
+            // 将所得No集合进行排序得到最大值
+            // 给所有序号进行排序
+            Collections.sort(No);
+            // 获取最大一个序号
+            int maxNo = No.get(No.size()-1);
+            // 生成id
+            Long id = IDUtils.getId();
+            // 新建项目编号
+            String newProNo = YM + "-" + (maxNo+1);
+            // 生成时间戳
+            Long time = new Date().getTime();
 
-        // 获取最大一个序号
-        int maxNo = No.get(No.size()-1);
-        System.out.println("maxNo " + maxNo);
-        
-        // 新建项目编号
-        
-        String newProNo = YM + "-" + (maxNo+1);
-        System.out.println(newProNo);
+            purchaseItemsList.getSysProDetailWithBLOBs().setId(id);
+            purchaseItemsList.getSysProDetailWithBLOBs().setProNo(newProNo);
+            purchaseItemsList.getSysProDetailWithBLOBs().setIsActive(1);
+            purchaseItemsList.getSysProDetailWithBLOBs().setIsUseful(0);
+            purchaseItemsList.getSysProDetailWithBLOBs().setTime(time);
+            // 向sys_pro_detail表中插入新项目
+            sysProDetailMapper.insert(purchaseItemsList.getSysProDetailWithBLOBs());
 
-        // 判断该项目名是否已经存在
-        int result = purchasePlanExtendMapper.findProNameByProName(sysProDetail.getName());
-        if (result == 0){
-            return "无重复名";
+            Inquiry inquiry = new Inquiry();
+            for (PurchaseItems item : purchaseItemsList.getPurchaseItemsList()) {
+                inquiry.setId(IDUtils.getId());
+                inquiry.setName(item.getItem());
+                inquiry.setRealBrand(item.getBrand());
+                inquiry.setParams(item.getParams());
+                inquiry.setModel(item.getModel());
+                inquiry.setUnit(item.getUnit());
+                inquiry.setNumber(item.getNumber());
+                inquiry.setSort(item.getSerialNumber());
+                inquiry.setIsinquiry(1);
+                inquiry.setVeto(0);
+                inquiry.setProDetailId(id);
+                inquiry.setIsActive(1);
+                inquiry.setIsUseful(0);
+                inquiry.setOperator(purchaseItemsList.getSysProDetailWithBLOBs().getOperator());
+                inquiry.setTime(new Date().getTime());
+                inquiry.setItemId(item.getId());
+                inquiryMapper.insert(inquiry);
+            }
+
+            return "success";
+        // 当项目名存在时
         }else {
-            return "该项目名已存在";
+            String name = purchaseItemsList.getSysProDetailWithBLOBs().getName();
+            for (PurchaseItems item : purchaseItemsList.getPurchaseItemsList()) {
+                Integer sort = purchasePlanExtendMapper.findSort(name, item.getSerialNumber());
+                // 当该购买项不存在时
+                if (sort == null){
+                    Inquiry inquiry = new Inquiry();
+                    inquiry.setId(IDUtils.getId());
+                    inquiry.setName(item.getItem());
+                    inquiry.setRealBrand(item.getBrand());
+                    inquiry.setParams(item.getParams());
+                    inquiry.setModel(item.getModel());
+                    inquiry.setUnit(item.getUnit());
+                    inquiry.setNumber(item.getNumber());
+                    inquiry.setSort(item.getSerialNumber());
+                    inquiry.setIsinquiry(1);
+                    inquiry.setVeto(0);
+                    inquiry.setProDetailId(result);
+                    inquiry.setIsActive(1);
+                    inquiry.setIsUseful(0);
+                    inquiry.setOperator(purchaseItemsList.getSysProDetailWithBLOBs().getOperator());
+                    inquiry.setTime(new Date().getTime());
+                    inquiry.setItemId(item.getId());
+                    inquiryMapper.insert(inquiry);
+                    System.out.println("添加：" + item.getSerialNumber());
+                    
+                // 当该购买项已存在时
+                }else {
+                    System.out.println("该购买项已存在 " + item.getSerialNumber());
+                }
+            }
+            return "success";
         }
     }
 }

@@ -38,6 +38,12 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
+            <groupId>com.xzx.xzxms.inquiry</groupId>
+            <artifactId>inquiry-dao</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>com.xzx</groupId>
             <artifactId>xzxms-commons</artifactId>
             <version>1.0-SNAPSHOT</version>

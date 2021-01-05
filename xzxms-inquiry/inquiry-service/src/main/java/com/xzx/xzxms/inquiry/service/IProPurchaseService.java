@@ -9,7 +9,7 @@ import java.util.List;
 public interface IProPurchaseService {
 
     /**
-     * 查询项目采购内容
+     * 查询询价结果
      * @param proDetailId
      * @return
      */
@@ -20,10 +20,4 @@ public interface IProPurchaseService {
      * @param inquiry
      */
     void updateCorrectPrice(Inquiry inquiry);
-
-    /**
-     * 修改供货价
-     * @param quote
-     */
-    void updateSupplyPrice(Quote quote);
 }

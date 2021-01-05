@@ -58,4 +58,13 @@ public interface ISysProDetailService {
      */
     void setInvalid(long id);
 
+    /**
+     * 询价页面查询招投标项目
+     * @param proName 项目名
+     * @param startTime 开始时间
+     * @param overTime 结束时间
+     * @return
+     */
+    List<SysProDetail> inquiryResultFindPro(String proName, long startTime, long overTime);
+
 }

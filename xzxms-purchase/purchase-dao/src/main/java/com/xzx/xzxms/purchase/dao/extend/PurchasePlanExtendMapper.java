@@ -1,6 +1,7 @@
 package com.xzx.xzxms.purchase.dao.extend;
 
 import com.xzx.xzxms.purchase.bean.PurchaseItems;
+import com.xzx.xzxms.purchase.vm.PurchaseContractGenerateVM;
 import com.xzx.xzxms.purchase.vm.PurchaseItemsVM;
 import com.xzx.xzxms.purchase.vm.PurchaseSupplierVM;
 import org.apache.ibatis.annotations.Mapper;
@@ -25,21 +26,21 @@ public interface PurchasePlanExtendMapper {
      * @param projectId
      * @return
      */
-    List<PurchaseItemsVM> findItemsByProjectId(@Param("projectId") String projectId);
+    List<PurchaseItemsVM> findItemsByProjectId(@Param("projectId") Long projectId);
 
     /**
      *
      * @param projectId
      * @param idList
      */
-    void updateItemsInquiry(@Param("projectId") String projectId, @Param("idList") List<Long> idList);
+    void updateItemsInquiry(@Param("projectId") Long projectId, @Param("idList") List<Long> idList);
 
     /**
      * 根据项目id获取所有购买项的序号
      * @param projectId
      * @return
      */
-    List<Integer> findSerialNumbersByProjectId(@Param("projectId") String projectId);
+    List<Integer> findSerialNumbersByProjectId(@Param("projectId") Long projectId);
 
     /**
      * 当购买项购买数量拆分，新增一条该购买项信息
@@ -64,7 +65,7 @@ public interface PurchasePlanExtendMapper {
      * 根据 projectName 在表 sys_pro_detail 中查询是否有相同项目名
      * @param projectName
      */
-    int findProNameByProName(@Param("name") String projectName);
+    Long findProNameByProName(@Param("name") String projectName);
 
     /**
      * 根据当前 年 月 查询所有符合条件的项目编号
@@ -72,4 +73,13 @@ public interface PurchasePlanExtendMapper {
      * @return
      */
     List<String> findProNoByYM(@Param("proNo") String proNo);
+
+    /**
+     * 根据项目名称和购买序号 在表inquiry中查询是否有相同询价记录
+     * @param name
+     * @param sort
+     * @return
+     */
+    Integer findSort(@Param("name") String name, @Param("sort") int sort);
+
 }

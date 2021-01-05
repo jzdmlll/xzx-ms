@@ -1,14 +1,14 @@
 package com.xzx.xzxms.inquiry.service.impl;
 
+import com.xzx.xzxms.commons.constant.CommonConstant;
 import com.xzx.xzxms.commons.dao.redis.JedisDao;
 import com.xzx.xzxms.commons.utils.Base64Util;
 import com.xzx.xzxms.commons.utils.IDUtils;
+import com.xzx.xzxms.inquiry.bean.*;
 import com.xzx.xzxms.inquiry.dao.SysProDetailMapper;
+import com.xzx.xzxms.inquiry.dao.SysProOriginMapper;
 import com.xzx.xzxms.inquiry.dao.extend.SysProDetailExtendMapper;
 import com.xzx.xzxms.inquiry.service.ISysProDetailService;
-import com.xzx.xzxms.inquiry.bean.SysProDetail;
-import com.xzx.xzxms.inquiry.bean.SysProDetailExample;
-import com.xzx.xzxms.inquiry.bean.SysProDetailWithBLOBs;
 import com.xzx.xzxms.inquiry.bean.extend.SysProDetailExtend;
 import com.xzx.xzxms.system.bean.SysFile;
 import com.xzx.xzxms.system.bean.SysFileExample;
@@ -26,8 +26,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-//import com.xzx.xzxms.service.ISysProCheckService;
-
 @Service
 public class SysProDetailServiceImpl implements ISysProDetailService {
 
@@ -41,6 +39,8 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
     private IFileUploadService fileUploadServiceImpl;
     @Resource
     private SysFileMapper sysFileMapper;
+    @Resource
+    private SysProOriginMapper sysProOriginMapper;
 
     @Override
     public List<SysProDetailExtend> findById() {
@@ -206,6 +206,22 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
         proDetail.setId(id);
         proDetail.setIsActive(0);
         sysProDetailMapper.updateByPrimaryKeySelective(proDetail);
+    }
+
+    @Override
+    public List<SysProDetail> inquiryResultFindPro(String proName, long startTime, long overTime) {
+
+        SysProOriginExample example = new SysProOriginExample();
+        example.createCriteria().andNameEqualTo("招投标项目").andIsActiveEqualTo(CommonConstant.EFFECTIVE);
+        List<SysProOrigin> list = sysProOriginMapper.selectByExample(example);
+        if (list.size() > 0){
+
+            SysProDetailExample sysProDetailExample = new SysProDetailExample();
+            sysProDetailExample.createCriteria().andIsActiveEqualTo(CommonConstant.EFFECTIVE).andNameLike("%"+proName+"%").andTimeBetween(startTime,overTime);
+            List<SysProDetail> sysProDetails = sysProDetailMapper.selectByExample(sysProDetailExample);
+            return sysProDetails;
+        }
+        return null;
     }
 
     @Override

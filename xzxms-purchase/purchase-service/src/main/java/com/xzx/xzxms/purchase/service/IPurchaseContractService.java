@@ -37,5 +37,8 @@ public interface IPurchaseContractService {
      * 询价结果生成采购合同
      * @param quotePurchaseVM
      */
+    /*
     void generatePurchaseContract(QuotePurchaseVM quotePurchaseVM);
+
+     */
 }

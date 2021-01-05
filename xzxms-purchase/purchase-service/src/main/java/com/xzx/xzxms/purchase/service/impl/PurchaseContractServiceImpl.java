@@ -107,7 +107,7 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
         List<PurchaseContract> purchaseContracts = purchaseContractExtendMapper.findAllLikeByContractNo(contractNo);
         return purchaseContracts;
     }
-
+/*
     @Transactional
     @Override
     public void generatePurchaseContract(QuotePurchaseVM quotePurchaseVM) {
@@ -154,7 +154,7 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
                 purchaseItems.setUnit(inquiry.getUnit());
                 purchaseItems.setSalePrice(inquiry.getCorrectPrice());
                 purchaseItems.setSaleTotalprice(inquiry.getCorrectPrice()*inquiry.getNumber());
-                purchaseItems.setSerialNumber(inquiry.getNumber());
+                purchaseItems.setNumber(inquiry.getNumber());
                 purchaseItems.setRequiredDelivery(inquiry.getRequiredDelivery());
                 purchaseItems.setIsInquiry(1);
                 purchaseItems.setRemark(inquiry.getRemark());
@@ -186,5 +186,5 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
             purchaseSupplyMapper.insert(purchaseSupply);
         }
     }
-
+*/
 }

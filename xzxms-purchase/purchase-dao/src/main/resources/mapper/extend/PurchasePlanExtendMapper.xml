@@ -5,11 +5,12 @@
     <resultMap id="PurchaseItems" type="com.xzx.xzxms.purchase.bean.PurchaseItems">
         <result column="id" property="id" jdbcType="BIGINT" />
         <result column="contract_id" property="contractId" jdbcType="BIGINT" />
-        <result column="project_id" property="projectId" jdbcType="VARCHAR" />
+        <result column="project_id" property="projectId" jdbcType="BIGINT" />
         <result column="serial_number" property="serialNumber" jdbcType="INTEGER" />
         <result column="item" property="item" jdbcType="VARCHAR" />
         <result column="brand" property="brand" jdbcType="VARCHAR" />
-        <result column="params" property="params" jdbcType="VARCHAR" />
+        <result column="params" property="params1" jdbcType="VARCHAR" />
+        <result column="params" property="params2" jdbcType="VARCHAR" />
         <result column="model" property="model" jdbcType="VARCHAR" />
         <result column="unit" property="unit" jdbcType="VARCHAR" />
         <result column="number" property="number" jdbcType="INTEGER" />
@@ -48,13 +49,13 @@
         <result column="pro_no" property="proNo" jdbcType="VARCHAR" />
     </resultMap>
 
-    <select id="findItemsByProjectId" parameterType="string" resultMap="PurchaseItemsVM">
+    <select id="findItemsByProjectId" parameterType="long" resultMap="PurchaseItemsVM">
         select id,contract_id,project_id,serial_number,item,brand,params,model,unit,number,is_inquiry,remark,is_active,operator,time
         from purchase_items
         where project_id=#{projectId} and is_active=1 order by serial_number
     </select>
 
-    <select id="findSerialNumbersByProjectId" parameterType="string" resultType="Integer">
+    <select id="findSerialNumbersByProjectId" parameterType="long" resultType="Integer">
         select serial_number from purchase_items where project_id=#{projectId} and is_active=1
     </select>
 
@@ -76,11 +77,17 @@
         and purchase_items.id = #{id}
     </select>
 
-    <select id="findProNameByProName" parameterType="string" resultType="int">
-        SELECT count(`name`) FROM `sys_pro_detail` where `name` = #{name}
+    <select id="findProNameByProName" parameterType="string" resultType="long">
+        SELECT id FROM `sys_pro_detail` where `name` = #{name}
     </select>
 
     <select id="findProNoByYM" parameterType="string" resultType="string">
         select pro_no from sys_pro_detail where pro_no like "%"#{proNo}"%" GROUP BY pro_no
+    </select>
+
+    <select id="findSort" parameterType="com.xzx.xzxms.inquiry.bean.SysProDetail" resultType="integer">
+        select sort
+        from inquiry inner join sys_pro_detail on inquiry.pro_detail_id = sys_pro_detail.id
+        where sys_pro_detail.name = #{name} and sort=#{sort}
     </select>
 </mapper>

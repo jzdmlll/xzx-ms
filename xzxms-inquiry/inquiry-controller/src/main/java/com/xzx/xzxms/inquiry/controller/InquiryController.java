@@ -3,16 +3,20 @@ import com.xzx.xzxms.commons.utils.CustomerException;
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
 import com.xzx.xzxms.inquiry.bean.Quote;
+import com.xzx.xzxms.inquiry.bean.SysProDetail;
 import com.xzx.xzxms.inquiry.service.IInquiryService;
 import com.xzx.xzxms.inquiry.bean.Inquiry;
 import com.xzx.xzxms.inquiry.bean.extend.InquiryExtend;
 import com.xzx.xzxms.inquiry.service.IProPurchaseService;
+import com.xzx.xzxms.inquiry.service.ISysProDetailService;
 import com.xzx.xzxms.inquiry.vm.BatchInquiryVM;
 import com.xzx.xzxms.inquiry.vm.ProPurchase;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.xml.crypto.Data;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -23,6 +27,8 @@ public class InquiryController {
     private IInquiryService iInquiryServiceImpl;
     @Resource
     private IProPurchaseService proPurchaseServiceImpl;
+    @Resource
+    private ISysProDetailService iSysProDetailService;
 
     @ApiOperation("根据项目id查询所有询价")
     @GetMapping("findByProDetailId")
@@ -115,24 +121,24 @@ public class InquiryController {
         return MessageUtil.success("success");
     }
 
-    @ApiOperation(value = "查询项目采购内容")
+    @ApiOperation(value = "查询询价结果")
     @GetMapping("findProPurchase")
     public Message findProPurchase(@RequestParam(value = "proDetailId",required = false,defaultValue = "-1") long proDetailId){
         List<ProPurchase> proPurchases = proPurchaseServiceImpl.findProPurchase(proDetailId);
         return MessageUtil.success("success", proPurchases);
     }
 
-    @ApiOperation("修正价格接口")
+    @ApiOperation(value = "修正价格接口")
     @PostMapping("updateCorrectPrice")
     public Message updateCorrectPrice(Inquiry inquiry){
         proPurchaseServiceImpl.updateCorrectPrice(inquiry);
         return MessageUtil.success("success");
     }
 
-    @ApiOperation("修改供货价")
-    @PostMapping("updateSupplyPrice")
-    public Message updateSupplyPrice(Quote quote){
-        proPurchaseServiceImpl.updateSupplyPrice(quote);
-        return MessageUtil.success("success");
+    @ApiOperation(value = "询价页面查询招投标项目")
+    @PostMapping("inquiryResultFindPro")
+    public Message inquiryResultFindPro(@RequestParam(value = "proName", required = false, defaultValue = "") String proName, @RequestParam(value = "startTime",required = false,defaultValue = "0") long startTime, @RequestParam(value = "overTime",required = false,defaultValue = "0") long overTime){
+        List<SysProDetail> list = iSysProDetailService.inquiryResultFindPro(proName, startTime, overTime);
+        return MessageUtil.success("success", list);
     }
 }

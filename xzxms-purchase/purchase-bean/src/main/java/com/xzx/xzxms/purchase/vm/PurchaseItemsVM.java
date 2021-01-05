@@ -1,5 +1,7 @@
 package com.xzx.xzxms.purchase.vm;
 
+import java.util.List;
+
 /**
  * @author：ZJW
  * @title：
@@ -12,14 +14,14 @@ public class PurchaseItemsVM {
 
     private Long id;
     private Long contractId;
-    private String projectId;
+    private Long projectId;
     private Integer serialNumber;
     private String item;
     private String brand;
     private String params;
     private String model;
     private String unit;
-    private Integer number;
+    private Double number;
     private Integer isInquiry;
     private String remark;
     private Integer isActive;
@@ -42,11 +44,11 @@ public class PurchaseItemsVM {
         this.contractId = contractId;
     }
 
-    public String getProjectId() {
+    public Long getProjectId() {
         return projectId;
     }
 
-    public void setProjectId(String projectId) {
+    public void setProjectId(Long projectId) {
         this.projectId = projectId;
     }
 
@@ -98,11 +100,11 @@ public class PurchaseItemsVM {
         this.unit = unit;
     }
 
-    public Integer getNumber() {
+    public Double getNumber() {
         return number;
     }
 
-    public void setNumber(Integer number) {
+    public void setNumber(Double number) {
         this.number = number;
     }
 
