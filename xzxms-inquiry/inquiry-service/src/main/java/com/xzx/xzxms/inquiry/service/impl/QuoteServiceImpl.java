@@ -59,7 +59,7 @@ public class QuoteServiceImpl implements IQuoteService {
     @Override
     public synchronized void saveOrUpdate(QuoteExtend quote) {
         long time = new Date().getTime();
-        long operatorId = quote.getOperator();
+        String operatorId = quote.getOperator();
         if (quote.getId() != null){
             Quote quote1 = quoteMapper.selectByPrimaryKey(quote.getId());
             if(quote1!=null) {
@@ -175,7 +175,7 @@ public class QuoteServiceImpl implements IQuoteService {
     public void batchAddQuote(QuoteExtend quote) throws IOException {
         List<SysFile> files = quote.getFiles();
         if(files.size() > 0) {
-            long operator = quote.getOperator();
+            String operator = quote.getOperator();
             long time = new Date().getTime();
             long proDetailId = quote.getProDetailId();
 
@@ -388,7 +388,7 @@ public class QuoteServiceImpl implements IQuoteService {
         quote.setIsActive(1);
         quote.setIsUseful(0);
         quote.setTime(time);
-        quote.setOperator(operator);
+        quote.setOperator(operator+"");
         quoteMapper.insert(quote);
     }
 

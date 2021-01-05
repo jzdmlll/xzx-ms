@@ -50,7 +50,7 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
     @Override
     public void saveOrUpdate(SysProDetailWithBLOBs proDetail, List<SysFile> files) {
         long time = new Date().getTime();
-        long operatorId = proDetail.getOperator();
+        String operatorId = proDetail.getOperator();
         if (proDetail.getId() != null){
             SysFileExample example = new SysFileExample();
             example.createCriteria().andOtherIdEqualTo(proDetail.getId());

@@ -131,7 +131,7 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
                     purchaseProject.setId(purchaseProjectId);
                     purchaseProject.setProjectName(proPurchase.getName());
                     purchaseProject.setIsActive(CommonConstant.EFFECTIVE);
-                    purchaseProject.setOperator(operator);
+                    purchaseProject.setOperator(operator+"");
                     purchaseProject.setTime(new Date().getTime());
                     purchaseProject.setInquiryProId(proPurchase.getId());
                     purchaseProject.setPurchaseProNo(proPurchase.getProNo());
@@ -154,7 +154,7 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
                     purchaseItems.setRemark(proPurchase.getInquiry().getRemark());
                     purchaseItems.setIsInquiry(CommonConstant.IS_INQUIRY);
                     purchaseItems.setIsActive(CommonConstant.EFFECTIVE);
-                    purchaseItems.setOperator(operator);
+                    purchaseItems.setOperator(operator+"");
                     purchaseItems.setTime(new Date().getTime());
                     purchaseItemsMapper.insert(purchaseItems);
 
@@ -174,7 +174,7 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
                     purchaseSupply.setNumber(proPurchase.getInquiry().getNumber());
                     purchaseSupply.setWarranty(proPurchase.getQuote().getWarranty());
                     purchaseSupply.setIsActive(CommonConstant.EFFECTIVE);
-                    purchaseSupply.setOperator(operator);
+                    purchaseSupply.setOperator(operator+"");
                     purchaseSupply.setTime(new Date().getTime());
                     purchaseSupply.setImage(proPurchase.getQuote().getImage());
                     purchaseSupplyMapper.insert(purchaseSupply);

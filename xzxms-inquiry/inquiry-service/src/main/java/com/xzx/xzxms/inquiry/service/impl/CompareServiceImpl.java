@@ -115,7 +115,7 @@ public class CompareServiceImpl implements ICompareService {
         SysProCheck proCheck = new SysProCheck();
         // 更新选中比价
         proCheck.setCompareAudit(SysCheckExtend.PASS_STATUS); //1选用
-        proCheck.setOperator(userId);
+        proCheck.setOperator(userId+"");
         proCheck.setTime(time);
         for (long id : checkCompareIds) {
             SysProCheck sysProCheck = sysProCheckMapper.selectByPrimaryKey(id);
@@ -135,7 +135,7 @@ public class CompareServiceImpl implements ICompareService {
         // 更新未选中比价
         proCheck = new SysProCheck();
         proCheck.setCompareAudit(SysCheckExtend.REFUSE_STATUS); //2未选用
-        proCheck.setOperator(userId);
+        proCheck.setOperator(userId+"");
         proCheck.setTime(time);
         for (long id : otherCompareIds) {
             SysProCheck sysProCheck = sysProCheckMapper.selectByPrimaryKey(id);

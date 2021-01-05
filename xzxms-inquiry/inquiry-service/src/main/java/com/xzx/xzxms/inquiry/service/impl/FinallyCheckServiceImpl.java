@@ -105,7 +105,7 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
         SysProCheck proCheck = new SysProCheck();
         // 更新选中比价
         proCheck.setFinallyAudit(SysCheckExtend.PASS_STATUS); //1选用
-        proCheck.setOperator(userId);
+        proCheck.setOperator(userId+"");
         proCheck.setTime(time);
         for (long id : checkIds) {
             proCheck.setId(id);
@@ -130,7 +130,7 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
             proPool.setChoose(1);
             proPool.setIsActive(1);
             proPool.setIsUseful(0);
-            proPool.setOperator(userId);
+            proPool.setOperator(userId+"");
             proPool.setTime(time);
             // 防止空指针异常
             BeanHelper.nullToEmpty(proPool);
@@ -145,7 +145,7 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
         }
         // 更新备注
         proCheck = new SysProCheck();
-        proCheck.setOperator(userId);
+        proCheck.setOperator(userId+"");
         for(Map map :remarks){
             proCheck.setId(Long.parseLong(map.get("id").toString()));
             proCheck.setFinallyRemark(map.get("remark").toString());
@@ -154,7 +154,7 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
         // 更新未选中比价
         proCheck = new SysProCheck();
         proCheck.setFinallyAudit(SysCheckExtend.REFUSE_STATUS); //2未选用
-        proCheck.setOperator(userId);
+        proCheck.setOperator(userId+"");
         proCheck.setTime(time);
         for (long id : unCheckIds) {
             proCheck.setId(id);
