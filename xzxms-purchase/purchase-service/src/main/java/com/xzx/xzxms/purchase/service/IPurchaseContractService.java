@@ -32,13 +32,9 @@ public interface IPurchaseContractService {
      */
     List<PurchaseContract> findAllLikeByContractNo(String contractNo);
 
-
     /**
-     * 询价结果生成采购合同
-     * @param quotePurchaseVM
+     * 询价结果发往采购
+     * @param quoteIds
      */
-    /*
-    void generatePurchaseContract(QuotePurchaseVM quotePurchaseVM);
-
-     */
+    void inquiryResultSendPurchase(long[] quoteIds, long operator);
 }

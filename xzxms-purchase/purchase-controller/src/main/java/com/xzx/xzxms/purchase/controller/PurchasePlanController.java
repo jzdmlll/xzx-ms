@@ -6,6 +6,7 @@ import com.xzx.xzxms.purchase.bean.PurchaseItems;
 import com.xzx.xzxms.purchase.bean.PurchaseItemsExample;
 import com.xzx.xzxms.purchase.dao.PurchaseItemsMapper;
 import com.xzx.xzxms.purchase.dao.PurchaseMapper;
+import com.xzx.xzxms.purchase.service.IPurchaseContractService;
 import com.xzx.xzxms.purchase.service.PurchasePlanService;
 import com.xzx.xzxms.purchase.service.impl.PurchaseContractManagementServiceImpl;
 import com.xzx.xzxms.purchase.service.impl.PurchasePlanServiceImpl;
@@ -17,6 +18,7 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
