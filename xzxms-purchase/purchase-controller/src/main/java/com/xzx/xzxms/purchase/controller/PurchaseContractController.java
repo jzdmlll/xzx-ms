@@ -16,8 +16,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/purchase/contract")
 public class PurchaseContractController {
+
     @Resource
     private IPurchaseContractService iPurchaseContractServiceImpl;
+
+
     @ApiOperation(value = "通过项目id进行查询")
     @GetMapping(value ="findByProjectId")
     public Message findByProjectId(Long projectId){
@@ -46,4 +49,10 @@ public class PurchaseContractController {
         return MessageUtil.success("success",purchaseContracts);
     }
 
+    @ApiOperation("询价结果发往采购需求")
+    @PostMapping("inquiryResultSendPurchase")
+    public Message inquiryResultSendPurchase(Long[] quoteIds, Long operator){
+        iPurchaseContractServiceImpl.inquiryResultSendPurchase(quoteIds, operator);
+        return MessageUtil.success("success");
+    }
 }

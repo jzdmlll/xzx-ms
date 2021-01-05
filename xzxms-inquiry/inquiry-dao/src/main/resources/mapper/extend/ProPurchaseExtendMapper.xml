@@ -24,4 +24,22 @@
         <collection property="inquiry" ofType="com.xzx.xzxms.inquiry.bean.Inquiry" autoMapping="true" columnPrefix="i_"></collection>
         <collection property="quote" ofType="com.xzx.xzxms.inquiry.bean.Quote" autoMapping="true" columnPrefix="q_"></collection>
     </resultMap>
+
+
+    <select id="findInquiryResult" resultMap="InquiryAndQuoteMap">
+        SELECT pro.name,pro.id as pro_id,pro.purchase_pro_id as pro_purchase_pro_id,
+        i.name as i_name,i.unit as i_unit,i.number as i_number,i.finally_price as i_finally_price,i.price as i_price,i.params as i_params,i.id as i_id,
+        i.correct_price as i_correct_price,i.sort as i_sort,
+        q.supplier as q_supplier,q.id as q_id,q.su_brand as q_su_brand,q.su_params as q_su_params,q.su_price as q_su_price,q.su_total_price as q_su_total_price,
+        q.su_delivery as q_su_delivery,q.warranty as q_warranty,q.su_remark q_su_remark
+        from quote q
+        left join inquiry i on q.inquiry_id = i.id
+        left join sys_pro_detail pro on i.pro_detail_id = pro.id
+        <where>
+            pro.is_active = 1 AND i.is_active = 1 AND q.is_active = 1 AND c.finally_audit = 1
+            <if test="quoteId != null and quoteId != -1">
+                and q.id = #{quoteId}
+            </if>
+        </where>
+    </select>
 </mapper>

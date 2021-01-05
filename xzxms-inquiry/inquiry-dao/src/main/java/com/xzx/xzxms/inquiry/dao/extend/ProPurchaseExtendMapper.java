@@ -10,4 +10,5 @@ public interface ProPurchaseExtendMapper {
 
     List<ProPurchase> findProPurchase(long proDetailId);
 
+    List<ProPurchase> findInquiryResult(long quoteId);
 }

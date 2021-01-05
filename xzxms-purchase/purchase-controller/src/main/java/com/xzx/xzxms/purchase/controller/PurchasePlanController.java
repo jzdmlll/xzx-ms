@@ -6,6 +6,7 @@ import com.xzx.xzxms.purchase.bean.PurchaseItems;
 import com.xzx.xzxms.purchase.bean.PurchaseItemsExample;
 import com.xzx.xzxms.purchase.dao.PurchaseItemsMapper;
 import com.xzx.xzxms.purchase.dao.PurchaseMapper;
+import com.xzx.xzxms.purchase.service.IPurchaseContractService;
 import com.xzx.xzxms.purchase.service.PurchasePlanService;
 import com.xzx.xzxms.purchase.service.impl.PurchaseContractManagementServiceImpl;
 import com.xzx.xzxms.purchase.service.impl.PurchasePlanServiceImpl;
