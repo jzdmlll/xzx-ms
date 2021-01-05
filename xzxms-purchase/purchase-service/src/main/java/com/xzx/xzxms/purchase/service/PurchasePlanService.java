@@ -1,7 +1,9 @@
 package com.xzx.xzxms.purchase.service;
 
 import com.xzx.xzxms.inquiry.bean.SysProDetail;
+import com.xzx.xzxms.inquiry.bean.SysProDetailWithBLOBs;
 import com.xzx.xzxms.purchase.bean.PurchaseItems;
+import com.xzx.xzxms.purchase.vm.PurchaseItemsListVM;
 import com.xzx.xzxms.purchase.vm.PurchaseItemsVM;
 import com.xzx.xzxms.purchase.vm.PurchaseSupplierVM;
 import org.apache.ibatis.annotations.Param;
@@ -24,7 +26,7 @@ public interface PurchasePlanService {
      * @param projectId
      * @return
      */
-    List<PurchaseItemsVM> findItemsByProjectIdService(String projectId);
+    List<PurchaseItemsVM> findItemsByProjectIdService(Long projectId);
 
 
     /**
@@ -33,7 +35,7 @@ public interface PurchasePlanService {
      * @param idList
      * @return
      */
-    String updateItemsInquiryService(String projectId, List<Long> idList);
+    String updateItemsInquiryService(Long projectId, List<Long> idList);
 
     /**
      * 当购买项购买数量拆分，新增一条该购买项信息
@@ -45,9 +47,9 @@ public interface PurchasePlanService {
     List<PurchaseSupplierVM> findPurchasingSupplierByItemIdService(Long id);
 
     /**
-     * 新增询价项目
-     * @param sysProDetail
+     * 新增询价项目,新增询价商品
+     * @param purchaseItemsList
      * @return
      */
-    String insertSysProDetail(SysProDetail sysProDetail);
+    String insertSysProDetailService(PurchaseItemsListVM purchaseItemsList);
 }

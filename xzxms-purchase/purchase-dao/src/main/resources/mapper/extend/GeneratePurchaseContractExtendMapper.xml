@@ -5,7 +5,7 @@
         select
         i.*,
         s.supplier s_supplier,s.model s_model,s.brand s_brand,s.params s_params,s.price s_price,s.delivery s_delivery,s.remark s_remark,
-        s.total_price s_total_price,s.warranty s_warranty,s.arrival_status s_arrival_status，
+        s.total_price s_total_price,s.warranty s_warranty,s.arrival_status s_arrival_status
         from purchase_items i
         left join purchase_supply s on s.item_id = i.id
         left join purchase_project p on p.id = i.project_id

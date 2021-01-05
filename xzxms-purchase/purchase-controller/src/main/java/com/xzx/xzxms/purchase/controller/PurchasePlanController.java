@@ -9,6 +9,7 @@ import com.xzx.xzxms.purchase.dao.PurchaseMapper;
 import com.xzx.xzxms.purchase.service.PurchasePlanService;
 import com.xzx.xzxms.purchase.service.impl.PurchaseContractManagementServiceImpl;
 import com.xzx.xzxms.purchase.service.impl.PurchasePlanServiceImpl;
+import com.xzx.xzxms.purchase.vm.PurchaseItemsListVM;
 import com.xzx.xzxms.purchase.vm.PurchaseItemsVM;
 import com.xzx.xzxms.purchase.vm.PurchaseProjectVM;
 import com.xzx.xzxms.purchase.vm.PurchaseSupplierVM;
@@ -42,7 +43,7 @@ public class PurchasePlanController {
 
     @ApiOperation("根据项目id查询该项目下的所有购买项")
     @GetMapping("findItemsByProjectId")
-    public Message findItemsByProjectId(@Param("projectId") String projectId){
+    public Message findItemsByProjectId(@Param("projectId") Long projectId){
         
         List<PurchaseItemsVM> itemsList = purchasePlanService.findItemsByProjectIdService(projectId);
         return MessageUtil.success("success",itemsList);
@@ -50,12 +51,7 @@ public class PurchasePlanController {
 
     @ApiOperation("根据项目id及其详情项id修改其是否需要询价")
     @GetMapping("updateItemsInquiry")
-    public Message updateItemsInquiry(@Param("projectId") String projectId, @Param("idList") List<Long> idList){
-//        PurchaseItemsExample purchaseItemsExample = new PurchaseItemsExample();
-//        purchaseItemsExample.createCriteria().andProjectIdEqualTo(projectId).andIdIn(idList);
-//        PurchaseItems purchaseItems = new PurchaseItems();
-//        purchaseItems.setIsInquiry(1);
-//        purchaseItemsMapper.updateByExample(purchaseItems, purchaseItemsExample);
+    public Message updateItemsInquiry(@Param("projectId") Long projectId, @Param("idList") List<Long> idList){
         String result = purchasePlanService.updateItemsInquiryService(projectId, idList);
         if (result.equals("success")){
             return MessageUtil.success("success");
@@ -80,6 +76,17 @@ public class PurchasePlanController {
     public Message findPurchasingSupplierByItemId(@Param("id") Long id){
         List<PurchaseSupplierVM> supplierInfo = purchasePlanService.findPurchasingSupplierByItemIdService(id);
         return MessageUtil.success("success",supplierInfo);
+    }
+
+    @ApiOperation("添加询价信息")
+    @GetMapping("insertInquiryInfo")
+    public Message insertInquiryInfo(PurchaseItemsListVM purchaseItemsList){
+        String result = purchasePlanService.insertSysProDetailService(purchaseItemsList);
+        if (result.equals("success")){
+            return MessageUtil.success("success");
+        }else {
+            return MessageUtil.error("error");
+        }
     }
 
 }
