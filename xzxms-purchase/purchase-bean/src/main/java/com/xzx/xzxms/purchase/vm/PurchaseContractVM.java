@@ -25,7 +25,7 @@ public class PurchaseContractVM {
     private String threeRemark;
     private Integer isActive;
     private Long time;
-    private Long operator;
+    private String operator;
 
     public Long getId() {
         return id;
@@ -131,11 +131,11 @@ public class PurchaseContractVM {
         this.time = time;
     }
 
-    public Long getOperator() {
+    public String getOperator() {
         return operator;
     }
 
-    public void setOperator(Long operator) {
+    public void setOperator(String operator) {
         this.operator = operator;
     }
 

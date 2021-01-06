@@ -17,7 +17,7 @@
         <result column="is_inquiry" property="isInquiry" jdbcType="INTEGER" />
         <result column="remark" property="remark" jdbcType="VARCHAR" />
         <result column="is_active" property="isActive" jdbcType="INTEGER" />
-        <result column="operator" property="operator" jdbcType="BIGINT" />
+        <result column="operator" property="operator" jdbcType="VARCHAR" />
         <result column="time" property="time" jdbcType="BIGINT" />
     </resultMap>
 
@@ -35,7 +35,7 @@
         <result column="is_inquiry" property="isInquiry" jdbcType="INTEGER" />
         <result column="remark" property="remark" jdbcType="VARCHAR" />
         <result column="is_active" property="isActive" jdbcType="INTEGER" />
-        <result column="operator" property="operator" jdbcType="BIGINT" />
+        <result column="operator" property="operator" jdbcType="VARCHAR" />
         <result column="time" property="time" jdbcType="BIGINT" />
     </resultMap>
 

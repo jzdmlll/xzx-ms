@@ -25,7 +25,7 @@ public class PurchaseItemsVM {
     private Integer isInquiry;
     private String remark;
     private Integer isActive;
-    private Long operator;
+    private String operator;
     private Long time;
 
     public Long getId() {
@@ -132,11 +132,11 @@ public class PurchaseItemsVM {
         this.isActive = isActive;
     }
 
-    public Long getOperator() {
+    public String getOperator() {
         return operator;
     }
 
-    public void setOperator(Long operator) {
+    public void setOperator(String operator) {
         this.operator = operator;
     }
 
