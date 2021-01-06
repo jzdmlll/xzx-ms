@@ -1,7 +1,9 @@
 package com.xzx.xzxms.system.service.impl;
 
+import com.xzx.xzxms.commons.constant.CommonConstant;
 import com.xzx.xzxms.commons.utils.IDUtils;
 import com.xzx.xzxms.system.bean.SysFile;
+import com.xzx.xzxms.system.bean.SysFileExample;
 import com.xzx.xzxms.system.dao.SysFileMapper;
 import org.springframework.stereotype.Service;
 import com.xzx.xzxms.system.service.ISysFileService;
@@ -41,5 +43,15 @@ public class SysFileServiceImpl implements ISysFileService {
     @Override
     public void delete(long[] ids) {
 
+    }
+
+    @Override
+    public List<SysFile> findByProId(Long proId) {
+
+        SysFileExample example = new SysFileExample();
+        //文件类型为0代表项目文件
+        example.createCriteria().andOtherIdEqualTo(proId).andTypeEqualTo(0).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
+        List<SysFile> sysFiles = sysFileMapper.selectByExample(example);
+        return sysFiles;
     }
 }

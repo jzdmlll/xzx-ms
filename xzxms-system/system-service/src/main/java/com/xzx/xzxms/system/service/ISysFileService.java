@@ -38,4 +38,10 @@ public interface ISysFileService {
      * @param ids
      */
     void delete(long[] ids);
+
+    /**
+         * 根据项目ID查询出文件
+     * @param proId
+     */
+    List<SysFile> findByProId(Long proId);
 }

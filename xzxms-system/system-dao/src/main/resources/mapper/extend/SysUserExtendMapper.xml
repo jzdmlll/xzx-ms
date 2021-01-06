@@ -16,4 +16,10 @@
     SELECT *
     FROM sys_user
   </select>
+
+  <select id="findById" resultType="com.xzx.xzxms.system.bean.SysUser">
+    select *
+    FROM sys_user
+    where id=#{sysUserId,jdbcType=BIGINT}
+  </select>
 </mapper>

@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
         <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xzx.xzxms.purchase.dao.extend.PurchaseProjectExtendMapper">
-<select id="findAllLike" resultType="com.xzx.xzxms.purchase.bean.PurchaseProject">
-    select * from purchase_project
-    <where>
-    is_active = 1
-        <if test="name!=null and name!=''">
-        and project_name like "%"#{name}"%"
-    </if>
-    </where>
-</select>
+    <resultMap id="a" type="com.xzx.xzxms.purchase.bean.PurchaseProject">
+        <result column="username" property="operator" jdbcType="VARCHAR"/>
+        <result column="username1" property="updateOperator" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="findAllLike" resultMap="a">
+<!--        select pro.*, user.username, user1.username username1
+        from purchase_project pro
+        left join sys_user user on pro.operator =
+        left join sys_user user1 on
+        <where>
+            is_active = 1
+            <if test="name!=null and name!=''">
+            and project_name like "%"#{name}"%"
+            </if>
+        </where>-->
+    </select>
 </mapper>
