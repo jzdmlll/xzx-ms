@@ -9,10 +9,7 @@ import com.xzx.xzxms.purchase.vm.PurchaseContractGenerateVM;
 import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -43,9 +40,9 @@ public class PurchaseContractGenerateController {
 
     @ApiOperation("新增合同以及为购买项绑定合同")
     @PostMapping("insertContractInfo")
-    public Message insertContractInfo(@Param("purchaseContractDTO") PurchaseContractDTO purchaseContractDTO){
+    public Message insertContractInfo(@Param("purchaseContractDTO") @RequestBody PurchaseContractDTO purchaseContractDTO){
         String result = purchaseContractGenerateService.insertContractInfoService(purchaseContractDTO);
-        if (result.equals("success")){
+        if (result.equals("生成成功")){
             return MessageUtil.success("success");
         }else if (result.equals("合同已存在")) {
             return MessageUtil.error("合同已存在");
