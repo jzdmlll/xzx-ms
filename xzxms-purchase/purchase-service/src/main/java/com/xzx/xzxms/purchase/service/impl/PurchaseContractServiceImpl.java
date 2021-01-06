@@ -97,9 +97,6 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
             purchaseContract.setId(IDUtils.getId());
             purchaseContract.setIsActive(1);
             purchaseContract.setTime(time);
-            purchaseContract.setFirstAudit(0);
-            purchaseContract.setSecondAudit(0);
-            purchaseContract.setThreeAudit(0);
             purchaseContractMapper.insert(purchaseContract);
         }
     }

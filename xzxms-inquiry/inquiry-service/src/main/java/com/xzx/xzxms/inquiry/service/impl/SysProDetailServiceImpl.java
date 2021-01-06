@@ -52,13 +52,13 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
         long time = new Date().getTime();
         String operatorId = proDetail.getOperator();
         if (proDetail.getId() != null){
-            SysFileExample example = new SysFileExample();
+            /*SysFileExample example = new SysFileExample();
             example.createCriteria().andOtherIdEqualTo(proDetail.getId());
             List<SysFile> sysFiles = sysFileMapper.selectByExample(example);
             for(SysFile file : sysFiles){
                 file.setIsActive(0);
                 sysFileMapper.updateByPrimaryKeySelective(file);
-            }
+            }*/
             //文件上传
             for (SysFile file : files) {
                 //如果redis中存在该文件
@@ -77,6 +77,7 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
                     file.setType(SysFileExtend.TYPE_PRODETAIL);
                     file.setOtherId(proDetail.getId());
                     file.setTime(time);
+                    file.setUrl(map.get("url").toString());
                     file.setIsActive(1);
                     file.setIsUseful(1);
                     file.setOperator(operatorId);
