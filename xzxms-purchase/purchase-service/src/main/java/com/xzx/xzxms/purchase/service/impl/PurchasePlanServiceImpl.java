@@ -84,14 +84,14 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
 
         // 获取最大一个序号
         int maxSerialNumber = serialNumbers.get(serialNumbers.size()-1);
-        System.out.println("=======" + maxSerialNumber);
+//        System.out.println("=======" + maxSerialNumber);
 
         // 新增数据序号 在原有最大序号上加一
         purchaseItems.setSerialNumber(maxSerialNumber+1);
 
         // 新增数据购买项的数量 = 原需购买量 - 此次实际购买量
         purchaseItems.setNumber(purchaseItems.getNumber() - itemNum);
-        System.out.println("--------" + (purchaseItems.getNumber() - itemNum));
+//        System.out.println("--------" + (purchaseItems.getNumber() - itemNum));
 
         // 获取当前时间
         purchaseItems.setTime(new Date().getTime());

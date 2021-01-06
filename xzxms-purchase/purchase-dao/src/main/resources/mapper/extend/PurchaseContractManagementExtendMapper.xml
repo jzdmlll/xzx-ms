@@ -21,7 +21,7 @@
         <result column="three_remark" property="threeRemark" jdbcType="INTEGER"/>
         <result column="is_active" property="isActive" jdbcType="VARCHAR"/>
         <result column="time" property="time" jdbcType="BIGINT"/>
-        <result column="operator" property="operator" jdbcType="BIGINT"/>
+        <result column="operator" property="operator" jdbcType="VARCHAR"/>
     </resultMap>
 
     <select id="findAllProjects" parameterType="string" resultMap="PurchaseProjectVM">
