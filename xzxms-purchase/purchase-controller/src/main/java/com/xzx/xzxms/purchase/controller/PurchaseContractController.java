@@ -3,12 +3,10 @@ package com.xzx.xzxms.purchase.controller;
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
 import com.xzx.xzxms.purchase.bean.PurchaseContract;
+import com.xzx.xzxms.purchase.bean.PurchaseSupply;
 import com.xzx.xzxms.purchase.service.IPurchaseContractService;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -53,6 +51,13 @@ public class PurchaseContractController {
     @PostMapping("inquiryResultSendPurchase")
     public Message inquiryResultSendPurchase(Long[] quoteIds, Long operator){
         iPurchaseContractServiceImpl.inquiryResultSendPurchase(quoteIds, operator);
+        return MessageUtil.success("success");
+    }
+
+    @ApiOperation("修改供货价")
+    @PostMapping("updateSupplyPrice")
+    public Message updateSupplyPrice(@RequestBody PurchaseSupply purchaseSupply){
+        iPurchaseContractServiceImpl.updateSupplyPrice(purchaseSupply);
         return MessageUtil.success("success");
     }
 }

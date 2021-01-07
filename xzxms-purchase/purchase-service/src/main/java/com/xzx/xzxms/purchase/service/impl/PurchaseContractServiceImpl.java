@@ -1,5 +1,6 @@
 package com.xzx.xzxms.purchase.service.impl;
 
+import ch.qos.logback.core.encoder.EchoEncoder;
 import com.xzx.xzxms.commons.constant.CommonConstant;
 import com.xzx.xzxms.commons.utils.CustomerException;
 import com.xzx.xzxms.commons.utils.IDUtils;
@@ -43,8 +44,6 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
     private SysProDetailMapper sysProDetailMapper;
     @Resource
     private InquiryMapper inquiryMapper;
-    @Resource
-    private QuoteMapper quoteMapper;
     @Resource
     private ProPurchaseExtendMapper proPurchaseExtendMapper;
 
@@ -193,6 +192,19 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
             }else {
                 throw new CustomerException("提交异常，存在询价结果供应商报价无效!");
             }
+        }
+    }
+
+    @Override
+    public void updateSupplyPrice(PurchaseSupply purchaseSupply) {
+
+        if(purchaseSupply.getPrice() != null && purchaseSupply.getNumber() != null){
+
+            purchaseSupply.setTotalPrice(purchaseSupply.getPrice()*purchaseSupply.getNumber());
+            purchaseSupply.setUpdateTime(new Date().getTime());
+            purchaseSupplyMapper.updateByPrimaryKeySelective(purchaseSupply);
+        }else {
+            throw new CustomerException("供货单价或供货数量不能为空!");
         }
     }
 }
