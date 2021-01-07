@@ -42,8 +42,8 @@ public class PurchaseContractGenerateController {
     @PostMapping("insertContractInfo")
     public Message insertContractInfo(@Param("purchaseContractDTO") @RequestBody PurchaseContractDTO purchaseContractDTO){
         String result = purchaseContractGenerateService.insertContractInfoService(purchaseContractDTO);
-        if (result.equals("生成成功")){
-            return MessageUtil.success("success");
+        if (result.equals("success")){
+            return MessageUtil.success("生成成功");
         }else if (result.equals("合同已存在")) {
             return MessageUtil.error("合同已存在");
         }else {
