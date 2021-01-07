@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xzx.xzxms.purchase.dao.extend.PurchaseProjectExtendMapper">
     <resultMap id="a" type="com.xzx.xzxms.purchase.bean.PurchaseProject">
         <result column="username" property="operator" jdbcType="VARCHAR"/>
@@ -7,15 +7,15 @@
     </resultMap>
 
     <select id="findAllLike" resultMap="a">
-<!--        select pro.*, user.username, user1.username username1
+      select pro.*, user.username, user1.username username1
         from purchase_project pro
-        left join sys_user user on pro.operator =
-        left join sys_user user1 on
+        left join sys_user user on pro.operator = user.id
+        left join sys_user user1 on pro.update_operator = user1.id
         <where>
-            is_active = 1
+            pro.is_active = 1
             <if test="name!=null and name!=''">
-            and project_name like "%"#{name}"%"
+            and pro.project_name like "%"#{name}"%"
             </if>
-        </where>-->
+        </where>
     </select>
 </mapper>
