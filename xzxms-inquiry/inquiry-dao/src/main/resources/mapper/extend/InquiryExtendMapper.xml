@@ -155,6 +155,6 @@
     </resultMap>
     <select id="findCompareNumByInquiryId" resultType="int">
         select count(1) from quote q left join sys_pro_check spc on q.id = spc.quote_id
-        where q.inquiry_id = #{id} and q.is_active = 1 and spc.compare_audit = 0
+        where q.inquiry_id = #{id} and q.is_active = 1 and spc.compare_audit = 0 or spc.compare_audit is NULL
     </select>
 </mapper>

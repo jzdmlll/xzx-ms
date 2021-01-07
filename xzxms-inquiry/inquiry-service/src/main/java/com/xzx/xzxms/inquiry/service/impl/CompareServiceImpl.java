@@ -20,6 +20,7 @@ import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class CompareServiceImpl implements ICompareService {
@@ -191,7 +192,7 @@ public class CompareServiceImpl implements ICompareService {
     public List<CompareQuoteListVM> findQuoteByInquiryId(long[] inquiryIds) {
 
         List<CompareQuoteListVM> list = compareExtendMapper.findQuoteListByInquiry(inquiryIds);
-
+        list = list.stream().sorted(Comparator.comparing(CompareQuoteListVM::getSuPrice)).collect(Collectors.toList());
         for (CompareQuoteListVM vm : list){
             for (QuoteRespVM quoteRespVM : vm.getQuotes()){
                 if (quoteRespVM.getCompareStatus() == 1){
