@@ -24,6 +24,23 @@
         <result column="operator" property="operator" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <resultMap id="PurchaseContractGenerateVM" type="com.xzx.xzxms.purchase.vm.PurchaseContractGenerateVM">
+        <result column="id" property="id" jdbcType="BIGINT" />
+        <result column="serial_number" property="serialNumber" jdbcType="INTEGER" />
+        <result column="supplier" property="supplier" jdbcType="VARCHAR" />
+        <result column="brand" property="brand" jdbcType="VARCHAR" />
+        <result column="model" property="model" jdbcType="VARCHAR" />
+        <result column="item" property="item" jdbcType="VARCHAR" />
+        <result column="unit" property="unit" jdbcType="VARCHAR" />
+        <result column="number" property="number" jdbcType="INTEGER" />
+        <result column="price" property="price" jdbcType="DOUBLE" />
+        <result column="total_price" property="totalPrice" jdbcType="DOUBLE" />
+        <result column="supply_params" property="supplyParams" jdbcType="VARCHAR" />
+        <result column="items_params" property="itemsParams" jdbcType="VARCHAR" />
+        <result column="warranty" property="warranty" jdbcType="VARCHAR" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+    </resultMap>
+
     <select id="findAllProjects" parameterType="string" resultMap="PurchaseProjectVM">
         SELECT id,project_name FROM `purchase_project`
         where is_active = 1
@@ -46,4 +63,18 @@
         set first_audit=#{firstAudit}, second_audit=#{secondAudit}, three_audit=#{threeAudit}
         where id=#{id}
     </update>
+
+    <select id="findItemsInfoByContractId" parameterType="long" resultMap="PurchaseContractGenerateVM">
+        SELECT purchase_items.id, purchase_items.serial_number, purchase_supply.supplier, purchase_supply.brand,
+                purchase_supply.model, purchase_items.item, purchase_items.unit,
+                purchase_supply.number, purchase_supply.price, purchase_supply.total_price,
+                purchase_supply.params supply_params, purchase_items.params items_params,
+                purchase_supply.warranty, purchase_supply.remark
+        FROM purchase_items inner join purchase_supply
+            on purchase_items.id = purchase_supply.item_id
+        where purchase_items.is_active = 1
+            and purchase_supply.is_active=1
+            and contract_id=#{contractId, jdbcType = BIGINT}
+        order by purchase_supply.supplier
+    </select>
 </mapper>
