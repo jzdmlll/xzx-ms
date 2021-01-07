@@ -1,5 +1,6 @@
 package com.xzx.xzxms.purchase.dao.extend;
 
+import com.xzx.xzxms.purchase.vm.PurchaseContractGenerateVM;
 import com.xzx.xzxms.purchase.vm.PurchaseContractVM;
 import com.xzx.xzxms.purchase.vm.PurchaseProjectVM;
 import org.apache.ibatis.annotations.Mapper;
@@ -45,4 +46,11 @@ public interface PurchaseContractManagementExtendMapper {
                                  @Param("secondAudit") Integer secondAudit,
                                  @Param("threeAudit") Integer threeAudit,
                                  @Param("id") Long id);
+
+    /**
+     * 根据合同id查询其购买项
+     * @param contractId
+     * @return
+     */
+    List<PurchaseContractGenerateVM> findItemsInfoByContractId(@Param("contractId") Long contractId);
 }
