@@ -35,8 +35,8 @@ public class PurchaseProjectController {
 
     @ApiOperation(value = "通过id进行假删")
     @PostMapping(value = "deleteById")
-    public Message deleteById(long id){
-        iPurchaseProjectServiceImpl.deleteById(id);
+    public Message deleteById(Long id, Long user){
+        iPurchaseProjectServiceImpl.deleteById(id, user);
         return MessageUtil.success("success");
     }
 

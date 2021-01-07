@@ -22,8 +22,9 @@ public interface IPurchaseProjectService {
     /**
      * 通过主键id逻辑假删
      * @param id
+     * @param user
      */
-    void deleteById(long id);
+    void deleteById(Long id, Long user);
 
     /**
      * 新增或者修改采购项目
