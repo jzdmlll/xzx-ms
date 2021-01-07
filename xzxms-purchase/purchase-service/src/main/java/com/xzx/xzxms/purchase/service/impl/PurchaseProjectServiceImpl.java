@@ -50,14 +50,15 @@ public class PurchaseProjectServiceImpl implements IPurchaseProjectService {
      * @param id
      */
     @Override
-    public void deleteById(long id) {
+    public void deleteById(Long id, Long user) {
         long time = new Date().getTime();
         PurchaseProject purchaseProject = purchaseProjectMapper.selectByPrimaryKey(id);
         if(purchaseProject==null || purchaseProject.getIsActive().equals(0)){
             throw new CustomerException("该数据已不存在");
         }else {
             purchaseProject.setIsActive(0);
-            purchaseProject.setTime(time);
+            purchaseProject.setUpdateTime(time);
+            purchaseProject.setUpdateOperator(user+"");
             purchaseProjectMapper.updateByPrimaryKeySelective(purchaseProject);
         }
     }
@@ -70,7 +71,7 @@ public class PurchaseProjectServiceImpl implements IPurchaseProjectService {
     public void saveOrUpdate(PurchaseProject purchaseProject) {
         long time = new Date().getTime();
         if(purchaseProject.getId() != null){
-            purchaseProject.setTime(time);
+            purchaseProject.setUpdateTime(time);
            purchaseProjectMapper.updateByPrimaryKeySelective(purchaseProject);
         }else {
             SysProDetailExample sysProDetailExample = new SysProDetailExample();
