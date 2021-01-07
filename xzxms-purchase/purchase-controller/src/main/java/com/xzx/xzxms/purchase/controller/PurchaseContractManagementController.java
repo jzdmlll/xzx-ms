@@ -2,7 +2,9 @@ package com.xzx.xzxms.purchase.controller;
 
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
+import com.xzx.xzxms.purchase.dao.extend.PurchaseContractManagementExtendMapper;
 import com.xzx.xzxms.purchase.service.impl.PurchaseContractManagementServiceImpl;
+import com.xzx.xzxms.purchase.vm.PurchaseContractGenerateVM;
 import com.xzx.xzxms.purchase.vm.PurchaseContractVM;
 import com.xzx.xzxms.purchase.vm.PurchaseProjectVM;
 import io.swagger.annotations.ApiOperation;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -29,6 +32,9 @@ public class PurchaseContractManagementController {
 
     @Autowired
     PurchaseContractManagementServiceImpl purchaseContractManagementService;
+
+    @Resource
+    PurchaseContractManagementExtendMapper purchaseContractManagementExtendMapper;
 
     @ApiOperation("根据输入项目名模糊查询")
     @GetMapping("findAllProjects")
@@ -53,6 +59,13 @@ public class PurchaseContractManagementController {
         }else {
             return MessageUtil.error("error");
         }
+    }
+
+    @ApiOperation("根据合同id查询所有与其相关的购买项信息")
+    @GetMapping("findItemsInfoByContractId")
+    public Message findItemsInfoByContractId(@Param("contractId") Long contractId){
+        List<PurchaseContractGenerateVM> itemsInfos = purchaseContractManagementExtendMapper.findItemsInfoByContractId(contractId);
+        return MessageUtil.success("success",itemsInfos);
     }
 
 }

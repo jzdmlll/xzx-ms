@@ -207,6 +207,8 @@ public class QuoteServiceImpl implements IQuoteService {
                 long inquiryId = -1L;
                 SysFile sysFile = new SysFile();
                 String notFound = "";
+                //询价数量
+                Double number = 0D;
 
                 InquiryPool inquiryPool = new InquiryPool();
 
@@ -227,6 +229,7 @@ public class QuoteServiceImpl implements IQuoteService {
                     if (inquiries.size() > 0) {
                         Inquiry inquiry = inquiries.get(0);
                         inquiryId = inquiry.getId();
+                        number = inquiry.getNumber();
 
 //                            if (inquiry.getIsinquiry() == 0){
 //                                throw new CustomerException("文件中:  ["+name+"   :"+params+"]  已被设定为不需询价，无法导入报价单,如需导入请修改!");
@@ -268,18 +271,23 @@ public class QuoteServiceImpl implements IQuoteService {
                             q.setSupplier(supplier);
                             inquiryPool.setSupplier(supplier);
 
+                            double price = Double.parseDouble(item.get("设备单价").toString().trim());
+
                             if(StringUtils.isEmpty(item.get("设备单价").toString().trim())){
                                 q.setSuPrice(0D);
                                 inquiryPool.setPrice(0D);
                             }else{
-                                q.setSuPrice(Double.parseDouble(item.get("设备单价").toString().trim()));
-                                inquiryPool.setPrice(Double.parseDouble(item.get("设备单价").toString().trim()));
+                                q.setSuPrice(price);
+                                inquiryPool.setPrice(price);
                             }
-                            if(StringUtils.isEmpty(item.get("设备总价").toString().trim())){
+                            /*if(StringUtils.isEmpty(item.get("设备总价").toString().trim())){
                                 q.setSuTotalPrice(0D);
                             }else{
                                 q.setSuTotalPrice(Double.parseDouble(item.get("设备总价").toString().trim()));
-                            }
+                            }*/
+
+                            q.setSuTotalPrice(price*number);
+
                             q.setSuRemark(item.get("备注").toString().trim());
                             inquiryPool.setRemark(item.get("备注").toString().trim());
                             q.setTime(time);

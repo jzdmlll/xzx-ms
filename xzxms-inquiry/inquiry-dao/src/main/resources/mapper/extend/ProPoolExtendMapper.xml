@@ -35,6 +35,6 @@
                 and p.model like CONCAT(CONCAT('%',#{model}),'%')
             </if>
         </where>
-        order by time
+        order by time desc
     </select>
 </mapper>

@@ -2,11 +2,8 @@ package com.xzx.xzxms.purchase.service.impl;
 
 import com.xzx.xzxms.commons.utils.IDUtils;
 import com.xzx.xzxms.inquiry.bean.Inquiry;
-import com.xzx.xzxms.inquiry.bean.SysProDetail;
-import com.xzx.xzxms.inquiry.bean.SysProDetailWithBLOBs;
 import com.xzx.xzxms.inquiry.dao.InquiryMapper;
 import com.xzx.xzxms.inquiry.dao.SysProDetailMapper;
-import com.xzx.xzxms.inquiry.dao.extend.SysProDetailExtendMapper;
 import com.xzx.xzxms.purchase.bean.PurchaseItems;
 import com.xzx.xzxms.purchase.bean.PurchaseItemsExample;
 import com.xzx.xzxms.purchase.dao.PurchaseItemsMapper;
@@ -20,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;

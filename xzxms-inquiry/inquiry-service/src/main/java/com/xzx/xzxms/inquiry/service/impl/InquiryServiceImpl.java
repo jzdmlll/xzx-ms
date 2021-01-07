@@ -195,7 +195,7 @@ public class InquiryServiceImpl implements IInquiryService {
         quote.setTime(time);
         quoteMapper.insert(quote);
 
-        SysProCheck sysProCheck = new SysProCheck();
+/*        SysProCheck sysProCheck = new SysProCheck();
         sysProCheck.setId(IDUtils.getId());
         sysProCheck.setTechnicalAudit(0);
         sysProCheck.setBusinessAudit(0);
@@ -208,7 +208,7 @@ public class InquiryServiceImpl implements IInquiryService {
         sysProCheck.setQuoteId(quoteId);
         sysProCheck.setOperator(operator+"");
         sysProCheck.setTime(time);
-        sysProCheckMapper.insertSelective(sysProCheck);
+        sysProCheckMapper.insertSelective(sysProCheck);*/
     }
 
     @Override
