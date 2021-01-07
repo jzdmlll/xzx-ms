@@ -35,6 +35,13 @@ public interface ISysProCheckService {
     void updateTechnicalStatus(List<SysProCheck> sysProChecks);
 
     /**
+     * 更改商务审核状态
+     * @param sysProChecks 审核对象集合
+     * @return
+     */
+    void updateBusinessStatus(List<SysProCheck> sysProChecks);
+
+    /**
      * 查询技术审核内容
      * @param status 审核状态
      * @param proDetailId 项目详情ID

@@ -47,6 +47,14 @@ public class SysProCheckController {
         return MessageUtil.success("操作成功");
     }
 
+    @ApiOperation("商务审核更改状态")
+    @PostMapping("updateTechnicalStatus")
+    public Message updateBusinessStatus(@RequestBody List<SysProCheck> sysProChecks) {
+
+        sysProCheckServiceImpl.updateBusinessStatus(sysProChecks);
+        return MessageUtil.success("操作成功");
+    }
+
     @ApiOperation("查询技术审核")
     @GetMapping("findTechnicalCheck")
     public Message findTechnicalCheck(@RequestParam(defaultValue = "-1")Integer status,@RequestParam(defaultValue = "-1") long proDetailId) {

@@ -35,6 +35,18 @@ public class ProCheckServiceImpl implements ISysProCheckService {
     }
 
     @Override
+    public void updateBusinessStatus(List<SysProCheck> sysProChecks) {
+
+        for (SysProCheck sysProCheck : sysProChecks){
+            if (0 != sysProCheck.getBusinessAudit()){
+                throw new CustomerException("已有比价结果，请勿再修改审核状态!");
+            }
+            sysProCheck.setTime(new Date().getTime());
+            sysProCheckMapper.updateByPrimaryKeySelective(sysProCheck);
+        }
+    }
+
+    @Override
     public List<SysCheckExtend> findTechnicalCheck(Integer status, long proDetailId) {
         List<SysCheckExtend> list = sysProCheckExtendMapper.cascadeFindTechnical(status, proDetailId);
         return list;
