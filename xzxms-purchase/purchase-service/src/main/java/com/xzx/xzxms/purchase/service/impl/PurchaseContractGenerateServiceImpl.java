@@ -1,5 +1,6 @@
 package com.xzx.xzxms.purchase.service.impl;
 
+import com.xzx.xzxms.commons.constant.CommonConstant;
 import com.xzx.xzxms.commons.utils.IDUtils;
 import com.xzx.xzxms.purchase.bean.PurchaseContract;
 import com.xzx.xzxms.purchase.bean.PurchaseItems;
@@ -54,7 +55,7 @@ public class PurchaseContractGenerateServiceImpl implements PurchaseContractGene
             purchaseContractDTO.getPurchaseContract().setId(id);
             // 获取当前时间
             purchaseContractDTO.getPurchaseContract().setTime(new Date().getTime());
-
+            purchaseContractDTO.getPurchaseContract().setIsActive(CommonConstant.EFFECTIVE);
             // 在合同表中新增一个新合同
             purchaseContractMapper.insert(purchaseContractDTO.getPurchaseContract());
 
