@@ -192,6 +192,7 @@ public class CompareServiceImpl implements ICompareService {
     public List<CompareQuoteListVM> findQuoteByInquiryId(long[] inquiryIds) {
 
         List<CompareQuoteListVM> list = compareExtendMapper.findQuoteListByInquiry(inquiryIds);
+        //根据供应商报价排序,第一个报价为最低价
         list = list.stream().sorted(Comparator.comparing(CompareQuoteListVM::getSuPrice)).collect(Collectors.toList());
         for (CompareQuoteListVM vm : list){
             for (QuoteRespVM quoteRespVM : vm.getQuotes()){
@@ -254,6 +255,21 @@ public class CompareServiceImpl implements ICompareService {
             List<SysProCheck> sysProChecks = sysProCheckMapper.selectByExample(sysProCheckExample);
             //先将所有报价比价状态置为未选用
             for (SysProCheck check : sysProChecks){
+
+                //添加验证
+                //如果技审、商审未审核，则不允许比价
+                //比价状态不为初始化0，则不允许比价
+                //终审状态不为初始化0，则不允许比价
+                if (check.getTechnicalAudit() == 0 || check.getBusinessAudit() == 0){
+                    throw new CustomerException("存在技审或商审未审核，无法进行比价!");
+                }
+                if (check.getCompareAudit() != 0){
+                    throw new CustomerException("比价状态不为初始化状态,数据异常");
+                }
+                if (check.getFinallyAudit() != null){
+                    throw new CustomerException("终审状态不为NULL,数据异常");
+                }
+
                 check.setCompareAudit(2);
                 check.setFinallyAudit(0);
                 sysProCheckMapper.updateByPrimaryKeySelective(check);
