@@ -48,7 +48,7 @@ public class SysProCheckController {
     }
 
     @ApiOperation("商务审核更改状态")
-    @PostMapping("updateTechnicalStatus")
+    @PostMapping("updateBusinessStatus")
     public Message updateBusinessStatus(@RequestBody List<SysProCheck> sysProChecks) {
 
         sysProCheckServiceImpl.updateBusinessStatus(sysProChecks);

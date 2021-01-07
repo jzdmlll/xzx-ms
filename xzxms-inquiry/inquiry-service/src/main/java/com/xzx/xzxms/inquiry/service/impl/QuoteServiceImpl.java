@@ -521,13 +521,30 @@ public class QuoteServiceImpl implements IQuoteService {
             SysProCheckExample sysProCheckExample = new SysProCheckExample();
             sysProCheckExample.createCriteria().andQuoteIdEqualTo(id);
             List<SysProCheck> list = sysProCheckMapper.selectByExample(sysProCheckExample);
-            SysProCheck sysProCheck = list.get(0);
-            if (sysProCheck.getBusinessAudit() != 0 || sysProCheck.getTechnicalAudit() != 0){
+            if (list.size() > 0){
+                //已送审，删除报价的同时删除审核
+                SysProCheck sysProCheck = list.get(0);
+                if (sysProCheck.getBusinessAudit() != 0 || sysProCheck.getTechnicalAudit() != 0){
 
-                throw new CustomerException("该报价信息已经被审核，无法删除");
+                    throw new CustomerException("该报价信息已经被审核，无法删除");
+                }
+
+                // 报价逻辑删除时，将对应审核删除
+                SysProCheckExample example = new SysProCheckExample();
+                example.createCriteria().andQuoteIdEqualTo(quote.getId());
+                List<SysProCheck> sysProChecks = sysProCheckMapper.selectByExample(example);
+                if(sysProChecks.size() > 0) {
+                    for(SysProCheck proCheck : sysProChecks) {
+                        sysProCheckMapper.deleteByPrimaryKey(proCheck.getId());
+                    }
+                }
             }
+
+            //未送审，直接删除报价
             quote.setIsActive(0);
+            quote.setUpdateTime(new Date().getTime());
             quoteMapper.updateByPrimaryKeySelective(quote);
+
             //删除报价的同时删除询价池对应的内容
             InquiryPoolExample example1 = new InquiryPoolExample();
             BeanHelper.nullToEmpty(quote);
@@ -535,15 +552,6 @@ public class QuoteServiceImpl implements IQuoteService {
             List<InquiryPool> inquiryPools = inquiryPoolMapper.selectByExample(example1);
             for (InquiryPool pool : inquiryPools){
                 inquiryPoolMapper.deleteByPrimaryKey(pool.getId());
-            }
-            // 报价逻辑删除时，将对应审核删除
-            SysProCheckExample example = new SysProCheckExample();
-            example.createCriteria().andQuoteIdEqualTo(quote.getId());
-            List<SysProCheck> sysProChecks = sysProCheckMapper.selectByExample(example);
-            if(sysProChecks.size() > 0) {
-                for(SysProCheck proCheck : sysProChecks) {
-                    sysProCheckMapper.deleteByPrimaryKey(proCheck.getId());
-                }
             }
         }else {
             throw new CustomerException("该数据已不存在");
