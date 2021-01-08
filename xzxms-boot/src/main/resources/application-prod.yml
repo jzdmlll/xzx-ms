@@ -19,12 +19,12 @@ spring:
       # 下面为连接池的补充设置，应用到上面所有数据源中
       initialSize: 5
       minIdle: 5
-      maxActive: 30
+      maxActive: 100
       # 配置获取连接等待超时的时间
       maxWait: 60000
       # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
       timeBetweenEvictionRunsMillis: 60000
-      spring.datasource.minEvictableIdleTimeMillis: 300000
+      minEvictableIdleTimeMillis: 300000
       validationQuery: SELECT 1 FROM DUAL
       testWhileIdle: true
       testOnBorrow: false
@@ -37,10 +37,10 @@ spring:
     timeout: 10000
     jedis:
       pool:
-        max-active: 50
-        max-wait: -1
-        max-idle: 50
-        min-idle: 5
+        max-active: 8
+        max-wait: -1ms
+        max-idle: 8
+        min-idle: 0
 
         #cluster:
         #nodes:
