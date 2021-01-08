@@ -1,12 +1,9 @@
 package com.xzx.xzxms.purchase.service;
 
-import com.xzx.xzxms.inquiry.bean.SysProDetail;
-import com.xzx.xzxms.inquiry.bean.SysProDetailWithBLOBs;
 import com.xzx.xzxms.purchase.bean.PurchaseItems;
-import com.xzx.xzxms.purchase.vm.PurchaseItemsListVM;
-import com.xzx.xzxms.purchase.vm.PurchaseItemsVM;
-import com.xzx.xzxms.purchase.vm.PurchaseSupplierVM;
-import org.apache.ibatis.annotations.Param;
+import com.xzx.xzxms.purchase.dto.PurchaseItemsListDTO;
+import com.xzx.xzxms.purchase.vo.PurchaseItemsVO;
+import com.xzx.xzxms.purchase.vo.PurchaseSupplierVO;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -26,8 +23,7 @@ public interface PurchasePlanService {
      * @param projectId
      * @return
      */
-    List<PurchaseItemsVM> findItemsByProjectIdService(Long projectId);
-
+    List<PurchaseItemsVO> findItemsByProjectIdService(Long projectId);
 
     /**
      * 根据项目id及其详情项id修改其是否需要询价
@@ -44,14 +40,19 @@ public interface PurchasePlanService {
      */
     String insertItemService(PurchaseItems purchaseItems, int itemNum);
 
-    List<PurchaseSupplierVM> findPurchasingSupplierByItemIdService(Long id);
+    /**
+     * 根据购买项id查找其供应商
+     * @param id
+     * @return
+     */
+    List<PurchaseSupplierVO> findPurchasingSupplierByItemIdService(Long id);
 
     /**
      * 新增询价项目,新增询价商品
      * @param purchaseItemsList
      * @return
      */
-    String insertSysProDetailService(PurchaseItemsListVM purchaseItemsList);
+    String insertSysProDetailService(PurchaseItemsListDTO purchaseItemsList);
 
     /**
      * 新增单个采购计划项

@@ -1,9 +1,8 @@
 package com.xzx.xzxms.purchase.dao.extend;
 
 import com.xzx.xzxms.purchase.bean.PurchaseItems;
-import com.xzx.xzxms.purchase.vm.PurchaseContractGenerateVM;
-import com.xzx.xzxms.purchase.vm.PurchaseItemsVM;
-import com.xzx.xzxms.purchase.vm.PurchaseSupplierVM;
+import com.xzx.xzxms.purchase.vo.PurchaseItemsVO;
+import com.xzx.xzxms.purchase.vo.PurchaseSupplierVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -27,7 +26,7 @@ public interface PurchasePlanExtendMapper {
      * @param projectId
      * @return
      */
-    List<PurchaseItemsVM> findItemsByProjectId(@Param("projectId") Long projectId);
+    List<PurchaseItemsVO> findItemsByProjectId(@Param("projectId") Long projectId);
 
     /**
      *
@@ -60,7 +59,7 @@ public interface PurchasePlanExtendMapper {
      * @param id
      * @return
      */
-    List<PurchaseSupplierVM> findPurchasingSupplierByItemId(@Param("id") Long id);
+    List<PurchaseSupplierVO> findPurchasingSupplierByItemId(@Param("id") Long id);
 
     /**
      * 根据 projectName 在表 sys_pro_detail 中查询是否有相同项目名

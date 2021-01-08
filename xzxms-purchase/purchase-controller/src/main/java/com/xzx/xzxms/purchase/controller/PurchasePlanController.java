@@ -3,17 +3,11 @@ package com.xzx.xzxms.purchase.controller;
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
 import com.xzx.xzxms.purchase.bean.PurchaseItems;
-import com.xzx.xzxms.purchase.bean.PurchaseItemsExample;
 import com.xzx.xzxms.purchase.dao.PurchaseItemsMapper;
-import com.xzx.xzxms.purchase.dao.PurchaseMapper;
-import com.xzx.xzxms.purchase.service.IPurchaseContractService;
-import com.xzx.xzxms.purchase.service.PurchasePlanService;
-import com.xzx.xzxms.purchase.service.impl.PurchaseContractManagementServiceImpl;
+import com.xzx.xzxms.purchase.dto.PurchaseItemsListDTO;
 import com.xzx.xzxms.purchase.service.impl.PurchasePlanServiceImpl;
-import com.xzx.xzxms.purchase.vm.PurchaseItemsListVM;
-import com.xzx.xzxms.purchase.vm.PurchaseItemsVM;
-import com.xzx.xzxms.purchase.vm.PurchaseProjectVM;
-import com.xzx.xzxms.purchase.vm.PurchaseSupplierVM;
+import com.xzx.xzxms.purchase.vo.PurchaseItemsVO;
+import com.xzx.xzxms.purchase.vo.PurchaseSupplierVO;
 import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +41,7 @@ public class PurchasePlanController {
     @GetMapping("findItemsByProjectId")
     public Message findItemsByProjectId(@Param("projectId") Long projectId){
         
-        List<PurchaseItemsVM> itemsList = purchasePlanService.findItemsByProjectIdService(projectId);
+        List<PurchaseItemsVO> itemsList = purchasePlanService.findItemsByProjectIdService(projectId);
         return MessageUtil.success("success",itemsList);
     }
 
@@ -76,13 +70,13 @@ public class PurchasePlanController {
     @ApiOperation("根据购买项id查找其供应商")
     @GetMapping("findPurchasingSupplierByItemId")
     public Message findPurchasingSupplierByItemId(@Param("id") Long id){
-        List<PurchaseSupplierVM> supplierInfo = purchasePlanService.findPurchasingSupplierByItemIdService(id);
+        List<PurchaseSupplierVO> supplierInfo = purchasePlanService.findPurchasingSupplierByItemIdService(id);
         return MessageUtil.success("success",supplierInfo);
     }
 
     @ApiOperation("添加询价信息")
     @PostMapping("insertInquiryInfo")
-    public Message insertInquiryInfo(PurchaseItemsListVM purchaseItemsList){
+    public Message insertInquiryInfo(PurchaseItemsListDTO purchaseItemsList){
         String result = purchasePlanService.insertSysProDetailService(purchaseItemsList);
         if (result.equals("success")){
             return MessageUtil.success("success");

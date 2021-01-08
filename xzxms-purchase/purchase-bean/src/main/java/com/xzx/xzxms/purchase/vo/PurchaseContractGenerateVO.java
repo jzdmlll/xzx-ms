@@ -1,16 +1,14 @@
-package com.xzx.xzxms.purchase.vm;
-
-import java.sql.Clob;
+package com.xzx.xzxms.purchase.vo;
 
 /**
  * @author：ZJW
- * @title：采购合同生成
- * @date：2020/12/30 15:31
+ * @title：
+ * @date：2021/1/8 14:41
  * @修改人：
- * @修改时间：2020/12/30 15:31
+ * @修改时间：2021/1/8 14:41
  * @修改描述：默认描述
  */
-public class PurchaseContractGenerateVM {
+public class PurchaseContractGenerateVO {
     private Long id;
     private Integer serialNumber;
     private String supplier;

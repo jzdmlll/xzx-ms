@@ -1,6 +1,6 @@
 package com.xzx.xzxms.purchase.dao.extend;
 
-import com.xzx.xzxms.purchase.vm.PurchaseContractGenerateVM;
+import com.xzx.xzxms.purchase.vo.PurchaseContractGenerateVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -19,7 +19,7 @@ public interface PurchaseContractGenerateExtendMapper {
      * @param projectId
      * @return
      */
-    List<PurchaseContractGenerateVM> findPurchaseItemsInfo(@Param("projectId") Long projectId);
+    List<PurchaseContractGenerateVO> findPurchaseItemsInfo(@Param("projectId") Long projectId);
 
     /**
      * 根据项目 id 及其 购买项 id 查询购项目信息
@@ -27,7 +27,7 @@ public interface PurchaseContractGenerateExtendMapper {
      * @param itemIds
      * @return
      */
-    List<PurchaseContractGenerateVM> findPurchaseItemsInfoByItemIds(@Param("projectId") Long projectId, @Param("itemIds") Long[] itemIds);
+    List<PurchaseContractGenerateVO> findPurchaseItemsInfoByItemIds(@Param("projectId") Long projectId, @Param("itemIds") Long[] itemIds);
 
     /**
      * 根据合同编号去purchase_contract表中查询是否存在此合同
