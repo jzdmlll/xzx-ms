@@ -1,12 +1,11 @@
 package com.xzx.xzxms.purchase.dao.extend;
 
 import com.xzx.xzxms.purchase.bean.PurchaseItems;
+import com.xzx.xzxms.purchase.vo.PurchaseItemsVO;
 import com.xzx.xzxms.purchase.bean.PurchaseSupply;
-import com.xzx.xzxms.purchase.vm.PurchaseContractGenerateVM;
-import com.xzx.xzxms.purchase.vm.PurchaseItemsVM;
-import com.xzx.xzxms.purchase.vm.PurchaseSupplierVM;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -27,7 +26,7 @@ public interface PurchasePlanExtendMapper {
      * @param projectId
      * @return
      */
-    List<PurchaseItemsVM> findItemsByProjectId(@Param("projectId") Long projectId);
+    List<PurchaseItemsVO> findItemsByProjectId(@Param("projectId") Long projectId);
 
     /**
      *
@@ -82,5 +81,14 @@ public interface PurchasePlanExtendMapper {
      * @return
      */
     Integer findSort(@Param("name") String name, @Param("sort") int sort);
+
+    /**
+     * 根据项目ID和序号查询采购项表是否存在
+     * @param projectId
+     * @param serialNum
+     * @return
+     */
+    @Select("SELECT COUNT(1) FROM purchase_items WHERE project_id = #{0} AND serial_number = #{1} AND is_active = 1")
+    int findSerialNumber(Long projectId, Integer serialNum);
 
 }

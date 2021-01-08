@@ -1,5 +1,7 @@
 package com.xzx.xzxms.purchase.service.impl;
 
+import com.xzx.xzxms.commons.constant.CommonConstant;
+import com.xzx.xzxms.commons.utils.CustomerException;
 import com.xzx.xzxms.commons.utils.IDUtils;
 import com.xzx.xzxms.inquiry.bean.Inquiry;
 import com.xzx.xzxms.inquiry.dao.InquiryMapper;
@@ -9,11 +11,10 @@ import com.xzx.xzxms.purchase.bean.PurchaseItemsExample;
 import com.xzx.xzxms.purchase.bean.PurchaseSupply;
 import com.xzx.xzxms.purchase.dao.PurchaseItemsMapper;
 import com.xzx.xzxms.purchase.dao.extend.PurchasePlanExtendMapper;
+import com.xzx.xzxms.purchase.dto.PurchaseItemsListDTO;
 import com.xzx.xzxms.purchase.service.PurchasePlanService;
-import com.xzx.xzxms.purchase.vm.PurchaseItemsListVM;
-import com.xzx.xzxms.purchase.vm.PurchaseItemsVM;
-import com.xzx.xzxms.purchase.vm.PurchaseSupplierVM;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.xzx.xzxms.purchase.vo.PurchaseItemsVO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,7 +37,7 @@ import java.util.List;
 public class PurchasePlanServiceImpl implements PurchasePlanService {
 
     @Autowired
-    PurchasePlanExtendMapper purchasePlanExtendMapper;
+    private PurchasePlanExtendMapper purchasePlanExtendMapper;
 
     @Resource
     private PurchaseItemsMapper purchaseItemsMapper;
@@ -53,8 +54,8 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
      * @return
      */
     @Override
-    public List<PurchaseItemsVM> findItemsByProjectIdService(Long projectId) {
-        List<PurchaseItemsVM> itemsList = purchasePlanExtendMapper.findItemsByProjectId(projectId);
+    public List<PurchaseItemsVO> findItemsByProjectIdService(Long projectId) {
+        List<PurchaseItemsVO> itemsList = purchasePlanExtendMapper.findItemsByProjectId(projectId);
         return itemsList;
     }
 
@@ -115,7 +116,7 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
 
     @Transactional
     @Override
-    public String insertSysProDetailService(PurchaseItemsListVM purchaseItemsList) {
+    public String insertSysProDetailService(PurchaseItemsListDTO purchaseItemsList) {
         // 获取项目id 判断该项目名是否已经存在
         Long result = purchasePlanExtendMapper.findProNameByProName(purchaseItemsList.getSysProDetailWithBLOBs().getName());
         // 当项目名称不重复
@@ -205,6 +206,45 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
                 }
             }
             return "success";
+        }
+    }
+
+    @Override
+    public void addPurchaseItem(PurchaseItems purchaseItems) {
+
+        checkSerialNumberIsExists(purchaseItems.getProjectId(), purchaseItems.getSerialNumber());
+        purchaseItems.setId(IDUtils.getId());
+        purchaseItems.setTime(new Date().getTime());
+        purchaseItems.setIsActive(CommonConstant.EFFECTIVE);
+        purchaseItemsMapper.insert(purchaseItems);
+    }
+
+    @Override
+    public void updatePurchaseItem(PurchaseItems purchaseItems) {
+
+        checkSerialNumberIsExists(purchaseItems.getProjectId(), purchaseItems.getSerialNumber());
+        purchaseItems.setUpdateTime(new Date().getTime());
+        purchaseItemsMapper.updateByPrimaryKeySelective(purchaseItems);
+    }
+
+    @Transactional
+    @Override
+    public void excelPurchaseItems(List<PurchaseItems> list) {
+
+        for(PurchaseItems purchaseItems : list){
+            checkSerialNumberIsExists(purchaseItems.getProjectId(), purchaseItems.getSerialNumber());
+            purchaseItems.setId(IDUtils.getId());
+            purchaseItems.setTime(new Date().getTime());
+            purchaseItems.setIsActive(CommonConstant.EFFECTIVE);
+            purchaseItemsMapper.insert(purchaseItems);
+        }
+    }
+
+    public void checkSerialNumberIsExists(Long projectId, Integer serialNum){
+
+        int num = purchasePlanExtendMapper.findSerialNumber(projectId, serialNum);
+        if (num > 0){
+            throw new CustomerException("此采购项序号已存在，不能重复插入!");
         }
     }
 }

@@ -3,18 +3,11 @@ package com.xzx.xzxms.purchase.controller;
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
 import com.xzx.xzxms.purchase.bean.PurchaseItems;
-import com.xzx.xzxms.purchase.bean.PurchaseItemsExample;
 import com.xzx.xzxms.purchase.bean.PurchaseSupply;
 import com.xzx.xzxms.purchase.dao.PurchaseItemsMapper;
-import com.xzx.xzxms.purchase.dao.PurchaseMapper;
-import com.xzx.xzxms.purchase.service.IPurchaseContractService;
-import com.xzx.xzxms.purchase.service.PurchasePlanService;
-import com.xzx.xzxms.purchase.service.impl.PurchaseContractManagementServiceImpl;
+import com.xzx.xzxms.purchase.dto.PurchaseItemsListDTO;
 import com.xzx.xzxms.purchase.service.impl.PurchasePlanServiceImpl;
-import com.xzx.xzxms.purchase.vm.PurchaseItemsListVM;
-import com.xzx.xzxms.purchase.vm.PurchaseItemsVM;
-import com.xzx.xzxms.purchase.vm.PurchaseProjectVM;
-import com.xzx.xzxms.purchase.vm.PurchaseSupplierVM;
+import com.xzx.xzxms.purchase.vo.PurchaseItemsVO;
 import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +41,7 @@ public class PurchasePlanController {
     @GetMapping("findItemsByProjectId")
     public Message findItemsByProjectId(@Param("projectId") Long projectId){
         
-        List<PurchaseItemsVM> itemsList = purchasePlanService.findItemsByProjectIdService(projectId);
+        List<PurchaseItemsVO> itemsList = purchasePlanService.findItemsByProjectIdService(projectId);
         return MessageUtil.success("success",itemsList);
     }
 
@@ -83,7 +76,7 @@ public class PurchasePlanController {
 
     @ApiOperation("添加询价信息")
     @PostMapping("insertInquiryInfo")
-    public Message insertInquiryInfo(PurchaseItemsListVM purchaseItemsList){
+    public Message insertInquiryInfo(PurchaseItemsListDTO purchaseItemsList){
         String result = purchasePlanService.insertSysProDetailService(purchaseItemsList);
         if (result.equals("success")){
             return MessageUtil.success("success");
@@ -92,4 +85,27 @@ public class PurchasePlanController {
         }
     }
 
+    @ApiOperation("新增单个采购计划项")
+    @PostMapping("addPurchaseItem")
+    public Message addPurchaseItem(PurchaseItems purchaseItems){
+
+        purchasePlanService.addPurchaseItem(purchaseItems);
+        return MessageUtil.success("success");
+    }
+
+    @ApiOperation("EXCEL导入采购计划项")
+    @PostMapping("excelPurchaseItems")
+    public Message excelPurchaseItems(List<PurchaseItems> purchaseItems){
+
+        purchasePlanService.excelPurchaseItems(purchaseItems);
+        return MessageUtil.success("success");
+    }
+
+    @ApiOperation("修改采购计划项")
+    @PostMapping("updatePurchaseItem")
+    public Message updatePurchaseItem(PurchaseItems purchaseItems){
+
+        purchasePlanService.updatePurchaseItem(purchaseItems);
+        return MessageUtil.success("success");
+    }
 }

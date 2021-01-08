@@ -21,7 +21,7 @@
         <result column="time" property="time" jdbcType="BIGINT" />
     </resultMap>
 
-    <resultMap id="PurchaseItemsVM" type="com.xzx.xzxms.purchase.vm.PurchaseItemsVM">
+    <resultMap id="PurchaseItemsVO" type="com.xzx.xzxms.purchase.vo.PurchaseItemsVO">
         <result column="id" property="id" jdbcType="BIGINT" />
         <result column="contract_id" property="contractId" jdbcType="BIGINT" />
         <result column="project_id" property="projectId" jdbcType="VARCHAR" />
@@ -44,7 +44,7 @@
         <result column="pro_no" property="proNo" jdbcType="VARCHAR" />
     </resultMap>
 
-    <select id="findItemsByProjectId" parameterType="long" resultMap="PurchaseItemsVM">
+    <select id="findItemsByProjectId" parameterType="long" resultMap="PurchaseItemsVO">
         select id,contract_id,project_id,serial_number,item,brand,params,model,unit,number,is_inquiry,remark,is_active,operator,time
         from purchase_items
         where project_id=#{projectId} and is_active=1 order by serial_number

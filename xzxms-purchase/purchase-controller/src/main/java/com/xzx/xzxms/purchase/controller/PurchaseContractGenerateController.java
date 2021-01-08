@@ -5,7 +5,7 @@ import com.xzx.xzxms.commons.utils.MessageUtil;
 import com.xzx.xzxms.purchase.dao.extend.PurchaseContractGenerateExtendMapper;
 import com.xzx.xzxms.purchase.dto.PurchaseContractDTO;
 import com.xzx.xzxms.purchase.service.PurchaseContractGenerateService;
-import com.xzx.xzxms.purchase.vm.PurchaseContractGenerateVM;
+import com.xzx.xzxms.purchase.vo.PurchaseContractGenerateVO;
 import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ public class PurchaseContractGenerateController {
     @ApiOperation("查询该项目的所有采购项信息")
     @GetMapping("findPurchaseItemsInfo")
     public Message findPurchaseItemsInfo(@Param("projectId") Long projectId){
-        List<PurchaseContractGenerateVM> purchaseItemsInfoList = purchaseContractGenerateExtendMapper.findPurchaseItemsInfo(projectId);
+        List<PurchaseContractGenerateVO> purchaseItemsInfoList = purchaseContractGenerateExtendMapper.findPurchaseItemsInfo(projectId);
         return MessageUtil.success("success",purchaseItemsInfoList);
     }
 

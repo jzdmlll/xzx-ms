@@ -2,12 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xzx.xzxms.purchase.dao.extend.PurchaseContractManagementExtendMapper">
 
-    <resultMap id="PurchaseProjectVM" type="com.xzx.xzxms.purchase.vm.PurchaseProjectVM">
+    <resultMap id="PurchaseProjectVO" type="com.xzx.xzxms.purchase.vo.PurchaseProjectVO">
         <result column="id" property="id" jdbcType="BIGINT" />
         <result column="project_name" property="projectName" jdbcType="VARCHAR" />
     </resultMap>
 
-    <resultMap id="PurchaseContractVM" type="com.xzx.xzxms.purchase.vm.PurchaseContractVM">
+    <resultMap id="PurchaseContractVO" type="com.xzx.xzxms.purchase.vo.PurchaseContractVO">
         <result column="id" property="id" jdbcType="BIGINT"/>
         <result column="contract_no" property="contractNo" jdbcType="VARCHAR"/>
         <result column="project_id" property="projectId" jdbcType="BIGINT"/>
@@ -24,7 +24,7 @@
         <result column="operator" property="operator" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <resultMap id="PurchaseContractGenerateVM" type="com.xzx.xzxms.purchase.vm.PurchaseContractGenerateVM">
+    <resultMap id="PurchaseContractGenerateVO" type="com.xzx.xzxms.purchase.vo.PurchaseContractGenerateVO">
         <result column="id" property="id" jdbcType="BIGINT" />
         <result column="serial_number" property="serialNumber" jdbcType="INTEGER" />
         <result column="supplier" property="supplier" jdbcType="VARCHAR" />
@@ -41,7 +41,7 @@
         <result column="remark" property="remark" jdbcType="VARCHAR" />
     </resultMap>
 
-    <select id="findAllProjects" parameterType="string" resultMap="PurchaseProjectVM">
+    <select id="findAllProjects" parameterType="string" resultMap="PurchaseProjectVO">
         SELECT id,project_name FROM `purchase_project`
         where is_active = 1
         <if test="projectName != null">
@@ -50,7 +50,7 @@
         ORDER BY time DESC
     </select>
     
-    <select id="findContractByProjectId" parameterType="long" resultMap="PurchaseContractVM">
+    <select id="findContractByProjectId" parameterType="long" resultMap="PurchaseContractVO">
         SELECT id, contract_no, project_id, attribute_id, first_audit, second_audit, three_audit,
                 first_remark, second_remark, three_remark, is_active, time, operator
         FROM `purchase_contract`
@@ -58,13 +58,13 @@
         and is_active=1
     </select>
 
-    <update id="updateContractAuditById" parameterType="com.xzx.xzxms.purchase.vm.PurchaseContractVM">
+    <update id="updateContractAuditById" parameterType="com.xzx.xzxms.purchase.vo.PurchaseContractVO">
         update `purchase_contract`
         set first_audit=#{firstAudit}, second_audit=#{secondAudit}, three_audit=#{threeAudit}
         where id=#{id}
     </update>
 
-    <select id="findItemsInfoByContractId" parameterType="long" resultMap="PurchaseContractGenerateVM">
+    <select id="findItemsInfoByContractId" parameterType="long" resultMap="PurchaseContractGenerateVO">
         SELECT purchase_items.id, purchase_items.serial_number, purchase_supply.supplier, purchase_supply.brand,
                 purchase_supply.model, purchase_items.item, purchase_items.unit,
                 purchase_supply.number, purchase_supply.price, purchase_supply.total_price,

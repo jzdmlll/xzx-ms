@@ -2,8 +2,8 @@ package com.xzx.xzxms.purchase.service.impl;
 
 import com.xzx.xzxms.purchase.dao.extend.PurchaseContractManagementExtendMapper;
 import com.xzx.xzxms.purchase.service.PurchaseContractManagementService;
-import com.xzx.xzxms.purchase.vm.PurchaseContractVM;
-import com.xzx.xzxms.purchase.vm.PurchaseProjectVM;
+import com.xzx.xzxms.purchase.vo.PurchaseContractVO;
+import com.xzx.xzxms.purchase.vo.PurchaseProjectVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -31,8 +31,8 @@ public class PurchaseContractManagementServiceImpl implements PurchaseContractMa
      * @return
      */
     @Override
-    public List<PurchaseProjectVM> findAllProjectsService(String projectName) {
-        List<PurchaseProjectVM> allProjects = purchaseContractManagementExtendMapper.findAllProjects(projectName);
+    public List<PurchaseProjectVO> findAllProjectsService(String projectName) {
+        List<PurchaseProjectVO> allProjects = purchaseContractManagementExtendMapper.findAllProjects(projectName);
         return allProjects;
     }
 
@@ -42,8 +42,8 @@ public class PurchaseContractManagementServiceImpl implements PurchaseContractMa
      * @return
      */
     @Override
-    public List<PurchaseContractVM> findContractByProjectId(Long project_id) {
-        List<PurchaseContractVM> contractList = purchaseContractManagementExtendMapper.findContractByProjectId(project_id);
+    public List<PurchaseContractVO> findContractByProjectId(Long project_id) {
+        List<PurchaseContractVO> contractList = purchaseContractManagementExtendMapper.findContractByProjectId(project_id);
         return contractList;
     }
 

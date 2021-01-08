@@ -1,8 +1,8 @@
 package com.xzx.xzxms.purchase.dao.extend;
 
-import com.xzx.xzxms.purchase.vm.PurchaseContractGenerateVM;
-import com.xzx.xzxms.purchase.vm.PurchaseContractVM;
-import com.xzx.xzxms.purchase.vm.PurchaseProjectVM;
+import com.xzx.xzxms.purchase.vo.PurchaseContractGenerateVO;
+import com.xzx.xzxms.purchase.vo.PurchaseContractVO;
+import com.xzx.xzxms.purchase.vo.PurchaseProjectVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -26,14 +26,14 @@ public interface PurchaseContractManagementExtendMapper {
      * @param projectName
      * @return
      */
-    List<PurchaseProjectVM> findAllProjects(@Param("projectName") String projectName);
+    List<PurchaseProjectVO> findAllProjects(@Param("projectName") String projectName);
 
     /**
      * 根据项目编号查找其对应合同
      * @param projectId
      * @return
      */
-    List<PurchaseContractVM> findContractByProjectId(@Param("projectId") Long projectId);
+    List<PurchaseContractVO> findContractByProjectId(@Param("projectId") Long projectId);
 
     /**
      * 根据合同id修改合同审核级别
@@ -52,5 +52,5 @@ public interface PurchaseContractManagementExtendMapper {
      * @param contractId
      * @return
      */
-    List<PurchaseContractGenerateVM> findItemsInfoByContractId(@Param("contractId") Long contractId);
+    List<PurchaseContractGenerateVO> findItemsInfoByContractId(@Param("contractId") Long contractId);
 }
