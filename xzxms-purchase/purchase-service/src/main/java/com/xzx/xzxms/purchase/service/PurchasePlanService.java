@@ -52,4 +52,22 @@ public interface PurchasePlanService {
      * @return
      */
     String insertSysProDetailService(PurchaseItemsListVM purchaseItemsList);
+
+    /**
+     * 新增单个采购计划项
+     * @param purchaseItems
+     */
+    void addPurchaseItem(PurchaseItems purchaseItems);
+
+    /**
+     * 修改采购计划项
+     * @param purchaseItems
+     */
+    void updatePurchaseItem(PurchaseItems purchaseItems);
+
+    /**
+     * Execl导入采购计划
+     * @param list
+     */
+    void excelPurchaseItems(List<PurchaseItems> list);
 }

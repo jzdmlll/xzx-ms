@@ -91,4 +91,27 @@ public class PurchasePlanController {
         }
     }
 
+    @ApiOperation("新增单个采购计划项")
+    @PostMapping("addPurchaseItem")
+    public Message addPurchaseItem(PurchaseItems purchaseItems){
+
+        purchasePlanService.addPurchaseItem(purchaseItems);
+        return MessageUtil.success("success");
+    }
+
+    @ApiOperation("EXCEL导入采购计划项")
+    @PostMapping("excelPurchaseItems")
+    public Message excelPurchaseItems(List<PurchaseItems> purchaseItems){
+
+        purchasePlanService.excelPurchaseItems(purchaseItems);
+        return MessageUtil.success("success");
+    }
+
+    @ApiOperation("修改采购计划项")
+    @PostMapping("updatePurchaseItem")
+    public Message updatePurchaseItem(PurchaseItems purchaseItems){
+
+        purchasePlanService.updatePurchaseItem(purchaseItems);
+        return MessageUtil.success("success");
+    }
 }
