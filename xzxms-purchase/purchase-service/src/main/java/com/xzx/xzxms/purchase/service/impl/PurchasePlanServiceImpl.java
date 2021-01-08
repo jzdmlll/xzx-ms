@@ -8,10 +8,10 @@ import com.xzx.xzxms.purchase.bean.PurchaseItems;
 import com.xzx.xzxms.purchase.bean.PurchaseItemsExample;
 import com.xzx.xzxms.purchase.dao.PurchaseItemsMapper;
 import com.xzx.xzxms.purchase.dao.extend.PurchasePlanExtendMapper;
+import com.xzx.xzxms.purchase.dto.PurchaseItemsListDTO;
 import com.xzx.xzxms.purchase.service.PurchasePlanService;
-import com.xzx.xzxms.purchase.vm.PurchaseItemsListVM;
-import com.xzx.xzxms.purchase.vm.PurchaseItemsVM;
-import com.xzx.xzxms.purchase.vm.PurchaseSupplierVM;
+import com.xzx.xzxms.purchase.vo.PurchaseItemsVO;
+import com.xzx.xzxms.purchase.vo.PurchaseSupplierVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,8 +52,8 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
      * @return
      */
     @Override
-    public List<PurchaseItemsVM> findItemsByProjectIdService(Long projectId) {
-        List<PurchaseItemsVM> itemsList = purchasePlanExtendMapper.findItemsByProjectId(projectId);
+    public List<PurchaseItemsVO> findItemsByProjectIdService(Long projectId) {
+        List<PurchaseItemsVO> itemsList = purchasePlanExtendMapper.findItemsByProjectId(projectId);
         return itemsList;
     }
 
@@ -108,18 +108,18 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
     }
 
     @Override
-    public List<PurchaseSupplierVM> findPurchasingSupplierByItemIdService(Long id) {
-        List<PurchaseSupplierVM> supplierInfo = purchasePlanExtendMapper.findPurchasingSupplierByItemId(id);
+    public List<PurchaseSupplierVO> findPurchasingSupplierByItemIdService(Long id) {
+        List<PurchaseSupplierVO> supplierInfo = purchasePlanExtendMapper.findPurchasingSupplierByItemId(id);
 
-        for (PurchaseSupplierVM purchaseSupplierVM : supplierInfo) {
-            System.out.println(purchaseSupplierVM);
+        for (PurchaseSupplierVO purchaseSupplierVO : supplierInfo) {
+            System.out.println(purchaseSupplierVO);
         }
         return supplierInfo;
     }
 
     @Transactional
     @Override
-    public String insertSysProDetailService(PurchaseItemsListVM purchaseItemsList) {
+    public String insertSysProDetailService(PurchaseItemsListDTO purchaseItemsList) {
         // 获取项目id 判断该项目名是否已经存在
         Long result = purchasePlanExtendMapper.findProNameByProName(purchaseItemsList.getSysProDetailWithBLOBs().getName());
         // 当项目名称不重复

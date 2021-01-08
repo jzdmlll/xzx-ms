@@ -1,8 +1,7 @@
 package com.xzx.xzxms.purchase.service;
 
-import com.xzx.xzxms.purchase.vm.PurchaseContractVM;
-import com.xzx.xzxms.purchase.vm.PurchaseProjectVM;
-import org.apache.ibatis.annotations.Param;
+import com.xzx.xzxms.purchase.vo.PurchaseContractVO;
+import com.xzx.xzxms.purchase.vo.PurchaseProjectVO;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,14 +22,14 @@ public interface PurchaseContractManagementService {
      * @param projectName
      * @return
      */
-    List<PurchaseProjectVM> findAllProjectsService(String projectName);
+    List<PurchaseProjectVO> findAllProjectsService(String projectName);
 
     /**
      * 根据项目id去查找其所有相关的合同信息
      * @param projectId
      * @return
      */
-    List<PurchaseContractVM> findContractByProjectId(Long projectId);
+    List<PurchaseContractVO> findContractByProjectId(Long projectId);
 
     /**
      * 根据合同id修改合同审核级别

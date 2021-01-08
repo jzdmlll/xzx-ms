@@ -21,7 +21,7 @@
         <result column="time" property="time" jdbcType="BIGINT" />
     </resultMap>
 
-    <resultMap id="PurchaseItemsVM" type="com.xzx.xzxms.purchase.vm.PurchaseItemsVM">
+    <resultMap id="PurchaseItemsVO" type="com.xzx.xzxms.purchase.vo.PurchaseItemsVO">
         <result column="id" property="id" jdbcType="BIGINT" />
         <result column="contract_id" property="contractId" jdbcType="BIGINT" />
         <result column="project_id" property="projectId" jdbcType="VARCHAR" />
@@ -39,7 +39,7 @@
         <result column="time" property="time" jdbcType="BIGINT" />
     </resultMap>
 
-    <resultMap id="PurchaseSupplierVM" type="com.xzx.xzxms.purchase.vm.PurchaseSupplierVM">
+    <resultMap id="PurchaseSupplierVO" type="com.xzx.xzxms.purchase.vo.PurchaseSupplierVO">
         <result column="serial_number" property="serialNumber" jdbcType="INTEGER" />
         <result column="name" property="name" jdbcType="VARCHAR" />
     </resultMap>
@@ -49,7 +49,7 @@
         <result column="pro_no" property="proNo" jdbcType="VARCHAR" />
     </resultMap>
 
-    <select id="findItemsByProjectId" parameterType="long" resultMap="PurchaseItemsVM">
+    <select id="findItemsByProjectId" parameterType="long" resultMap="PurchaseItemsVO">
         select id,contract_id,project_id,serial_number,item,brand,params,model,unit,number,is_inquiry,remark,is_active,operator,time
         from purchase_items
         where project_id=#{projectId} and is_active=1 order by serial_number
@@ -68,7 +68,7 @@
         update purchase_items set number=#{number} where id = #{id}
     </update>
 
-    <select id="findPurchasingSupplierByItemId" parameterType="long" resultMap="PurchaseSupplierVM">
+    <select id="findPurchasingSupplierByItemId" parameterType="long" resultMap="PurchaseSupplierVO">
         select purchase_items.serial_number, supplier.`name`
         from purchase_items inner join purchase_supply inner join supplier on (purchase_items.id = purchase_supply.item_id and purchase_supply.supplier_id = supplier.id)
         where purchase_supply.is_active=1

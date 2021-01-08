@@ -4,9 +4,9 @@ import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
 import com.xzx.xzxms.purchase.dao.extend.PurchaseContractManagementExtendMapper;
 import com.xzx.xzxms.purchase.service.impl.PurchaseContractManagementServiceImpl;
-import com.xzx.xzxms.purchase.vm.PurchaseContractGenerateVM;
-import com.xzx.xzxms.purchase.vm.PurchaseContractVM;
-import com.xzx.xzxms.purchase.vm.PurchaseProjectVM;
+import com.xzx.xzxms.purchase.vo.PurchaseContractGenerateVO;
+import com.xzx.xzxms.purchase.vo.PurchaseContractVO;
+import com.xzx.xzxms.purchase.vo.PurchaseProjectVO;
 import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,14 +39,14 @@ public class PurchaseContractManagementController {
     @ApiOperation("根据输入项目名模糊查询")
     @GetMapping("findAllProjects")
     public Message findAllProjects(@Param("projectName") String projectName){
-        List<PurchaseProjectVM> allProjects = purchaseContractManagementService.findAllProjectsService(projectName);
+        List<PurchaseProjectVO> allProjects = purchaseContractManagementService.findAllProjectsService(projectName);
         return MessageUtil.success("success",allProjects);
     }
 
     @ApiOperation("根据项目id查询所有与其相关的合同信息")
     @GetMapping("findContractByProjectId")
     public Message findContractByProjectId(@Param("projectId") Long projectId){
-        List<PurchaseContractVM> contractList = purchaseContractManagementService.findContractByProjectId(projectId);
+        List<PurchaseContractVO> contractList = purchaseContractManagementService.findContractByProjectId(projectId);
         return MessageUtil.success("success",contractList);
     }
 
@@ -64,7 +64,7 @@ public class PurchaseContractManagementController {
     @ApiOperation("根据合同id查询所有与其相关的购买项信息")
     @GetMapping("findItemsInfoByContractId")
     public Message findItemsInfoByContractId(@Param("contractId") Long contractId){
-        List<PurchaseContractGenerateVM> itemsInfos = purchaseContractManagementExtendMapper.findItemsInfoByContractId(contractId);
+        List<PurchaseContractGenerateVO> itemsInfos = purchaseContractManagementExtendMapper.findItemsInfoByContractId(contractId);
         return MessageUtil.success("success",itemsInfos);
     }
 
