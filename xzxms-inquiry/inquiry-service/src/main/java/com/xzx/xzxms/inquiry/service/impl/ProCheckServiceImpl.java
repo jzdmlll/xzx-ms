@@ -26,7 +26,7 @@ public class ProCheckServiceImpl implements ISysProCheckService {
     public void updateTechnicalStatus(List<SysProCheck> sysProChecks) {
 
         for (SysProCheck sysProCheck : sysProChecks){
-            if (0 != sysProCheck.getCompareAudit()){
+            if (sysProCheck.getCompareAudit() !=null && 0 != sysProCheck.getCompareAudit()){
                 throw new CustomerException("已有比价结果，请勿再修改审核状态!");
             }
             sysProCheck.setTime(new Date().getTime());
@@ -38,7 +38,7 @@ public class ProCheckServiceImpl implements ISysProCheckService {
     public void updateBusinessStatus(List<SysProCheck> sysProChecks) {
 
         for (SysProCheck sysProCheck : sysProChecks){
-            if (0 != sysProCheck.getBusinessAudit()){
+            if (sysProCheck.getCompareAudit() !=null && 0 != sysProCheck.getBusinessAudit()){
                 throw new CustomerException("已有比价结果，请勿再修改审核状态!");
             }
             sysProCheck.setTime(new Date().getTime());

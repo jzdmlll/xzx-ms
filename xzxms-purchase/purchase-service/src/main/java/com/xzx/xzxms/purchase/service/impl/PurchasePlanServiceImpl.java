@@ -6,6 +6,7 @@ import com.xzx.xzxms.inquiry.dao.InquiryMapper;
 import com.xzx.xzxms.inquiry.dao.SysProDetailMapper;
 import com.xzx.xzxms.purchase.bean.PurchaseItems;
 import com.xzx.xzxms.purchase.bean.PurchaseItemsExample;
+import com.xzx.xzxms.purchase.bean.PurchaseSupply;
 import com.xzx.xzxms.purchase.dao.PurchaseItemsMapper;
 import com.xzx.xzxms.purchase.dao.extend.PurchasePlanExtendMapper;
 import com.xzx.xzxms.purchase.service.PurchasePlanService;
@@ -108,13 +109,8 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
     }
 
     @Override
-    public List<PurchaseSupplierVM> findPurchasingSupplierByItemIdService(Long id) {
-        List<PurchaseSupplierVM> supplierInfo = purchasePlanExtendMapper.findPurchasingSupplierByItemId(id);
-
-        for (PurchaseSupplierVM purchaseSupplierVM : supplierInfo) {
-            System.out.println(purchaseSupplierVM);
-        }
-        return supplierInfo;
+    public List<PurchaseSupply> findPurchasingSupplierByItemIdService(Long id) {
+        return purchasePlanExtendMapper.findPurchasingSupplierByItemId(id);
     }
 
     @Transactional

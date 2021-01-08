@@ -1,6 +1,7 @@
 package com.xzx.xzxms.purchase.dao.extend;
 
 import com.xzx.xzxms.purchase.bean.PurchaseItems;
+import com.xzx.xzxms.purchase.bean.PurchaseSupply;
 import com.xzx.xzxms.purchase.vm.PurchaseContractGenerateVM;
 import com.xzx.xzxms.purchase.vm.PurchaseItemsVM;
 import com.xzx.xzxms.purchase.vm.PurchaseSupplierVM;
@@ -59,7 +60,7 @@ public interface PurchasePlanExtendMapper {
      * @param id
      * @return
      */
-    List<PurchaseSupplierVM> findPurchasingSupplierByItemId(@Param("id") Long id);
+    List<PurchaseSupply> findPurchasingSupplierByItemId(@Param("id") Long id);
 
     /**
      * 根据 projectName 在表 sys_pro_detail 中查询是否有相同项目名

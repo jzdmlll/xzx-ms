@@ -39,11 +39,6 @@
         <result column="time" property="time" jdbcType="BIGINT" />
     </resultMap>
 
-    <resultMap id="PurchaseSupplierVM" type="com.xzx.xzxms.purchase.vm.PurchaseSupplierVM">
-        <result column="serial_number" property="serialNumber" jdbcType="INTEGER" />
-        <result column="name" property="name" jdbcType="VARCHAR" />
-    </resultMap>
-
     <resultMap id="SysProDetail" type="com.xzx.xzxms.inquiry.bean.SysProDetail">
         <result column="name" property="name" jdbcType="VARCHAR" />
         <result column="pro_no" property="proNo" jdbcType="VARCHAR" />
@@ -68,13 +63,8 @@
         update purchase_items set number=#{number} where id = #{id}
     </update>
 
-    <select id="findPurchasingSupplierByItemId" parameterType="long" resultMap="PurchaseSupplierVM">
-        select purchase_items.serial_number, supplier.`name`
-        from purchase_items inner join purchase_supply inner join supplier on (purchase_items.id = purchase_supply.item_id and purchase_supply.supplier_id = supplier.id)
-        where purchase_supply.is_active=1
-        and supplier.is_active=1
-        and purchase_items.is_active=1
-        and purchase_items.id = #{id}
+    <select id="findPurchasingSupplierByItemId" parameterType="Long" resultType="com.xzx.xzxms.purchase.bean.PurchaseSupply">
+        select * from purchase_supply where item_id = #{id} and is_active != 0
     </select>
 
     <select id="findProNameByProName" parameterType="string" resultType="long">

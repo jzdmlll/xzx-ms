@@ -51,7 +51,11 @@ public class SysUserController {
     @PostMapping("login")
     public Message login(@RequestBody UserVM userVM) {
         // 1. 认证用户的用户名和密码
+        //System.out.println("");
+        long time1 = System.currentTimeMillis();
         SysUser user = userServiceImpl.login(userVM);
+        long time2 = System.currentTimeMillis();
+        System.out.println("login cost:"+(time2 - time1));
         if (user != null) {
             // 2. 如果登录成功产生token,将token缓存起来，返回
             Map<String, String> map = new HashMap<>();
@@ -61,7 +65,8 @@ public class SysUserController {
             //放入redis缓存
             String userJson = JsonUtils.objectToJson(user);
             jedisDaoImpl.setCode(token, userJson, JwtTokenUtil.REDIS_TOKEN_TIME);
-
+            long time3 = System.currentTimeMillis();
+            System.out.println("redis cost:"+(time3 - time2));
             return MessageUtil.success("登录成功", map);
         }
         // 3. 如果登录失败

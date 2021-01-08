@@ -4,6 +4,7 @@ import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
 import com.xzx.xzxms.purchase.bean.PurchaseItems;
 import com.xzx.xzxms.purchase.bean.PurchaseItemsExample;
+import com.xzx.xzxms.purchase.bean.PurchaseSupply;
 import com.xzx.xzxms.purchase.dao.PurchaseItemsMapper;
 import com.xzx.xzxms.purchase.dao.PurchaseMapper;
 import com.xzx.xzxms.purchase.service.IPurchaseContractService;
@@ -76,7 +77,7 @@ public class PurchasePlanController {
     @ApiOperation("根据购买项id查找其供应商")
     @GetMapping("findPurchasingSupplierByItemId")
     public Message findPurchasingSupplierByItemId(@Param("id") Long id){
-        List<PurchaseSupplierVM> supplierInfo = purchasePlanService.findPurchasingSupplierByItemIdService(id);
+        List<PurchaseSupply> supplierInfo = purchasePlanService.findPurchasingSupplierByItemIdService(id);
         return MessageUtil.success("success",supplierInfo);
     }
 

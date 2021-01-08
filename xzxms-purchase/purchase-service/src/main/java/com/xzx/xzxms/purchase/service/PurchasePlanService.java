@@ -3,6 +3,7 @@ package com.xzx.xzxms.purchase.service;
 import com.xzx.xzxms.inquiry.bean.SysProDetail;
 import com.xzx.xzxms.inquiry.bean.SysProDetailWithBLOBs;
 import com.xzx.xzxms.purchase.bean.PurchaseItems;
+import com.xzx.xzxms.purchase.bean.PurchaseSupply;
 import com.xzx.xzxms.purchase.vm.PurchaseItemsListVM;
 import com.xzx.xzxms.purchase.vm.PurchaseItemsVM;
 import com.xzx.xzxms.purchase.vm.PurchaseSupplierVM;
@@ -44,7 +45,7 @@ public interface PurchasePlanService {
      */
     String insertItemService(PurchaseItems purchaseItems, int itemNum);
 
-    List<PurchaseSupplierVM> findPurchasingSupplierByItemIdService(Long id);
+    List<PurchaseSupply> findPurchasingSupplierByItemIdService(Long id);
 
     /**
      * 新增询价项目,新增询价商品
