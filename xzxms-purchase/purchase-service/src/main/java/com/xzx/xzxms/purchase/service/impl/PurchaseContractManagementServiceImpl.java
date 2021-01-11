@@ -26,6 +26,7 @@ public class PurchaseContractManagementServiceImpl implements PurchaseContractMa
     PurchaseContractManagementExtendMapper purchaseContractManagementExtendMapper;
 
     /**
+     * 周嘉玮
      * 查找所有符合条件的项目
      * @param projectName
      * @return
@@ -37,6 +38,7 @@ public class PurchaseContractManagementServiceImpl implements PurchaseContractMa
     }
 
     /**
+     * 周嘉玮
      * 根据项目id去查找其所有相关的合同信息
      * @param project_id
      * @return
@@ -48,6 +50,7 @@ public class PurchaseContractManagementServiceImpl implements PurchaseContractMa
     }
 
     /**
+     * 周嘉玮
      * 根据合同id修改合同审核级别
      * @param firstAudit
      * @param secondAudit

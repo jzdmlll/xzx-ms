@@ -31,6 +31,11 @@ public class PurchaseContractGenerateController {
     @Autowired
     PurchaseContractGenerateService purchaseContractGenerateService;
 
+    /**
+     * 周嘉玮
+     * @param projectId
+     * @return
+     */
     @ApiOperation("查询该项目的所有采购项信息")
     @GetMapping("findPurchaseItemsInfo")
     public Message findPurchaseItemsInfo(@Param("projectId") Long projectId){
@@ -38,6 +43,11 @@ public class PurchaseContractGenerateController {
         return MessageUtil.success("success",purchaseItemsInfoList);
     }
 
+    /**
+     * 周嘉玮
+     * @param purchaseContractDTO
+     * @return
+     */
     @ApiOperation("新增合同以及为购买项绑定合同")
     @PostMapping("insertContractInfo")
     public Message insertContractInfo(@Param("purchaseContractDTO") @RequestBody PurchaseContractDTO purchaseContractDTO){
@@ -51,6 +61,11 @@ public class PurchaseContractGenerateController {
         }
     }
 
+    /**
+     * 周嘉玮
+     * @param contractNo
+     * @return
+     */
     @ApiOperation("判断是否存在该合同编号")
     @GetMapping("findContractNo")
     public Message findContractNo(@Param("contractNo") String contractNo){

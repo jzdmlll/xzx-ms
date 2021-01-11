@@ -22,6 +22,7 @@ import java.util.List;
 @Repository
 public interface PurchasePlanExtendMapper {
     /**
+     * 周嘉玮
      * 根据项目id查询该项目下的所有购买项
      * @param projectId
      * @return
@@ -29,13 +30,14 @@ public interface PurchasePlanExtendMapper {
     List<PurchaseItemsVO> findItemsByProjectId(@Param("projectId") Long projectId);
 
     /**
-     *
+     * 周嘉玮
      * @param projectId
      * @param idList
      */
     void updateItemsInquiry(@Param("projectId") Long projectId, @Param("idList") List<Long> idList);
 
     /**
+     * 周嘉玮
      * 根据项目id获取所有购买项的序号
      * @param projectId
      * @return
@@ -43,18 +45,21 @@ public interface PurchasePlanExtendMapper {
     List<Integer> findSerialNumbersByProjectId(@Param("projectId") Long projectId);
 
     /**
+     * 周嘉玮
      * 当购买项购买数量拆分，新增一条该购买项信息
      * @param purchaseItems
      */
     void insertItem(PurchaseItems purchaseItems);
 
     /**
+     * 周嘉玮
      * 当购买项数量拆分时，修改当前购买数量
      * @param itemNum
      */
     void updateItemNumber(@Param("number") int itemNum, @Param("id") Long id);
 
     /**
+     * 周嘉玮
      * 根据购买项id查找其供应商
      * @param id
      * @return
@@ -62,12 +67,14 @@ public interface PurchasePlanExtendMapper {
     List<PurchaseSupply> findPurchasingSupplierByItemId(@Param("id") Long id);
 
     /**
+     * 周嘉玮
      * 根据 projectName 在表 sys_pro_detail 中查询是否有相同项目名
      * @param projectName
      */
     Long findProNameByProName(@Param("name") String projectName);
 
     /**
+     * 周嘉玮
      * 根据当前 年 月 查询所有符合条件的项目编号
      * @param proNo
      * @return
@@ -75,6 +82,7 @@ public interface PurchasePlanExtendMapper {
     List<String> findProNoByYM(@Param("proNo") String proNo);
 
     /**
+     * 周嘉玮
      * 根据项目名称和购买序号 在表inquiry中查询是否有相同询价记录
      * @param name
      * @param sort
@@ -83,6 +91,7 @@ public interface PurchasePlanExtendMapper {
     Integer findSort(@Param("name") String name, @Param("sort") int sort);
 
     /**
+     * 孙乃裕
      * 根据项目ID和序号查询采购项表是否存在
      * @param projectId
      * @param serialNum
