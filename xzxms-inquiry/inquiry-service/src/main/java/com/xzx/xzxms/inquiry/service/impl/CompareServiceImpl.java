@@ -263,7 +263,9 @@ public class CompareServiceImpl implements ICompareService {
                 if (check.getTechnicalAudit() == 0 || check.getBusinessAudit() == 0){
                     throw new CustomerException("存在技审或商审未审核，无法进行比价!");
                 }
-                if (check.getCompareAudit() != 0){
+                if (check.getCompareAudit() == null){
+                    throw new CustomerException("该比价未被提交过来，请勿比价!");
+                }else if (check.getCompareAudit() != 0){
                     throw new CustomerException("比价状态不为初始化状态,数据异常");
                 }
                 if (check.getFinallyAudit() != null){
