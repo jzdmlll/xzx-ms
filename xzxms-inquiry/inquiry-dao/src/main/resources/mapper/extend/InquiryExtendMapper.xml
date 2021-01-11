@@ -148,7 +148,8 @@
         i.id = #{id}
     </select>
     <select id="findInquiryByProId" resultType="com.xzx.xzxms.inquiry.vm.InquiryVM">
-        select i.*, count(if(spc.compare_audit = 0 or spc.compare_audit is NULL,true,null)) unCompareNum
+        select i.*, count(if(spc.compare_audit = 0,true,null)) unCompareNum,
+        count(if(spc.compare_audit is NULL,true,null)) unSendNum
         from inquiry i
         left join quote q on i.id = q.inquiry_id
         left join sys_pro_check spc on q.id = spc.quote_id
@@ -161,6 +162,6 @@
     </resultMap>
     <select id="findCompareNumByInquiryId" resultType="int">
         select count(1) from quote q left join sys_pro_check spc on q.id = spc.quote_id
-        where q.inquiry_id = #{id} and q.is_active = 1 and spc.compare_audit = 0 or spc.compare_audit is NULL
+        where q.inquiry_id = #{id} and q.is_active = 1 and (spc.compare_audit = 0 or spc.compare_audit is NULL)
     </select>-->
 </mapper>

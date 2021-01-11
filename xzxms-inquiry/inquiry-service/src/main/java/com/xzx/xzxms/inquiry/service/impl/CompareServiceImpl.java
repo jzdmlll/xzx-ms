@@ -196,7 +196,9 @@ public class CompareServiceImpl implements ICompareService {
 
         for (CompareQuoteListVM vm : list){
             for (QuoteRespVM quoteRespVM : vm.getQuotes()){
-                if (quoteRespVM.getCompareStatus() == 1){
+                if(quoteRespVM.getCompareStatus() == null){
+                    continue;
+                }else if (quoteRespVM.getCompareStatus() == 1){
                     vm.setSuPrice(quoteRespVM.getSuPrice());
                 }
             }
