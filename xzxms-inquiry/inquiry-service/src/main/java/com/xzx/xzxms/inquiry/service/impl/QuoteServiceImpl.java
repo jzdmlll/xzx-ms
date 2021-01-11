@@ -1,5 +1,6 @@
 package com.xzx.xzxms.inquiry.service.impl;
 
+import com.xzx.xzxms.commons.constant.CommonConstant;
 import com.xzx.xzxms.commons.dao.redis.JedisDao;
 import com.xzx.xzxms.commons.utils.*;
 import com.xzx.xzxms.inquiry.dao.*;
@@ -228,6 +229,12 @@ public class QuoteServiceImpl implements IQuoteService {
                     List<Inquiry> inquiries = inquiryMapper.selectByExample(example);
                     if (inquiries.size() > 0) {
                         Inquiry inquiry = inquiries.get(0);
+
+                        int num = quoteAndInquiry.findIsExistQuote(inquiry.getId());
+                        if (num != 0){
+                            throw new CustomerException(inquiry.getName() + "  已有报价，如需重新导入请先删除报价信息!");
+                        }
+
                         inquiryId = inquiry.getId();
                         number = inquiry.getNumber();
 
@@ -411,36 +418,43 @@ public class QuoteServiceImpl implements IQuoteService {
         InquiryExample example = new InquiryExample();
         example.createCriteria().andIdEqualTo(quote.getInquiryId());
         List<Inquiry> inquiries = inquiryMapper.selectByExample(example);
-        Inquiry inquiry = inquiries.get(0);
+        if (inquiries.size() > 0){
 
-        quote.setId(quoteId);
-        quote.setDataSource(1);
-        quote.setIsActive(1);
-        quote.setIsUseful(0);
-        quote.setTime(time);
-        quoteMapper.insert(quote);
+            Inquiry inquiry = inquiries.get(0);
+            //验证该询价是否已比价
+            int num = quoteAndInquiry.findIsExistCompare(inquiry.getId());
+            if (num > 0){
+                throw new CustomerException(inquiry.getName() + "   此询价已比价，请勿再新添或修改报价!");
+            }
+            quote.setId(quoteId);
+            quote.setDataSource(1);
+            quote.setIsActive(CommonConstant.EFFECTIVE);
+            quote.setIsUseful(CommonConstant.IS_NOT_USEFUL);
+            quote.setTime(time);
+            quoteMapper.insert(quote);
 
-        InquiryPool inquiryPool = new InquiryPool();
-        inquiryPool.setId(IDUtils.getId());
-        inquiryPool.setTime(time);
-        inquiryPool.setIsActive(1);
-        inquiryPool.setOperator(quote.getOperator());
-        inquiryPool.setSupplier(quote.getSupplier());
-        inquiryPool.setEquipmentName(inquiry.getName());
-        inquiryPool.setBrand(quote.getSuBrand());
-        inquiryPool.setModel(quote.getSuModel());
-        inquiryPool.setTechnicalRequire(inquiry.getParams());
-        inquiryPool.setUnit(inquiry.getUnit());
-        inquiryPool.setQuoteModel(quote.getSuModel());
-        inquiryPool.setTechnicalParams(quote.getSuParams());
-        inquiryPool.setQuoteBrand(quote.getSuBrand());
-        inquiryPool.setPrice(quote.getSuPrice());
-        inquiryPool.setDelivery(quote.getSuDelivery());
-        inquiryPool.setWarranty(quote.getWarranty());
-        inquiryPool.setImage(quote.getImage());
-        inquiryPool.setRemark(quote.getSuRemark());
-        inquiryPool.setProDetailId(inquiry.getProDetailId());
-        inquiryPoolMapper.insert(inquiryPool);
+            InquiryPool inquiryPool = new InquiryPool();
+            inquiryPool.setId(IDUtils.getId());
+            inquiryPool.setTime(time);
+            inquiryPool.setIsActive(1);
+            inquiryPool.setOperator(quote.getOperator());
+            inquiryPool.setSupplier(quote.getSupplier());
+            inquiryPool.setEquipmentName(inquiry.getName());
+            inquiryPool.setBrand(quote.getSuBrand());
+            inquiryPool.setModel(quote.getSuModel());
+            inquiryPool.setTechnicalRequire(inquiry.getParams());
+            inquiryPool.setUnit(inquiry.getUnit());
+            inquiryPool.setQuoteModel(quote.getSuModel());
+            inquiryPool.setTechnicalParams(quote.getSuParams());
+            inquiryPool.setQuoteBrand(quote.getSuBrand());
+            inquiryPool.setPrice(quote.getSuPrice());
+            inquiryPool.setDelivery(quote.getSuDelivery());
+            inquiryPool.setWarranty(quote.getWarranty());
+            inquiryPool.setImage(quote.getImage());
+            inquiryPool.setRemark(quote.getSuRemark());
+            inquiryPool.setProDetailId(inquiry.getProDetailId());
+            inquiryPoolMapper.insert(inquiryPool);
+        }
     }
 
     @Transactional
