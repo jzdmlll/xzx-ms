@@ -192,11 +192,10 @@ public class CompareServiceImpl implements ICompareService {
     public List<CompareQuoteListVM> findQuoteByInquiryId(long[] inquiryIds) {
 
         List<CompareQuoteListVM> list = compareExtendMapper.findQuoteListByInquiry(inquiryIds);
-        //根据供应商报价排序,第一个报价为最低价
 
         for (CompareQuoteListVM vm : list){
             for (QuoteRespVM quoteRespVM : vm.getQuotes()){
-                if(quoteRespVM.getCompareStatus() == null){
+                if (quoteRespVM.getCompareStatus() == null){
                     continue;
                 }else if (quoteRespVM.getCompareStatus() == 1){
                     vm.setSuPrice(quoteRespVM.getSuPrice());
