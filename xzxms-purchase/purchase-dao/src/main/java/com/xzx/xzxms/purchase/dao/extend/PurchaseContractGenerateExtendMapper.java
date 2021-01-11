@@ -15,6 +15,7 @@ import java.util.List;
  */
 public interface PurchaseContractGenerateExtendMapper {
     /**
+     * 周嘉玮
      * 查询所有购买项信息
      * @param projectId
      * @return
@@ -22,6 +23,7 @@ public interface PurchaseContractGenerateExtendMapper {
     List<PurchaseContractGenerateVO> findPurchaseItemsInfo(@Param("projectId") Long projectId);
 
     /**
+     * 周嘉玮
      * 根据项目 id 及其 购买项 id 查询购项目信息
      * @param projectId
      * @param itemIds
@@ -30,6 +32,7 @@ public interface PurchaseContractGenerateExtendMapper {
     List<PurchaseContractGenerateVO> findPurchaseItemsInfoByItemIds(@Param("projectId") Long projectId, @Param("itemIds") Long[] itemIds);
 
     /**
+     * 周嘉玮
      * 根据合同编号去purchase_contract表中查询是否存在此合同
      * @param contractNo
      * @return

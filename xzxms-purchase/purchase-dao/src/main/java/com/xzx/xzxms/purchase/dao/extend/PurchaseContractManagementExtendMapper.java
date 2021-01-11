@@ -22,6 +22,7 @@ import java.util.List;
 public interface PurchaseContractManagementExtendMapper {
 
     /**
+     * 周嘉玮
      * 查询所有项目
      * @param projectName
      * @return
@@ -29,6 +30,7 @@ public interface PurchaseContractManagementExtendMapper {
     List<PurchaseProjectVO> findAllProjects(@Param("projectName") String projectName);
 
     /**
+     * 周嘉玮
      * 根据项目编号查找其对应合同
      * @param projectId
      * @return
@@ -36,6 +38,7 @@ public interface PurchaseContractManagementExtendMapper {
     List<PurchaseContractVO> findContractByProjectId(@Param("projectId") Long projectId);
 
     /**
+     * 周嘉玮
      * 根据合同id修改合同审核级别
      * @param firstAudit
      * @param secondAudit
@@ -48,6 +51,7 @@ public interface PurchaseContractManagementExtendMapper {
                                  @Param("id") Long id);
 
     /**
+     * 周嘉玮
      * 根据合同id查询其购买项
      * @param contractId
      * @return
