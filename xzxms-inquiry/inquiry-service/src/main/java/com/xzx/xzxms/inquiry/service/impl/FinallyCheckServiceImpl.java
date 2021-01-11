@@ -48,7 +48,45 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
 
         Map map = new HashMap();
 
-        for (int i = 0; i < finallyCheckCompareVMS.size(); i++) {
+        long inquiryId = 0L;
+
+        int i = 1;
+        for(FinallyQuoteInquiryVM f : finallyCheckCompareVMS){
+
+            if (inquiryId == f.getInquiryId()){
+                if (f.getSuPrice() == minPrice){
+                    f.setMinPrice(1);
+                }
+                map.put(f.getSupplier(),f);
+
+            }else {
+                if (inquiryId != 0){
+                    maps.add(map);
+                    map = new HashMap();
+                }
+                inquiryId = f.getInquiryId();
+                //最低价
+                f.setMinPrice(1);
+                map.put("inquiry", f);
+                Map _map = new HashMap();
+                _map.put("price", f.getPrice());
+                _map.put("totalPrice", f.getTotalPrice());
+                map.put("draft", _map);
+                map.put(f.getSupplier(),f);
+                minPrice = f.getSuPrice();
+            }
+
+            if (i < finallyCheckCompareVMS.size()){
+                i++;
+            }else {
+                maps.add(map);
+            }
+        }
+
+
+   /*     for (int i = 0; i < finallyCheckCompareVMS.size(); i++) {
+
+
             if (finallyCheckCompareVMS.get(i).getSuPrice() != null){
                 price = finallyCheckCompareVMS.get(i).getSuPrice();
             }
@@ -82,7 +120,7 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
             if (i == finallyCheckCompareVMS.size() - 1) {
                 maps.add(map);
             }
-        }
+        }*/
         return maps;
     }
 
