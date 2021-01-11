@@ -66,7 +66,7 @@ public class CompareController {
 
     @ApiOperation("根据项目详情ID查询出所有询价需求")
     @GetMapping("findInquiryByProDetailId")
-    public Message findInquiryByProDetailId(long proDetailId){
+    public Message findInquiryByProDetailId(Long proDetailId){
 
         List<InquiryVM> list = compareServiceImpl.findInquiryByProDetailId(proDetailId);
         return MessageUtil.success("查询成功",list);

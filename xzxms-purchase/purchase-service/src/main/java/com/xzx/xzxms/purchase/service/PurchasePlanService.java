@@ -66,4 +66,12 @@ public interface PurchasePlanService {
      * @param list
      */
     void excelPurchaseItems(List<PurchaseItems> list);
+
+    /**
+     *
+     * @param projectId
+     * @param serialNum
+     * @return
+     */
+    int checkSerialNumberIsExists(Long projectId, Integer serialNum);
 }
