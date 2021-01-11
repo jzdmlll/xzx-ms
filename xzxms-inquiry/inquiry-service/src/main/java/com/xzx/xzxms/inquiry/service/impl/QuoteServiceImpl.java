@@ -494,9 +494,8 @@ public class QuoteServiceImpl implements IQuoteService {
         example.createCriteria().andInquiryIdEqualTo(inquiryId).andIsActiveEqualTo(1);
         List<Quote> list = quoteMapper.selectByExample(example);
 
-        SysProCheckExample proCheckExample = new SysProCheckExample();
-
         for (Quote quote : list){
+            SysProCheckExample proCheckExample = new SysProCheckExample();
             proCheckExample.createCriteria().andQuoteIdEqualTo(quote.getId());
             List<SysProCheck> proChecks = sysProCheckMapper.selectByExample(proCheckExample);
             if (proChecks.size() > 0){
@@ -504,13 +503,14 @@ public class QuoteServiceImpl implements IQuoteService {
                 if (sysProCheck.getBusinessAudit() == 0 || sysProCheck.getTechnicalAudit() == 0){
                     throw new CustomerException("未审核，勿发往比价!");
                 }else {
-                    if (sysProCheck.getCompareAudit() == null){
+                    if (sysProCheck.getCompareAudit() == null || sysProCheck.getCompareAudit() == 0){
                         //发往比价；比价状态初始化
                         sysProCheck.setCompareAudit(0);
                         sysProCheck.setCompareRemark("");
+
                         sysProCheckMapper.updateByPrimaryKeySelective(sysProCheck);
                     }else {
-                        throw new CustomerException("已提交发往比价，勿重复操作!");
+                        throw new CustomerException("已有比价操作，勿再发送请求!");
                     }
                 }
             }else {
