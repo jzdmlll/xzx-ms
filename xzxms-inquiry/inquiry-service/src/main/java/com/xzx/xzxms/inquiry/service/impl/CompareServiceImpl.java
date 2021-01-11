@@ -241,10 +241,10 @@ public class CompareServiceImpl implements ICompareService {
     @Override
     public void compareResultCommit(CompareVM compareVM) {
 
-        List<Long> longs = new ArrayList<>();
 
         for (QuoteExtend quoteExtend : compareVM.getQuoteList()) {
 
+            List<Long> longs = new ArrayList<>();
             QuoteExample quoteExample = new QuoteExample();
             quoteExample.createCriteria().andIsActiveEqualTo(CommonConstant.EFFECTIVE).andInquiryIdEqualTo(quoteExtend.getInquiryId());
             List<Quote> quotes = quoteMapper.selectByExample(quoteExample);
