@@ -150,4 +150,17 @@ public class PurchasePlanController {
         purchasePlanService.updatePurchaseItem(purchaseItems);
         return MessageUtil.success("success");
     }
+
+    /**
+     * Lzc
+     * @param projectId
+     * @param serialNum
+     * @return
+     */
+    @ApiOperation("检查采购计划项序号是否存在(查询数量)")
+    @GetMapping("checkSerialNumberIsExists")
+    public Message checkSerialNumberIsExists(Long projectId, Integer serialNum) {
+        int num = purchasePlanService.checkSerialNumberIsExists(projectId, serialNum);
+        return MessageUtil.success("success", num);
+    }
 }

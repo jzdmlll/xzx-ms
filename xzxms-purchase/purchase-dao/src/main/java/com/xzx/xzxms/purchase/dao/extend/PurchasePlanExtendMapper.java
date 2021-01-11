@@ -97,7 +97,7 @@ public interface PurchasePlanExtendMapper {
      * @param serialNum
      * @return
      */
-    @Select("SELECT COUNT(1) FROM purchase_items WHERE project_id = #{0} AND serial_number = #{1} AND is_active = 1")
+    @Select("SELECT COUNT(1) FROM purchase_items WHERE project_id = #{arg0} AND serial_number = #{arg1} AND is_active = 1")
     int findSerialNumber(Long projectId, Integer serialNum);
 
 }

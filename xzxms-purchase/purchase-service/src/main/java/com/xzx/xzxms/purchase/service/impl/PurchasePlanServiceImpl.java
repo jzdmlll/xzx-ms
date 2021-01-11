@@ -239,9 +239,13 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
     @Override
     public void addPurchaseItem(PurchaseItems purchaseItems) {
 
-        checkSerialNumberIsExists(purchaseItems.getProjectId(), purchaseItems.getSerialNumber());
+        int num = checkSerialNumberIsExists(purchaseItems.getProjectId(), purchaseItems.getSerialNumber());
+        if (num > 0){
+            throw new CustomerException("此采购项序号已存在，不能重复插入!");
+        }
         purchaseItems.setId(IDUtils.getId());
         purchaseItems.setTime(new Date().getTime());
+        purchaseItems.setIsInquiry(0);
         purchaseItems.setIsActive(CommonConstant.EFFECTIVE);
         purchaseItemsMapper.insert(purchaseItems);
     }
@@ -253,7 +257,10 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
     @Override
     public void updatePurchaseItem(PurchaseItems purchaseItems) {
 
-        checkSerialNumberIsExists(purchaseItems.getProjectId(), purchaseItems.getSerialNumber());
+        int num = checkSerialNumberIsExists(purchaseItems.getProjectId(), purchaseItems.getSerialNumber());
+        if (num > 0){
+            throw new CustomerException("此采购项序号已存在，不能重复插入!");
+        }
         purchaseItems.setUpdateTime(new Date().getTime());
         purchaseItemsMapper.updateByPrimaryKeySelective(purchaseItems);
     }
@@ -267,7 +274,10 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
     public void excelPurchaseItems(List<PurchaseItems> list) {
 
         for(PurchaseItems purchaseItems : list){
-            checkSerialNumberIsExists(purchaseItems.getProjectId(), purchaseItems.getSerialNumber());
+            int num = checkSerialNumberIsExists(purchaseItems.getProjectId(), purchaseItems.getSerialNumber());
+            if (num > 0){
+                throw new CustomerException("此采购项序号已存在，不能重复插入!");
+            }
             purchaseItems.setId(IDUtils.getId());
             purchaseItems.setTime(new Date().getTime());
             purchaseItems.setIsActive(CommonConstant.EFFECTIVE);
@@ -280,11 +290,7 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
      * @param projectId
      * @param serialNum
      */
-    public void checkSerialNumberIsExists(Long projectId, Integer serialNum){
-
-        int num = purchasePlanExtendMapper.findSerialNumber(projectId, serialNum);
-        if (num > 0){
-            throw new CustomerException("此采购项序号已存在，不能重复插入!");
-        }
+    public int checkSerialNumberIsExists(Long projectId, Integer serialNum){
+        return purchasePlanExtendMapper.findSerialNumber(projectId, serialNum);
     }
 }
