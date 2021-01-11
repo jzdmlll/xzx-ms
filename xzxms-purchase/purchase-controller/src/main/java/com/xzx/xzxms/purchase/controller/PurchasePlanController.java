@@ -37,6 +37,11 @@ public class PurchasePlanController {
     @Resource
     private PurchaseItemsMapper purchaseItemsMapper;
 
+    /**
+     * 周嘉玮
+     * @param projectId
+     * @return
+     */
     @ApiOperation("根据项目id查询该项目下的所有购买项")
     @GetMapping("findItemsByProjectId")
     public Message findItemsByProjectId(@Param("projectId") Long projectId){
@@ -45,6 +50,12 @@ public class PurchasePlanController {
         return MessageUtil.success("success",itemsList);
     }
 
+    /**
+     * 周嘉玮
+     * @param projectId
+     * @param idList
+     * @return
+     */
     @ApiOperation("根据项目id及其详情项id修改其是否需要询价")
     @PostMapping("updateItemsInquiry")
     public Message updateItemsInquiry(@Param("projectId") Long projectId, @Param("idList") List<Long> idList){
@@ -56,6 +67,12 @@ public class PurchasePlanController {
         }
     }
 
+    /**
+     * 周嘉玮
+     * @param purchaseItems
+     * @param itemNum
+     * @return
+     */
     @ApiOperation("当购买项需要拆分时")
     @PostMapping("insertItem")
     public Message insertItem(PurchaseItems purchaseItems, @Param("itemNum") int itemNum){
@@ -67,6 +84,11 @@ public class PurchasePlanController {
         }
     }
 
+    /**
+     * 周嘉玮
+     * @param id
+     * @return
+     */
     @ApiOperation("根据购买项id查找其供应商")
     @GetMapping("findPurchasingSupplierByItemId")
     public Message findPurchasingSupplierByItemId(@Param("id") Long id){
@@ -74,6 +96,11 @@ public class PurchasePlanController {
         return MessageUtil.success("success",supplierInfo);
     }
 
+    /**
+     * 周嘉玮
+     * @param purchaseItemsList
+     * @return
+     */
     @ApiOperation("添加询价信息")
     @PostMapping("insertInquiryInfo")
     public Message insertInquiryInfo(PurchaseItemsListDTO purchaseItemsList){
@@ -85,6 +112,11 @@ public class PurchasePlanController {
         }
     }
 
+    /**
+     * 孙乃裕
+     * @param purchaseItems
+     * @return
+     */
     @ApiOperation("新增单个采购计划项")
     @PostMapping("addPurchaseItem")
     public Message addPurchaseItem(PurchaseItems purchaseItems){
@@ -93,6 +125,11 @@ public class PurchasePlanController {
         return MessageUtil.success("success");
     }
 
+    /**
+     * 孙乃裕
+     * @param purchaseItems
+     * @return
+     */
     @ApiOperation("EXCEL导入采购计划项")
     @PostMapping("excelPurchaseItems")
     public Message excelPurchaseItems(List<PurchaseItems> purchaseItems){
@@ -101,6 +138,11 @@ public class PurchasePlanController {
         return MessageUtil.success("success");
     }
 
+    /**
+     * 孙乃裕
+     * @param purchaseItems
+     * @return
+     */
     @ApiOperation("修改采购计划项")
     @PostMapping("updatePurchaseItem")
     public Message updatePurchaseItem(PurchaseItems purchaseItems){

@@ -49,6 +49,7 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
     private InquiryMapper inquiryMapper;
 
     /**
+     * 周嘉玮
      * 根据项目id查询该项目下的所有购买项
      * @param projectId
      * @return
@@ -59,6 +60,12 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
         return itemsList;
     }
 
+    /**
+     * 周嘉玮
+     * @param projectId
+     * @param idList
+     * @return
+     */
     @Override
     public String updateItemsInquiryService(Long projectId, List<Long> idList) {
         PurchaseItemsExample purchaseItemsExample = new PurchaseItemsExample();
@@ -70,6 +77,12 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
         return "success";
     }
 
+    /**
+     * 周嘉玮
+     * @param purchaseItems
+     * @param itemNum
+     * @return
+     */
     @Transactional
     @Override
     synchronized public String insertItemService(PurchaseItems purchaseItems, int itemNum) {
@@ -109,11 +122,21 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
         return "success";
     }
 
+    /**
+     * 周嘉玮
+     * @param id
+     * @return
+     */
     @Override
     public List<PurchaseSupply> findPurchasingSupplierByItemIdService(Long id) {
         return purchasePlanExtendMapper.findPurchasingSupplierByItemId(id);
     }
 
+    /**
+     *
+     * @param purchaseItemsList
+     * @return
+     */
     @Transactional
     @Override
     public String insertSysProDetailService(PurchaseItemsListDTO purchaseItemsList) {
@@ -209,6 +232,10 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
         }
     }
 
+    /**
+     * 孙乃裕
+     * @param purchaseItems
+     */
     @Override
     public void addPurchaseItem(PurchaseItems purchaseItems) {
 
@@ -219,6 +246,10 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
         purchaseItemsMapper.insert(purchaseItems);
     }
 
+    /**
+     * 孙乃裕
+     * @param purchaseItems
+     */
     @Override
     public void updatePurchaseItem(PurchaseItems purchaseItems) {
 
@@ -227,6 +258,10 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
         purchaseItemsMapper.updateByPrimaryKeySelective(purchaseItems);
     }
 
+    /**
+     * 孙乃裕
+     * @param list
+     */
     @Transactional
     @Override
     public void excelPurchaseItems(List<PurchaseItems> list) {
@@ -240,6 +275,11 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
         }
     }
 
+    /**
+     * 孙乃裕
+     * @param projectId
+     * @param serialNum
+     */
     public void checkSerialNumberIsExists(Long projectId, Integer serialNum){
 
         int num = purchasePlanExtendMapper.findSerialNumber(projectId, serialNum);

@@ -37,6 +37,11 @@ public class PurchaseContractGenerateServiceImpl implements PurchaseContractGene
     @Resource
     private PurchaseItemsMapper purchaseItemsMapper;
 
+    /**
+     * 周嘉玮
+     * @param purchaseContractDTO
+     * @return
+     */
     @Transactional
     @Override
     public String insertContractInfoService(PurchaseContractDTO purchaseContractDTO) {
@@ -67,7 +72,6 @@ public class PurchaseContractGenerateServiceImpl implements PurchaseContractGene
             purchaseItems.setContractId(id);
             //purchaseItemsMapper.updateByExample(purchaseItems, purchaseItemsExample);
             purchaseItemsMapper.updateByExampleSelective(purchaseItems, purchaseItemsExample);
-
 
             return "success";
         }else {

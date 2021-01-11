@@ -36,6 +36,11 @@ public class PurchaseContractManagementController {
     @Resource
     PurchaseContractManagementExtendMapper purchaseContractManagementExtendMapper;
 
+    /**
+     * 周嘉玮
+     * @param projectName
+     * @return
+     */
     @ApiOperation("根据输入项目名模糊查询")
     @GetMapping("findAllProjects")
     public Message findAllProjects(@Param("projectName") String projectName){
@@ -43,6 +48,11 @@ public class PurchaseContractManagementController {
         return MessageUtil.success("success",allProjects);
     }
 
+    /**
+     * 周嘉玮
+     * @param projectId
+     * @return
+     */
     @ApiOperation("根据项目id查询所有与其相关的合同信息")
     @GetMapping("findContractByProjectId")
     public Message findContractByProjectId(@Param("projectId") Long projectId){
@@ -50,6 +60,14 @@ public class PurchaseContractManagementController {
         return MessageUtil.success("success",contractList);
     }
 
+    /**
+     * 周嘉玮
+     * @param firstAudit
+     * @param secondAudit
+     * @param threeAudit
+     * @param id
+     * @return
+     */
     @ApiOperation("根据合同id修改合同审核级别")
     @PostMapping("updateContractAuditById")
     public Message updateContractAuditById(@Param("firstAudit") Integer firstAudit, @Param("secondAudit") Integer secondAudit, @Param("threeAudit") Integer threeAudit, @Param("id") Long id){
@@ -61,6 +79,11 @@ public class PurchaseContractManagementController {
         }
     }
 
+    /**
+     * 周嘉玮
+     * @param contractId
+     * @return
+     */
     @ApiOperation("根据合同id查询所有与其相关的购买项信息")
     @GetMapping("findItemsInfoByContractId")
     public Message findItemsInfoByContractId(@Param("contractId") Long contractId){
