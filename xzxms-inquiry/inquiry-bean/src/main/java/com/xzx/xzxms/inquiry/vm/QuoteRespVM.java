@@ -4,54 +4,54 @@ import com.xzx.xzxms.inquiry.bean.Quote;
 
 public class QuoteRespVM extends Quote {
 
-    private int compareId;
-    private int technicalAudit;
-    private int businessAudit;
-    private int compareStatus;
-    private int finallyAudit;
+    private Long compareId;
+    private Integer technicalAudit;
+    private Integer businessAudit;
+    private Integer compareStatus;
+    private Integer finallyAudit;
     private String technicalRemark;
     private String businessRemark;
     private String compareRemark;
     private String finallyRemark;
     private String name;
 
-    public int getCompareId() {
+    public Long getCompareId() {
         return compareId;
     }
 
-    public void setCompareId(int compareId) {
+    public void setCompareId(Long compareId) {
         this.compareId = compareId;
     }
 
-    public int getTechnicalAudit() {
+    public Integer getTechnicalAudit() {
         return technicalAudit;
     }
 
-    public void setTechnicalAudit(int technicalAudit) {
+    public void setTechnicalAudit(Integer technicalAudit) {
         this.technicalAudit = technicalAudit;
     }
 
-    public int getBusinessAudit() {
+    public Integer getBusinessAudit() {
         return businessAudit;
     }
 
-    public void setBusinessAudit(int businessAudit) {
+    public void setBusinessAudit(Integer businessAudit) {
         this.businessAudit = businessAudit;
     }
 
-    public int getCompareStatus() {
+    public Integer getCompareStatus() {
         return compareStatus;
     }
 
-    public void setCompareStatus(int compareStatus) {
+    public void setCompareStatus(Integer compareStatus) {
         this.compareStatus = compareStatus;
     }
 
-    public int getFinallyAudit() {
+    public Integer getFinallyAudit() {
         return finallyAudit;
     }
 
-    public void setFinallyAudit(int finallyAudit) {
+    public void setFinallyAudit(Integer finallyAudit) {
         this.finallyAudit = finallyAudit;
     }
 
