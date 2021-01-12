@@ -89,7 +89,7 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
      */
     @Transactional
     @Override
-    synchronized public String insertItemService(PurchaseItems purchaseItems, int itemNum) {
+    synchronized public String insertItemService(PurchaseItems purchaseItems, Double itemNum) {
         
         // 根据项目id获取所有购买项的序号
         List<Integer> serialNumbers = purchasePlanExtendMapper.findSerialNumbersByProjectId(purchaseItems.getProjectId());
@@ -120,8 +120,8 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
         // 插入新数据
         purchasePlanExtendMapper.insertItem(purchaseItems);
 
-        // 修改原数据
-        purchasePlanExtendMapper.updateItemNumber(itemNum, id);
+        // 修改原数据，修改其数量、操作员、操作时间
+        purchasePlanExtendMapper.updateItemNumber(itemNum, id, purchaseItems.getOperator(), new Date().getTime());
 
         return "success";
     }

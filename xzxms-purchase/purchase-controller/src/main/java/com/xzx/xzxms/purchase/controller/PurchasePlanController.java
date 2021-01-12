@@ -76,7 +76,7 @@ public class PurchasePlanController {
      */
     @ApiOperation("当购买项需要拆分时")
     @PostMapping("insertItem")
-    public Message insertItem(PurchaseItems purchaseItems, @Param("itemNum") int itemNum){
+    public Message insertItem(PurchaseItems purchaseItems, @Param("itemNum") Double itemNum){
         String result = purchasePlanService.insertItemService(purchaseItems, itemNum);
         if (result.equals("success")){
             return MessageUtil.success("success");
