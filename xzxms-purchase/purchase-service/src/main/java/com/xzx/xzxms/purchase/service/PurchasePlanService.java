@@ -2,6 +2,7 @@ package com.xzx.xzxms.purchase.service;
 
 import com.xzx.xzxms.purchase.bean.PurchaseItems;
 import com.xzx.xzxms.purchase.bean.PurchaseSupply;
+import com.xzx.xzxms.purchase.dto.PurchaseItemsDTO;
 import com.xzx.xzxms.purchase.dto.PurchaseItemsListDTO;
 import com.xzx.xzxms.purchase.vo.PurchaseItemsVO;
 import org.springframework.stereotype.Repository;
@@ -27,11 +28,10 @@ public interface PurchasePlanService {
 
     /**
      * 根据项目id及其详情项id修改其是否需要询价
-     * @param projectId
-     * @param idList
+     * @param purchaseItemsDTO
      * @return
      */
-    String updateItemsInquiryService(Long projectId, List<Long> idList);
+    String updateItemsInquiryService(PurchaseItemsDTO purchaseItemsDTO);
 
     /**
      * 当购买项购买数量拆分，新增一条该购买项信息
@@ -40,6 +40,11 @@ public interface PurchasePlanService {
      */
     String insertItemService(PurchaseItems purchaseItems, int itemNum);
 
+    /**
+     * 根据购买项id查找其供应商
+     * @param id
+     * @return
+     */
     List<PurchaseSupply> findPurchasingSupplierByItemIdService(Long id);
 
     /**

@@ -5,7 +5,9 @@ import com.xzx.xzxms.commons.utils.MessageUtil;
 import com.xzx.xzxms.purchase.bean.PurchaseItems;
 import com.xzx.xzxms.purchase.bean.PurchaseSupply;
 import com.xzx.xzxms.purchase.dao.PurchaseItemsMapper;
+import com.xzx.xzxms.purchase.dto.PurchaseItemsDTO;
 import com.xzx.xzxms.purchase.dto.PurchaseItemsListDTO;
+import com.xzx.xzxms.purchase.service.PurchasePlanService;
 import com.xzx.xzxms.purchase.service.impl.PurchasePlanServiceImpl;
 import com.xzx.xzxms.purchase.vo.PurchaseItemsVO;
 import io.swagger.annotations.ApiOperation;
@@ -32,7 +34,7 @@ import java.util.List;
 public class PurchasePlanController {
 
     @Autowired
-    PurchasePlanServiceImpl purchasePlanService;
+    PurchasePlanService purchasePlanService;
 
     @Resource
     private PurchaseItemsMapper purchaseItemsMapper;
@@ -52,14 +54,13 @@ public class PurchasePlanController {
 
     /**
      * 周嘉玮
-     * @param projectId
-     * @param idList
+     * @param purchaseItemsDTO
      * @return
      */
     @ApiOperation("根据项目id及其详情项id修改其是否需要询价")
     @PostMapping("updateItemsInquiry")
-    public Message updateItemsInquiry(@Param("projectId") Long projectId, @Param("idList") List<Long> idList){
-        String result = purchasePlanService.updateItemsInquiryService(projectId, idList);
+    public Message updateItemsInquiry(PurchaseItemsDTO purchaseItemsDTO){
+        String result = purchasePlanService.updateItemsInquiryService(purchaseItemsDTO);
         if (result.equals("success")){
             return MessageUtil.success("success");
         }else {

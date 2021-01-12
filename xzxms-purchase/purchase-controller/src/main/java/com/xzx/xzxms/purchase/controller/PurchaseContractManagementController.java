@@ -3,6 +3,7 @@ package com.xzx.xzxms.purchase.controller;
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
 import com.xzx.xzxms.purchase.dao.extend.PurchaseContractManagementExtendMapper;
+import com.xzx.xzxms.purchase.service.PurchaseContractManagementService;
 import com.xzx.xzxms.purchase.service.impl.PurchaseContractManagementServiceImpl;
 import com.xzx.xzxms.purchase.vo.PurchaseContractGenerateVO;
 import com.xzx.xzxms.purchase.vo.PurchaseContractVO;
@@ -31,7 +32,7 @@ import java.util.List;
 public class PurchaseContractManagementController {
 
     @Autowired
-    PurchaseContractManagementServiceImpl purchaseContractManagementService;
+    PurchaseContractManagementService purchaseContractManagementService;
 
     @Resource
     PurchaseContractManagementExtendMapper purchaseContractManagementExtendMapper;

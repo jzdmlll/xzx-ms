@@ -1,5 +1,6 @@
 package com.xzx.xzxms.purchase.dao.extend;
 
+import com.xzx.xzxms.purchase.dto.PurchaseContractDTO;
 import com.xzx.xzxms.purchase.vo.PurchaseContractGenerateVO;
 import com.xzx.xzxms.purchase.vo.PurchaseContractVO;
 import com.xzx.xzxms.purchase.vo.PurchaseProjectVO;
@@ -49,6 +50,13 @@ public interface PurchaseContractManagementExtendMapper {
                                  @Param("secondAudit") Integer secondAudit,
                                  @Param("threeAudit") Integer threeAudit,
                                  @Param("id") Long id);
+
+//    /**
+//     * 周嘉玮
+//     * 根据合同id修改合同审核级别
+//     * @param purchaseContractDTO
+//     */
+//    void updateContractAuditById(PurchaseContractDTO purchaseContractDTO);
 
     /**
      * 周嘉玮

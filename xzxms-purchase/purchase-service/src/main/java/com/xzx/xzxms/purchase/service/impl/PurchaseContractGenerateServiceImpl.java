@@ -64,12 +64,14 @@ public class PurchaseContractGenerateServiceImpl implements PurchaseContractGene
             // 在合同表中新增一个新合同
             purchaseContractMapper.insert(purchaseContractDTO.getPurchaseContract());
 
-            // 在购买项表中更新合同编号
+            // 在购买项表中更新合同编号、更新操作人员、更新时间
 //            purchaseItemsMapper.up
             PurchaseItemsExample purchaseItemsExample = new PurchaseItemsExample();
             purchaseItemsExample.createCriteria().andProjectIdEqualTo(purchaseContractDTO.getPurchaseContract().getProjectId()).andIdIn(purchaseContractDTO.getItemIds());
             PurchaseItems purchaseItems = new PurchaseItems();
             purchaseItems.setContractId(id);
+            purchaseItems.setUpdateOperator(purchaseContractDTO.getPurchaseContract().getOperator());
+            purchaseItems.setUpdateTime(new Date().getTime());
             //purchaseItemsMapper.updateByExample(purchaseItems, purchaseItemsExample);
             purchaseItemsMapper.updateByExampleSelective(purchaseItems, purchaseItemsExample);
 

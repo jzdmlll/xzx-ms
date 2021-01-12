@@ -11,6 +11,7 @@ import com.xzx.xzxms.purchase.bean.PurchaseItemsExample;
 import com.xzx.xzxms.purchase.bean.PurchaseSupply;
 import com.xzx.xzxms.purchase.dao.PurchaseItemsMapper;
 import com.xzx.xzxms.purchase.dao.extend.PurchasePlanExtendMapper;
+import com.xzx.xzxms.purchase.dto.PurchaseItemsDTO;
 import com.xzx.xzxms.purchase.dto.PurchaseItemsListDTO;
 import com.xzx.xzxms.purchase.service.PurchasePlanService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,17 +63,20 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
 
     /**
      * 周嘉玮
-     * @param projectId
-     * @param idList
+     * @param purchaseItemsDTO
      * @return
      */
     @Override
-    public String updateItemsInquiryService(Long projectId, List<Long> idList) {
+    public String updateItemsInquiryService(PurchaseItemsDTO purchaseItemsDTO) {
         PurchaseItemsExample purchaseItemsExample = new PurchaseItemsExample();
-        purchaseItemsExample.createCriteria().andProjectIdEqualTo(projectId).andIdIn(idList);
+        // 根据 is_active、project_id、id 这三个字段去查询需要修改的结果集
+        purchaseItemsExample.createCriteria().andIsActiveEqualTo(1).andProjectIdEqualTo(purchaseItemsDTO.getPurchaseItems().getProjectId()).andIdIn(purchaseItemsDTO.getItemIds());
+
+        // 需修改内容：询价状态、修改人、修改时间
         PurchaseItems purchaseItems = new PurchaseItems();
         purchaseItems.setIsInquiry(1);
-        //purchaseItemsMapper.updateByExample(purchaseItems, purchaseItemsExample);
+        purchaseItems.setUpdateOperator(purchaseItemsDTO.getPurchaseItems().getOperator());
+        purchaseItems.setUpdateTime(new Date().getTime());
         purchaseItemsMapper.updateByExampleSelective(purchaseItems, purchaseItemsExample);
         return "success";
     }
@@ -133,7 +137,7 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
     }
 
     /**
-     *
+     * 周嘉玮
      * @param purchaseItemsList
      * @return
      */
