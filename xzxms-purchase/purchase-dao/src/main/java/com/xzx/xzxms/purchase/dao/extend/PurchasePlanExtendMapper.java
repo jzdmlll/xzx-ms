@@ -100,4 +100,11 @@ public interface PurchasePlanExtendMapper {
     @Select("SELECT COUNT(1) FROM purchase_items WHERE project_id = #{arg0} AND serial_number = #{arg1} AND is_active = 1")
     int findSerialNumber(Long projectId, Integer serialNum);
 
+
+    /**
+     * sunny
+     * 询价结果发往采购
+     * @param quoteIds
+     */
+    void inquiryResultSendPurchase(Long[] quoteIds, Long operator);
 }
