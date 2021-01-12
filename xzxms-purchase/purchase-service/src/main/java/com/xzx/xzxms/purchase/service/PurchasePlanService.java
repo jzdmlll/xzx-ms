@@ -38,7 +38,7 @@ public interface PurchasePlanService {
      * @param purchaseItems
      * @param itemNum
      */
-    String insertItemService(PurchaseItems purchaseItems, int itemNum);
+    String insertItemService(PurchaseItems purchaseItems, Double itemNum);
 
     /**
      * 根据购买项id查找其供应商

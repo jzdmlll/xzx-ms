@@ -19,6 +19,8 @@
         <result column="is_active" property="isActive" jdbcType="INTEGER" />
         <result column="operator" property="operator" jdbcType="VARCHAR" />
         <result column="time" property="time" jdbcType="BIGINT" />
+        <result column="update_operator" property="updateOperator" jdbcType="VARCHAR" />
+        <result column="update_time" property="updateTime" jdbcType="BIGINT" />
     </resultMap>
 
     <resultMap id="PurchaseItemsVO" type="com.xzx.xzxms.purchase.vo.PurchaseItemsVO">
@@ -60,7 +62,7 @@
     </insert>
 
     <update id="updateItemNumber" parameterType="com.xzx.xzxms.purchase.bean.PurchaseItems">
-        update purchase_items set number=#{number} where id = #{id}
+        update purchase_items set number=#{number}, update_operator=#{updateOperator}, update_time=#{updateTime}  where id = #{id}
     </update>
 
     <select id="findPurchasingSupplierByItemId" parameterType="Long" resultType="com.xzx.xzxms.purchase.bean.PurchaseSupply">

@@ -56,7 +56,10 @@ public interface PurchasePlanExtendMapper {
      * 当购买项数量拆分时，修改当前购买数量
      * @param itemNum
      */
-    void updateItemNumber(@Param("number") int itemNum, @Param("id") Long id);
+    void updateItemNumber(@Param("number") Double itemNum,
+                          @Param("id") Long id,
+                          @Param("updateOperator") String updateOperator,
+                          @Param("updateTime") Long updateTime);
 
     /**
      * 周嘉玮
