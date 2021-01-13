@@ -5,6 +5,7 @@ import com.xzx.xzxms.commons.utils.MessageUtil;
 import com.xzx.xzxms.purchase.bean.PurchaseItems;
 import com.xzx.xzxms.purchase.bean.PurchaseSupply;
 import com.xzx.xzxms.purchase.dto.PurchaseItemsDTO;
+import com.xzx.xzxms.purchase.dto.PurchaseItemsExcelImportDTO;
 import com.xzx.xzxms.purchase.dto.PurchaseItemsListDTO;
 import com.xzx.xzxms.purchase.service.PurchasePlanService;
 import com.xzx.xzxms.purchase.vo.PurchaseItemsVO;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -53,7 +56,7 @@ public class PurchasePlanController {
      */
     @ApiOperation("根据项目id及其详情项id修改其是否需要询价")
     @PostMapping("updateItemsInquiry")
-    public Message updateItemsInquiry(PurchaseItemsDTO purchaseItemsDTO){
+    public Message updateItemsInquiry(@RequestBody PurchaseItemsDTO purchaseItemsDTO){
         String result = purchasePlanServiceImpl.updateItemsInquiryService(purchaseItemsDTO);
         if (result.equals("success")){
             return MessageUtil.success("success");
@@ -127,7 +130,7 @@ public class PurchasePlanController {
      */
     @ApiOperation("EXCEL导入采购计划项")
     @PostMapping("excelPurchaseItems")
-    public Message excelPurchaseItems(List<PurchaseItems> purchaseItems){
+    public Message excelPurchaseItems(@RequestBody PurchaseItemsExcelImportDTO purchaseItems){
 
         purchasePlanServiceImpl.excelPurchaseItems(purchaseItems);
         return MessageUtil.success("success");
@@ -173,4 +176,16 @@ public class PurchasePlanController {
         return MessageUtil.success("success");
     }
 
+
+    /**
+     * Lzc
+     * 批量逻辑删除采购项
+     * @param purchaseItemIds 采购项 ID数组
+     */
+    @ApiOperation("批量逻辑删除采购项")
+    @PostMapping("logicDeletePurchaseItems")
+    public Message logicDeletePurchaseItems(Long[] purchaseItemIds) {
+        purchasePlanServiceImpl.logicDeletePurchaseItems(purchaseItemIds);
+        return MessageUtil.success("删除成功");
+    }
 }
