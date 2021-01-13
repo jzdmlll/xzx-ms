@@ -4,14 +4,12 @@ import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
 import com.xzx.xzxms.purchase.bean.PurchaseItems;
 import com.xzx.xzxms.purchase.bean.PurchaseSupply;
-import com.xzx.xzxms.purchase.dao.PurchaseItemsMapper;
+import com.xzx.xzxms.purchase.dto.PurchaseItemsDTO;
 import com.xzx.xzxms.purchase.dto.PurchaseItemsListDTO;
 import com.xzx.xzxms.purchase.service.PurchasePlanService;
-import com.xzx.xzxms.purchase.service.impl.PurchasePlanServiceImpl;
 import com.xzx.xzxms.purchase.vo.PurchaseItemsVO;
 import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,14 +48,13 @@ public class PurchasePlanController {
 
     /**
      * 周嘉玮
-     * @param projectId
-     * @param idList
+     * @param purchaseItemsDTO
      * @return
      */
     @ApiOperation("根据项目id及其详情项id修改其是否需要询价")
     @PostMapping("updateItemsInquiry")
-    public Message updateItemsInquiry(@Param("projectId") Long projectId, @Param("idList") List<Long> idList){
-        String result = purchasePlanServiceImpl.updateItemsInquiryService(projectId, idList);
+    public Message updateItemsInquiry(PurchaseItemsDTO purchaseItemsDTO){
+        String result = purchasePlanServiceImpl.updateItemsInquiryService(purchaseItemsDTO);
         if (result.equals("success")){
             return MessageUtil.success("success");
         }else {
@@ -73,7 +70,7 @@ public class PurchasePlanController {
      */
     @ApiOperation("当购买项需要拆分时")
     @PostMapping("insertItem")
-    public Message insertItem(PurchaseItems purchaseItems, @Param("itemNum") int itemNum){
+    public Message insertItem(PurchaseItems purchaseItems, @Param("itemNum") Double itemNum){
         String result = purchasePlanServiceImpl.insertItemService(purchaseItems, itemNum);
         if (result.equals("success")){
             return MessageUtil.success("success");
@@ -163,10 +160,17 @@ public class PurchasePlanController {
     }
 
 
+    /**
+     * sunny
+     * @param quoteIds
+     * @param operator
+     * @return
+     */
     @ApiOperation("询价结果发往采购需求")
     @PostMapping("inquiryResultSendPurchase")
     public Message inquiryResultSendPurchase(Long[] quoteIds, Long operator){
         purchasePlanServiceImpl.inquiryResultSendPurchase(quoteIds, operator);
         return MessageUtil.success("success");
     }
+
 }

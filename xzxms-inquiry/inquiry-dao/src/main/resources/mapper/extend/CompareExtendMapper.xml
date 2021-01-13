@@ -42,7 +42,7 @@
           q.is_active = 1 and i.is_active = 1
           and i.id = #{inquiryId,jdbcType=BIGINT}
       </where>
-        order by spc.quote_id
+        order by q.su_price
     </select>
 
 <!--    id i_id,i.name i_name,i,code i_code,i.real_brand i_real_brand,i.brand i_brand,i.params i_params,i.model i_model,i.unit i_unit,i.number i_number,i.total_price i_total_price-->

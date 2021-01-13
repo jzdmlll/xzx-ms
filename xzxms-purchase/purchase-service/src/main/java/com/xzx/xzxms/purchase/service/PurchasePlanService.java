@@ -80,4 +80,9 @@ public interface PurchasePlanService {
      */
     int checkSerialNumberIsExists(Long projectId, Integer serialNum);
 
+    /**
+     * 询价结果发往采购
+     * @param quoteIds
+     */
+    void inquiryResultSendPurchase(Long[] quoteIds, Long operator);
 }

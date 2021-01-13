@@ -35,17 +35,7 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
     @Resource
     private PurchaseContractExtendMapper purchaseContractExtendMapper;
     @Resource
-    private PurchaseItemsMapper purchaseItemsMapper;
-    @Resource
     private PurchaseSupplyMapper purchaseSupplyMapper;
-    @Resource
-    private PurchaseProjectMapper purchaseProjectMapper;
-    @Resource
-    private SysProDetailMapper sysProDetailMapper;
-    @Resource
-    private InquiryMapper inquiryMapper;
-    @Resource
-    private ProPurchaseExtendMapper proPurchaseExtendMapper;
 
 
     /**
@@ -110,6 +100,7 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
         List<PurchaseContract> purchaseContracts = purchaseContractExtendMapper.findAllLikeByContractNo(contractNo);
         return purchaseContracts;
     }
+
 
     @Override
     public void updateSupplyPrice(PurchaseSupply purchaseSupply) {
