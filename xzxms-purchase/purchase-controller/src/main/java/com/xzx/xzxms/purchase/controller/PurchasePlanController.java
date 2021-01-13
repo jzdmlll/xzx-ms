@@ -4,15 +4,17 @@ import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
 import com.xzx.xzxms.purchase.bean.PurchaseItems;
 import com.xzx.xzxms.purchase.bean.PurchaseSupply;
-import com.xzx.xzxms.purchase.dao.PurchaseItemsMapper;
 import com.xzx.xzxms.purchase.dto.PurchaseItemsDTO;
 import com.xzx.xzxms.purchase.dto.PurchaseItemsExcelImportDTO;
 import com.xzx.xzxms.purchase.dto.PurchaseItemsListDTO;
 import com.xzx.xzxms.purchase.service.PurchasePlanService;
-import com.xzx.xzxms.purchase.service.impl.PurchasePlanServiceImpl;
 import com.xzx.xzxms.purchase.vo.PurchaseItemsVO;
 import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,11 +33,8 @@ import java.util.List;
 @RequestMapping("/purchase/purchasePlan")
 public class PurchasePlanController {
 
-    @Autowired
-    PurchasePlanService purchasePlanService;
-
     @Resource
-    private PurchaseItemsMapper purchaseItemsMapper;
+    private PurchasePlanService purchasePlanServiceImpl;
 
     /**
      * 周嘉玮
@@ -46,7 +45,7 @@ public class PurchasePlanController {
     @GetMapping("findItemsByProjectId")
     public Message findItemsByProjectId(@Param("projectId") Long projectId){
         
-        List<PurchaseItemsVO> itemsList = purchasePlanService.findItemsByProjectIdService(projectId);
+        List<PurchaseItemsVO> itemsList = purchasePlanServiceImpl.findItemsByProjectIdService(projectId);
         return MessageUtil.success("success",itemsList);
     }
 
@@ -58,7 +57,7 @@ public class PurchasePlanController {
     @ApiOperation("根据项目id及其详情项id修改其是否需要询价")
     @PostMapping("updateItemsInquiry")
     public Message updateItemsInquiry(@RequestBody PurchaseItemsDTO purchaseItemsDTO){
-        String result = purchasePlanService.updateItemsInquiryService(purchaseItemsDTO);
+        String result = purchasePlanServiceImpl.updateItemsInquiryService(purchaseItemsDTO);
         if (result.equals("success")){
             return MessageUtil.success("success");
         }else {
@@ -74,8 +73,8 @@ public class PurchasePlanController {
      */
     @ApiOperation("当购买项需要拆分时")
     @PostMapping("insertItem")
-    public Message insertItem(PurchaseItems purchaseItems, @Param("itemNum") int itemNum){
-        String result = purchasePlanService.insertItemService(purchaseItems, itemNum);
+    public Message insertItem(PurchaseItems purchaseItems, @Param("itemNum") Double itemNum){
+        String result = purchasePlanServiceImpl.insertItemService(purchaseItems, itemNum);
         if (result.equals("success")){
             return MessageUtil.success("success");
         }else {
@@ -91,7 +90,7 @@ public class PurchasePlanController {
     @ApiOperation("根据购买项id查找其供应商")
     @GetMapping("findPurchasingSupplierByItemId")
     public Message findPurchasingSupplierByItemId(@Param("id") Long id){
-        List<PurchaseSupply> supplierInfo = purchasePlanService.findPurchasingSupplierByItemIdService(id);
+        List<PurchaseSupply> supplierInfo = purchasePlanServiceImpl.findPurchasingSupplierByItemIdService(id);
         return MessageUtil.success("success",supplierInfo);
     }
 
@@ -103,7 +102,7 @@ public class PurchasePlanController {
     @ApiOperation("添加询价信息")
     @PostMapping("insertInquiryInfo")
     public Message insertInquiryInfo(PurchaseItemsListDTO purchaseItemsList){
-        String result = purchasePlanService.insertSysProDetailService(purchaseItemsList);
+        String result = purchasePlanServiceImpl.insertSysProDetailService(purchaseItemsList);
         if (result.equals("success")){
             return MessageUtil.success("success");
         }else {
@@ -120,7 +119,7 @@ public class PurchasePlanController {
     @PostMapping("addPurchaseItem")
     public Message addPurchaseItem(PurchaseItems purchaseItems){
 
-        purchasePlanService.addPurchaseItem(purchaseItems);
+        purchasePlanServiceImpl.addPurchaseItem(purchaseItems);
         return MessageUtil.success("success");
     }
 
@@ -133,7 +132,7 @@ public class PurchasePlanController {
     @PostMapping("excelPurchaseItems")
     public Message excelPurchaseItems(@RequestBody PurchaseItemsExcelImportDTO purchaseItems){
 
-        purchasePlanService.excelPurchaseItems(purchaseItems);
+        purchasePlanServiceImpl.excelPurchaseItems(purchaseItems);
         return MessageUtil.success("success");
     }
 
@@ -146,7 +145,7 @@ public class PurchasePlanController {
     @PostMapping("updatePurchaseItem")
     public Message updatePurchaseItem(PurchaseItems purchaseItems){
 
-        purchasePlanService.updatePurchaseItem(purchaseItems);
+        purchasePlanServiceImpl.updatePurchaseItem(purchaseItems);
         return MessageUtil.success("success");
     }
 
@@ -159,9 +158,24 @@ public class PurchasePlanController {
     @ApiOperation("检查采购计划项序号是否存在(查询数量)")
     @GetMapping("checkSerialNumberIsExists")
     public Message checkSerialNumberIsExists(Long projectId, Integer serialNum) {
-        int num = purchasePlanService.checkSerialNumberIsExists(projectId, serialNum);
+        int num = purchasePlanServiceImpl.checkSerialNumberIsExists(projectId, serialNum);
         return MessageUtil.success("success", num);
     }
+
+
+    /**
+     * sunny
+     * @param quoteIds
+     * @param operator
+     * @return
+     */
+    @ApiOperation("询价结果发往采购需求")
+    @PostMapping("inquiryResultSendPurchase")
+    public Message inquiryResultSendPurchase(Long[] quoteIds, Long operator){
+        purchasePlanServiceImpl.inquiryResultSendPurchase(quoteIds, operator);
+        return MessageUtil.success("success");
+    }
+
 
     /**
      * Lzc
@@ -171,7 +185,7 @@ public class PurchasePlanController {
     @ApiOperation("批量逻辑删除采购项")
     @PostMapping("logicDeletePurchaseItems")
     public Message logicDeletePurchaseItems(Long[] purchaseItemIds) {
-        purchasePlanService.logicDeletePurchaseItems(purchaseItemIds);
+        purchasePlanServiceImpl.logicDeletePurchaseItems(purchaseItemIds);
         return MessageUtil.success("删除成功");
     }
 }

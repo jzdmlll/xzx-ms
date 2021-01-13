@@ -39,7 +39,7 @@ public interface PurchasePlanService {
      * @param purchaseItems
      * @param itemNum
      */
-    String insertItemService(PurchaseItems purchaseItems, int itemNum);
+    String insertItemService(PurchaseItems purchaseItems, Double itemNum);
 
     /**
      * 根据购买项id查找其供应商
@@ -87,4 +87,10 @@ public interface PurchasePlanService {
      * @param purchaseItemIds 采购项 ID数组
      */
     void logicDeletePurchaseItems(Long[] purchaseItemIds);
+
+    /**
+     * 询价结果发往采购
+     * @param quoteIds
+     */
+    void inquiryResultSendPurchase(Long[] quoteIds, Long operator);
 }

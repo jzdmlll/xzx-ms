@@ -2,7 +2,6 @@ package com.xzx.xzxms.purchase.service;
 
 import com.xzx.xzxms.purchase.bean.PurchaseContract;
 import com.xzx.xzxms.purchase.bean.PurchaseSupply;
-import com.xzx.xzxms.purchase.vm.QuotePurchaseVM;
 
 import java.util.List;
 
@@ -34,14 +33,9 @@ public interface IPurchaseContractService {
     List<PurchaseContract> findAllLikeByContractNo(String contractNo);
 
     /**
-     * 询价结果发往采购
-     * @param quoteIds
-     */
-    void inquiryResultSendPurchase(Long[] quoteIds, Long operator);
-
-    /**
      * 修改供货价
      * @param purchaseSupply
      */
     void updateSupplyPrice(PurchaseSupply purchaseSupply);
+
 }

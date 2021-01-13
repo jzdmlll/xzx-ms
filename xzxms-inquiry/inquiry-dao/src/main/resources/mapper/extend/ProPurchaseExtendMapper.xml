@@ -2,9 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xzx.xzxms.inquiry.dao.extend.ProPurchaseExtendMapper">
     <select id="findProPurchase" resultMap="InquiryAndQuoteMap">
-        SELECT pro.name,i.sort as i_sort,
+        SELECT pro.name, pro.id, pro.purchase_pro_id,
+        i.sort as i_sort,
         i.name as i_name,i.unit as i_unit,i.number as i_number,i.finally_price as i_finally_price,i.price as i_price,i.params as i_params,i.id as i_id,
-        i.correct_price as i_correct_price,
+        i.correct_price as i_correct_price,i.item_id as i_item_id,
         q.supplier as q_supplier,q.id as q_id,q.su_brand as q_su_brand,q.su_params as q_su_params,q.su_price as q_su_price,q.su_total_price as q_su_total_price,
         q.su_delivery as q_su_delivery,q.warranty as q_warranty,q.su_remark q_su_remark
         from sys_pro_detail pro
@@ -36,9 +37,9 @@
         left join inquiry i on q.inquiry_id = i.id
         left join sys_pro_detail pro on i.pro_detail_id = pro.id
         <where>
-            pro.is_active = 1 AND i.is_active = 1 AND q.is_active = 1 AND c.finally_audit = 1
+            pro.is_active = 1 AND i.is_active = 1 AND q.is_active = 1
             <if test="quoteId != null and quoteId != -1">
-                and q.id = #{quoteId}
+                AND q.id = #{quoteId}
             </if>
         </where>
     </select>

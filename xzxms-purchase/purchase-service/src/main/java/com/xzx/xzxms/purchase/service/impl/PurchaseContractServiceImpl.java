@@ -35,17 +35,7 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
     @Resource
     private PurchaseContractExtendMapper purchaseContractExtendMapper;
     @Resource
-    private PurchaseItemsMapper purchaseItemsMapper;
-    @Resource
     private PurchaseSupplyMapper purchaseSupplyMapper;
-    @Resource
-    private PurchaseProjectMapper purchaseProjectMapper;
-    @Resource
-    private SysProDetailMapper sysProDetailMapper;
-    @Resource
-    private InquiryMapper inquiryMapper;
-    @Resource
-    private ProPurchaseExtendMapper proPurchaseExtendMapper;
 
 
     /**
@@ -111,89 +101,6 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
         return purchaseContracts;
     }
 
-    @Transactional
-    @Override
-    public void inquiryResultSendPurchase(Long[] quoteIds, Long operator) {
-
-        for(long id : quoteIds){
-            List<ProPurchase> proPurchases = proPurchaseExtendMapper.findInquiryResult(id);
-            if (proPurchases.size() > 0){
-                ProPurchase proPurchase = proPurchases.get(0);
-                if (proPurchase.getInquiry().getItemId() == null && proPurchase.getPurchaseProId() == null){
-
-                    //先生成采购项目
-                    PurchaseProject purchaseProject = new PurchaseProject();
-                    long purchaseProjectId = IDUtils.getId();
-                    purchaseProject.setId(purchaseProjectId);
-                    purchaseProject.setProjectName(proPurchase.getName());
-                    purchaseProject.setIsActive(CommonConstant.EFFECTIVE);
-                    purchaseProject.setOperator(operator+"");
-                    purchaseProject.setTime(new Date().getTime());
-                    purchaseProject.setInquiryProId(proPurchase.getId());
-                    purchaseProject.setPurchaseProNo(proPurchase.getProNo());
-                    purchaseProjectMapper.insert(purchaseProject);
-
-                    //再生成采购需求项
-                    PurchaseItems purchaseItems = new PurchaseItems();
-                    long purchaseItemsId = IDUtils.getId();
-                    purchaseItems.setId(purchaseItemsId);
-                    purchaseItems.setProjectId(purchaseProjectId);
-                    purchaseItems.setSerialNumber(proPurchase.getInquiry().getSort());
-                    purchaseItems.setItem(proPurchase.getInquiry().getName());
-                    purchaseItems.setBrand(proPurchase.getInquiry().getBrand());
-                    purchaseItems.setParams(proPurchase.getInquiry().getParams());
-                    purchaseItems.setModel(proPurchase.getInquiry().getModel());
-                    purchaseItems.setUnit(proPurchase.getInquiry().getUnit());
-                    purchaseItems.setSalePrice(proPurchase.getInquiry().getCorrectPrice());
-                    purchaseItems.setRequiredDelivery(proPurchase.getInquiry().getRequiredDelivery());
-                    purchaseItems.setNumber(proPurchase.getInquiry().getNumber());
-                    purchaseItems.setRemark(proPurchase.getInquiry().getRemark());
-                    purchaseItems.setIsInquiry(CommonConstant.IS_INQUIRY);
-                    purchaseItems.setIsActive(CommonConstant.EFFECTIVE);
-                    purchaseItems.setOperator(operator+"");
-                    purchaseItems.setTime(new Date().getTime());
-                    purchaseItemsMapper.insert(purchaseItems);
-
-                    //最后生成供货表
-                    PurchaseSupply purchaseSupply = new PurchaseSupply();
-                    long purchaseSupplyId = IDUtils.getId();
-                    purchaseSupply.setId(purchaseSupplyId);
-                    purchaseSupply.setSupplierId(proPurchase.getQuote().getSupplierId());
-                    purchaseSupply.setSupplier(proPurchase.getQuote().getSupplier());
-                    purchaseSupply.setItemId(purchaseItemsId);
-                    purchaseSupply.setModel(proPurchase.getQuote().getSuModel());
-                    purchaseSupply.setBrand(proPurchase.getQuote().getSuBrand());
-                    purchaseSupply.setParams(proPurchase.getQuote().getSuParams());
-                    purchaseSupply.setPrice(proPurchase.getQuote().getSuPrice());
-                    purchaseSupply.setDelivery(proPurchase.getQuote().getSuDelivery());
-                    purchaseSupply.setRemark(proPurchase.getQuote().getSuRemark());
-                    purchaseSupply.setNumber(proPurchase.getInquiry().getNumber());
-                    purchaseSupply.setWarranty(proPurchase.getQuote().getWarranty());
-                    purchaseSupply.setIsActive(CommonConstant.EFFECTIVE);
-                    purchaseSupply.setOperator(operator+"");
-                    purchaseSupply.setTime(new Date().getTime());
-                    purchaseSupply.setImage(proPurchase.getQuote().getImage());
-                    purchaseSupplyMapper.insert(purchaseSupply);
-
-                    //修改询价表中采购项ID
-                    Inquiry inquiry = proPurchase.getInquiry();
-                    inquiry.setItemId(purchaseItemsId);
-                    inquiryMapper.updateByPrimaryKeySelective(inquiry);
-
-                    //修改询价项目表中的采购项目ID
-                    SysProDetailWithBLOBs sysProDetail = new SysProDetailWithBLOBs();
-                    sysProDetail.setId(proPurchase.getId());
-                    sysProDetail.setPurchaseProId(purchaseProjectId);
-                    sysProDetailMapper.updateByPrimaryKeySelective(sysProDetail);
-
-                }else {
-                    throw new CustomerException("提交异常, 此询价结果已发往采购!");
-                }
-            }else {
-                throw new CustomerException("提交异常，存在询价结果供应商报价无效!");
-            }
-        }
-    }
 
     @Override
     public void updateSupplyPrice(PurchaseSupply purchaseSupply) {

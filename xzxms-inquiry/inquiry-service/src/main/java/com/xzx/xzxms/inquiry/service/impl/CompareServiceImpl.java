@@ -194,6 +194,7 @@ public class CompareServiceImpl implements ICompareService {
         List<CompareQuoteListVM> list = compareExtendMapper.findQuoteListByInquiry(inquiryIds);
 
         for (CompareQuoteListVM vm : list){
+            vm.setMinPrice(vm.getQuotes().get(0).getSuPrice());
             for (QuoteRespVM quoteRespVM : vm.getQuotes()){
                 if (quoteRespVM.getCompareStatus() == null){
                     continue;

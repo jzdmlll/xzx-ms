@@ -47,13 +47,6 @@ public class PurchaseContractController {
         return MessageUtil.success("success",purchaseContracts);
     }
 
-    @ApiOperation("询价结果发往采购需求")
-    @PostMapping("inquiryResultSendPurchase")
-    public Message inquiryResultSendPurchase(Long[] quoteIds, Long operator){
-        iPurchaseContractServiceImpl.inquiryResultSendPurchase(quoteIds, operator);
-        return MessageUtil.success("success");
-    }
-
     @ApiOperation("修改供货价")
     @PostMapping("updateSupplyPrice")
     public Message updateSupplyPrice(@RequestBody PurchaseSupply purchaseSupply){

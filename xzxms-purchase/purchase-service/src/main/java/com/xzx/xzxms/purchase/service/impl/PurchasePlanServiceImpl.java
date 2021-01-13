@@ -4,12 +4,18 @@ import com.xzx.xzxms.commons.constant.CommonConstant;
 import com.xzx.xzxms.commons.utils.CustomerException;
 import com.xzx.xzxms.commons.utils.IDUtils;
 import com.xzx.xzxms.inquiry.bean.Inquiry;
+import com.xzx.xzxms.inquiry.bean.SysProDetailWithBLOBs;
 import com.xzx.xzxms.inquiry.dao.InquiryMapper;
 import com.xzx.xzxms.inquiry.dao.SysProDetailMapper;
+import com.xzx.xzxms.inquiry.dao.extend.ProPurchaseExtendMapper;
+import com.xzx.xzxms.inquiry.vm.ProPurchase;
 import com.xzx.xzxms.purchase.bean.PurchaseItems;
 import com.xzx.xzxms.purchase.bean.PurchaseItemsExample;
+import com.xzx.xzxms.purchase.bean.PurchaseProject;
 import com.xzx.xzxms.purchase.bean.PurchaseSupply;
 import com.xzx.xzxms.purchase.dao.PurchaseItemsMapper;
+import com.xzx.xzxms.purchase.dao.PurchaseProjectMapper;
+import com.xzx.xzxms.purchase.dao.PurchaseSupplyMapper;
 import com.xzx.xzxms.purchase.dao.extend.PurchasePlanExtendMapper;
 import com.xzx.xzxms.purchase.dto.PurchaseItemsDTO;
 import com.xzx.xzxms.purchase.dto.PurchaseItemsExcelImportDTO;
@@ -49,6 +55,15 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
 
     @Resource
     private InquiryMapper inquiryMapper;
+
+    @Resource
+    private ProPurchaseExtendMapper proPurchaseExtendMapper;
+
+    @Resource
+    private PurchaseProjectMapper purchaseProjectMapper;
+
+    @Resource
+    private PurchaseSupplyMapper purchaseSupplyMapper;
 
     /**
      * 周嘉玮
@@ -90,7 +105,7 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
      */
     @Transactional
     @Override
-    synchronized public String insertItemService(PurchaseItems purchaseItems, int itemNum) {
+    synchronized public String insertItemService(PurchaseItems purchaseItems, Double itemNum) {
         
         // 根据项目id获取所有购买项的序号
         List<Integer> serialNumbers = purchasePlanExtendMapper.findSerialNumbersByProjectId(purchaseItems.getProjectId());
@@ -121,8 +136,8 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
         // 插入新数据
         purchasePlanExtendMapper.insertItem(purchaseItems);
 
-        // 修改原数据
-        purchasePlanExtendMapper.updateItemNumber(itemNum, id);
+        // 修改原数据，修改其数量、操作员、操作时间
+        purchasePlanExtendMapper.updateItemNumber(itemNum, id, purchaseItems.getOperator(), new Date().getTime());
 
         return "success";
     }
@@ -298,6 +313,98 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
      */
     public int checkSerialNumberIsExists(Long projectId, Integer serialNum){
         return purchasePlanExtendMapper.findSerialNumber(projectId, serialNum);
+    }
+
+    @Transactional
+    @Override
+    public void inquiryResultSendPurchase(Long[] quoteIds, Long operator) {
+
+        Long purchaseProjectId = 0L;
+
+        for(long id : quoteIds){
+            List<ProPurchase> proPurchases = proPurchaseExtendMapper.findInquiryResult(id);
+
+            if (proPurchases.size() > 0){
+
+                ProPurchase proPurchase = proPurchases.get(0);
+
+                if (proPurchase.getInquiry().getItemId() == null && proPurchase.getPurchaseProId() == null){
+
+                    if (purchaseProjectId == 0){
+
+                        //先生成采购项目
+                        PurchaseProject purchaseProject = new PurchaseProject();
+                        purchaseProjectId = IDUtils.getId();
+                        purchaseProject.setId(purchaseProjectId);
+                        purchaseProject.setProjectName(proPurchase.getName());
+                        purchaseProject.setIsActive(CommonConstant.EFFECTIVE);
+                        purchaseProject.setOperator(operator + "");
+                        purchaseProject.setTime(new Date().getTime());
+                        purchaseProject.setInquiryProId(proPurchase.getId());
+                        purchaseProject.setPurchaseProNo(proPurchase.getProNo());
+                        purchaseProjectMapper.insert(purchaseProject);
+
+                        //修改询价项目表中的采购项目ID
+                        SysProDetailWithBLOBs sysProDetail = new SysProDetailWithBLOBs();
+                        sysProDetail.setId(proPurchase.getId());
+                        sysProDetail.setPurchaseProId(purchaseProjectId);
+                        sysProDetailMapper.updateByPrimaryKeySelective(sysProDetail);
+                    }
+
+                    //再生成采购需求项
+                    PurchaseItems purchaseItems = new PurchaseItems();
+                    long purchaseItemsId = IDUtils.getId();
+                    purchaseItems.setId(purchaseItemsId);
+                    purchaseItems.setProjectId(purchaseProjectId);
+                    purchaseItems.setSerialNumber(proPurchase.getInquiry().getSort());
+                    purchaseItems.setItem(proPurchase.getInquiry().getName());
+                    purchaseItems.setBrand(proPurchase.getInquiry().getBrand());
+                    purchaseItems.setParams(proPurchase.getInquiry().getParams());
+                    purchaseItems.setModel(proPurchase.getInquiry().getModel());
+                    purchaseItems.setUnit(proPurchase.getInquiry().getUnit());
+                    purchaseItems.setSalePrice(proPurchase.getInquiry().getCorrectPrice());
+                    purchaseItems.setRequiredDelivery(proPurchase.getInquiry().getRequiredDelivery());
+                    purchaseItems.setNumber(proPurchase.getInquiry().getNumber());
+                    purchaseItems.setRemark(proPurchase.getInquiry().getRemark());
+                    purchaseItems.setIsInquiry(CommonConstant.IS_INQUIRY);
+                    purchaseItems.setIsActive(CommonConstant.EFFECTIVE);
+                    purchaseItems.setOperator(operator+"");
+                    purchaseItems.setTime(new Date().getTime());
+                    purchaseItemsMapper.insert(purchaseItems);
+
+                    //最后生成供货表
+                    PurchaseSupply purchaseSupply = new PurchaseSupply();
+                    long purchaseSupplyId = IDUtils.getId();
+                    purchaseSupply.setId(purchaseSupplyId);
+                    purchaseSupply.setSupplierId(proPurchase.getQuote().getSupplierId());
+                    purchaseSupply.setSupplier(proPurchase.getQuote().getSupplier());
+                    purchaseSupply.setItemId(purchaseItemsId);
+                    purchaseSupply.setModel(proPurchase.getQuote().getSuModel());
+                    purchaseSupply.setBrand(proPurchase.getQuote().getSuBrand());
+                    purchaseSupply.setParams(proPurchase.getQuote().getSuParams());
+                    purchaseSupply.setPrice(proPurchase.getQuote().getSuPrice());
+                    purchaseSupply.setDelivery(proPurchase.getQuote().getSuDelivery());
+                    purchaseSupply.setRemark(proPurchase.getQuote().getSuRemark());
+                    purchaseSupply.setNumber(proPurchase.getInquiry().getNumber());
+                    purchaseSupply.setWarranty(proPurchase.getQuote().getWarranty());
+                    purchaseSupply.setIsActive(CommonConstant.EFFECTIVE);
+                    purchaseSupply.setOperator(operator+"");
+                    purchaseSupply.setTime(new Date().getTime());
+                    purchaseSupply.setImage(proPurchase.getQuote().getImage());
+                    purchaseSupplyMapper.insert(purchaseSupply);
+
+                    //修改询价表中采购项ID
+                    Inquiry inquiry = proPurchase.getInquiry();
+                    inquiry.setItemId(purchaseItemsId);
+                    inquiryMapper.updateByPrimaryKeySelective(inquiry);
+
+                }else {
+                    throw new CustomerException("提交异常, 此询价结果已发往采购!");
+                }
+            }else {
+                throw new CustomerException("提交异常，存在询价结果供应商报价无效!");
+            }
+        }
     }
 
     @Transactional
