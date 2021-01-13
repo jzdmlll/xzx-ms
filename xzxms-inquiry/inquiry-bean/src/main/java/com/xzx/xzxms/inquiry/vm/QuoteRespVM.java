@@ -14,6 +14,15 @@ public class QuoteRespVM extends Quote {
     private String compareRemark;
     private String finallyRemark;
     private String name;
+    private double minPrice;
+
+    public double getMinPrice() {
+        return minPrice;
+    }
+
+    public void setMinPrice(double minPrice) {
+        this.minPrice = minPrice;
+    }
 
     public Long getCompareId() {
         return compareId;
