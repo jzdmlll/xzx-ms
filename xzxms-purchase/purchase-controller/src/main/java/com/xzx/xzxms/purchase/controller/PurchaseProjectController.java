@@ -19,6 +19,11 @@ public class PurchaseProjectController {
     @Resource
     private IPurchaseProjectService iPurchaseProjectServiceImpl;
 
+    /**
+     * tjz
+     * @param name
+     * @return
+     */
     @ApiOperation(value = "模糊查询")
     @GetMapping(value = "findAllLike")
     public Message findAllLike(String name){
@@ -26,6 +31,11 @@ public class PurchaseProjectController {
         return MessageUtil.success("success", purchaseProjects);
     }
 
+    /**
+     * tjz
+     * @param id
+     * @return
+     */
     @ApiOperation(value = "通过项目id进行查询")
     @GetMapping(value ="findById")
     public Message findById(Long id){
@@ -33,6 +43,12 @@ public class PurchaseProjectController {
         return MessageUtil.success("success",list);
     }
 
+    /**
+     * tjz
+     * @param id
+     * @param user
+     * @return
+     */
     @ApiOperation(value = "通过id进行假删")
     @PostMapping(value = "deleteById")
     public Message deleteById(Long id, Long user){
@@ -40,6 +56,11 @@ public class PurchaseProjectController {
         return MessageUtil.success("success");
     }
 
+    /**
+     * tjz
+     * @param purchaseProject
+     * @return
+     */
     @ApiOperation(value = "新增或者修改")
     @PostMapping(value = "saveOrUpdate")
     public Message saveOrUpdate(PurchaseProject purchaseProject){
