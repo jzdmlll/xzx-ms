@@ -319,7 +319,7 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
     @Override
     public void inquiryResultSendPurchase(Long[] quoteIds, Long operator) {
 
-        Long purchaseProjectId = 0L;
+        Long purchaseProjectId;
 
         for(long id : quoteIds){
             List<ProPurchase> proPurchases = proPurchaseExtendMapper.findInquiryResult(id);
@@ -328,9 +328,11 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
 
                 ProPurchase proPurchase = proPurchases.get(0);
 
-                if (proPurchase.getInquiry().getItemId() == null && proPurchase.getPurchaseProId() == null){
+                if (proPurchase.getInquiry().getItemId() == null){
 
-                    if (purchaseProjectId == 0){
+                    purchaseProjectId = proPurchase.getPurchaseProId();
+
+                    if (purchaseProjectId == null){
 
                         //先生成采购项目
                         PurchaseProject purchaseProject = new PurchaseProject();
