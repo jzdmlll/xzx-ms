@@ -12,6 +12,7 @@ import com.xzx.xzxms.purchase.bean.PurchaseSupply;
 import com.xzx.xzxms.purchase.dao.PurchaseItemsMapper;
 import com.xzx.xzxms.purchase.dao.extend.PurchasePlanExtendMapper;
 import com.xzx.xzxms.purchase.dto.PurchaseItemsDTO;
+import com.xzx.xzxms.purchase.dto.PurchaseItemsExcelImportDTO;
 import com.xzx.xzxms.purchase.dto.PurchaseItemsListDTO;
 import com.xzx.xzxms.purchase.service.PurchasePlanService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -271,12 +272,12 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
 
     /**
      * 孙乃裕
-     * @param list
+     * @param purchaseItemsDTO
      */
     @Transactional
     @Override
-    public void excelPurchaseItems(List<PurchaseItems> list) {
-
+    public void excelPurchaseItems(PurchaseItemsExcelImportDTO purchaseItemsDTO) {
+        List<PurchaseItems> list = purchaseItemsDTO.getPurchaseItems();
         for(PurchaseItems purchaseItems : list){
             int num = checkSerialNumberIsExists(purchaseItems.getProjectId(), purchaseItems.getSerialNumber());
             if (num > 0){
@@ -285,6 +286,7 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
             purchaseItems.setId(IDUtils.getId());
             purchaseItems.setTime(new Date().getTime());
             purchaseItems.setIsActive(CommonConstant.EFFECTIVE);
+            purchaseItems.setIsInquiry(CommonConstant.IS_NOT_INQUIRY);
             purchaseItemsMapper.insert(purchaseItems);
         }
     }
@@ -296,5 +298,16 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
      */
     public int checkSerialNumberIsExists(Long projectId, Integer serialNum){
         return purchasePlanExtendMapper.findSerialNumber(projectId, serialNum);
+    }
+
+    @Transactional
+    @Override
+    public void logicDeletePurchaseItems(Long[] purchaseItemIds) {
+        PurchaseItems purchaseItems = new PurchaseItems();
+        for (Long purchaseItemId : purchaseItemIds) {
+            purchaseItems.setId(purchaseItemId);
+            purchaseItems.setIsActive(CommonConstant.INVALID);
+            purchaseItemsMapper.updateByPrimaryKeySelective(purchaseItems);
+        }
     }
 }

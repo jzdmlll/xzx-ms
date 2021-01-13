@@ -3,6 +3,7 @@ package com.xzx.xzxms.purchase.service;
 import com.xzx.xzxms.purchase.bean.PurchaseItems;
 import com.xzx.xzxms.purchase.bean.PurchaseSupply;
 import com.xzx.xzxms.purchase.dto.PurchaseItemsDTO;
+import com.xzx.xzxms.purchase.dto.PurchaseItemsExcelImportDTO;
 import com.xzx.xzxms.purchase.dto.PurchaseItemsListDTO;
 import com.xzx.xzxms.purchase.vo.PurchaseItemsVO;
 import org.springframework.stereotype.Repository;
@@ -68,15 +69,22 @@ public interface PurchasePlanService {
 
     /**
      * Execl导入采购计划
-     * @param list
+     * @param purchaseItemsDTO
      */
-    void excelPurchaseItems(List<PurchaseItems> list);
+    void excelPurchaseItems(PurchaseItemsExcelImportDTO purchaseItemsDTO);
 
     /**
-     *
+     * 检查采购计划项序号是否存在(查询数量)
      * @param projectId
      * @param serialNum
      * @return
      */
     int checkSerialNumberIsExists(Long projectId, Integer serialNum);
+
+    /**
+     * Lzc
+     * 批量逻辑删除采购项
+     * @param purchaseItemIds 采购项 ID数组
+     */
+    void logicDeletePurchaseItems(Long[] purchaseItemIds);
 }
