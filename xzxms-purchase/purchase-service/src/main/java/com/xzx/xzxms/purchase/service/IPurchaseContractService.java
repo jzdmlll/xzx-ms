@@ -17,7 +17,7 @@ public interface IPurchaseContractService {
      * 逻辑假删
      * @param id
      */
-    void deleteById(long id);
+    void deleteById(Long id);
 
     /**
      * 新增或者修改合同

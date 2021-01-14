@@ -1,13 +1,17 @@
 package com.xzx.xzxms.purchase.service.impl;
 
+import com.xzx.xzxms.commons.constant.CommonConstant;
 import com.xzx.xzxms.commons.utils.CustomerException;
 import com.xzx.xzxms.commons.utils.IDUtils;
 import com.xzx.xzxms.purchase.bean.*;
 import com.xzx.xzxms.purchase.dao.PurchaseContractMapper;
+import com.xzx.xzxms.purchase.dao.PurchaseItemsMapper;
 import com.xzx.xzxms.purchase.dao.PurchaseSupplyMapper;
 import com.xzx.xzxms.purchase.dao.extend.PurchaseContractExtendMapper;
+import com.xzx.xzxms.purchase.dto.PurchaseItemsExcelImportDTO;
 import com.xzx.xzxms.purchase.service.IPurchaseContractService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -22,6 +26,8 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
     private PurchaseContractExtendMapper purchaseContractExtendMapper;
     @Resource
     private PurchaseSupplyMapper purchaseSupplyMapper;
+    @Resource
+    private PurchaseItemsMapper purchaseItemsMapper;
 
 
     /**
@@ -45,15 +51,27 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
      * 逻辑假删
      * @param id
      */
+    @Transactional
     @Override
-    public void deleteById(long id) {
-        long time = new Date().getTime();
+    public void deleteById(Long id) {
         PurchaseContract purchaseContract = purchaseContractMapper.selectByPrimaryKey(id);
-        if(purchaseContract==null || purchaseContract.getIsActive().equals(0)){
+        if(purchaseContract == null || purchaseContract.getIsActive().equals(CommonConstant.INVALID)){
             throw new CustomerException("该数据已不存在");
         }else {
-            purchaseContract.setIsActive(0);
-            purchaseContract.setTime(time);
+            long time = new Date().getTime();
+
+            PurchaseItemsExample example = new PurchaseItemsExample();
+            example.createCriteria().andContractIdEqualTo(id).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
+            List<PurchaseItems> list = purchaseItemsMapper.selectByExample(example);
+            if (list.size() > 0){
+                for(PurchaseItems p : list){
+                    p.setContractId(null);
+                    purchaseItemsMapper.updateByPrimaryKey(p);
+                }
+            }
+
+            purchaseContract.setIsActive(CommonConstant.INVALID);
+            purchaseContract.setUpdateTime(time);
             purchaseContractMapper.updateByPrimaryKeySelective(purchaseContract);
         }
     }

@@ -17,6 +17,7 @@
                 and p.id = #{projectId,jdbcType = BIGINT}
             </if>
         </where>
+        order by time
     </select>
     <resultMap id="GenerateExtendMap1" type="com.xzx.xzxms.purchase.bean.vm.PurchaseItemsAndSupplyVM" extends="com.xzx.xzxms.purchase.dao.PurchaseItemsMapper.BaseResultMap">
         <collection property="purchaseSupply" ofType="com.xzx.xzxms.purchase.bean.PurchaseSupply" autoMapping="true" columnPrefix="s_"></collection>
