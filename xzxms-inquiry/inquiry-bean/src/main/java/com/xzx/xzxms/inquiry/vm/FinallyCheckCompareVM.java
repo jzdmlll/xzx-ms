@@ -5,7 +5,6 @@ import com.xzx.xzxms.inquiry.bean.SysProCheck;
 
 public class FinallyCheckCompareVM extends QuoteRespVM {
     //最低价(1代表最低价)
-    private int minPrice;
     private SysProCheck finalCheck;
     private double price;
     private double totalPrice;
@@ -33,14 +32,6 @@ public class FinallyCheckCompareVM extends QuoteRespVM {
 
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
-    }
-
-    public int getMinPrice() {
-        return minPrice;
-    }
-
-    public void setMinPrice(int minPrice) {
-        this.minPrice = minPrice;
     }
 
     public int getSort() {
