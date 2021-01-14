@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xzx.xzxms.inquiry.dao.extend.ProPurchaseExtendMapper">
     <select id="findProPurchase" resultMap="InquiryAndQuoteMap">
-        SELECT pro.name, pro.id, pro.purchase_pro_id,
+        SELECT pro.name,
         i.sort as i_sort,
         i.name as i_name,i.unit as i_unit,i.number as i_number,i.finally_price as i_finally_price,i.price as i_price,i.params as i_params,i.id as i_id,
         i.correct_price as i_correct_price,i.item_id as i_item_id,
@@ -22,13 +22,13 @@
     </select>
 
     <resultMap id="InquiryAndQuoteMap" type="com.xzx.xzxms.inquiry.vm.ProPurchase" extends="com.xzx.xzxms.inquiry.dao.SysProDetailMapper.BaseResultMap">
-        <collection property="inquiry" ofType="com.xzx.xzxms.inquiry.bean.Inquiry" autoMapping="true" columnPrefix="i_"></collection>
-        <collection property="quote" ofType="com.xzx.xzxms.inquiry.bean.Quote" autoMapping="true" columnPrefix="q_"></collection>
+        <association property="inquiry" javaType="com.xzx.xzxms.inquiry.bean.Inquiry" autoMapping="true" columnPrefix="i_"></association>
+        <association property="quote" javaType="com.xzx.xzxms.inquiry.bean.Quote" autoMapping="true" columnPrefix="q_"></association>
     </resultMap>
 
 
     <select id="findInquiryResult" resultMap="InquiryAndQuoteMap">
-        SELECT pro.name,pro.id as pro_id,pro.purchase_pro_id as pro_purchase_pro_id,
+        SELECT pro.name,pro.id as id,pro.purchase_pro_id as purchase_pro_id,
         i.name as i_name,i.unit as i_unit,i.number as i_number,i.finally_price as i_finally_price,i.price as i_price,i.params as i_params,i.id as i_id,
         i.correct_price as i_correct_price,i.sort as i_sort,
         q.supplier as q_supplier,q.id as q_id,q.su_brand as q_su_brand,q.su_params as q_su_params,q.su_price as q_su_price,q.su_total_price as q_su_total_price,

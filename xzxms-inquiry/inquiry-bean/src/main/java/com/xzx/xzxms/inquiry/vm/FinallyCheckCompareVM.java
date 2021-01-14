@@ -4,7 +4,7 @@ package com.xzx.xzxms.inquiry.vm;
 import com.xzx.xzxms.inquiry.bean.SysProCheck;
 
 public class FinallyCheckCompareVM extends QuoteRespVM {
-    //最低价(1代表最低价)
+
     private SysProCheck finalCheck;
     private double price;
     private double totalPrice;
