@@ -38,25 +38,25 @@ public interface PurchaseContractManagementExtendMapper {
      */
     List<PurchaseContractVO> findContractByProjectId(@Param("projectId") Long projectId);
 
-    /**
-     * 周嘉玮
-     * 根据合同id修改合同审核级别
-     * @param firstAudit
-     * @param secondAudit
-     * @param threeAudit
-     * @param id
-     */
-    void updateContractAuditById(@Param("firstAudit") Integer firstAudit,
-                                 @Param("secondAudit") Integer secondAudit,
-                                 @Param("threeAudit") Integer threeAudit,
-                                 @Param("id") Long id);
-
 //    /**
 //     * 周嘉玮
 //     * 根据合同id修改合同审核级别
-//     * @param purchaseContractDTO
+//     * @param firstAudit
+//     * @param secondAudit
+//     * @param threeAudit
+//     * @param id
 //     */
-//    void updateContractAuditById(PurchaseContractDTO purchaseContractDTO);
+//    void updateContractAuditById(@Param("firstAudit") Integer firstAudit,
+//                                 @Param("secondAudit") Integer secondAudit,
+//                                 @Param("threeAudit") Integer threeAudit,
+//                                 @Param("id") Long id);
+
+    /**
+     * 周嘉玮
+     * 根据合同id修改合同审核级别
+     * @param purchaseContractDTO
+     */
+    void updateContractAuditById(PurchaseContractDTO purchaseContractDTO);
 
     /**
      * 周嘉玮

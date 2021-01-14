@@ -2,9 +2,10 @@ package com.xzx.xzxms.purchase.controller;
 
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
+import com.xzx.xzxms.purchase.bean.PurchaseContract;
 import com.xzx.xzxms.purchase.dao.extend.PurchaseContractManagementExtendMapper;
+import com.xzx.xzxms.purchase.dto.PurchaseContractDTO;
 import com.xzx.xzxms.purchase.service.PurchaseContractManagementService;
-import com.xzx.xzxms.purchase.service.impl.PurchaseContractManagementServiceImpl;
 import com.xzx.xzxms.purchase.vo.PurchaseContractGenerateVO;
 import com.xzx.xzxms.purchase.vo.PurchaseContractVO;
 import com.xzx.xzxms.purchase.vo.PurchaseProjectVO;
@@ -21,7 +22,7 @@ import java.util.List;
 
 /**
  * @author：ZJW
- * @title：
+ * @title：合同管理
  * @date：2020/12/15 19:04
  * @修改人：
  * @修改时间：2020/12/15 19:04
@@ -63,16 +64,13 @@ public class PurchaseContractManagementController {
 
     /**
      * 周嘉玮
-     * @param firstAudit
-     * @param secondAudit
-     * @param threeAudit
-     * @param id
+     * @param purchaseContract
      * @return
      */
-    @ApiOperation("根据合同id修改合同审核级别")
+    @ApiOperation("根据合同id修改合同审核级别(送审)")
     @PostMapping("updateContractAuditById")
-    public Message updateContractAuditById(@Param("firstAudit") Integer firstAudit, @Param("secondAudit") Integer secondAudit, @Param("threeAudit") Integer threeAudit, @Param("id") Long id){
-        String result = purchaseContractManagementService.updateContractAuditByIdService(firstAudit, secondAudit, threeAudit, id);
+    public Message updateContractAuditById(PurchaseContract purchaseContract){
+        String result = purchaseContractManagementService.updateContractAuditByIdService(purchaseContract);
         if (result.equals("success")){
             return MessageUtil.success("success");
         }else {

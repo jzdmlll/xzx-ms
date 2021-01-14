@@ -1,27 +1,13 @@
 package com.xzx.xzxms.purchase.service.impl;
 
-import ch.qos.logback.core.encoder.EchoEncoder;
-import com.xzx.xzxms.commons.constant.CommonConstant;
 import com.xzx.xzxms.commons.utils.CustomerException;
 import com.xzx.xzxms.commons.utils.IDUtils;
-import com.xzx.xzxms.inquiry.bean.Inquiry;
-import com.xzx.xzxms.inquiry.bean.Quote;
-import com.xzx.xzxms.inquiry.bean.SysProDetail;
-import com.xzx.xzxms.inquiry.bean.SysProDetailWithBLOBs;
-import com.xzx.xzxms.inquiry.dao.InquiryMapper;
-import com.xzx.xzxms.inquiry.dao.QuoteMapper;
-import com.xzx.xzxms.inquiry.dao.SysProDetailMapper;
-import com.xzx.xzxms.inquiry.dao.extend.ProPurchaseExtendMapper;
-import com.xzx.xzxms.inquiry.vm.ProPurchase;
 import com.xzx.xzxms.purchase.bean.*;
 import com.xzx.xzxms.purchase.dao.PurchaseContractMapper;
-import com.xzx.xzxms.purchase.dao.PurchaseItemsMapper;
-import com.xzx.xzxms.purchase.dao.PurchaseProjectMapper;
 import com.xzx.xzxms.purchase.dao.PurchaseSupplyMapper;
 import com.xzx.xzxms.purchase.dao.extend.PurchaseContractExtendMapper;
 import com.xzx.xzxms.purchase.service.IPurchaseContractService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Date;
