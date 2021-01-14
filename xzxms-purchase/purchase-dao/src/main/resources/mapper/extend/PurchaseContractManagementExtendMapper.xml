@@ -39,6 +39,7 @@
         <result column="items_params" property="itemsParams" jdbcType="VARCHAR" />
         <result column="warranty" property="warranty" jdbcType="VARCHAR" />
         <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="delivery" property="delivery" jdbcType="VARCHAR" />
     </resultMap>
 
     <select id="findAllProjects" parameterType="string" resultMap="PurchaseProjectVO">
@@ -69,7 +70,7 @@
                 purchase_supply.model, purchase_items.item, purchase_items.unit,
                 purchase_supply.number, purchase_supply.price, purchase_supply.total_price,
                 purchase_supply.params supply_params, purchase_items.params items_params,
-                purchase_supply.warranty, purchase_supply.remark
+                purchase_supply.warranty, purchase_supply.remark, purchase_supply.delivery
         FROM purchase_items inner join purchase_supply
             on purchase_items.id = purchase_supply.item_id
         where purchase_items.is_active = 1

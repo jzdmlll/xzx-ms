@@ -23,6 +23,16 @@ public class PurchaseContractGenerateVO {
     private String itemsParams;
     private String warranty;
     private String remark;
+    private String delivery;
+
+
+    public String getDelivery() {
+        return delivery;
+    }
+
+    public void setDelivery(String delivery) {
+        this.delivery = delivery;
+    }
 
     public Long getId() {
         return id;
