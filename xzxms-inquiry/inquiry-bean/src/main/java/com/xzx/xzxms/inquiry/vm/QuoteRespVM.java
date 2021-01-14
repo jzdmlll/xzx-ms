@@ -14,13 +14,13 @@ public class QuoteRespVM extends Quote {
     private String compareRemark;
     private String finallyRemark;
     private String name;
-    private double minPrice;
+    private Double minPrice;
 
-    public double getMinPrice() {
+    public Double getMinPrice() {
         return minPrice;
     }
 
-    public void setMinPrice(double minPrice) {
+    public void setMinPrice(Double minPrice) {
         this.minPrice = minPrice;
     }
 
