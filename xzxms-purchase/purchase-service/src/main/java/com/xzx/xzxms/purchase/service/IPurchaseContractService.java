@@ -2,6 +2,7 @@ package com.xzx.xzxms.purchase.service;
 
 import com.xzx.xzxms.purchase.bean.PurchaseContract;
 import com.xzx.xzxms.purchase.bean.PurchaseSupply;
+import com.xzx.xzxms.system.bean.SysFile;
 
 import java.util.List;
 
@@ -37,5 +38,13 @@ public interface IPurchaseContractService {
      * @param purchaseSupply
      */
     void updateSupplyPrice(PurchaseSupply purchaseSupply);
+
+    /**
+     * sunny
+     * 根据合同ID查询出合同下所有的文件
+     * @param contractId
+     * @return
+     */
+    List<SysFile> findContractFileByContractId(Long contractId);
 
 }

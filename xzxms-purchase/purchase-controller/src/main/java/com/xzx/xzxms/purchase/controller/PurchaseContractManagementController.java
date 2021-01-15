@@ -5,10 +5,12 @@ import com.xzx.xzxms.commons.utils.MessageUtil;
 import com.xzx.xzxms.purchase.bean.PurchaseContract;
 import com.xzx.xzxms.purchase.dao.extend.PurchaseContractManagementExtendMapper;
 import com.xzx.xzxms.purchase.dto.PurchaseContractDTO;
+import com.xzx.xzxms.purchase.service.IPurchaseContractService;
 import com.xzx.xzxms.purchase.service.PurchaseContractManagementService;
 import com.xzx.xzxms.purchase.vo.PurchaseContractGenerateVO;
 import com.xzx.xzxms.purchase.vo.PurchaseContractVO;
 import com.xzx.xzxms.purchase.vo.PurchaseProjectVO;
+import com.xzx.xzxms.system.bean.SysFile;
 import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,9 @@ public class PurchaseContractManagementController {
 
     @Resource
     PurchaseContractManagementExtendMapper purchaseContractManagementExtendMapper;
+
+    @Resource
+    private IPurchaseContractService purchaseContractServiceImpl;
 
     /**
      * 周嘉玮
@@ -88,6 +93,14 @@ public class PurchaseContractManagementController {
     public Message findItemsInfoByContractId(@Param("contractId") Long contractId){
         List<PurchaseContractGenerateVO> itemsInfos = purchaseContractManagementExtendMapper.findItemsInfoByContractId(contractId);
         return MessageUtil.success("success",itemsInfos);
+    }
+
+
+    @ApiOperation("根据合同ID查询出合同下所有的文件")
+    @GetMapping("findContractFileByContractId")
+    public Message findContractFileByContractId(Long contractId){
+        List<SysFile> list = purchaseContractServiceImpl.findContractFileByContractId(contractId);
+        return MessageUtil.success("success", list);
     }
 
 }

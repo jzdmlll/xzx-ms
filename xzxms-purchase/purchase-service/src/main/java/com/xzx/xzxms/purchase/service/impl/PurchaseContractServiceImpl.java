@@ -10,6 +10,7 @@ import com.xzx.xzxms.purchase.dao.PurchaseSupplyMapper;
 import com.xzx.xzxms.purchase.dao.extend.PurchaseContractExtendMapper;
 import com.xzx.xzxms.purchase.dto.PurchaseItemsExcelImportDTO;
 import com.xzx.xzxms.purchase.service.IPurchaseContractService;
+import com.xzx.xzxms.system.bean.SysFile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -117,5 +118,12 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
         }else {
             throw new CustomerException("供货单价或供货数量不能为空!");
         }
+    }
+
+    @Override
+    public List<SysFile> findContractFileByContractId(Long contractId) {
+
+        List<SysFile> sysFiles = purchaseContractExtendMapper.findContractFileByContractId(contractId);
+        return sysFiles;
     }
 }
