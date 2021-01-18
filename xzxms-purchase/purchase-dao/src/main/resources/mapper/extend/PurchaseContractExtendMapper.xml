@@ -11,11 +11,16 @@
         </where>
     </select>
 
-
     <select id="findContractFileByContractId" resultType="com.xzx.xzxms.system.bean.SysFile">
-        select name, url, u.username as operator, f.time, f.update_operator as update_operator, f.update_time
+        select name, url, u.username as operator, f.time, u1.username as update_operator, f.update_time
         from sys_file f
         left join sys_user u on f.operator = u.id
         left join sys_user u1 on f.update_operator = u1.id
+        <where>
+            f.is_active = 1
+            <if test="contractId != null">
+                and other_id = #{contractId}
+            </if>
+        </where>
     </select>
 </mapper>
