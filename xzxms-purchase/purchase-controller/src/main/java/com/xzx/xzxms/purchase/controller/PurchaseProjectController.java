@@ -68,10 +68,4 @@ public class PurchaseProjectController {
         return MessageUtil.success("success");
     }
 
-    /*@ApiOperation(value = "新增或者修改")
-    @GetMapping(value = "saveOrUpdate")
-    public Message saveOrUpdate(PurchaseProject purchaseProject){
-        iPurchaseProjectServiceImpl.saveOrUpdate(purchaseProject);
-        return MessageUtil.success("success");
-    }*/
 }
