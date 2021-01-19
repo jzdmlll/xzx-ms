@@ -49,12 +49,18 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
         }
         System.out.println(request.getServletPath());
         // 获取请求头信息authorization信息
-        final String token = request.getHeader(JwtTokenUtil.AUTH_HEADER_KEY);
+        String token = request.getHeader(JwtTokenUtil.AUTH_HEADER_KEY);
+        //final String websocketToken = request.getHeader(JwtTokenUtil.AUTH_WEBSOCKET_KEY);
         if(StringUtils.isEmpty(token)){
-            throw new UnAuthorizedException("用户还未登录");
+            /*if (StringUtils.isEmpty(websocketToken)) {
+                throw new UnAuthorizedException("用户还未登录");
+            }else {
+                token = websocketToken;
+            }*/
             /*System.out.println("用户还未登录");
             return true;*/
         }
+
         // 验证token是否有效--无效已做异常抛出，由全局异常处理后返回对应信息
         Claims claims = JwtTokenUtil.parseJWT(token, JwtTokenUtil.base64Secret);
         if(claims == null ){
@@ -74,7 +80,6 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
 
     // 判断权限
     private boolean auth(long userId,String path){
-
         // 查询出该用户的所有权限
         List<SysPrivilege> privileges = privilegeService.findByUserId(userId);
         // 匹配

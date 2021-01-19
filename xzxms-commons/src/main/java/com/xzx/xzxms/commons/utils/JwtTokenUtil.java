@@ -15,6 +15,8 @@ public class JwtTokenUtil {
 
     public static final String AUTH_HEADER_KEY = "X-Token";
 
+    public static final String AUTH_WEBSOCKET_KEY = "Sec-WebSocket-Protocol";
+
     public static final String TOKEN_PREFIX = "Bearer ";
 
     public static final Long REDIS_TOKEN_TIME = 4*60L;
