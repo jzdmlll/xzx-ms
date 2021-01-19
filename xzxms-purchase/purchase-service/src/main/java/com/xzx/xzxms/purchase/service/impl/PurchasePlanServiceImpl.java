@@ -9,10 +9,7 @@ import com.xzx.xzxms.inquiry.dao.InquiryMapper;
 import com.xzx.xzxms.inquiry.dao.SysProDetailMapper;
 import com.xzx.xzxms.inquiry.dao.extend.ProPurchaseExtendMapper;
 import com.xzx.xzxms.inquiry.vm.ProPurchase;
-import com.xzx.xzxms.purchase.bean.PurchaseItems;
-import com.xzx.xzxms.purchase.bean.PurchaseItemsExample;
-import com.xzx.xzxms.purchase.bean.PurchaseProject;
-import com.xzx.xzxms.purchase.bean.PurchaseSupply;
+import com.xzx.xzxms.purchase.bean.*;
 import com.xzx.xzxms.purchase.dao.PurchaseItemsMapper;
 import com.xzx.xzxms.purchase.dao.PurchaseProjectMapper;
 import com.xzx.xzxms.purchase.dao.PurchaseSupplyMapper;
@@ -309,17 +306,23 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
 
     /**
      * 孙乃裕
+     * 修改人：tjz
      * @param purchaseItems
      */
     @Override
     public void updatePurchaseItem(PurchaseItems purchaseItems) {
-
+        //增加了判断是否发往询价，没有才能修改
         int num = checkSerialNumberIsExists(purchaseItems.getProjectId(), purchaseItems.getSerialNumber());
         if (num > 0){
             throw new CustomerException("此采购项序号已存在，不能重复插入!");
+        }else {
+            if(purchaseItems.getIsInquiry()!=0) {
+                throw new CustomerException("已经发往询价，请勿修改");
+            }else {
+                purchaseItems.setUpdateTime(new Date().getTime());
+                purchaseItemsMapper.updateByPrimaryKeySelective(purchaseItems);
+            }
         }
-        purchaseItems.setUpdateTime(new Date().getTime());
-        purchaseItemsMapper.updateByPrimaryKeySelective(purchaseItems);
     }
 
     /**
@@ -446,14 +449,30 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
         }
     }
 
+    /**
+     * 修改人：tjz
+     * @param purchaseItemIds 采购项 ID数组
+     * @param operator
+     */
     @Transactional
     @Override
-    public void logicDeletePurchaseItems(Long[] purchaseItemIds) {
+    public void logicDeletePurchaseItems(Long[] purchaseItemIds,String operator) {
         PurchaseItems purchaseItems = new PurchaseItems();
+        long time = new Date().getTime();
         for (Long purchaseItemId : purchaseItemIds) {
-            purchaseItems.setId(purchaseItemId);
-            purchaseItems.setIsActive(CommonConstant.INVALID);
-            purchaseItemsMapper.updateByPrimaryKeySelective(purchaseItems);
+            //判断采购项相关的采购供货数量是否大于0，有供货数量就不可删除采购项
+            PurchaseSupplyExample example = new PurchaseSupplyExample();
+            example.createCriteria().andItemIdEqualTo(purchaseItemId).andNumberGreaterThan(0.0).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
+            List<PurchaseSupply> list = purchaseSupplyMapper.selectByExample(example);
+            if(list.size()>0){
+                throw new CustomerException("采购项已有采购供货，不可删除");
+            }else {
+                purchaseItems.setId(purchaseItemId);
+                purchaseItems.setIsActive(CommonConstant.INVALID);
+                purchaseItems.setUpdateOperator(operator);
+                purchaseItems.setUpdateTime(time);
+                purchaseItemsMapper.updateByPrimaryKeySelective(purchaseItems);
+            }
         }
     }
 }
