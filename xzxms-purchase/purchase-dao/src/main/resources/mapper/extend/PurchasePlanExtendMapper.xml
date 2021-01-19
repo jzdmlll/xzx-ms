@@ -9,8 +9,7 @@
         <result column="serial_number" property="serialNumber" jdbcType="INTEGER" />
         <result column="item" property="item" jdbcType="VARCHAR" />
         <result column="brand" property="brand" jdbcType="VARCHAR" />
-        <result column="params" property="params1" jdbcType="VARCHAR" />
-        <result column="params" property="params2" jdbcType="VARCHAR" />
+        <result column="params" property="params" jdbcType="VARCHAR" />
         <result column="model" property="model" jdbcType="VARCHAR" />
         <result column="unit" property="unit" jdbcType="VARCHAR" />
         <result column="number" property="number" jdbcType="INTEGER" />
@@ -58,6 +57,13 @@
 
     <select id="findNumberById" parameterType="long" resultType="double">
         select number from purchase_items where id = #{id} and is_active=1
+    </select>
+
+    <select id="findItemInfoById" parameterType="long" resultMap="PurchaseItems">
+        select item, brand, params, model, unit, number, serial_number
+        FROM `purchase_items`
+        where id=#{id}
+        and is_active=1
     </select>
 
     <insert id="insertItem" parameterType="com.xzx.xzxms.purchase.bean.PurchaseItems">

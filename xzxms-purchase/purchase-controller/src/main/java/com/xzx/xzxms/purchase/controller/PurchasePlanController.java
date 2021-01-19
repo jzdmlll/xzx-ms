@@ -138,6 +138,7 @@ public class PurchasePlanController {
 
     /**
      * 孙乃裕
+     * 修改人：tjz
      * @param purchaseItems
      * @return
      */
@@ -180,12 +181,13 @@ public class PurchasePlanController {
     /**
      * Lzc
      * 批量逻辑删除采购项
+     * 修改人:tjz
      * @param purchaseItemIds 采购项 ID数组
      */
     @ApiOperation("批量逻辑删除采购项")
     @PostMapping("logicDeletePurchaseItems")
-    public Message logicDeletePurchaseItems(Long[] purchaseItemIds) {
-        purchasePlanServiceImpl.logicDeletePurchaseItems(purchaseItemIds);
+    public Message logicDeletePurchaseItems(Long[] purchaseItemIds,String operator) {
+        purchasePlanServiceImpl.logicDeletePurchaseItems(purchaseItemIds,operator);
         return MessageUtil.success("删除成功");
     }
 }

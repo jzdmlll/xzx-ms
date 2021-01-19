@@ -63,6 +63,7 @@ public interface PurchasePlanService {
 
     /**
      * 修改采购计划项
+     * 修改人：tjz
      * @param purchaseItems
      */
     void updatePurchaseItem(PurchaseItems purchaseItems);
@@ -84,9 +85,10 @@ public interface PurchasePlanService {
     /**
      * Lzc
      * 批量逻辑删除采购项
+     * 修改人：tjz
      * @param purchaseItemIds 采购项 ID数组
      */
-    void logicDeletePurchaseItems(Long[] purchaseItemIds);
+    void logicDeletePurchaseItems(Long[] purchaseItemIds,String operator);
 
     /**
      * 询价结果发往采购
