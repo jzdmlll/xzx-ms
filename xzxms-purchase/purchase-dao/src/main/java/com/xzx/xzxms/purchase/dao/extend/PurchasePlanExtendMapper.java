@@ -52,6 +52,7 @@ public interface PurchasePlanExtendMapper {
     void insertItem(PurchaseItems purchaseItems);
 
     /**
+     * 周嘉玮
      * 根据购买项id查找其购买数量
      * @param id
      * @return
@@ -59,11 +60,20 @@ public interface PurchasePlanExtendMapper {
     Double findNumberById(@Param("id") Long id);
 
     /**
+     * 周嘉玮
      * 根据购买项id查找其相关信息
      * @param id
      * @return
      */
     PurchaseItems findItemInfoById(@Param("id") Long id);
+
+    /**
+     * 周嘉玮
+     * 根据项目id获取其项目名
+     * @param projectId
+     * @return
+     */
+    String findProNameByProId(@Param("projectId") Long projectId);
 
     /**
      * 周嘉玮

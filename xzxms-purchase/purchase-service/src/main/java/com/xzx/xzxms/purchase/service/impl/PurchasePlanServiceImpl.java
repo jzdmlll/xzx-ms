@@ -190,6 +190,9 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
             purchaseItemsList.getSysProDetailWithBLOBs().setIsActive(1);
             purchaseItemsList.getSysProDetailWithBLOBs().setIsUseful(0);
             purchaseItemsList.getSysProDetailWithBLOBs().setTime(time);
+            // 根据项目id查找项目名
+            String proName = purchasePlanExtendMapper.findProNameByProId(purchaseItemsList.getSysProDetailWithBLOBs().getPurchaseProId());
+            purchaseItemsList.getSysProDetailWithBLOBs().setName(proName);
             // 向sys_pro_detail表中插入新项目
             sysProDetailMapper.insert(purchaseItemsList.getSysProDetailWithBLOBs());
 

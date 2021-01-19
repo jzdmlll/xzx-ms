@@ -66,6 +66,10 @@
         and is_active=1
     </select>
 
+    <select id="findProNameByProId" parameterType="long" resultType="string">
+        SELECT project_name FROM `purchase_project` where id=#{projectId}
+    </select>
+
     <insert id="insertItem" parameterType="com.xzx.xzxms.purchase.bean.PurchaseItems">
         insert into purchase_items (id,contract_id,project_id,serial_number,item,brand,params,model,unit,number,is_inquiry,remark,is_active,operator,time)
         values(#{id}, #{contractId}, #{projectId}, #{serialNumber}, #{item}, #{brand}, #{params}, #{model}, #{unit}, #{number}, #{isInquiry}, #{remark}, #{isActive}, #{operator}, #{time})
