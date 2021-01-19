@@ -71,14 +71,12 @@ public class InquiryServiceImpl implements IInquiryService {
             }
             inquiryMapper.deleteByExample(example);
         }
-        int sort = 1;
         for (Inquiry inquiry : inquiryList) {
             long inquiryId = IDUtils.getId();
             inquiry.setId(inquiryId);
             inquiry.setTime(time);
             inquiry.setIsActive(1);
             inquiry.setIsUseful(0);
-            inquiry.setSort(sort ++);
             //需要询价
             inquiry.setIsinquiry(1);
             //否决
