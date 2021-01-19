@@ -15,7 +15,7 @@ import com.xzx.xzxms.system.bean.SysFile;
 import com.xzx.xzxms.system.bean.SysFileExample;
 import com.xzx.xzxms.system.bean.extend.SysFileExtend;
 import com.xzx.xzxms.system.dao.SysFileMapper;
-import com.xzx.xzxms.system.service.IFileUploadService;
+import com.xzx.xzxms.commons.fileupload.IFileUploadService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

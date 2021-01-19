@@ -5,6 +5,7 @@ import com.xzx.xzxms.commons.utils.MessageUtil;
 import com.xzx.xzxms.purchase.bean.PurchaseContract;
 import com.xzx.xzxms.purchase.dao.extend.PurchaseContractManagementExtendMapper;
 import com.xzx.xzxms.purchase.dto.PurchaseContractDTO;
+import com.xzx.xzxms.purchase.dto.PurchaseContractFIleDTO;
 import com.xzx.xzxms.purchase.service.IPurchaseContractService;
 import com.xzx.xzxms.purchase.service.PurchaseContractManagementService;
 import com.xzx.xzxms.purchase.vo.PurchaseContractGenerateVO;
@@ -14,10 +15,7 @@ import com.xzx.xzxms.system.bean.SysFile;
 import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -103,4 +101,15 @@ public class PurchaseContractManagementController {
         return MessageUtil.success("success", list);
     }
 
+    /**
+     * Lzc 合同文件上传
+     * @param purchaseContractFIleDTO
+     * @return
+     */
+    @ApiOperation("合同文件上传")
+    @PostMapping("uploadContractFile")
+    public Message uploadContractFile(@RequestBody PurchaseContractFIleDTO purchaseContractFIleDTO){
+        purchaseContractManagementService.uploadContractFile(purchaseContractFIleDTO.getPurchaseContract(), purchaseContractFIleDTO.getFileList());
+        return MessageUtil.success("success");
+    }
 }

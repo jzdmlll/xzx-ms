@@ -4,6 +4,7 @@ import com.xzx.xzxms.purchase.bean.PurchaseContract;
 import com.xzx.xzxms.purchase.dto.PurchaseContractDTO;
 import com.xzx.xzxms.purchase.vo.PurchaseContractVO;
 import com.xzx.xzxms.purchase.vo.PurchaseProjectVO;
+import com.xzx.xzxms.system.bean.SysFile;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -42,4 +43,11 @@ public interface PurchaseContractManagementService {
      * @return
      */
     String updateContractAuditByIdService(PurchaseContract purchaseContract);
+
+    /**
+     * Lzc 采购合同文件上传
+     * @param purchaseContract
+     * @param fileList
+     */
+    void uploadContractFile(PurchaseContract purchaseContract, List<SysFile> fileList);
 }

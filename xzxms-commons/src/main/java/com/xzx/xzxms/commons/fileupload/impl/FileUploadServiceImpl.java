@@ -1,4 +1,4 @@
-package com.xzx.xzxms.system.service.impl;
+package com.xzx.xzxms.commons.fileupload.impl;
 
 import com.xzx.xzxms.commons.dao.redis.JedisDao;
 import com.xzx.xzxms.commons.utils.Base64Util;
@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import com.xzx.xzxms.system.service.IFileUploadService;
+import com.xzx.xzxms.commons.fileupload.IFileUploadService;
 
 import java.io.BufferedInputStream;
 import java.io.FileOutputStream;

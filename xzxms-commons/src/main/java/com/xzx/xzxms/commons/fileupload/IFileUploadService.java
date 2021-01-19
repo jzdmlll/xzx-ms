@@ -1,4 +1,4 @@
-package com.xzx.xzxms.system.service;
+package com.xzx.xzxms.commons.fileupload;
 
 import org.springframework.web.multipart.MultipartFile;
 

@@ -1,7 +1,7 @@
 package com.xzx.xzxms.system.controller;
 
 import com.xzx.xzxms.commons.utils.CustomerException;
-import com.xzx.xzxms.system.service.IFileUploadService;
+import com.xzx.xzxms.commons.fileupload.IFileUploadService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
