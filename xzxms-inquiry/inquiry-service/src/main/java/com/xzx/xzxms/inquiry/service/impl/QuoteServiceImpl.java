@@ -229,11 +229,11 @@ public class QuoteServiceImpl implements IQuoteService {
                     List<Inquiry> inquiries = inquiryMapper.selectByExample(example);
                     if (inquiries.size() > 0) {
                         Inquiry inquiry = inquiries.get(0);
-
+/*
                         int num = quoteAndInquiry.findIsExistQuote(inquiry.getId());
                         if (num != 0){
                             throw new CustomerException(inquiry.getName() + "  已有报价，如需重新导入请先删除报价信息!");
-                        }
+                        }*/
 
                         inquiryId = inquiry.getId();
                         number = inquiry.getNumber();

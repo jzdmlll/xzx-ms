@@ -54,4 +54,13 @@ public class SysFileServiceImpl implements ISysFileService {
         List<SysFile> sysFiles = sysFileMapper.selectByExample(example);
         return sysFiles;
     }
+
+    @Override
+    public List<SysFile> findByOtherId(Long otherId, Integer type) {
+
+        SysFileExample example = new SysFileExample();
+        example.createCriteria().andOtherIdEqualTo(otherId).andTypeEqualTo(type).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
+        List<SysFile> sysFiles = sysFileMapper.selectByExample(example);
+        return sysFiles;
+    }
 }

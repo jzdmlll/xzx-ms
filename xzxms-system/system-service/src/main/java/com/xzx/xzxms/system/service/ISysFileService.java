@@ -44,4 +44,12 @@ public interface ISysFileService {
      * @param proId
      */
     List<SysFile> findByProId(Long proId);
+
+    /**
+     * 根据Other ID查询出文件
+     * @param otherId
+     * @param type
+     * @return
+     */
+    List<SysFile> findByOtherId(Long otherId, Integer type);
 }

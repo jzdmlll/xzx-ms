@@ -40,4 +40,11 @@ public class SysFileController {
         return MessageUtil.success("success", sysFiles);
     }
 
+    @ApiOperation("根据Other ID查询出文件")
+    @GetMapping(value = "findByOtherId")
+    public Message findByOtherId(Long otherId, Integer type){
+        List<SysFile> sysFiles =iSysFileServiceImpl.findByOtherId(otherId, type);
+        return MessageUtil.success("操作成功", sysFiles);
+    }
+
 }
