@@ -112,7 +112,7 @@ logging:
     com.xzx.xzxms: debug
 
 webconfig:
-  test: false
+  test: true
   auto-add-privilege: true
 
 

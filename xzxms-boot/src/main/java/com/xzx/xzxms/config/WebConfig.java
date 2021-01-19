@@ -23,13 +23,21 @@ public class WebConfig implements WebMvcConfigurer {
 	private Boolean test;
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
-
-		registry.addMapping("/**")
-				.allowedOrigins("*")
-				.allowedMethods("GET","POST","PUT","OPTIONS","DELETE","PATCH")
-				.allowedHeaders("*")
-				.allowCredentials(true)
-				.maxAge(3600);
+		if(test) {
+			registry.addMapping("/**")
+					.allowedOrigins("*")
+					.allowedMethods("GET","POST","PUT","OPTIONS","DELETE","PATCH")
+					.allowedHeaders("*")
+					.allowCredentials(true)
+					.maxAge(3600);
+		} else {
+			registry.addMapping("/**")
+					.allowedOrigins("http://218.87.96.53:8006")
+					.allowedMethods("GET","POST","PUT","OPTIONS","DELETE","PATCH")
+					.allowedHeaders("*")
+					.allowCredentials(true)
+					.maxAge(3600);
+		}
 	}
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
