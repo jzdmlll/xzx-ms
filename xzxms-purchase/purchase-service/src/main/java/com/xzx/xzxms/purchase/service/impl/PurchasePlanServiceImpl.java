@@ -140,6 +140,7 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
         // 修改原数据，修改其数量、操作员、操作时间
         purchasePlanExtendMapper.updateItemNumber(itemNum, id, purchaseItems.getOperator(), new Date().getTime());
 
+        //
         return "success";
     }
 
@@ -196,6 +197,7 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
             sysProDetailMapper.insert(purchaseItemsList.getSysProDetailWithBLOBs());
 
             Inquiry inquiry = new Inquiry();
+            List<Long> itemIds = new ArrayList<>();
             for (PurchaseItems item : purchaseItemsList.getPurchaseItemsList()) {
                 inquiry.setId(IDUtils.getId());
                 inquiry.setName(item.getItem());
@@ -214,12 +216,28 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
                 inquiry.setTime(new Date().getTime());
                 inquiry.setItemId(item.getId());
                 inquiryMapper.insert(inquiry);
+                // 获取所有的item的id
+                itemIds.add(item.getId());
             }
+
+            // 更新采购项目是否需要询价
+            PurchaseItemsExample purchaseItemsExample = new PurchaseItemsExample();
+            // 根据 is_active、id 这三个字段去查询需要修改的结果集
+            purchaseItemsExample.createCriteria().andIsActiveEqualTo(1).andIdIn(itemIds);
+
+            // 需修改内容：询价状态、修改人、修改时间
+            PurchaseItems purchaseItems = new PurchaseItems();
+            purchaseItems.setIsInquiry(1);
+            purchaseItems.setUpdateOperator(purchaseItemsList.getSysProDetailWithBLOBs().getOperator());
+            purchaseItems.setUpdateTime(new Date().getTime());
+            purchaseItemsMapper.updateByExampleSelective(purchaseItems, purchaseItemsExample);
+
 
             return "success";
         // 当项目名存在时
         }else {
             String name = purchaseItemsList.getSysProDetailWithBLOBs().getName();
+            List<Long> itemIds = new ArrayList<>();
             for (PurchaseItems item : purchaseItemsList.getPurchaseItemsList()) {
                 Integer sort = purchasePlanExtendMapper.findSort(name, item.getSerialNumber());
                 // 当该购买项不存在时
@@ -243,11 +261,25 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
                     inquiry.setItemId(item.getId());
                     inquiryMapper.insert(inquiry);
                     System.out.println("添加：" + item.getSerialNumber());
-                    
+                    // 获取所有的item的id
+                    itemIds.add(item.getId());
                 // 当该购买项已存在时
                 }else {
                     System.out.println("该购买项已存在 " + item.getSerialNumber());
+                    throw new CustomerException("该购买项已存在 " + item.getItem());
                 }
+
+                // 更新采购项目是否需要询价
+                PurchaseItemsExample purchaseItemsExample = new PurchaseItemsExample();
+                // 根据 is_active、id 这三个字段去查询需要修改的结果集
+                purchaseItemsExample.createCriteria().andIsActiveEqualTo(1).andIdIn(itemIds);
+
+                // 需修改内容：询价状态、修改人、修改时间
+                PurchaseItems purchaseItems = new PurchaseItems();
+                purchaseItems.setIsInquiry(1);
+                purchaseItems.setUpdateOperator(purchaseItemsList.getSysProDetailWithBLOBs().getOperator());
+                purchaseItems.setUpdateTime(new Date().getTime());
+                purchaseItemsMapper.updateByExampleSelective(purchaseItems, purchaseItemsExample);
             }
             return "success";
         }
