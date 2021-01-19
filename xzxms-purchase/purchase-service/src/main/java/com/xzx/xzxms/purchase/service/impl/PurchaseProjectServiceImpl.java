@@ -1,16 +1,22 @@
 package com.xzx.xzxms.purchase.service.impl;
 
+import com.xzx.xzxms.commons.constant.CommonConstant;
 import com.xzx.xzxms.commons.utils.CustomerException;
 import com.xzx.xzxms.commons.utils.IDUtils;
 import com.xzx.xzxms.inquiry.bean.SysProDetail;
 import com.xzx.xzxms.inquiry.bean.SysProDetailExample;
 import com.xzx.xzxms.inquiry.dao.SysProDetailMapper;
+import com.xzx.xzxms.purchase.bean.PurchaseItems;
+import com.xzx.xzxms.purchase.bean.PurchaseItemsExample;
 import com.xzx.xzxms.purchase.bean.PurchaseProject;
 import com.xzx.xzxms.purchase.bean.PurchaseProjectExample;
+import com.xzx.xzxms.purchase.dao.PurchaseItemsMapper;
 import com.xzx.xzxms.purchase.dao.PurchaseProjectMapper;
 import com.xzx.xzxms.purchase.dao.extend.PurchaseProjectExtendMapper;
 import com.xzx.xzxms.purchase.service.IPurchaseProjectService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
@@ -23,6 +29,8 @@ public class PurchaseProjectServiceImpl implements IPurchaseProjectService {
     private PurchaseProjectMapper purchaseProjectMapper;
     @Resource
     private SysProDetailMapper sysProDetailMapper;
+    @Resource
+    private PurchaseItemsMapper purchaseItemsMapper;
     /**
      * 模糊查询项目名
      * @param name
@@ -52,21 +60,31 @@ public class PurchaseProjectServiceImpl implements IPurchaseProjectService {
      * @param id
      */
     //这里新增了user参数
+    @Transactional
     @Override
     public void deleteById(Long id, Long user) {
         long time = new Date().getTime();
         //通过前台传的参数id查询采购项目对象
         PurchaseProject purchaseProject = purchaseProjectMapper.selectByPrimaryKey(id);
         //如果查询出的采购项目对象为空或者该采购项目对象为无效的，则返回“数据不存在”
+
         if(purchaseProject==null || purchaseProject.getIsActive().equals(0)){
             throw new CustomerException("该数据已不存在");
         }else {
-            //修改符合条件的采购项目对象的部分内容，is_active置为0代表对象无效
-            purchaseProject.setIsActive(0);
-            purchaseProject.setUpdateTime(time);
-            purchaseProject.setUpdateOperator(user+"");
-            //使用updateByPrimaryKeySelective方法，将不为空的字段进行修改操作
-            purchaseProjectMapper.updateByPrimaryKeySelective(purchaseProject);
+            //判断项目下是否有采购项，无采购项的情况才能删除
+            PurchaseItemsExample example = new PurchaseItemsExample();
+            example.createCriteria().andProjectIdEqualTo(id).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
+            List<PurchaseItems> list = purchaseItemsMapper.selectByExample(example);
+            if (list.size()>0){
+                throw new CustomerException("该项目下已有采购项，不可删除。");
+            }else {
+                //修改符合条件的采购项目对象的部分内容，is_active置为0代表对象无效
+                purchaseProject.setIsActive(0);
+                purchaseProject.setUpdateTime(time);
+                purchaseProject.setUpdateOperator(user + "");
+                //使用updateByPrimaryKeySelective方法，将不为空的字段进行修改操作
+                purchaseProjectMapper.updateByPrimaryKeySelective(purchaseProject);
+            }
         }
     }
 
