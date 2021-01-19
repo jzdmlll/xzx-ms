@@ -60,6 +60,13 @@
         select number from purchase_items where id = #{id} and is_active=1
     </select>
 
+    <select id="findItemInfoById" parameterType="long" resultMap="PurchaseItems">
+        select item, brand, params, model, unit, number, serial_number
+        FROM `purchase_items`
+        where id=#{id}
+        and is_active=1
+    </select>
+
     <insert id="insertItem" parameterType="com.xzx.xzxms.purchase.bean.PurchaseItems">
         insert into purchase_items (id,contract_id,project_id,serial_number,item,brand,params,model,unit,number,is_inquiry,remark,is_active,operator,time)
         values(#{id}, #{contractId}, #{projectId}, #{serialNumber}, #{item}, #{brand}, #{params}, #{model}, #{unit}, #{number}, #{isInquiry}, #{remark}, #{isActive}, #{operator}, #{time})

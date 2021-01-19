@@ -200,13 +200,15 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
             List<Long> itemIds = new ArrayList<>();
             for (PurchaseItems item : purchaseItemsList.getPurchaseItemsList()) {
                 inquiry.setId(IDUtils.getId());
-                inquiry.setName(item.getItem());
-                inquiry.setRealBrand(item.getBrand());
-                inquiry.setParams(item.getParams());
-                inquiry.setModel(item.getModel());
-                inquiry.setUnit(item.getUnit());
-                inquiry.setNumber(item.getNumber());
-                inquiry.setSort(item.getSerialNumber());
+                // 在根据item_id去purchase_items表中获取该购买项相关信息
+                PurchaseItems itemInfo = purchasePlanExtendMapper.findItemInfoById(item.getId());
+                inquiry.setName(itemInfo.getItem());
+                inquiry.setRealBrand(itemInfo.getBrand());
+                inquiry.setParams(itemInfo.getParams());
+                inquiry.setModel(itemInfo.getModel());
+                inquiry.setUnit(itemInfo.getUnit());
+                inquiry.setNumber(itemInfo.getNumber());
+                inquiry.setSort(itemInfo.getSerialNumber());
                 inquiry.setIsinquiry(1);
                 inquiry.setVeto(0);
                 inquiry.setProDetailId(id);
@@ -222,7 +224,7 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
 
             // 更新采购项目是否需要询价
             PurchaseItemsExample purchaseItemsExample = new PurchaseItemsExample();
-            // 根据 is_active、id 这三个字段去查询需要修改的结果集
+            // 根据 is_active、id 这两个字段去查询需要修改的结果集
             purchaseItemsExample.createCriteria().andIsActiveEqualTo(1).andIdIn(itemIds);
 
             // 需修改内容：询价状态、修改人、修改时间
@@ -244,13 +246,15 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
                 if (sort == null){
                     Inquiry inquiry = new Inquiry();
                     inquiry.setId(IDUtils.getId());
-                    inquiry.setName(item.getItem());
-                    inquiry.setRealBrand(item.getBrand());
-                    inquiry.setParams(item.getParams());
-                    inquiry.setModel(item.getModel());
-                    inquiry.setUnit(item.getUnit());
-                    inquiry.setNumber(item.getNumber());
-                    inquiry.setSort(item.getSerialNumber());
+                    // 在根据item_id去purchase_items表中获取该购买项相关信息
+                    PurchaseItems itemInfo = purchasePlanExtendMapper.findItemInfoById(item.getId());
+                    inquiry.setName(itemInfo.getItem());
+                    inquiry.setRealBrand(itemInfo.getBrand());
+                    inquiry.setParams(itemInfo.getParams());
+                    inquiry.setModel(itemInfo.getModel());
+                    inquiry.setUnit(itemInfo.getUnit());
+                    inquiry.setNumber(itemInfo.getNumber());
+                    inquiry.setSort(itemInfo.getSerialNumber());
                     inquiry.setIsinquiry(1);
                     inquiry.setVeto(0);
                     inquiry.setProDetailId(result);
@@ -271,7 +275,7 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
 
                 // 更新采购项目是否需要询价
                 PurchaseItemsExample purchaseItemsExample = new PurchaseItemsExample();
-                // 根据 is_active、id 这三个字段去查询需要修改的结果集
+                // 根据 is_active、id 这两个字段去查询需要修改的结果集
                 purchaseItemsExample.createCriteria().andIsActiveEqualTo(1).andIdIn(itemIds);
 
                 // 需修改内容：询价状态、修改人、修改时间

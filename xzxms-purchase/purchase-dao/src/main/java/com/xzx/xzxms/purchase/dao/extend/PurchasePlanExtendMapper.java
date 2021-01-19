@@ -59,6 +59,13 @@ public interface PurchasePlanExtendMapper {
     Double findNumberById(@Param("id") Long id);
 
     /**
+     * 根据购买项id查找其相关信息
+     * @param id
+     * @return
+     */
+    PurchaseItems findItemInfoById(@Param("id") Long id);
+
+    /**
      * 周嘉玮
      * 当购买项数量拆分时，修改当前购买数量
      * @param itemNum
