@@ -12,6 +12,7 @@
         <module>xzxms-system</module>
         <module>xzxms-inquiry</module>
         <module>xzxms-purchase</module>
+        <module>xzxms-chapter</module>
     </modules>
 
     <parent>

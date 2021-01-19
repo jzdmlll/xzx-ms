@@ -80,6 +80,28 @@
             <artifactId>purchase-bean</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.xzx.xzxms.chapter</groupId>
+            <artifactId>chapter-dao</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.xzx.xzxms.chapter</groupId>
+            <artifactId>chapter-service</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.xzx.xzxms.chapter</groupId>
+            <artifactId>chapter-controller</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.xzx.xzxms.chapter</groupId>
+            <artifactId>chapter-bean</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>

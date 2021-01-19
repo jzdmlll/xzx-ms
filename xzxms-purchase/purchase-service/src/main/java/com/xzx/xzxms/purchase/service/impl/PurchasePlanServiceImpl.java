@@ -119,8 +119,11 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
         // 新增数据序号 在原有最大序号上加一
         purchaseItems.setSerialNumber(maxSerialNumber+1);
 
-        // 新增数据购买项的数量 = 原需购买量 - 此次实际购买量
-        purchaseItems.setNumber(purchaseItems.getNumber() - itemNum);
+        // 获取数据库中实际购买数量
+        double number = purchasePlanExtendMapper.findNumberById(purchaseItems.getId());
+
+        // 新增数据购买项的数量 = 实际购买数量 - 此次实际购买量
+        purchaseItems.setNumber(number - itemNum);
 
         // 获取当前时间
         purchaseItems.setTime(new Date().getTime());
