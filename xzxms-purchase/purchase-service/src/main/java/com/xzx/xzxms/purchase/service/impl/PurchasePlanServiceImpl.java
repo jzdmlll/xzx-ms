@@ -452,6 +452,14 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
         }
     }
 
+    @Override
+    public String insertSupplyByItemService(PurchaseSupply purchaseSupply) {
+        purchaseSupply.setId(IDUtils.getId());
+        purchaseSupply.setTime(new Date().getTime());
+        purchaseSupplyMapper.insert(purchaseSupply);
+        return "success";
+    }
+
     /**
      * 修改人：tjz
      * @param purchaseItemIds 采购项 ID数组

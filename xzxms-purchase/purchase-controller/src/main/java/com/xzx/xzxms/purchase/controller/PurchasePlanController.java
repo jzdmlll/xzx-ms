@@ -190,4 +190,16 @@ public class PurchasePlanController {
         purchasePlanServiceImpl.logicDeletePurchaseItems(purchaseItemIds,operator);
         return MessageUtil.success("删除成功");
     }
+
+    @ApiOperation("从产品池选择完以后，将信息插入purchase_supply")
+    @PostMapping("insertSupplyByItem")
+    public Message insertSupplyByItem(PurchaseSupply purchaseSupply){
+        String result = purchasePlanServiceImpl.insertSupplyByItemService(purchaseSupply);
+        if (result.equals("success")){
+            return MessageUtil.success("success");
+        }else {
+            return MessageUtil.error("error");
+        }
+    }
+
 }

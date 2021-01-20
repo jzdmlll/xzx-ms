@@ -95,4 +95,11 @@ public interface PurchasePlanService {
      * @param quoteIds
      */
     void inquiryResultSendPurchase(Long[] quoteIds, Long operator);
+
+    /**
+     * 从产品池选择完以后，将信息插入purchase_supply
+     * @param purchaseSupply
+     * @return
+     */
+    String insertSupplyByItemService(PurchaseSupply purchaseSupply);
 }
