@@ -98,22 +98,15 @@ public class ChapterAuditServiceImpl implements ChapterAuditService {
 
     /**
      * 周嘉玮
-     * 根据项目名称做模糊查询
-     * @param projectName
+     * 获取所有项目名
      * @return
      */
     @Override
-    public List<ChapterAudit> findAllProjectNameService(String projectName) {
+    public List<ChapterAudit> findAllProjectNameService() {
         ChapterAuditExample chapterAuditExample = new ChapterAuditExample();
-        if (projectName == null || projectName.equals("")){
             chapterAuditExample.createCriteria().andIsActiveEqualTo(1);
             List<ChapterAudit> projectNames = chapterAuditMapper.selectByExample(chapterAuditExample);
             return projectNames;
-        }else {
-            chapterAuditExample.createCriteria().andIsActiveEqualTo(1).andProjectNameLike("%" + projectName + "%");
-            List<ChapterAudit> projectNames = chapterAuditMapper.selectByExample(chapterAuditExample);
-            return projectNames;
-        }
     }
 
     /**

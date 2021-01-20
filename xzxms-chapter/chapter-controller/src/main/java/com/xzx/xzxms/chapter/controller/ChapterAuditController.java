@@ -59,10 +59,10 @@ public class ChapterAuditController {
     /**
      * 周嘉玮
      */
-    @ApiOperation("根据项目名称做模糊查询")
+    @ApiOperation("获取所有项目名")
     @PostMapping("findAllProjectName")
-    public Message findAllProjectName(String projectName){
-        List<ChapterAudit> projectNames = chapterAuditService.findAllProjectNameService(projectName);
+    public Message findAllProjectName(){
+        List<ChapterAudit> projectNames = chapterAuditService.findAllProjectNameService();
         if (projectNames.size() > 0){
             return MessageUtil.success("success", projectNames);
         }else {

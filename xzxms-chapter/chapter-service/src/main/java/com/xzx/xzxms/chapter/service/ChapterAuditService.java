@@ -25,11 +25,10 @@ public interface ChapterAuditService {
     String insertChapterAuditService(ChapterAudit chapterAudit, List<SysFile> files);
 
     /**
-     * 根据项目名称做模糊查询
-     * @param projectName
+     * 获取所有项目名
      * @return
      */
-    List<ChapterAudit> findAllProjectNameService(String projectName);
+    List<ChapterAudit> findAllProjectNameService();
 
     /**
      * 根据项目名称查询该项目下所有审核信息审核信息
