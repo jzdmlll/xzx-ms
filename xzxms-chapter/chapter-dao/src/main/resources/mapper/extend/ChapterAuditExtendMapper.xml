@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xzx.xzxms.chapter.dao.extend.ChapterAuditExtendMapper">
-    <select id="findAllChapterAuditor" resultType="string">
-        select username
+
+    <resultMap id="ChapterAuditorDTO" type="com.xzx.xzxms.chapter.dto.ChapterAuditorDTO">
+        <result column="id" property="id" jdbcType="BIGINT" />
+        <result column="username" property="username" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="findAllChapterAuditor" resultMap="ChapterAuditorDTO">
+        select sys_user.id, username
         from sys_user_role inner join sys_user on sys_user_role.user_id = sys_user.id
         where role_id = (SELECT role_id
         FROM `sys_privilege` inner join sys_role_privilege on sys_privilege.id = sys_role_privilege.privilege_id

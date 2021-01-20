@@ -3,6 +3,7 @@ package com.xzx.xzxms.chapter.controller;
 import com.xzx.xzxms.chapter.bean.ChapterAudit;
 import com.xzx.xzxms.chapter.dao.extend.ChapterAuditExtendMapper;
 import com.xzx.xzxms.chapter.dto.ChapterAuditDTO;
+import com.xzx.xzxms.chapter.dto.ChapterAuditorDTO;
 import com.xzx.xzxms.chapter.service.ChapterAuditService;
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
@@ -46,7 +47,7 @@ public class ChapterAuditController {
     @ApiOperation("下拉显示所有可发往的用章审核人")
     @GetMapping("findAllChapterAuditor")
     public Message findAllChapterAuditor(){
-        List<String> allChapterAuditor = chapterAuditExtendMapper.findAllChapterAuditor();
+        List<ChapterAuditorDTO> allChapterAuditor = chapterAuditExtendMapper.findAllChapterAuditor();
         if (allChapterAuditor.size() > 0){
             return MessageUtil.success("success", allChapterAuditor);
         }else {

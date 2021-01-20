@@ -1,5 +1,6 @@
 package com.xzx.xzxms.chapter.dao.extend;
 
+import com.xzx.xzxms.chapter.dto.ChapterAuditorDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -20,5 +21,5 @@ public interface ChapterAuditExtendMapper {
      * 周嘉玮
      * 下拉显示所有可发往的用章审核人
      */
-    List<String> findAllChapterAuditor();
+    List<ChapterAuditorDTO> findAllChapterAuditor();
 }
