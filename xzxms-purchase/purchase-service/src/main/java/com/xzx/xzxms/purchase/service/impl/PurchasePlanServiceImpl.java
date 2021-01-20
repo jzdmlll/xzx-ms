@@ -452,6 +452,12 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
         }
     }
 
+    /**
+     * 周嘉玮
+     * 从产品池选择完以后，将信息插入purchase_supply
+     * @param purchaseSupply
+     * @return
+     */
     @Override
     public String insertSupplyByItemService(PurchaseSupply purchaseSupply) {
 

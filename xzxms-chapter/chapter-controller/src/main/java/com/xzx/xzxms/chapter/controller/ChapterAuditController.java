@@ -1,7 +1,9 @@
 package com.xzx.xzxms.chapter.controller;
 
 import com.xzx.xzxms.chapter.bean.ChapterAudit;
+import com.xzx.xzxms.chapter.dao.extend.ChapterAuditExtendMapper;
 import com.xzx.xzxms.chapter.dto.ChapterAuditDTO;
+import com.xzx.xzxms.chapter.dto.ChapterAuditorDTO;
 import com.xzx.xzxms.chapter.service.ChapterAuditService;
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
@@ -25,6 +27,8 @@ public class ChapterAuditController {
 
     @Autowired
     ChapterAuditService chapterAuditService;
+    @Autowired
+    ChapterAuditExtendMapper chapterAuditExtendMapper;
 
     /**
      * 周嘉玮
@@ -40,17 +44,30 @@ public class ChapterAuditController {
         }
     }
 
+    @ApiOperation("下拉显示所有可发往的用章审核人")
+    @GetMapping("findAllChapterAuditor")
+    public Message findAllChapterAuditor(){
+        List<ChapterAuditorDTO> allChapterAuditor = chapterAuditExtendMapper.findAllChapterAuditor();
+        if (allChapterAuditor.size() > 0){
+            return MessageUtil.success("success", allChapterAuditor);
+        }else {
+            return MessageUtil.error("无审核人");
+        }
+    }
+
+
+
     /**
      * 周嘉玮
      */
-    @ApiOperation("根据项目名称做模糊查询")
-    @PostMapping("findAllProjectName")
-    public Message findAllProjectName(String projectName){
-        List<ChapterAudit> projectNames = chapterAuditService.findAllProjectNameService(projectName);
+    @ApiOperation("获取所有项目名")
+    @GetMapping("findAllProjectName")
+    public Message findAllProjectName(){
+        List<ChapterAudit> projectNames = chapterAuditService.findAllProjectNameService();
         if (projectNames.size() > 0){
             return MessageUtil.success("success", projectNames);
         }else {
-            return MessageUtil.error("error");
+            return MessageUtil.error("无查询结果");
         }
     }
 
