@@ -44,7 +44,7 @@ public class ChapterAuditController {
     }
 
     @ApiOperation("下拉显示所有可发往的用章审核人")
-    @PostMapping("findAllChapterAuditor")
+    @GetMapping("findAllChapterAuditor")
     public Message findAllChapterAuditor(){
         List<String> allChapterAuditor = chapterAuditExtendMapper.findAllChapterAuditor();
         if (allChapterAuditor.size() > 0){
@@ -60,13 +60,13 @@ public class ChapterAuditController {
      * 周嘉玮
      */
     @ApiOperation("获取所有项目名")
-    @PostMapping("findAllProjectName")
+    @GetMapping("findAllProjectName")
     public Message findAllProjectName(){
         List<ChapterAudit> projectNames = chapterAuditService.findAllProjectNameService();
         if (projectNames.size() > 0){
             return MessageUtil.success("success", projectNames);
         }else {
-            return MessageUtil.error("error");
+            return MessageUtil.error("无查询结果");
         }
     }
 
