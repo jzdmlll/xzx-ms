@@ -98,20 +98,30 @@ public class ChapterAuditServiceImpl implements ChapterAuditService {
 
     /**
      * 周嘉玮
-     * 根据id查询该条审核信息
-     * @param id
+     * 根据项目名称做模糊查询
+     * @param projectName
      * @return
      */
     @Override
-    public ChapterAudit findChapterAuditInfoByIdService(Long id) {
+    public List<ChapterAudit> findAllProjectNameService(String projectName) {
         ChapterAuditExample chapterAuditExample = new ChapterAuditExample();
-        chapterAuditExample.createCriteria().andIdEqualTo(id).andIsActiveEqualTo(1);
-        List<ChapterAudit> chapterAudits = chapterAuditMapper.selectByExample(chapterAuditExample);
-        if (chapterAudits.size() == 1){
-            return chapterAudits.get(0);
-        }else {
-            return null;
-        }
+        chapterAuditExample.createCriteria().andIsActiveEqualTo(1).andProjectNameLike("%" + projectName + "%");
+        List<ChapterAudit> projectNames = chapterAuditMapper.selectByExample(chapterAuditExample);
+        return projectNames;
+    }
+
+    /**
+     * 周嘉玮
+     * 根据id查询该条审核信息
+     * @param ProjectName
+     * @return
+     */
+    @Override
+    public List<ChapterAudit> findChapterAuditInfosByProjectNameService(String ProjectName) {
+        ChapterAuditExample chapterAuditExample = new ChapterAuditExample();
+        chapterAuditExample.createCriteria().andProjectNameEqualTo(ProjectName).andIsActiveEqualTo(1);
+        List<ChapterAudit> chapterAuditInfos = chapterAuditMapper.selectByExample(chapterAuditExample);
+        return chapterAuditInfos;
     }
 
     /**
