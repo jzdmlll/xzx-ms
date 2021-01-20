@@ -263,6 +263,10 @@ public class QuoteServiceImpl implements IQuoteService {
                         Quote q = new Quote();
                         long quoteId = IDUtils.getId();
                         try {
+                            if (StringUtils.isEmpty(item.get("设备单价").toString().trim()) && StringUtils.isEmpty(item.get("报价品牌").toString().trim())) {
+                                continue;
+                            }
+                            double price = Double.parseDouble(item.get("设备单价").toString().trim());
                             q.setId(quoteId);
                             q.setIsActive(1);
                             q.setIsUseful(0);
@@ -277,9 +281,6 @@ public class QuoteServiceImpl implements IQuoteService {
                             inquiryPool.setTechnicalParams(item.get("实际技术参数").toString().trim());
                             q.setSupplier(supplier);
                             inquiryPool.setSupplier(supplier);
-
-                            double price = Double.parseDouble(item.get("设备单价").toString().trim());
-
                             if(StringUtils.isEmpty(item.get("设备单价").toString().trim())){
                                 q.setSuPrice(0D);
                                 inquiryPool.setPrice(0D);

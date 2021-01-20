@@ -454,10 +454,81 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
 
     @Override
     public String insertSupplyByItemService(PurchaseSupply purchaseSupply) {
+
+        PurchaseSupplyExample example = new PurchaseSupplyExample();
+        example.createCriteria().andIsActiveEqualTo(CommonConstant.EFFECTIVE).andItemIdEqualTo(purchaseSupply.getItemId());
+        Long num = purchaseSupplyMapper.countByExample(example);
+
+        if(num > 0){
+            throw new CustomerException("已存在供货商，如需重新选择，请先删除已有的供货商!");
+        }
+
         purchaseSupply.setId(IDUtils.getId());
+        purchaseSupply.setIsActive(CommonConstant.EFFECTIVE);
+        purchaseSupply.setArrivalStatus(0);
         purchaseSupply.setTime(new Date().getTime());
         purchaseSupplyMapper.insert(purchaseSupply);
         return "success";
+    }
+
+    @Override
+    public void deletePurchaseSupply(PurchaseSupply purchaseSupply) {
+
+        PurchaseItemsExample example = new PurchaseItemsExample();
+        example.createCriteria().andIdEqualTo(purchaseSupply.getItemId()).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
+        List<PurchaseItems> list = purchaseItemsMapper.selectByExample(example);
+        if(list.size() > 0){
+            PurchaseItems purchaseItems = list.get(0);
+            if(purchaseItems.getContractId() != null){
+                //不存在合同则可以删除
+                purchaseSupply.setIsActive(CommonConstant.INVALID);
+                purchaseSupply.setUpdateTime(new Date().getTime());
+                purchaseSupplyMapper.updateByPrimaryKeySelective(purchaseSupply);
+            }else{
+                throw new CustomerException("此采购项已建立合同,无法删除，如需删除，请先撤销系统编号为" + purchaseItems.getContractId() + "合同!");
+            }
+        }
+    }
+
+    @Override
+    public void updatePurchaseSupply(PurchaseSupply purchaseSupply) {
+
+        PurchaseItemsExample example = new PurchaseItemsExample();
+        example.createCriteria().andIdEqualTo(purchaseSupply.getItemId()).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
+        List<PurchaseItems> list = purchaseItemsMapper.selectByExample(example);
+        if(list.size() > 0){
+            PurchaseItems purchaseItems = list.get(0);
+            if(purchaseItems.getContractId() != null){
+                //不存在合同则可以修改
+                purchaseSupply.setUpdateTime(new Date().getTime());
+                purchaseSupplyMapper.updateByPrimaryKeySelective(purchaseSupply);
+            }else{
+                throw new CustomerException("此采购项已建立合同,无法修改，如需修改，请先撤销系统编号为" + purchaseItems.getContractId() + "合同!");
+            }
+        }
+    }
+
+    @Override
+    public void updatePurchaseItems(PurchaseItems purchaseItems) {
+
+        PurchaseItemsExample example = new PurchaseItemsExample();
+        example.createCriteria().andIsActiveEqualTo(CommonConstant.EFFECTIVE).andIdEqualTo(purchaseItems.getId());
+        List<PurchaseItems> list = purchaseItemsMapper.selectByExample(example);
+        if(list.size() > 0){
+            if(CommonConstant.IS_INQUIRY.equals(list.get(0).getIsInquiry())){
+                throw new CustomerException("已发往询价，请勿修改操作!");
+            }else {
+                PurchaseSupplyExample supplyExample = new PurchaseSupplyExample();
+                supplyExample.createCriteria().andItemIdEqualTo(purchaseItems.getId()).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
+                List<PurchaseSupply> supplies = purchaseSupplyMapper.selectByExample(supplyExample);
+                if(supplies.size() > 0){
+                    throw new CustomerException("已存在供货商，请勿修改采购项信息，如需修改，先删除供货商!");
+                }else{
+                    purchaseItems.setUpdateTime(new Date().getTime());
+                    purchaseItemsMapper.updateByPrimaryKeySelective(purchaseItems);
+                }
+            }
+        }
     }
 
     /**

@@ -41,22 +41,13 @@ public class WebConfig implements WebMvcConfigurer {
 	}
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		if(test) {
-			//拦截路径可自行配置多个 可用 ，分隔开
-			registry.addInterceptor(jwtInterceptor())
-					.addPathPatterns("/**")
-					.excludePathPatterns(
-							"/**/**");
-		}else {
-			//拦截路径可自行配置多个 可用 ，分隔开
-			registry.addInterceptor(jwtInterceptor())
-//				.addPathPatterns("/category/**","/article/**","/user/**","/role/**","/privilege/**")
-					.addPathPatterns("/**")
-					.excludePathPatterns(
-							"/swagger-resources/**","/v2/**","/swagger-ui.html","/webjars/**",
-							"/user/login","/user/logout","user/findMenuByUserIdUsingGET","/user/getCode",
-							"/user/register","/file/upload","/file/uploadCache","/webSocket/*");
-		}
+		//拦截路径可自行配置多个 可用 ，分隔开
+		registry.addInterceptor(jwtInterceptor())
+//			.addPathPatterns("/category/**","/article/**","/user/**","/role/**","/privilege/**")
+			.addPathPatterns("/**")
+			.excludePathPatterns(
+				"/swagger-resources/**","/v2/**","/swagger-ui.html","/webjars/**",
+				"/user/login","/user/logout","user/findMenuByUserIdUsingGET","/user/getCode",
+				"/user/register","/file/upload","/file/uploadCache","/webSocket/*");
 	}
-
 }

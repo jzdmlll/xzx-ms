@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -196,10 +195,30 @@ public class PurchasePlanController {
     public Message insertSupplyByItem(PurchaseSupply purchaseSupply){
         String result = purchasePlanServiceImpl.insertSupplyByItemService(purchaseSupply);
         if (result.equals("success")){
-            return MessageUtil.success("success");
+            return MessageUtil.success("操作成功");
         }else {
             return MessageUtil.error("error");
         }
+    }
+
+    @ApiOperation("删除供货商")
+    @PostMapping("deletePurchaseSupply")
+    public Message deletePurchaseSupply(PurchaseSupply purchaseSupply) {
+        purchasePlanServiceImpl.deletePurchaseSupply(purchaseSupply);
+        return MessageUtil.success("操作成功");
+    }
+
+    @ApiOperation("修改供货商")
+    @PostMapping("updatePurchaseSupply")
+    public Message updatePurchaseSupply(PurchaseSupply purchaseSupply) {
+        purchasePlanServiceImpl.updatePurchaseSupply(purchaseSupply);
+        return MessageUtil.success("操作成功");
+    }
+    @ApiOperation("修改采购项")
+    @PostMapping("updatePurchaseItems")
+    public Message updatePurchaseItems(PurchaseItems purchaseItems) {
+        purchasePlanServiceImpl.updatePurchaseItems(purchaseItems);
+        return MessageUtil.success("操作成功");
     }
 
 }

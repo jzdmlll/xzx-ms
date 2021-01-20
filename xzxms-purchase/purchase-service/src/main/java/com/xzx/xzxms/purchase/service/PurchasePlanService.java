@@ -102,4 +102,25 @@ public interface PurchasePlanService {
      * @return
      */
     String insertSupplyByItemService(PurchaseSupply purchaseSupply);
+
+    /**
+     * sunny
+     * 删除供货商
+     * @param purchaseSupply
+     */
+    void deletePurchaseSupply(PurchaseSupply purchaseSupply);
+
+    /**
+     * sunny
+     * 修改供货商
+     * @param purchaseSupply
+     */
+    void updatePurchaseSupply(PurchaseSupply purchaseSupply);
+
+    /**
+     * sunny
+     * 采购项修改
+     * @param purchaseItems
+     */
+    void updatePurchaseItems(PurchaseItems purchaseItems);
 }
