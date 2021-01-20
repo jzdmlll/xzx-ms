@@ -1,6 +1,7 @@
 package com.xzx.xzxms.chapter.controller;
 
 import com.xzx.xzxms.chapter.bean.ChapterAudit;
+import com.xzx.xzxms.chapter.dto.ChapterAuditDTO;
 import com.xzx.xzxms.chapter.service.ChapterAuditService;
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
@@ -31,8 +32,8 @@ public class ChapterAuditController {
 
     @ApiOperation("在文件表中新增文件；在用章审核表中新增信息")
     @PostMapping("insertChapterAudit")
-    public Message insertChapterAudit(@RequestBody ChapterAudit chapterAudit, List<SysFile> files){
-        String result = chapterAuditService.insertChapterAudit(chapterAudit, files);
+    public Message insertChapterAudit(@RequestBody ChapterAuditDTO chapterAuditDTO){
+        String result = chapterAuditService.insertChapterAudit(chapterAuditDTO.getChapterAudit(), chapterAuditDTO.getFiles());
         if (result.equals("success")){
             return MessageUtil.success("success");
         }else {

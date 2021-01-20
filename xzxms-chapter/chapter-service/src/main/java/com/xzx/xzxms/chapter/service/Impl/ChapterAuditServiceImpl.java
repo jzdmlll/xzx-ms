@@ -77,6 +77,7 @@ public class ChapterAuditServiceImpl implements ChapterAuditService {
 
         // 新增用章审核
         // 送审时间
+        chapterAudit.setId(id);
         chapterAudit.setSenderTime(new Date().getTime());
         chapterAudit.setIsActive(1);
         // 审核状态初始化 0-未审核
