@@ -594,4 +594,28 @@ public class ChapterAudit {
     public void setAuditStatus(Integer auditStatus) {
         this.auditStatus = auditStatus;
     }
+
+    @Override
+    public String toString() {
+        return "ChapterAudit{" +
+                "id=" + id +
+                ", projectName='" + projectName + '\'' +
+                ", contractName='" + contractName + '\'' +
+                ", contractNo='" + contractNo + '\'' +
+                ", mainContent='" + mainContent + '\'' +
+                ", price=" + price +
+                ", file='" + file + '\'' +
+                ", firstParty='" + firstParty + '\'' +
+                ", secondParty='" + secondParty + '\'' +
+                ", type='" + type + '\'' +
+                ", sender='" + sender + '\'' +
+                ", senderTime=" + senderTime +
+                ", auditor='" + auditor + '\'' +
+                ", auditTime=" + auditTime +
+                ", isActive=" + isActive +
+                ", senderRemark='" + senderRemark + '\'' +
+                ", auditRemark='" + auditRemark + '\'' +
+                ", auditStatus=" + auditStatus +
+                '}';
+    }
 }

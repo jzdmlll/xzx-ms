@@ -1,6 +1,7 @@
 package com.xzx.xzxms.chapter.service.Impl;
 
 import com.xzx.xzxms.chapter.bean.ChapterAudit;
+import com.xzx.xzxms.chapter.bean.ChapterAuditExample;
 import com.xzx.xzxms.chapter.dao.ChapterAuditMapper;
 import com.xzx.xzxms.chapter.service.ChapterAuditService;
 import com.xzx.xzxms.commons.dao.redis.JedisDao;
@@ -41,9 +42,16 @@ public class ChapterAuditServiceImpl implements ChapterAuditService {
     private ChapterAuditMapper chapterAuditMapper;
 
 
+    /**
+     * 周嘉玮
+     * 在文件表中新增文件；在用章审核表中新增信息
+     * @param chapterAudit
+     * @param files
+     * @return
+     */
     @Transactional
     @Override
-    public String insertChapterAudit(ChapterAudit chapterAudit, List<SysFile> files) {
+    public String insertChapterAuditService(ChapterAudit chapterAudit, List<SysFile> files) {
 
         // 生成用章审核信息id
         long id = IDUtils.getId();
@@ -86,5 +94,87 @@ public class ChapterAuditServiceImpl implements ChapterAuditService {
         chapterAuditMapper.insert(chapterAudit);
 
         return "success";
+    }
+
+    /**
+     * 周嘉玮
+     * 根据id查询该条审核信息
+     * @param id
+     * @return
+     */
+    @Override
+    public ChapterAudit findChapterAuditInfoByIdService(Long id) {
+        ChapterAuditExample chapterAuditExample = new ChapterAuditExample();
+        chapterAuditExample.createCriteria().andIdEqualTo(id).andIsActiveEqualTo(1);
+        List<ChapterAudit> chapterAudits = chapterAuditMapper.selectByExample(chapterAuditExample);
+        if (chapterAudits.size() == 1){
+            return chapterAudits.get(0);
+        }else {
+            return null;
+        }
+    }
+
+    /**
+     * 周嘉玮
+     * 审核人审核回馈
+     * @param chapterAudit
+     * @return
+     */
+    @Override
+    public String updateChapterAuditService(ChapterAudit chapterAudit) {
+
+        ChapterAuditExample chapterAuditExample = new ChapterAuditExample();
+        // 查询需要审核的那条数据
+        chapterAuditExample.createCriteria().andIdEqualTo(chapterAudit.getId());
+
+        chapterAudit.setAuditTime(new Date().getTime());
+        chapterAuditMapper.updateByExampleSelective(chapterAudit, chapterAuditExample);
+
+        return "success";
+    }
+
+    /**
+     * 周嘉玮
+     * 删除用章审核
+     * @param id
+     * @return
+     */
+    @Transactional
+    @Override
+    public String deleteChapterAuditService(Long id) {
+
+        ChapterAuditExample chapterAuditExample = new ChapterAuditExample();
+        // 查询需要删除的那条数据
+        chapterAuditExample.createCriteria().andIdEqualTo(id);
+
+        ChapterAudit chapterAudit = new ChapterAudit();
+        // 假删
+        chapterAudit.setIsActive(0);
+        chapterAuditMapper.updateByExampleSelective(chapterAudit, chapterAuditExample);
+
+        // 判断是否删除成功
+        ChapterAuditExample chapterAuditExample1 = new ChapterAuditExample();
+        chapterAuditExample1.createCriteria().andIdEqualTo(id).andIsActiveEqualTo(1);
+        long count = chapterAuditMapper.countByExample(chapterAuditExample1);
+        if (count == 0){
+            return "success";
+        }else {
+            return "error";
+        }
+
+
+//        // 删除该条数据
+//        chapterAuditMapper.deleteByPrimaryKey(id);
+//
+//        // 判断是否删除成功
+//        ChapterAudit chapterAudit = chapterAuditMapper.selectByPrimaryKey(id);
+//        // 删除成功
+//        if (chapterAudit == null || chapterAudit.equals("")){
+//            return "success";
+//
+//        //删除失败
+//        }else {
+//            return "error";
+//        }
     }
 }

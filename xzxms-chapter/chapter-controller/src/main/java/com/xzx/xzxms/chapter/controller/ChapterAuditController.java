@@ -5,15 +5,9 @@ import com.xzx.xzxms.chapter.dto.ChapterAuditDTO;
 import com.xzx.xzxms.chapter.service.ChapterAuditService;
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
-import com.xzx.xzxms.system.bean.SysFile;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author：ZJW
@@ -33,11 +27,45 @@ public class ChapterAuditController {
     @ApiOperation("在文件表中新增文件；在用章审核表中新增信息")
     @PostMapping("insertChapterAudit")
     public Message insertChapterAudit(@RequestBody ChapterAuditDTO chapterAuditDTO){
-        String result = chapterAuditService.insertChapterAudit(chapterAuditDTO.getChapterAudit(), chapterAuditDTO.getFiles());
+        String result = chapterAuditService.insertChapterAuditService(chapterAuditDTO.getChapterAudit(), chapterAuditDTO.getFiles());
         if (result.equals("success")){
             return MessageUtil.success("success");
         }else {
             return MessageUtil.error("error");
         }
     }
+
+    @ApiOperation("根据id查询该条审核信息")
+    @GetMapping("findChapterAuditInfoById")
+    public Message findChapterAuditInfoById(Long id){
+        ChapterAudit chapterAuditInfo = chapterAuditService.findChapterAuditInfoByIdService(id);
+        if (chapterAuditInfo != null && !chapterAuditInfo.equals("")){
+            return MessageUtil.success("success");
+        }else {
+            return MessageUtil.error("error");
+        }
+    }
+
+    @ApiOperation("审核人审核回馈")
+    @PostMapping("updateChapterAudit")
+    public Message updateChapterAudit(@RequestBody ChapterAudit chapterAudit){
+        String result = chapterAuditService.updateChapterAuditService(chapterAudit);
+        if (result.equals("success")){
+            return MessageUtil.success("success");
+        }else {
+            return MessageUtil.error("error");
+        }
+    }
+
+    @ApiOperation("删除该条审核")
+    @GetMapping("deleteChapterAuditService")
+    public Message deleteChapterAuditService(Long id){
+        String result = chapterAuditService.deleteChapterAuditService(id);
+        if (result.equals("success")){
+            return MessageUtil.success("success");
+        }else {
+            return MessageUtil.error("error");
+        }
+    }
+
 }
