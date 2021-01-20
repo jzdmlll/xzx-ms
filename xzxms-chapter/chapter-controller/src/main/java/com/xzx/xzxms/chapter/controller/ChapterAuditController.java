@@ -1,6 +1,7 @@
 package com.xzx.xzxms.chapter.controller;
 
 import com.xzx.xzxms.chapter.bean.ChapterAudit;
+import com.xzx.xzxms.chapter.dao.extend.ChapterAuditExtendMapper;
 import com.xzx.xzxms.chapter.dto.ChapterAuditDTO;
 import com.xzx.xzxms.chapter.service.ChapterAuditService;
 import com.xzx.xzxms.commons.utils.Message;
@@ -25,6 +26,8 @@ public class ChapterAuditController {
 
     @Autowired
     ChapterAuditService chapterAuditService;
+    @Autowired
+    ChapterAuditExtendMapper chapterAuditExtendMapper;
 
     /**
      * 周嘉玮
@@ -39,6 +42,19 @@ public class ChapterAuditController {
             return MessageUtil.error("error");
         }
     }
+
+    @ApiOperation("下拉显示所有可发往的用章审核人")
+    @PostMapping("findAllChapterAuditor")
+    public Message findAllChapterAuditor(){
+        List<String> allChapterAuditor = chapterAuditExtendMapper.findAllChapterAuditor();
+        if (allChapterAuditor.size() > 0){
+            return MessageUtil.success("success", allChapterAuditor);
+        }else {
+            return MessageUtil.error("无审核人");
+        }
+    }
+
+
 
     /**
      * 周嘉玮

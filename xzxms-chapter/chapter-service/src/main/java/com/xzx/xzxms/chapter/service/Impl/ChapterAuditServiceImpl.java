@@ -105,9 +105,15 @@ public class ChapterAuditServiceImpl implements ChapterAuditService {
     @Override
     public List<ChapterAudit> findAllProjectNameService(String projectName) {
         ChapterAuditExample chapterAuditExample = new ChapterAuditExample();
-        chapterAuditExample.createCriteria().andIsActiveEqualTo(1).andProjectNameLike("%" + projectName + "%");
-        List<ChapterAudit> projectNames = chapterAuditMapper.selectByExample(chapterAuditExample);
-        return projectNames;
+        if (projectName == null || projectName.equals("")){
+            chapterAuditExample.createCriteria().andIsActiveEqualTo(1);
+            List<ChapterAudit> projectNames = chapterAuditMapper.selectByExample(chapterAuditExample);
+            return projectNames;
+        }else {
+            chapterAuditExample.createCriteria().andIsActiveEqualTo(1).andProjectNameLike("%" + projectName + "%");
+            List<ChapterAudit> projectNames = chapterAuditMapper.selectByExample(chapterAuditExample);
+            return projectNames;
+        }
     }
 
     /**
