@@ -9,6 +9,7 @@ import com.xzx.xzxms.commons.fileupload.IFileUploadService;
 import com.xzx.xzxms.commons.utils.Base64Util;
 import com.xzx.xzxms.commons.utils.IDUtils;
 import com.xzx.xzxms.system.bean.SysFile;
+import com.xzx.xzxms.system.bean.SysFileExample;
 import com.xzx.xzxms.system.bean.extend.SysFileExtend;
 import com.xzx.xzxms.system.dao.SysFileMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -185,5 +186,13 @@ public class ChapterAuditServiceImpl implements ChapterAuditService {
 //        }else {
 //            return "error";
 //        }
+    }
+
+    @Override
+    public List<SysFile> findFileUrlByOtherIdService(Long otherId) {
+        SysFileExample sysFileExample = new SysFileExample();
+        sysFileExample.createCriteria().andIsActiveEqualTo(1).andOtherIdEqualTo(otherId);
+        List<SysFile> sysFiles = sysFileMapper.selectByExample(sysFileExample);
+        return sysFiles;
     }
 }

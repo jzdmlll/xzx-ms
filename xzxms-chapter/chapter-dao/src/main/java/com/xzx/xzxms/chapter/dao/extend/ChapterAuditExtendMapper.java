@@ -1,7 +1,9 @@
 package com.xzx.xzxms.chapter.dao.extend;
 
+import com.xzx.xzxms.chapter.bean.ChapterAudit;
 import com.xzx.xzxms.chapter.dto.ChapterAuditorDTO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -22,4 +24,17 @@ public interface ChapterAuditExtendMapper {
      * 下拉显示所有可发往的用章审核人
      */
     List<ChapterAuditorDTO> findAllChapterAuditor();
+
+    /**
+     * 根据输入条件进行查询、模糊查询
+     * @param projectName
+     * @param startTime
+     * @param overTime
+     * @param auditStatus
+     * @return
+     */
+    List<ChapterAudit> findChapterAuditorInfoByLike(@Param("projectName") String projectName,
+                                                    @Param("startTime") Long startTime,
+                                                    @Param("overTime") Long overTime,
+                                                    @Param("auditStatus") Integer auditStatus);
 }
