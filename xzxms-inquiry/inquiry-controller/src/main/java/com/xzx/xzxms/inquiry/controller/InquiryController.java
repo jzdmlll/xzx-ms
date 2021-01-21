@@ -4,6 +4,8 @@ import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
 import com.xzx.xzxms.inquiry.bean.Quote;
 import com.xzx.xzxms.inquiry.bean.SysProDetail;
+import com.xzx.xzxms.inquiry.dto.InquiryTree;
+import com.xzx.xzxms.inquiry.dto.InquiryTreeDTO;
 import com.xzx.xzxms.inquiry.service.IInquiryService;
 import com.xzx.xzxms.inquiry.bean.Inquiry;
 import com.xzx.xzxms.inquiry.bean.extend.InquiryExtend;
@@ -74,6 +76,14 @@ public class InquiryController {
         return MessageUtil.success("保存成功");
     }
 
+    @ApiOperation(value = "询价页面树结构导入")
+    @PostMapping(value = "batchAddInquiryTree")
+    public Message batchAddInquiryTree(@RequestBody InquiryTreeDTO inquiryTreeDTO){
+
+
+        return MessageUtil.success("success");
+    }
+
     @ApiOperation(value="批量删除询价内容")
     @PostMapping(value="batchSetInvalid")
     public Message batchSetInvalid(long[] ids){
@@ -110,7 +120,7 @@ public class InquiryController {
     @PostMapping(value = "saveOrUpdate")
     public Message saveOrUpdate(Inquiry inquiry){
 
-        iInquiryServiceImpl.insertOrUpdateInquiry(inquiry);
+        iInquiryServiceImpl.insertInquiry(inquiry);
         return MessageUtil.success("success");
     }
 

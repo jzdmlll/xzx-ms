@@ -1,5 +1,6 @@
 package com.xzx.xzxms.inquiry.service.impl;
 
+import com.xzx.xzxms.commons.constant.CommonConstant;
 import com.xzx.xzxms.commons.utils.BeanHelper;
 import com.xzx.xzxms.commons.utils.CustomerException;
 import com.xzx.xzxms.commons.utils.IDUtils;
@@ -9,6 +10,8 @@ import com.xzx.xzxms.inquiry.dao.QuoteMapper;
 import com.xzx.xzxms.inquiry.dao.SysProCheckMapper;
 import com.xzx.xzxms.inquiry.dao.extend.InquiryExtendMapper;
 import com.xzx.xzxms.inquiry.dao.extend.QuoteAndInquiryExtendMapper;
+import com.xzx.xzxms.inquiry.dto.InquiryTree;
+import com.xzx.xzxms.inquiry.dto.InquiryTreeDTO;
 import com.xzx.xzxms.inquiry.service.IInquiryService;
 import com.xzx.xzxms.inquiry.bean.*;
 import com.xzx.xzxms.inquiry.bean.extend.InquiryAndProDetailExtend;
@@ -18,6 +21,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import javax.smartcardio.CommandAPDU;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
@@ -32,10 +36,6 @@ public class InquiryServiceImpl implements IInquiryService {
     private QuoteMapper quoteMapper;
     @Resource
     private ProPoolMapper proPoolMapper;
-    @Resource
-    private SysProCheckMapper sysProCheckMapper;
-    @Resource
-    private QuoteAndInquiryExtendMapper quoteAndInquiryExtendMapper;
 
     @Override
     public List<InquiryExtend> findByProDetailId(Long proDetailId, String name, String model) {
@@ -49,51 +49,115 @@ public class InquiryServiceImpl implements IInquiryService {
     }
 
     /**
+     * 根据询价ID查询存在报价的数量
+     * @param inquiry
+     * @return
+     */
+    public long isExistQuoteByInquiryId(Inquiry inquiry){
+
+        QuoteExample example = new QuoteExample();
+        example.createCriteria().andInquiryIdEqualTo(inquiry.getId()).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
+        long num = quoteMapper.countByExample(example);
+        return num;
+    }
+
+    /**
+     * 根据询价参数判断是否存在此询价
+     * @param inquiry
+     */
+    public void isExistByInquiryParams(Inquiry inquiry){
+
+        InquiryExample example = new InquiryExample();
+        example.createCriteria().andNameEqualTo(inquiry.getName()).andParamsEqualTo(inquiry.getParams()).andVetoEqualTo(CommonConstant.VETOED)
+                .andSortEqualTo(inquiry.getSort()).andProDetailIdEqualTo(inquiry.getProDetailId()).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
+        long num = inquiryMapper.countByExample(example);
+        if (num > 0){
+            throw new CustomerException(inquiry.getName() + ":询价内容已存在，勿重复添加!");
+        }
+    }
+
+    /**
+     * sunny
      * 批量插入
      * @param inquiryList
      */
     @Transactional(isolation = Isolation.SERIALIZABLE)
     @Override
     public void batchAddInquiry(List<Inquiry> inquiryList) throws SQLException {
+
         long time = new Date().getTime();
         InquiryExample example = new InquiryExample();
-        example.createCriteria().andProDetailIdEqualTo(inquiryList.get(0).getProDetailId()).andIsActiveEqualTo(1);
-        List<Inquiry> inquiries = inquiryMapper.selectByExample(example);
-        if (inquiries.size() > 0) {
-            for (Inquiry i:inquiries){
-                QuoteExample ex = new QuoteExample();
-                ex.createCriteria().andInquiryIdEqualTo(i.getId()).andIsActiveEqualTo(1);
-                List<Quote> quotes = quoteMapper.selectByExample(ex);
-
-                if(quotes.size() > 0) {
-                    throw new CustomerException("询价函["+i.getName()+"]下已有报价单存在，禁止覆盖");
-                }
-            }
-            inquiryMapper.deleteByExample(example);
+        example.createCriteria().andProDetailIdEqualTo(inquiryList.get(0).getProDetailId()).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
+        long inquiryNum = inquiryMapper.countByExample(example);
+        if (inquiryNum > 0){
+            throw new CustomerException("已存在一条或多条询价信息,如需重新导入，请先全部删除后导入!");
         }
+
         for (Inquiry inquiry : inquiryList) {
+
             long inquiryId = IDUtils.getId();
             inquiry.setId(inquiryId);
             inquiry.setTime(time);
-            inquiry.setIsActive(1);
-            inquiry.setIsUseful(0);
+            inquiry.setIsActive(CommonConstant.EFFECTIVE);
+            inquiry.setIsUseful(CommonConstant.IS_NOT_USEFUL);
             //需要询价
-            inquiry.setIsinquiry(1);
-            //否决
-            inquiry.setVeto(0);
-            inquiryMapper.insert(inquiry);
+            inquiry.setIsinquiry(CommonConstant.IS_INQUIRY);
+            //未否决
+            inquiry.setVeto(CommonConstant.NOT_VETOED);
+
+            //询价插入先判断是否已存在，防止重复
+            isExistByInquiryParams(inquiry);
+            inquiryMapper.insertSelective(inquiry);
+        }
+    }
+
+    @Transactional
+    @Override
+    public void batchAddInquiryTree(InquiryTreeDTO inquiryTreeDTO) {
+
+        long time = new Date().getTime();
+        for(InquiryTree tree : inquiryTreeDTO.getInquiryList()){
+            //如何tree.getChildren()=0,说明它是大类
+            if (tree.getChildren().size() == 0){
+
+                //生成大类表
+                long parentId = IDUtils.getId();
+                tree.setId(parentId);
+                tree.setTime(time);
+                tree.setIsActive(CommonConstant.EFFECTIVE);
+                tree.setIsUseful(CommonConstant.IS_NOT_USEFUL);
+                tree.setVeto(CommonConstant.VETOED);
+                isExistByInquiryParams(tree);
+                inquiryMapper.insertSelective(tree);
+
+                //遍历小类,补充信息
+                for(Inquiry inquiry : tree.getChildren()){
+
+                    inquiry.setId(IDUtils.getId());
+                    inquiry.setParentId(parentId + "");
+                    inquiry.setTime(time);
+                    inquiry.setIsActive(CommonConstant.EFFECTIVE);
+                    inquiry.setIsUseful(CommonConstant.IS_NOT_USEFUL);
+                    inquiry.setIsinquiry(CommonConstant.IS_INQUIRY);
+                    inquiry.setVeto(CommonConstant.NOT_VETOED);
+                    isExistByInquiryParams(inquiry);
+                    inquiryMapper.insertSelective(inquiry);
+                }
+            }else {
+                throw new CustomerException("excel格式错误，无法解析!");
+            }
         }
     }
 
     @Override
     public void rowSave(Inquiry inquiry) {
 
-        int count = quoteAndInquiryExtendMapper.findIsExistQuote(inquiry.getId());
-        if (count > 0){
-            throw new CustomerException("该询价信息已存在报价，请勿修改询价内容!，如需修改请先删除报价!");
+        long num = isExistQuoteByInquiryId(inquiry);
+        if (num > 0){
+            throw new CustomerException(inquiry.getName() + ":已存在报价，请勿修改询价内容!，如需修改请先删除报价!");
         }
 
-        inquiry.setTime(new Date().getTime());
+        inquiry.setUpdateTime(new Date().getTime());
         inquiryMapper.updateByPrimaryKeySelective(inquiry);
     }
 
@@ -103,19 +167,17 @@ public class InquiryServiceImpl implements IInquiryService {
 
         long time = new Date().getTime();
         for (long id : ids){
-            Inquiry inquiry=inquiryMapper.selectByPrimaryKey(id);
-            QuoteExample example = new QuoteExample();
-            example.createCriteria().andInquiryIdEqualTo(id).andIsActiveEqualTo(1);
-            List<Quote> quotes = quoteMapper.selectByExample(example);
-            if(quotes.size() > 0) {
-                throw new CustomerException("该询价下有报价内容，请删除对应报价内容后执行该操作");
+            Inquiry inquiry = inquiryMapper.selectByPrimaryKey(id);
+            long num = isExistQuoteByInquiryId(inquiry);
+            if(num > 0) {
+                throw new CustomerException(inquiry.getName() + ":下有报价内容，请删除对应报价内容后执行该操作");
             }
-            if (inquiry != null || !inquiry.getIsActive().equals(0)){
-                inquiry.setIsActive(0);
+            if (inquiry != null && inquiry.getIsActive().equals(CommonConstant.EFFECTIVE)){
+                inquiry.setIsActive(CommonConstant.INVALID);
                 inquiry.setTime(time);
                 inquiryMapper.updateByPrimaryKeySelective(inquiry);
             }else {
-                throw new CustomerException("该数据已不存在");
+                throw new CustomerException(inquiry.getName() + ":已不存在");
             }
         }
     }
@@ -133,14 +195,12 @@ public class InquiryServiceImpl implements IInquiryService {
     public void batchSetIsNotInquiry(long[] ids, Integer status) {
 
         for (long id : ids){
-            QuoteExample example = new QuoteExample();
-            example.createCriteria().andInquiryIdEqualTo(id).andIsActiveEqualTo(1);
-            List<Quote> list = quoteMapper.selectByExample(example);
-            if (list.size() > 0){
-                Inquiry inq = inquiryMapper.selectByPrimaryKey(id);
-                throw new CustomerException(inq.getName() + ":已存在报价，勿更改是否需要询价状态!");
+
+            Inquiry inquiry = inquiryMapper.selectByPrimaryKey(id);
+            long num = isExistQuoteByInquiryId(inquiry);
+            if (num > 0){
+                throw new CustomerException(inquiry.getName() + " :已存在报价，勿更改是否需要询价状态!");
             }
-            Inquiry inquiry = new Inquiry();
             inquiry.setId(id);
             inquiry.setIsinquiry(status);
             inquiryMapper.updateByPrimaryKeySelective(inquiry);
@@ -153,20 +213,12 @@ public class InquiryServiceImpl implements IInquiryService {
         Inquiry inquiry = new Inquiry();
         inquiry.setId(id);
         //否决
-        inquiry.setVeto(1);
+        inquiry.setVeto(CommonConstant.VETOED);
         inquiryMapper.updateByPrimaryKeySelective(inquiry);
     }
 
     @Override
     public void inquiryChoosePool(long inquiryId, long proPoolId, long operator) {
-
-//        QuoteExample example = new QuoteExample();
-//        example.createCriteria().andInquiryIdEqualTo(inquiryId).andIsActiveEqualTo(1);
-//        List<Quote> quotes = quoteMapper.selectByExample(example);
-//
-//        if(quotes.size() > 0){
-//            throw new CustomerException("此条询价内容已存在报价，如需修改请先删除报价!");
-//        }
 
         long quoteId = IDUtils.getId();
         long time = new Date().getTime();
@@ -191,37 +243,19 @@ public class InquiryServiceImpl implements IInquiryService {
         quote.setIsUseful(0);
         quote.setOperator(operator+"");
         quote.setTime(time);
-        quoteMapper.insert(quote);
-
-/*        SysProCheck sysProCheck = new SysProCheck();
-        sysProCheck.setId(IDUtils.getId());
-        sysProCheck.setTechnicalAudit(0);
-        sysProCheck.setBusinessAudit(0);
-        sysProCheck.setCompareAudit(0);
-        sysProCheck.setFinallyAudit(0);
-        sysProCheck.setTechnicalRemark("");
-        sysProCheck.setBusinessRemark("");
-        sysProCheck.setCompareRemark("");
-        sysProCheck.setFinallyRemark("");
-        sysProCheck.setQuoteId(quoteId);
-        sysProCheck.setOperator(operator+"");
-        sysProCheck.setTime(time);
-        sysProCheckMapper.insertSelective(sysProCheck);*/
+        quoteMapper.insertSelective(quote);
     }
 
     @Override
-    public void insertOrUpdateInquiry(Inquiry inquiry) {
+    public void insertInquiry(Inquiry inquiry) {
 
-        InquiryExample example = new InquiryExample();
-        example.createCriteria().andNameEqualTo(inquiry.getName()).andParamsEqualTo(inquiry.getParams()).andVetoEqualTo(0)
-                .andProDetailIdEqualTo(inquiry.getProDetailId()).andIsActiveEqualTo(1);
-        List<Inquiry> inquiries = inquiryMapper.selectByExample(example);
-        if (inquiries.size() > 0){
-            throw new CustomerException(inquiry.getName() + ":询价内容已存在，勿重复添加!");
-        }
         inquiry.setId(IDUtils.getId());
-        inquiry.setVeto(0);
+        inquiry.setIsinquiry(CommonConstant.IS_INQUIRY);
+        inquiry.setIsActive(CommonConstant.EFFECTIVE);
+        inquiry.setIsUseful(CommonConstant.IS_NOT_USEFUL);
+        inquiry.setVeto(CommonConstant.VETOED);
         inquiry.setTime(new Date().getTime());
+        isExistByInquiryParams(inquiry);
         inquiryMapper.insert(inquiry);
     }
 
@@ -229,7 +263,7 @@ public class InquiryServiceImpl implements IInquiryService {
     public void finallyUpdateDraft(Inquiry inquiry) {
 
         inquiry.setCorrectPrice(inquiry.getFinallyPrice());
-        inquiry.setTime(new Date().getTime());
+        inquiry.setUpdateTime(new Date().getTime());
         inquiryMapper.updateByPrimaryKeySelective(inquiry);
     }
 
