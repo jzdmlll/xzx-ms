@@ -3,6 +3,16 @@ package com.xzx.xzxms.commons.constant;
 public interface CommonConstant {
 
     /**
+     * 选用
+     */
+    public static final Integer CHOOSE = 1;
+
+    /**
+     * 未选用
+     */
+    public static final Integer NOT_CHOOSE = 2;
+
+    /**
      * 有效的
      */
     public static final Integer EFFECTIVE = 1;

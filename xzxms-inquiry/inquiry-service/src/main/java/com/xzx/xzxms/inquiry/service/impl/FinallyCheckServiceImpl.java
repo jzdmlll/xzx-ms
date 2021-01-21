@@ -1,5 +1,6 @@
 package com.xzx.xzxms.inquiry.service.impl;
 
+import com.xzx.xzxms.commons.constant.CommonConstant;
 import com.xzx.xzxms.commons.utils.BeanHelper;
 import com.xzx.xzxms.commons.utils.IDUtils;
 import com.xzx.xzxms.inquiry.dao.InquiryMapper;
@@ -55,7 +56,7 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
 
             if (inquiryId == f.getInquiryId()){
                 Object value =  map.get(f.getSupplier());
-                if (value != null && f.getTechnicalAudit() == 1 && f.getBusinessAudit() == 1){
+                if (value != null && f.getTechnicalAudit() == CommonConstant.CHOOSE && f.getBusinessAudit() == CommonConstant.CHOOSE && f.getCompareStatus() == CommonConstant.CHOOSE){
                     //如果存在一样的供货商，技审、商审通过则替换掉
                     map.replace(f.getSupplier(),f);
                 }else {
