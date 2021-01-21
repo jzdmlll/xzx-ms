@@ -1,7 +1,6 @@
 package com.xzx.xzxms.purchase.service.impl;
 
 import com.xzx.xzxms.commons.constant.CommonConstant;
-import com.xzx.xzxms.commons.constant.FileConstant;
 import com.xzx.xzxms.commons.dao.redis.JedisDao;
 import com.xzx.xzxms.commons.utils.Base64Util;
 import com.xzx.xzxms.commons.utils.CustomerException;
@@ -109,7 +108,7 @@ public class PurchaseContractManagementServiceImpl implements PurchaseContractMa
         // 查询该合同下是否有文件
         SysFileExample sysFileExample = new SysFileExample();
         sysFileExample.createCriteria().andOtherIdEqualTo(purchaseContract.getId()).andIsActiveEqualTo(CommonConstant.EFFECTIVE)
-                .andTypeEqualTo(FileConstant.FILE_PURCHASE_CONTRACT);
+                .andTypeEqualTo(SysFileExtend.TYPE_PURCHASE_CONTRACT);
         Long fileNum = sysFileMapper.countByExample(sysFileExample);
 
         if (fileNum > 0) {
@@ -143,7 +142,7 @@ public class PurchaseContractManagementServiceImpl implements PurchaseContractMa
             }
             //文件信息插入到数据库
 
-            file.setType(FileConstant.FILE_PURCHASE_CONTRACT);
+            file.setType(SysFileExtend.TYPE_PURCHASE_CONTRACT);
             file.setOtherId(purchaseContract.getId());
             file.setTime(time);
             file.setIsActive(CommonConstant.EFFECTIVE);
