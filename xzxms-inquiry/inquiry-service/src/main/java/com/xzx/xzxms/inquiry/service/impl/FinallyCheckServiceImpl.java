@@ -54,11 +54,16 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
         for(FinallyQuoteInquiryVM f : finallyCheckCompareVMS){
 
             if (inquiryId == f.getInquiryId()){
-                if (f.getSuPrice() == minPrice){
-                    f.setMinPrice(1);
+                Object value =  map.get(f.getSupplier());
+                if (value != null && f.getTechnicalAudit() == 1 && f.getBusinessAudit() == 1){
+                    //如果存在一样的供货商，技审、商审通过则替换掉
+                    map.replace(f.getSupplier(),f);
+                }else {
+                    if (f.getSuPrice() == minPrice){
+                        f.setMinPrice(1);
+                    }
+                    map.put(f.getSupplier(),f);
                 }
-                map.put(f.getSupplier(),f);
-
             }else {
                 if (inquiryId != 0){
                     maps.add(map);
