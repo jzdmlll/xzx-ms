@@ -16,6 +16,7 @@ import java.util.List;
 public class PurchaseItemsListDTO {
     private List<PurchaseItems> purchaseItemsList;
     private SysProDetailWithBLOBs sysProDetailWithBLOBs;
+
     public List<PurchaseItems> getPurchaseItemsList() {
         return purchaseItemsList;
     }
