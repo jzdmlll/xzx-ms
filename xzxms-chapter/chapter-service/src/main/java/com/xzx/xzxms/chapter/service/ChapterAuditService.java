@@ -2,6 +2,7 @@ package com.xzx.xzxms.chapter.service;
 
 import com.xzx.xzxms.chapter.bean.ChapterAudit;
 import com.xzx.xzxms.system.bean.SysFile;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -25,12 +26,14 @@ public interface ChapterAuditService {
     String insertChapterAuditService(ChapterAudit chapterAudit, List<SysFile> files);
 
     /**
+     * 周嘉玮
      * 获取所有项目名
      * @return
      */
     List<ChapterAudit> findAllProjectNameService();
 
     /**
+     * 周嘉玮
      * 根据项目名称查询该项目下所有审核信息审核信息
      * @param projectName
      * @return
@@ -38,6 +41,7 @@ public interface ChapterAuditService {
     List<ChapterAudit> findChapterAuditInfosByProjectNameService(String projectName);
 
     /**
+     * 周嘉玮
      * 审核人审核回馈
      * @param chapterAudit
      * @return
@@ -45,9 +49,17 @@ public interface ChapterAuditService {
     String updateChapterAuditService(ChapterAudit chapterAudit);
 
     /**
+     * 周嘉玮
      * 删除该条审核
      * @param id
      * @return
      */
     String deleteChapterAuditService(Long id);
+
+    /**
+     * 根据审核项id（在sys_file中是other_id）查询其文件
+     * @param otherId
+     * @return
+     */
+    List<SysFile> findFileUrlByOtherIdService(Long otherId);
 }

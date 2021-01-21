@@ -7,6 +7,7 @@ import com.xzx.xzxms.chapter.dto.ChapterAuditorDTO;
 import com.xzx.xzxms.chapter.service.ChapterAuditService;
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
+import com.xzx.xzxms.system.bean.SysFile;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -110,6 +111,17 @@ public class ChapterAuditController {
             return MessageUtil.success("success");
         }else {
             return MessageUtil.error("error");
+        }
+    }
+
+    @ApiOperation("根据审核项id（在sys_file中是other_id）查询其文件")
+    @GetMapping("findFileUrlByOtherId")
+    public Message findFileUrlByOtherId(Long id){
+        List<SysFile> fileUrls = chapterAuditService.findFileUrlByOtherIdService(id);
+        if (fileUrls.size()>0){
+            return MessageUtil.success("success",fileUrls);
+        }else {
+            return MessageUtil.error("无上传文件");
         }
     }
 
