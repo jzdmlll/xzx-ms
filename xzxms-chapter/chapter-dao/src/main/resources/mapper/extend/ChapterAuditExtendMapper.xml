@@ -30,10 +30,10 @@
             and project_name like "%"#{projectName, jdbcType = VARCHAR}"%"
         </if>
         <if test="startTime != null">
-            and senderTime &gt;= #{startTime, jdbcType = BIGINT}
+            and sender_time &gt;= #{startTime, jdbcType = BIGINT}
         </if>
         <if test="overTime != null">
-            and senderTime &lt;= #{overTime, jdbcType = BIGINT}
+            and sender_time &lt;= #{overTime, jdbcType = BIGINT}
         </if>
     </select>
 </mapper>
