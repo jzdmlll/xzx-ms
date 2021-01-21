@@ -19,7 +19,7 @@
         where name='用章管理' and type='menu')
     </select>
 
-    <select id="" resultMap="com.xzx.xzxms.chapter.bean.ChapterAudit">
+    <select id="findChapterAuditorInfoByLike" resultType="com.xzx.xzxms.chapter.bean.ChapterAudit">
         SELECT username auditor, chapter_audit.id,project_name,contract_name,contract_no,main_content,price,file,first_party,second_party,type,sender,sender_time,audit_time,chapter_audit.is_active,sender_remark,audit_remark,audit_status
         FROM `chapter_audit` inner join sys_user on auditor = sys_user.id
         where chapter_audit.is_active=1 and sys_user.is_active=1
