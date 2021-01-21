@@ -49,18 +49,19 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
     }
 
     /**
+     * sunny
      * 逻辑假删
      * @param id
      */
     @Transactional
     @Override
     public void deleteById(Long id) {
+
         PurchaseContract purchaseContract = purchaseContractMapper.selectByPrimaryKey(id);
-        if(purchaseContract == null || purchaseContract.getIsActive().equals(CommonConstant.INVALID)){
-            throw new CustomerException("该数据已不存在");
+        if(purchaseContract == null || (CommonConstant.INVALID).equals(purchaseContract.getIsActive())){
+            throw new CustomerException("数据已不存在");
         }else {
             long time = new Date().getTime();
-
             PurchaseItemsExample example = new PurchaseItemsExample();
             example.createCriteria().andContractIdEqualTo(id).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
             List<PurchaseItems> list = purchaseItemsMapper.selectByExample(example);

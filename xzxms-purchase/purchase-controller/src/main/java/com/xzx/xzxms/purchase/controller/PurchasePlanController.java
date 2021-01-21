@@ -100,7 +100,7 @@ public class PurchasePlanController {
      */
     @ApiOperation("添加询价信息")
     @PostMapping("insertInquiryInfo")
-    public Message insertInquiryInfo(PurchaseItemsListDTO purchaseItemsList){
+    public Message insertInquiryInfo(@RequestBody PurchaseItemsListDTO purchaseItemsList){
         String result = purchasePlanServiceImpl.insertSysProDetailService(purchaseItemsList);
         if (result.equals("success")){
             return MessageUtil.success("success");
