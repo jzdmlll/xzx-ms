@@ -66,7 +66,7 @@ public class InquiryController {
     }
 
     @ApiOperation(value = "批量新增询价")
-    @PostMapping(value ="batchAddInquiry" )
+    @PostMapping(value ="batchAddInquiry")
     public Message batchAddInquiry(@RequestBody BatchInquiryVM inquiries){
         try {
             iInquiryServiceImpl.batchAddInquiry(inquiries.getInquiryList());
@@ -80,7 +80,7 @@ public class InquiryController {
     @PostMapping(value = "batchAddInquiryTree")
     public Message batchAddInquiryTree(@RequestBody InquiryTreeDTO inquiryTreeDTO){
 
-
+        iInquiryServiceImpl.batchAddInquiryTree(inquiryTreeDTO);
         return MessageUtil.success("success");
     }
 
