@@ -98,13 +98,15 @@
     </resultMap>
     <select id="findInquiryAndQuoteNum" resultMap="FindInquiryAndQuoteNumMap">
         SELECT
-          b.*,a.num quote_num,dev.name device_model
+          b.name name, j.name parent_id, b.code code, b.brand brand, b.params params, b.model model, b.unit unit, b.number number, b.price price, b.sort sort,
+          b.veto veto, 
+          a.num quote_num, dev.name device_model
         from
           inquiry b left join (SELECT inquiry_id,count(1) num from quote where inquiry_id=inquiry_id and is_active = 1 group by inquiry_id)a
         ON
           b.id = a.inquiry_id
-        LEFT JOIN
-          sys_device_type dev on b.device_type_id = dev.id
+        LEFT JOIN sys_device_type dev on b.device_type_id = dev.id
+        LEFT JOIN inquiry j ON b.parent_id = j.id
         <where>
             b.is_active = 1
             <if test="proDetailId != -1 and proDetailId != null">

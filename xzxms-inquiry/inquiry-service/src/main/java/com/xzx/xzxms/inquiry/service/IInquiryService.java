@@ -4,6 +4,7 @@ package com.xzx.xzxms.inquiry.service;
 import com.xzx.xzxms.inquiry.bean.Inquiry;
 import com.xzx.xzxms.inquiry.bean.extend.InquiryAndProDetailExtend;
 import com.xzx.xzxms.inquiry.bean.extend.InquiryExtend;
+import com.xzx.xzxms.inquiry.dto.InquiryTreeDTO;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -27,6 +28,13 @@ public interface IInquiryService {
      */
 
     void batchAddInquiry(List<Inquiry> inquiryList) throws SQLException;
+
+    /**
+     * sunny
+     *询价excel树结构导入
+     * @param inquiryTreeDTO
+     */
+    void batchAddInquiryTree(InquiryTreeDTO inquiryTreeDTO);
 
     /**
      * 行内编辑保存
@@ -73,7 +81,7 @@ public interface IInquiryService {
      * 新增或修改询价
      * @param inquiry 询价对象
      */
-    void insertOrUpdateInquiry(Inquiry inquiry);
+    void insertInquiry(Inquiry inquiry);
 
     /**
      * 终审修改拟定报价
