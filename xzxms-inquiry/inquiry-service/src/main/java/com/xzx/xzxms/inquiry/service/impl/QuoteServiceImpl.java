@@ -204,7 +204,7 @@ public class QuoteServiceImpl implements IQuoteService {
                 //2.报价信息存入数据库报价表
                 String name = "";
                 String params = "";
-                int sort = 0;
+                Double sort = 0D;
                 long inquiryId = -1L;
                 SysFile sysFile = new SysFile();
                 String notFound = "";
@@ -219,7 +219,7 @@ public class QuoteServiceImpl implements IQuoteService {
 
                     name = item.get("设备名称").toString().trim();
                     params = item.get("型号").toString().trim();
-                    sort = Integer.parseInt(item.get("序号").toString().trim());
+                    sort = Double.parseDouble(item.get("序号").toString().trim());
                     InquiryExample example = new InquiryExample();
                     if("".equals(params) || params == null) {
                         example.createCriteria().andNameEqualTo(name).andModelIsNull().andIsActiveEqualTo(1).andProDetailIdEqualTo(proDetailId).andVetoEqualTo(0).andSortEqualTo(sort);
@@ -230,10 +230,10 @@ public class QuoteServiceImpl implements IQuoteService {
                     if (inquiries.size() > 0) {
                         Inquiry inquiry = inquiries.get(0);
 
-                        int num = quoteAndInquiry.findIsExistQuote(inquiry.getId());
+               /*         int num = quoteAndInquiry.findIsExistQuote(inquiry.getId());
                         if (num != 0){
                             throw new CustomerException(inquiry.getName() + "  已有报价，如需重新导入请先删除报价信息!");
-                        }
+                        }*/
 
                         inquiryId = inquiry.getId();
                         number = inquiry.getNumber();

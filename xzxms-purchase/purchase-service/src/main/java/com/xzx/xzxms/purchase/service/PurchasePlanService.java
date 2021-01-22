@@ -80,7 +80,7 @@ public interface PurchasePlanService {
      * @param serialNum
      * @return
      */
-    int checkSerialNumberIsExists(Long projectId, Integer serialNum);
+    int checkSerialNumberIsExists(Long projectId, Double serialNum);
 
     /**
      * Lzc

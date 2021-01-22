@@ -42,7 +42,7 @@ public interface PurchasePlanExtendMapper {
      * @param projectId
      * @return
      */
-    List<Integer> findSerialNumbersByProjectId(@Param("projectId") Long projectId);
+    List<Double> findSerialNumbersByProjectId(@Param("projectId") Long projectId);
 
     /**
      * 周嘉玮
@@ -115,7 +115,7 @@ public interface PurchasePlanExtendMapper {
      * @param sort
      * @return
      */
-    Integer findSort(@Param("name") String name, @Param("sort") int sort);
+    Double findSort(@Param("name") String name, @Param("sort") Double sort);
 
     /**
      * 孙乃裕
@@ -125,6 +125,6 @@ public interface PurchasePlanExtendMapper {
      * @return
      */
     @Select("SELECT COUNT(1) FROM purchase_items WHERE project_id = #{projectId} AND serial_number = #{serialNum} AND is_active = 1")
-    int findSerialNumber(@Param("projectId") Long projectId,@Param("serialNum") Integer serialNum);
+    int findSerialNumber(@Param("projectId") Long projectId,@Param("serialNum") Double serialNum);
 
 }

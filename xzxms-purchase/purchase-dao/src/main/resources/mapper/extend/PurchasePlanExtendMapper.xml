@@ -51,7 +51,7 @@
         where project_id=#{projectId} and is_active=1 order by serial_number
     </select>
 
-    <select id="findSerialNumbersByProjectId" parameterType="long" resultType="Integer">
+    <select id="findSerialNumbersByProjectId" parameterType="long" resultType="double">
         select serial_number from purchase_items where project_id=#{projectId} and is_active=1
     </select>
 
@@ -91,7 +91,7 @@
         select pro_no from sys_pro_detail where pro_no like "%"#{proNo}"%" GROUP BY pro_no
     </select>
 
-    <select id="findSort" parameterType="com.xzx.xzxms.inquiry.bean.SysProDetail" resultType="integer">
+    <select id="findSort" parameterType="com.xzx.xzxms.inquiry.bean.SysProDetail" resultType="double">
         select sort
         from inquiry inner join sys_pro_detail on inquiry.pro_detail_id = sys_pro_detail.id
         where sys_pro_detail.name = #{name} and sort=#{sort}

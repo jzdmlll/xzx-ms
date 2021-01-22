@@ -3,6 +3,7 @@ package com.xzx.xzxms.inquiry.service.impl;
 import com.xzx.xzxms.commons.constant.CommonConstant;
 import com.xzx.xzxms.commons.dao.redis.JedisDao;
 import com.xzx.xzxms.commons.utils.Base64Util;
+import com.xzx.xzxms.commons.utils.CustomerException;
 import com.xzx.xzxms.commons.utils.IDUtils;
 import com.xzx.xzxms.inquiry.bean.*;
 import com.xzx.xzxms.inquiry.dao.SysProDetailMapper;
@@ -11,6 +12,7 @@ import com.xzx.xzxms.inquiry.dao.extend.SysProDetailExtendMapper;
 import com.xzx.xzxms.inquiry.service.ISysProDetailService;
 import com.xzx.xzxms.inquiry.bean.extend.SysProDetailExtend;
 import com.xzx.xzxms.system.bean.SysFile;
+import com.xzx.xzxms.system.bean.SysFileExample;
 import com.xzx.xzxms.system.bean.extend.SysFileExtend;
 import com.xzx.xzxms.system.dao.SysFileMapper;
 import com.xzx.xzxms.commons.fileupload.IFileUploadService;
@@ -51,72 +53,57 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
         long time = new Date().getTime();
         String operatorId = proDetail.getOperator();
         if (proDetail.getId() != null){
-            /*SysFileExample example = new SysFileExample();
-            example.createCriteria().andOtherIdEqualTo(proDetail.getId());
-            List<SysFile> sysFiles = sysFileMapper.selectByExample(example);
-            for(SysFile file : sysFiles){
-                file.setIsActive(0);
-                sysFileMapper.updateByPrimaryKeySelective(file);
-            }*/
-            //文件上传
+            // 查询该项目是否有文件
+            SysFileExample sysFileExample = new SysFileExample();
+            sysFileExample.createCriteria().andOtherIdEqualTo(proDetail.getId()).andIsActiveEqualTo(CommonConstant.EFFECTIVE)
+                    .andTypeEqualTo(SysFileExtend.TYPE_PRODETAIL);
+            Long fileNum = sysFileMapper.countByExample(sysFileExample);
+            if (fileNum > 0) {
+                // 修改
+                // 覆盖之前文件
+                SysFile newFile = new SysFile();
+                newFile.setIsActive(CommonConstant.INVALID);
+                sysFileMapper.updateByExampleSelective(newFile, sysFileExample);
+            }
+            // 修改
+            // 文件上传
             for (SysFile file : files) {
-                //如果redis中存在该文件
-                if (jedisDaoImpl.exists(file.getId().toString())) {
-                    //从redis中取出base64文件码
-                    String base64File = jedisDaoImpl.get(file.getId().toString());
-                    //解码，还原成输入流
-                    InputStream inputStream = Base64Util.decodeBase64File(base64File);
-                    System.out.println("redis");
-                    //清除redis该文件缓存
-                    jedisDaoImpl.del(file.getId().toString());
-                    //上传到Nginx
-                    Map<String, Object> map = fileUploadServiceImpl.uploadByStream(inputStream, file.getName());
+                if (file.getOperator() == null || "".equals(file.getOperator())) {
+                    //如果redis中存在该文件
+                    if (jedisDaoImpl.exists(file.getId().toString())) {
+                        //从redis中取出base64文件码
+                        String base64File = jedisDaoImpl.get(file.getId().toString());
+                        //解码，还原成输入流
+                        InputStream inputStream = Base64Util.decodeBase64File(base64File);
+                        System.out.println("redis");
+                        //清除redis该文件缓存
+                        jedisDaoImpl.del(file.getId().toString());
+                        //上传到Nginx
+                        Map<String, Object> map = fileUploadServiceImpl.uploadByStream(inputStream, file.getName());
+                        file.setUrl(map.get("url").toString());
 
-                    //文件信息持久化到数据库
-                    file.setType(SysFileExtend.TYPE_PRODETAIL);
-                    file.setOtherId(proDetail.getId());
-                    file.setTime(time);
-                    file.setUrl(map.get("url").toString());
-                    file.setIsActive(1);
-                    file.setIsUseful(1);
-                    file.setOperator(operatorId);
-                    sysFileMapper.insert(file);
-                    System.out.println("数据库");
+                    }else {
+                        throw new CustomerException("文件上传信息过期，请重新上传");
+                    }
+
+                }else {
+                    // 新增 重新生成ID
+                    file.setId(IDUtils.getId());
                 }
+                //文件信息持久化到数据库
+                file.setType(SysFileExtend.TYPE_PRODETAIL);
+                file.setOtherId(proDetail.getId());
+                file.setTime(time);
+                file.setIsActive(1);
+                file.setIsUseful(1);
+                file.setOperator(operatorId);
+                sysFileMapper.insert(file);
             }
             proDetail.setProRate(proDetail.getProRate()*1000);
             sysProDetailMapper.updateByPrimaryKeySelective(proDetail);
-           /* SysProDetailExample example2 = new SysProDetailExample();
-            example2.createCriteria().andIdEqualTo(proDetail.getId());
-            List<SysProDetail> sysProDetails = sysProDetailMapper.selectByExample(example2);
-            for(SysProDetail sysProDetail:sysProDetails){
-                sysProDetailMapper.updateByExample(example2);
-            }*/
-            /*int size = sysProCheckExtendMapper.findExistsCheck(proDetail.getId());
-            if (size > 0){
-                throw  new CustomerException("审核流程修改失败, 需将项目的所有报价单数据删除才可修改审核流程");
-            }
-
-            long proDetailId = proDetail.getId();
-            sysProDetailMapper.updateByPrimaryKeySelective(proDetail);
-
-            //审核流程插入前需判断是否存在，存在先删除后更新
-            SysProDetailCheckExample example = new SysProDetailCheckExample();
-            example.createCriteria().andProDetailIdEqualTo(proDetailId);
-            List<SysProDetailCheck> sysProDetailCheck = sysProDetailCheckMapper.selectByExample(example);
-            if (sysProDetailCheck.size() > 0){
-                sysProDetailCheck.forEach((x)->{sysProDetailCheckMapper.deleteByPrimaryKey(x.getId());});
-            }
-            for(SysProDetailCheck check : proChecks) {
-                check.setId(IDUtils.getId());
-                check.setProDetailId(proDetailId);
-                check.setTime(time);
-                check.setCheckStatus(0);
-                check.setOperator(operatorId);
-                sysProDetailCheckMapper.insert(check);
-            }*/
 
         }else {
+            // 新增
             long proDetailId = IDUtils.getId();
             //文件上传
             for (SysFile file : files) {
@@ -126,7 +113,6 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
                     String base64File = jedisDaoImpl.get(file.getId().toString());
                     //解码，还原成输入流
                     InputStream inputStream = Base64Util.decodeBase64File(base64File);
-                    System.out.println("redis");
                     //清除redis该文件缓存
                     jedisDaoImpl.del(file.getId().toString());
                     //上传到Nginx
@@ -136,11 +122,11 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
                     file.setType(SysFileExtend.TYPE_PRODETAIL);
                     file.setOtherId(proDetailId);
                     file.setTime(time);
+                    file.setUrl(map.get("url").toString());
                     file.setIsActive(1);
                     file.setIsUseful(1);
                     file.setOperator(operatorId);
                     sysFileMapper.insert(file);
-                    System.out.println("数据库");
                 }
             }
 

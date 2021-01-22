@@ -6,6 +6,7 @@ import com.xzx.xzxms.system.bean.extend.SysUserExtend;
 import com.xzx.xzxms.system.vm.UserVM;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ISysUserService {
     /**
@@ -13,7 +14,7 @@ public interface ISysUserService {
      * @param SysUserVM
      * @return
      */
-    SysUser login(UserVM SysUserVM);
+    Map<String, String> login(UserVM SysUserVM);
     /**
      * 通过id获取用户信息
      * @param id

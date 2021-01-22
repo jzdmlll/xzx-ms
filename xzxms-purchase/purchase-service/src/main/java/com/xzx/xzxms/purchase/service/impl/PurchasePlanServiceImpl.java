@@ -105,13 +105,13 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
     synchronized public String insertItemService(PurchaseItems purchaseItems, Double itemNum) {
         
         // 根据项目id获取所有购买项的序号
-        List<Integer> serialNumbers = purchasePlanExtendMapper.findSerialNumbersByProjectId(purchaseItems.getProjectId());
+        List<Double> serialNumbers = purchasePlanExtendMapper.findSerialNumbersByProjectId(purchaseItems.getProjectId());
 
         // 给所有序号进行排序
         Collections.sort(serialNumbers);
 
         // 获取最大一个序号
-        int maxSerialNumber = serialNumbers.get(serialNumbers.size()-1);
+        Double maxSerialNumber = serialNumbers.get(serialNumbers.size()-1);
 
         // 新增数据序号 在原有最大序号上加一
         purchaseItems.setSerialNumber(maxSerialNumber+1);
@@ -241,7 +241,7 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
             String name = purchaseItemsList.getSysProDetailWithBLOBs().getName();
             List<Long> itemIds = new ArrayList<>();
             for (PurchaseItems item : purchaseItemsList.getPurchaseItemsList()) {
-                Integer sort = purchasePlanExtendMapper.findSort(name, item.getSerialNumber());
+                Double sort = purchasePlanExtendMapper.findSort(name, item.getSerialNumber());
                 // 当该购买项不存在时
                 if (sort == null){
                     Inquiry inquiry = new Inquiry();
@@ -349,12 +349,14 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
         }
     }
 
+
     /**
      * 孙乃裕
      * @param projectId
      * @param serialNum
      */
-    public int checkSerialNumberIsExists(Long projectId, Integer serialNum){
+    @Override
+    public int checkSerialNumberIsExists(Long projectId, Double serialNum){
         return purchasePlanExtendMapper.findSerialNumber(projectId, serialNum);
     }
 

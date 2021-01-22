@@ -1,8 +1,7 @@
 package com.xzx.xzxms.system.service.impl;
 
 import com.xzx.xzxms.commons.aspect.annotation.AutoLog;
-import com.xzx.xzxms.commons.utils.CustomerException;
-import com.xzx.xzxms.commons.utils.IDUtils;
+import com.xzx.xzxms.commons.utils.*;
 import com.xzx.xzxms.system.bean.SysUser;
 import com.xzx.xzxms.system.bean.SysUserExample;
 import com.xzx.xzxms.system.bean.SysUserRole;
@@ -17,9 +16,7 @@ import org.springframework.stereotype.Service;
 import com.xzx.xzxms.system.service.ISysUserService;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class SysUserServiceImpl implements ISysUserService {
@@ -34,21 +31,32 @@ public class SysUserServiceImpl implements ISysUserService {
 
     @AutoLog(value = "登录成功！用户：")
     @Override
-    public SysUser login(UserVM userVM) {
+    public Map<String, String> login(UserVM userVM) {
         String username = userVM.getUsername();
         String password = userVM.getPassword();
-
+        SysUser user = null;
         SysUserExample example = new SysUserExample();
         example.createCriteria().andUsernameEqualTo(username);
         List<SysUser> userList = userMapper.selectByExample(example);
         if(userList!=null && userList.size()>0) {
-            SysUser user = userList.get(0);
             //验证密码
+            user = userList.get(0);
             if (password.equals(user.getPassword())) {
-                return user;
+                // 2. 如果登录成功产生token,将token缓存起来，返回
+                Map<String, String> map = new HashMap<>();
+                //通过jwt产生token
+                String token = JwtTokenUtil.createJWT(user.getId(), user.getUsername());
+                map.put("token", token);
+                //放入redis缓存
+                String userJson = JsonUtils.objectToJson(user);
+                jedisDaoImpl.setCode(token, userJson, JwtTokenUtil.REDIS_TOKEN_TIME);
+                return map;
+            }else {
+                throw new CustomerException("密码错误");
             }
+        }else {
+            throw new CustomerException("用户名不存在");
         }
-        return null;
     }
 
     @Override

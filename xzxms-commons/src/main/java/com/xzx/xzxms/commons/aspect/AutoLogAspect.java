@@ -12,6 +12,7 @@ import com.xzx.xzxms.commons.utils.JwtTokenUtil;
 import com.xzx.xzxms.commons.utils.SpringContextUtils;
 import com.xzx.xzxms.system.bean.SysLog;
 import com.xzx.xzxms.system.bean.SysUser;
+import org.apache.commons.lang.StringUtils;
 import org.apache.sshd.common.util.security.SecurityUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -30,6 +31,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.util.Date;
+import java.util.Map;
 
 
 /**
@@ -90,14 +92,11 @@ public class AutoLogAspect {
         String token = request.getHeader("X-Token");
         Long userId = null;
         String username = "";
-        if((token == null || "".equals(token)) && obj instanceof SysUser){
-            userId = ((SysUser) obj).getId();
-            username = ((SysUser) obj).getUsername();
-            log.setLogContent(log.getLogContent() + username);
-        }else {
-            userId = Long.parseLong(JwtTokenUtil.getUserId(token, JwtTokenUtil.base64Secret).trim());
-            username = JwtTokenUtil.getUsername(token, JwtTokenUtil.base64Secret);
+        if("login".equals(methodName) && StringUtils.isEmpty(token)){
+            token = ((Map<String, String>)obj).get("token");
         }
+        userId = Long.parseLong(JwtTokenUtil.getUserId(token, JwtTokenUtil.base64Secret).trim());
+        username = JwtTokenUtil.getUsername(token, JwtTokenUtil.base64Secret);
         log.setUserid(userId);
         log.setUsername(username);
         //耗时

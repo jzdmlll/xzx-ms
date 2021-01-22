@@ -157,7 +157,7 @@ public class PurchasePlanController {
      */
     @ApiOperation("检查采购计划项序号是否存在(查询数量)")
     @GetMapping("checkSerialNumberIsExists")
-    public Message checkSerialNumberIsExists(Long projectId, Integer serialNum) {
+    public Message checkSerialNumberIsExists(Long projectId, Double serialNum) {
         int num = purchasePlanServiceImpl.checkSerialNumberIsExists(projectId, serialNum);
         return MessageUtil.success("success", num);
     }
