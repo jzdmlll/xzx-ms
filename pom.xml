@@ -13,6 +13,7 @@
         <module>xzxms-inquiry</module>
         <module>xzxms-purchase</module>
         <module>xzxms-chapter</module>
+        <module>xzxms-equipment</module>
     </modules>
 
     <parent>
