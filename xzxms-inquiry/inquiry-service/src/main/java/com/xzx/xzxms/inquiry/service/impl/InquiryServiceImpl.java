@@ -68,7 +68,7 @@ public class InquiryServiceImpl implements IInquiryService {
     public void isExistByInquiryParams(Inquiry inquiry){
 
         InquiryExample example = new InquiryExample();
-        example.createCriteria().andNameEqualTo(inquiry.getName()).andParamsEqualTo(inquiry.getParams()).andVetoEqualTo(CommonConstant.VETOED)
+        example.createCriteria().andNameEqualTo(inquiry.getName()).andVetoEqualTo(CommonConstant.VETOED)
                 .andSortEqualTo(inquiry.getSort()).andProDetailIdEqualTo(inquiry.getProDetailId()).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
         long num = inquiryMapper.countByExample(example);
         if (num > 0){
@@ -118,12 +118,13 @@ public class InquiryServiceImpl implements IInquiryService {
         long time = new Date().getTime();
         for(InquiryTree tree : inquiryTreeDTO.getInquiryList()){
             //如何tree.getChildren()=0,说明它是大类
-            if (tree.getChildren().size() == 0){
+            if (tree.getChildren().size() > 0){
 
                 //生成大类表
                 long parentId = IDUtils.getId();
                 tree.setId(parentId);
                 tree.setTime(time);
+                tree.setParentId("-1"); // 区分大类和普通询价
                 tree.setIsActive(CommonConstant.EFFECTIVE);
                 tree.setIsUseful(CommonConstant.IS_NOT_USEFUL);
                 tree.setVeto(CommonConstant.VETOED);

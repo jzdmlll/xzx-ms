@@ -208,6 +208,7 @@ public class QuoteServiceImpl implements IQuoteService {
                 long inquiryId = -1L;
                 SysFile sysFile = new SysFile();
                 String notFound = "";
+                Long id = null;
                 //询价数量
                 Double number = 0D;
 
@@ -216,16 +217,23 @@ public class QuoteServiceImpl implements IQuoteService {
                 for (Map<String, Object> item : dataFromExcel) {
 
                     String imgUrl = "";
-
-                    name = item.get("设备名称").toString().trim();
-                    params = item.get("型号").toString().trim();
-                    sort = Double.parseDouble(item.get("序号").toString().trim());
                     InquiryExample example = new InquiryExample();
-                    if("".equals(params) || params == null) {
-                        example.createCriteria().andNameEqualTo(name).andModelIsNull().andIsActiveEqualTo(1).andProDetailIdEqualTo(proDetailId).andVetoEqualTo(0).andSortEqualTo(sort);
+
+                    if (item.get("编号") != null && "".equals(item.get("编号").toString())) {
+                        id = Long.parseLong(item.get("编号").toString().trim());
+                        example.createCriteria().andIdEqualTo(id).andIsActiveEqualTo(1).andProDetailIdEqualTo(proDetailId).andVetoEqualTo(0).andSortEqualTo(sort);
                     }else {
-                        example.createCriteria().andNameEqualTo(name).andModelEqualTo(params).andIsActiveEqualTo(1).andProDetailIdEqualTo(proDetailId).andVetoEqualTo(0).andSortEqualTo(sort);
+                        name = item.get("设备名称").toString().trim();
+                        params = item.get("型号").toString().trim();
+                        sort = Double.parseDouble(item.get("序号").toString().trim());
+
+                        if("".equals(params) || params == null) {
+                            example.createCriteria().andNameEqualTo(name).andModelIsNull().andIsActiveEqualTo(1).andProDetailIdEqualTo(proDetailId).andVetoEqualTo(0).andSortEqualTo(sort);
+                        }else {
+                            example.createCriteria().andNameEqualTo(name).andModelEqualTo(params).andIsActiveEqualTo(1).andProDetailIdEqualTo(proDetailId).andVetoEqualTo(0).andSortEqualTo(sort);
+                        }
                     }
+
                     List<Inquiry> inquiries = inquiryMapper.selectByExample(example);
                     if (inquiries.size() > 0) {
                         Inquiry inquiry = inquiries.get(0);
