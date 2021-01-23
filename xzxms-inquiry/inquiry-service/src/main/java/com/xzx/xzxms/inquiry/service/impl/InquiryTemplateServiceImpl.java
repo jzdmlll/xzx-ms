@@ -12,6 +12,7 @@ import com.xzx.xzxms.inquiry.dao.InquiryTemplateMapper;
 import com.xzx.xzxms.inquiry.dao.extend.InquiryTemplateExtendMapper;
 import com.xzx.xzxms.inquiry.service.IInquiryTemplateService;
 import io.swagger.models.auth.In;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -23,6 +24,7 @@ import java.util.List;
  *@Author sunny
  *@Date DATE{TIME}
  */
+@Service
 public class InquiryTemplateServiceImpl implements IInquiryTemplateService {
 
     @Resource
