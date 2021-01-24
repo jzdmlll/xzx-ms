@@ -112,4 +112,17 @@ public class PurchaseContractManagementController {
         purchaseContractManagementService.uploadContractFile(purchaseContractFIleDTO.getPurchaseContract(), purchaseContractFIleDTO.getFileList());
         return MessageUtil.success("success");
     }
+
+    /**
+     * sunny
+     * 合同生效并上传正式合同等文件
+     * @param purchaseContractFIleDTO
+     * @return
+     */
+    @ApiOperation("合同生效并上传正式合同等文件")
+    @PostMapping("purchaseContractEffective")
+    public Message purchaseContractEffective(@RequestBody PurchaseContractFIleDTO purchaseContractFIleDTO){
+        purchaseContractManagementService.purchaseContractEffective(purchaseContractFIleDTO.getPurchaseContract(), purchaseContractFIleDTO.getFileList());
+        return MessageUtil.success("success");
+    }
 }

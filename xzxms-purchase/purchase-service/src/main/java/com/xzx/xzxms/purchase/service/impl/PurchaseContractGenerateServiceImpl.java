@@ -61,6 +61,8 @@ public class PurchaseContractGenerateServiceImpl implements PurchaseContractGene
             // 获取当前时间
             purchaseContractDTO.getPurchaseContract().setTime(new Date().getTime());
             purchaseContractDTO.getPurchaseContract().setIsActive(CommonConstant.EFFECTIVE);
+            //合同状态设为拟定状态
+            purchaseContractDTO.getPurchaseContract().setContractStatus(CommonConstant.FORMULATION);
             // 在合同表中新增一个新合同
             purchaseContractMapper.insert(purchaseContractDTO.getPurchaseContract());
 

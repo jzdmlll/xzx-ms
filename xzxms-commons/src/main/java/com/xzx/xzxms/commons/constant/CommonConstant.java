@@ -3,6 +3,16 @@ package com.xzx.xzxms.commons.constant;
 public interface CommonConstant {
 
     /**
+     * 合同拟定状态
+     */
+    public static final Integer FORMULATION = 0;
+
+    /**
+     * 合同生效状态
+     */
+    public static final Integer TAKE_EFFECT = 1;
+
+    /**
      * 选用
      */
     public static final Integer CHOOSE = 1;

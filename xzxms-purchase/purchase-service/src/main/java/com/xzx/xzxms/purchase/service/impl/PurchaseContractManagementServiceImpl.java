@@ -101,10 +101,7 @@ public class PurchaseContractManagementServiceImpl implements PurchaseContractMa
     @Transactional
     @Override
     public void uploadContractFile(PurchaseContract purchaseContract, List<SysFile> fileList) {
-        // 获取当前时间 时间戳
-        Long time = new Date().getTime();
-        // 获取操作人 ID
-        String operatorId = purchaseContract.getOperator();
+
         // 查询该合同下是否有文件
         SysFileExample sysFileExample = new SysFileExample();
         sysFileExample.createCriteria().andOtherIdEqualTo(purchaseContract.getId()).andIsActiveEqualTo(CommonConstant.EFFECTIVE)
@@ -118,6 +115,29 @@ public class PurchaseContractManagementServiceImpl implements PurchaseContractMa
             newFile.setIsActive(CommonConstant.INVALID);
             sysFileMapper.updateByExampleSelective(newFile, sysFileExample);
         }
+
+        uploadPurchaseContractFile(purchaseContract, fileList);
+    }
+
+    @Transactional
+    @Override
+    public void purchaseContractEffective(PurchaseContract purchaseContract, List<SysFile> fileList) {
+
+        //先将合同的状态改为正式有效状态
+        purchaseContract.setContractStatus(CommonConstant.TAKE_EFFECT);
+        purchaseContractMapper.updateByPrimaryKeySelective(purchaseContract);
+        uploadPurchaseContractFile(purchaseContract, fileList);
+    }
+
+    /**
+     * sunny
+     * 合同文件上传
+     * @param purchaseContract
+     * @param fileList
+     */
+    public void uploadPurchaseContractFile(PurchaseContract purchaseContract, List<SysFile> fileList){
+
+        Long time = new Date().getTime();
         // 遍历
         for (SysFile file : fileList) {
 
@@ -146,10 +166,10 @@ public class PurchaseContractManagementServiceImpl implements PurchaseContractMa
             file.setOtherId(purchaseContract.getId());
             file.setTime(time);
             file.setIsActive(CommonConstant.EFFECTIVE);
-            file.setIsUseful(1);
-            file.setOperator(operatorId);
+            file.setIsUseful(CommonConstant.IS_NOT_USEFUL);
+            file.setOperator(purchaseContract.getOperator());
             sysFileMapper.insert(file);
         }
-
     }
+
 }
