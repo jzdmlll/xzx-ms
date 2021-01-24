@@ -32,7 +32,7 @@ public class JsonUtils {
      * 将json结果集转化为对象
      * 
      * @param jsonData json数据
-     * @param clazz 对象中的object类型
+     * @param beanType 对象中的object类型
      * @return
      */
     public static <T> T jsonToPojo(String jsonData, Class<T> beanType) {
@@ -64,5 +64,44 @@ public class JsonUtils {
     	
     	return null;
     }
-    
+    /**
+     * JSON字符串特殊字符处理，比如：“\A1;1300”
+     * @param s
+     * @return String
+     */
+    public static String string2Json(String s) {
+        StringBuffer sb = new StringBuffer();
+        for (int i=0; i<s.length(); i++) {
+            char c = s.charAt(i);
+            switch (c){
+                case ' ':
+                    sb.append("");
+                    break;
+                case '\\':
+                    sb.append("");
+                    break;
+                case '/':
+                    sb.append("");
+                    break;
+                case '\b':
+                    sb.append("");
+                    break;
+                case '\f':
+                    sb.append("");
+                    break;
+                case '\n':
+                    sb.append("");
+                    break;
+                case '\r':
+                    sb.append("");
+                    break;
+                case '\t':
+                    sb.append("");
+                    break;
+                default:
+                    sb.append(c);
+            }
+        }
+        return sb.toString();
+    }
 }
