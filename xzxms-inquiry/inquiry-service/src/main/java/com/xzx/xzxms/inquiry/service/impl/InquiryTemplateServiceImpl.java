@@ -5,6 +5,7 @@ package com.xzx.xzxms.inquiry.service.impl;/**
  */
 
 import com.xzx.xzxms.commons.utils.IDUtils;
+import com.xzx.xzxms.commons.utils.JsonUtils;
 import com.xzx.xzxms.inquiry.bean.InquiryTemplate;
 import com.xzx.xzxms.inquiry.bean.InquiryTemplateExample;
 import com.xzx.xzxms.inquiry.bean.InquiryTemplateWithBLOBs;
@@ -40,9 +41,9 @@ public class InquiryTemplateServiceImpl implements IInquiryTemplateService {
 
     @Override
     public void insertInquiryTemplate(InquiryTemplateWithBLOBs inquiryTemplateWithBLOBs) {
-
-        inquiryTemplateWithBLOBs.setId(IDUtils.getId());
         inquiryTemplateWithBLOBs.setTime(new Date().getTime());
+        inquiryTemplateWithBLOBs.setJsonKeys(JsonUtils.string2Json(inquiryTemplateWithBLOBs.getJsonKeys().trim()));
+        inquiryTemplateWithBLOBs.setTableColumn(JsonUtils.string2Json(inquiryTemplateWithBLOBs.getTableColumn().trim()));
         inquiryTemplateMapper.insertSelective(inquiryTemplateWithBLOBs);
     }
 
@@ -50,6 +51,8 @@ public class InquiryTemplateServiceImpl implements IInquiryTemplateService {
     public void updateInquiryTemplate(InquiryTemplateWithBLOBs inquiryTemplateWithBLOBs) {
 
         inquiryTemplateWithBLOBs.setTime(new Date().getTime());
+        inquiryTemplateWithBLOBs.setJsonKeys(JsonUtils.string2Json(inquiryTemplateWithBLOBs.getJsonKeys().trim()));
+        inquiryTemplateWithBLOBs.setTableColumn(JsonUtils.string2Json(inquiryTemplateWithBLOBs.getTableColumn().trim()));
         inquiryTemplateMapper.updateByPrimaryKeyWithBLOBs(inquiryTemplateWithBLOBs);
     }
 

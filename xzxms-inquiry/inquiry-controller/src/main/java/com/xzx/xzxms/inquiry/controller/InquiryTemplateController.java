@@ -25,7 +25,7 @@ import java.util.List;
  *@Date DATE{TIME}
  */
 @RestController
-@RequestMapping("/template")
+@RequestMapping("/inquiry/template")
 public class InquiryTemplateController {
 
     @Resource
