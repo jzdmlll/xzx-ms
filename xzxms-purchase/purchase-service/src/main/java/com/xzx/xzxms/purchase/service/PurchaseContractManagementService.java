@@ -50,4 +50,13 @@ public interface PurchaseContractManagementService {
      * @param fileList
      */
     void uploadContractFile(PurchaseContract purchaseContract, List<SysFile> fileList);
+
+    /**
+     * sunny
+     * 采购合同正式生效
+     * @param purchaseContract
+     * @param fileList
+     */
+    void purchaseContractEffective(PurchaseContract purchaseContract, List<SysFile> fileList);
+
 }
