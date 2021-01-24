@@ -4,6 +4,7 @@ package com.xzx.xzxms.inquiry.service.impl;/**
  * @Version 1.0
  */
 
+import com.xzx.xzxms.commons.dao.redis.JedisDao;
 import com.xzx.xzxms.commons.utils.IDUtils;
 import com.xzx.xzxms.commons.utils.JsonUtils;
 import com.xzx.xzxms.inquiry.bean.InquiryTemplate;
@@ -32,11 +33,25 @@ public class InquiryTemplateServiceImpl implements IInquiryTemplateService {
     private InquiryTemplateMapper inquiryTemplateMapper;
     @Resource
     private InquiryTemplateExtendMapper inquiryTemplateExtendMapper;
+    @Resource
+    private JedisDao jedisDaoImpl;
 
     @Override
     public List<InquiryTemplateWithBLOBs> findInquiryTemplate(Long id) {
-
-        return inquiryTemplateExtendMapper.findAll(id);
+        String key = "";
+        if(id == null) {
+            key = "xzx:inquiryTemplate:all";
+        }else {
+            key = "xzx:inquiryTemplate:" + id;
+        }
+        if(jedisDaoImpl.exists(key)) {
+            String json = jedisDaoImpl.get(key);
+            return JsonUtils.jsonToList(json, InquiryTemplateWithBLOBs.class);
+        }else {
+            List<InquiryTemplateWithBLOBs> templateList = inquiryTemplateExtendMapper.findAll(id);
+            jedisDaoImpl.set(key, JsonUtils.objectToJson(templateList));
+            return templateList;
+        }
     }
 
     @Override
@@ -45,6 +60,10 @@ public class InquiryTemplateServiceImpl implements IInquiryTemplateService {
         inquiryTemplateWithBLOBs.setJsonKeys(JsonUtils.string2Json(inquiryTemplateWithBLOBs.getJsonKeys().trim()));
         inquiryTemplateWithBLOBs.setTableColumn(JsonUtils.string2Json(inquiryTemplateWithBLOBs.getTableColumn().trim()));
         inquiryTemplateMapper.insertSelective(inquiryTemplateWithBLOBs);
+
+        if(jedisDaoImpl.exists("xzx:inquiryTemplate:all")) {
+            jedisDaoImpl.del("xzx:inquiryTemplate:all");
+        }
     }
 
     @Override
@@ -54,11 +73,27 @@ public class InquiryTemplateServiceImpl implements IInquiryTemplateService {
         inquiryTemplateWithBLOBs.setJsonKeys(JsonUtils.string2Json(inquiryTemplateWithBLOBs.getJsonKeys().trim()));
         inquiryTemplateWithBLOBs.setTableColumn(JsonUtils.string2Json(inquiryTemplateWithBLOBs.getTableColumn().trim()));
         inquiryTemplateMapper.updateByPrimaryKeyWithBLOBs(inquiryTemplateWithBLOBs);
+
+        if(jedisDaoImpl.exists("xzx:inquiryTemplate:all")) {
+            jedisDaoImpl.del("xzx:inquiryTemplate:all");
+        }
+
+        if (jedisDaoImpl.exists("xzx:inquiryTemplate:"+ inquiryTemplateWithBLOBs.getId())) {
+            jedisDaoImpl.del("xzx:inquiryTemplate:"+ inquiryTemplateWithBLOBs.getId());
+        }
     }
 
     @Override
     public void setInvalidInquiryTemplate(InquiryTemplate inquiryTemplate) {
 
         inquiryTemplateMapper.deleteByPrimaryKey(inquiryTemplate.getId());
+
+        if(jedisDaoImpl.exists("xzx:inquiryTemplate:all")) {
+            jedisDaoImpl.del("xzx:inquiryTemplate:all");
+        }
+
+        if (jedisDaoImpl.exists("xzx:inquiryTemplate:"+ inquiryTemplate.getId())) {
+            jedisDaoImpl.del("xzx:inquiryTemplate:"+ inquiryTemplate.getId());
+        }
     }
 }

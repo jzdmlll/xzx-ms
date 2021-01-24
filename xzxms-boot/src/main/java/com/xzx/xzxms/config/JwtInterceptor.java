@@ -52,6 +52,7 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
         String token = request.getHeader(JwtTokenUtil.AUTH_HEADER_KEY);
         //final String websocketToken = request.getHeader(JwtTokenUtil.AUTH_WEBSOCKET_KEY);
         if(StringUtils.isEmpty(token)){
+            throw new UnAuthorizedException("用户还未登录");
             /*if (StringUtils.isEmpty(websocketToken)) {
                 throw new UnAuthorizedException("用户还未登录");
             }else {
