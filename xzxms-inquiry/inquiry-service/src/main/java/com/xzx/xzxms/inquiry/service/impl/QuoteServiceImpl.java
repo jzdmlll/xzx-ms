@@ -462,6 +462,12 @@ public class QuoteServiceImpl implements IQuoteService {
             inquiryPool.setImage(quote.getImage());
             inquiryPool.setRemark(quote.getSuRemark());
             inquiryPool.setProDetailId(inquiry.getProDetailId());
+            inquiryPool.setTagNumer(inquiry.getTagNumber());
+            inquiryPool.setMeter(inquiry.getMeter());
+            inquiryPool.setMeasuringRange(inquiry.getMeasuringRange());
+            inquiryPool.setMeterSignal(inquiry.getMeterSignal());
+            inquiryPool.setConnectionMode(inquiry.getConnectionMode());
+            inquiryPool.setTube(inquiry.getTube());
             inquiryPoolMapper.insert(inquiryPool);
         }
     }

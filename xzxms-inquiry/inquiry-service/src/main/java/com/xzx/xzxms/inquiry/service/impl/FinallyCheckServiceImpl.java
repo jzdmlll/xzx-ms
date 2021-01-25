@@ -176,6 +176,15 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
             proPool.setIsUseful(0);
             proPool.setOperator(userId+"");
             proPool.setTime(time);
+
+            //2021/01/25 sunny 新增字段
+            proPool.setTagNumer(quoteExtendInquiry.getInquiry().getTagNumber());
+            proPool.setMeter(quoteExtendInquiry.getInquiry().getMeter());
+            proPool.setMeasuringRange(quoteExtendInquiry.getInquiry().getMeasuringRange());
+            proPool.setMeterSignal(quoteExtendInquiry.getInquiry().getMeterSignal());
+            proPool.setConnectionMode(quoteExtendInquiry.getInquiry().getConnectionMode());
+            proPool.setTube(quoteExtendInquiry.getInquiry().getTube());
+
             // 防止空指针异常
             BeanHelper.nullToEmpty(proPool);
             ProPoolExample example = new ProPoolExample();

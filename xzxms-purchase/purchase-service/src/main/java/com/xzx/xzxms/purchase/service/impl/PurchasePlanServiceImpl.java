@@ -153,6 +153,8 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
 
     /**
      * 周嘉玮
+     * 修改人:sunny
+     * 2021/01/25
      * @param purchaseItemsList
      * @return
      */
@@ -187,8 +189,8 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
 
             purchaseItemsList.getSysProDetailWithBLOBs().setId(id);
             purchaseItemsList.getSysProDetailWithBLOBs().setProNo(newProNo);
-            purchaseItemsList.getSysProDetailWithBLOBs().setIsActive(1);
-            purchaseItemsList.getSysProDetailWithBLOBs().setIsUseful(0);
+            purchaseItemsList.getSysProDetailWithBLOBs().setIsActive(CommonConstant.EFFECTIVE);
+            purchaseItemsList.getSysProDetailWithBLOBs().setIsUseful(CommonConstant.IS_NOT_USEFUL);
             purchaseItemsList.getSysProDetailWithBLOBs().setTime(time);
             // 根据项目id查找项目名
             String proName = purchasePlanExtendMapper.findProNameByProId(purchaseItemsList.getSysProDetailWithBLOBs().getPurchaseProId());
@@ -209,14 +211,23 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
                 inquiry.setUnit(itemInfo.getUnit());
                 inquiry.setNumber(itemInfo.getNumber());
                 inquiry.setSort(itemInfo.getSerialNumber());
-                inquiry.setIsinquiry(1);
-                inquiry.setVeto(0);
+                inquiry.setIsinquiry(CommonConstant.IS_INQUIRY);
+                inquiry.setVeto(CommonConstant.NOT_VETOED);
                 inquiry.setProDetailId(id);
-                inquiry.setIsActive(1);
-                inquiry.setIsUseful(0);
+                inquiry.setIsActive(CommonConstant.EFFECTIVE);
+                inquiry.setIsUseful(CommonConstant.IS_NOT_USEFUL);
                 inquiry.setOperator(purchaseItemsList.getSysProDetailWithBLOBs().getOperator());
                 inquiry.setTime(new Date().getTime());
                 inquiry.setItemId(item.getId());
+
+                //新增项
+                inquiry.setTagNumber(itemInfo.getTagNumer());
+                inquiry.setMeter(itemInfo.getMeter());
+                inquiry.setMeasuringRange(itemInfo.getMeasuringRange());
+                inquiry.setMeterSignal(itemInfo.getMeterSignal());
+                inquiry.setConnectionMode(itemInfo.getConnectionMode());
+                inquiry.setTube(itemInfo.getTube());
+
                 inquiryMapper.insert(inquiry);
                 // 获取所有的item的id
                 itemIds.add(item.getId());
@@ -263,6 +274,15 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
                     inquiry.setOperator(purchaseItemsList.getSysProDetailWithBLOBs().getOperator());
                     inquiry.setTime(new Date().getTime());
                     inquiry.setItemId(item.getId());
+
+                    //新增项
+                    inquiry.setTagNumber(itemInfo.getTagNumer());
+                    inquiry.setMeter(itemInfo.getMeter());
+                    inquiry.setMeasuringRange(itemInfo.getMeasuringRange());
+                    inquiry.setMeterSignal(itemInfo.getMeterSignal());
+                    inquiry.setConnectionMode(itemInfo.getConnectionMode());
+                    inquiry.setTube(itemInfo.getTube());
+
                     inquiryMapper.insert(inquiry);
                     System.out.println("添加：" + item.getSerialNumber());
                     // 获取所有的item的id
@@ -417,6 +437,15 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
                     purchaseItems.setIsActive(CommonConstant.EFFECTIVE);
                     purchaseItems.setOperator(operator+"");
                     purchaseItems.setTime(new Date().getTime());
+
+                    //新增
+                    purchaseItems.setTagNumer(proPurchase.getInquiry().getTagNumber());
+                    purchaseItems.setMeter(proPurchase.getInquiry().getMeter());
+                    purchaseItems.setMeasuringRange(proPurchase.getInquiry().getMeasuringRange());
+                    purchaseItems.setMeterSignal(proPurchase.getInquiry().getMeterSignal());
+                    purchaseItems.setConnectionMode(proPurchase.getInquiry().getConnectionMode());
+                    purchaseItems.setTube(proPurchase.getInquiry().getTube());
+
                     purchaseItemsMapper.insert(purchaseItems);
 
                     //最后生成供货表

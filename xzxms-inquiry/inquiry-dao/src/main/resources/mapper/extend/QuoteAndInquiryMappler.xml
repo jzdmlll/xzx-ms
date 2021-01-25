@@ -29,7 +29,8 @@
         select
         q.*,
         i.model i_model,i.name i_name,i.number i_number,i.params i_params,i.sort i_sort,i.unit i_unit,i.price i_price,
-        i.total_price i_total_price
+        i.total_price i_total_price, i.tag_number i_tag_number, i.meter i_meter, i.measuring_range i_measuring_range, i.meter_signal i_meter_signal,
+        i.connection_mode i_connection_mode, i.tube i_tube
         from quote q
         left join inquiry i on q.inquiry_id=i.id
         left join sys_pro_check c on q.id = c.quote_id
