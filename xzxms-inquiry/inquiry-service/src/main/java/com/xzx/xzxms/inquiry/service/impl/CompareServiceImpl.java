@@ -300,4 +300,23 @@ public class CompareServiceImpl implements ICompareService {
             }
         }
     }
+
+    @Override
+    public void compareAddRemark(SysProCheck sysProCheck) {
+
+        SysProCheckExample example = new SysProCheckExample();
+        example.createCriteria().andQuoteIdEqualTo(sysProCheck.getId());
+        List<SysProCheck> proChecks = sysProCheckMapper.selectByExample(example);
+        if (proChecks.size() > 0){
+            SysProCheck proCheck = proChecks.get(0);
+            if (proCheck.getFinallyAudit() == null || proCheck.getFinallyAudit() == 0){
+                sysProCheck.setId(proCheck.getId());
+                sysProCheckMapper.updateByPrimaryKeySelective(sysProCheck);
+            }else {
+                throw new CustomerException("已终审，无法修改比价备注!");
+            }
+        }else {
+            throw new CustomerException("查询有误! 请联系系统管理员");
+        }
+    }
 }

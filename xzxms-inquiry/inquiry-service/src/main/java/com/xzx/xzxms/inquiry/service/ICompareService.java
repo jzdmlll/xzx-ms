@@ -1,6 +1,7 @@
 package com.xzx.xzxms.inquiry.service;
 
 import com.xzx.xzxms.inquiry.bean.Inquiry;
+import com.xzx.xzxms.inquiry.bean.SysProCheck;
 import com.xzx.xzxms.inquiry.vm.*;
 
 import java.util.List;
@@ -60,4 +61,12 @@ public interface ICompareService {
      * @param compareVM
      */
     void compareResultCommit(CompareVM compareVM);
+
+    /**
+     * sunny
+     * 2021/01/25
+     * 比价界面每条报价添加比价审核备注
+     * @param sysProCheck
+     */
+    void compareAddRemark(SysProCheck sysProCheck);
 }

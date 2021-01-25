@@ -4,6 +4,7 @@ import com.xzx.xzxms.commons.utils.CustomerException;
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
 import com.xzx.xzxms.inquiry.bean.Inquiry;
+import com.xzx.xzxms.inquiry.bean.SysProCheck;
 import com.xzx.xzxms.inquiry.service.ICompareService;
 import com.xzx.xzxms.inquiry.service.IInquiryService;
 import com.xzx.xzxms.inquiry.bean.extend.InquiryAndProDetailExtend;
@@ -99,6 +100,13 @@ public class CompareController {
     @PostMapping("compareResultCommit")
     public Message compareResultCommit(@RequestBody CompareVM compareVM){
         compareServiceImpl.compareResultCommit(compareVM);
+        return MessageUtil.success("操作成功");
+    }
+
+    @ApiOperation("比价界面每条报价添加比价审核备注")
+    @PostMapping("compareAddRemark")
+    public Message compareAddRemark(SysProCheck sysProCheck){
+        compareServiceImpl.compareAddRemark(sysProCheck);
         return MessageUtil.success("操作成功");
     }
 }
