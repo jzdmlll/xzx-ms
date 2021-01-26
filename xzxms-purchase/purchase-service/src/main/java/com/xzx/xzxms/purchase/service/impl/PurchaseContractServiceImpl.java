@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -150,8 +151,11 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
             //使用方法排序，获取最大的编码序号
             Collections.sort(No);
             int maxNo = No.get(No.size() - 1);
+            //尝试解决结果一位时前面补0
+            DecimalFormat myDf = new DecimalFormat("00");
+            String myNo = myDf.format(maxNo+1);
             //生成采购合同编码
-            String newContractNo = "XGXZXGX" + YMD + "-" + (maxNo + 1);
+            String newContractNo = "XGXZXGX" + YMD + "-" + myNo;
             return newContractNo;
         }else {
             //无合同时生成合同编码
