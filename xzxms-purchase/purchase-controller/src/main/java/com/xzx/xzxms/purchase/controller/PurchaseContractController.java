@@ -53,4 +53,16 @@ public class PurchaseContractController {
         iPurchaseContractServiceImpl.updateSupplyPrice(purchaseSupply);
         return MessageUtil.success("success");
     }
+
+    /**
+     * tjz
+     * 自动生成合同编码
+     * @return
+     */
+    @ApiOperation(value = "自动生成合同编码")
+    @PostMapping(value = "AutomaticGenerationContractNo")
+    public Message AutomaticGenerationContractNo(){
+        String contractNo = iPurchaseContractServiceImpl.AutomaticGenerationContractNo();
+        return MessageUtil.success("success",contractNo);
+    }
 }
