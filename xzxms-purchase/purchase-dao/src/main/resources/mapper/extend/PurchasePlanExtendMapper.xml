@@ -38,6 +38,16 @@
         <result column="is_active" property="isActive" jdbcType="INTEGER" />
         <result column="operator" property="operator" jdbcType="VARCHAR" />
         <result column="time" property="time" jdbcType="BIGINT" />
+
+        <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+        <result column="tag_number" property="tagNumber" jdbcType="VARCHAR" />
+        <result column="meter" property="meter" jdbcType="VARCHAR" />
+        <result column="measuring_range" property="measuringRange" jdbcType="VARCHAR" />
+        <result column="meter_signal" property="meterSignal" jdbcType="VARCHAR" />
+        <result column="connection_mode" property="connectionMode" jdbcType="VARCHAR" />
+        <result column="tube" property="tube" jdbcType="VARCHAR" />
+        <result column="template_id" property="templateId" jdbcType="VARCHAR" />
+        <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
     </resultMap>
 
     <resultMap id="SysProDetail" type="com.xzx.xzxms.inquiry.bean.SysProDetail">
@@ -46,9 +56,11 @@
     </resultMap>
 
     <select id="findItemsByProjectId" parameterType="long" resultMap="PurchaseItemsVO">
-        select id,contract_id,project_id,serial_number,item,brand,params,model,unit,number,is_inquiry,remark,is_active,operator,time
-        from purchase_items
-        where project_id=#{projectId} and is_active=1 order by serial_number
+        select id,contract_id,project_id,serial_number,item,brand,params,model,unit,number,is_inquiry,remark,is_active,operator,time,tag_number,meter,measuring_range,connection_mode,
+        tube,template_id,j.parent_id as parent_id,meter_signal
+        from purchase_items left join purchase_items j on purchase_items.parent_id = j.id
+        where project_id = #{projectId} and is_active = 1 and (purchase_items.parent_id is null or purchase_items.parent_id != -1)
+        order by serial_number
     </select>
 
     <select id="findSerialNumbersByProjectId" parameterType="long" resultType="double">
