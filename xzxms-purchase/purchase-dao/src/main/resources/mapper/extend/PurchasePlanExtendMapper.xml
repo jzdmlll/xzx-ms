@@ -40,14 +40,13 @@
         <result column="time" property="time" jdbcType="BIGINT" />
 
         <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
-        <result column="tag_number" property="tagNumber" jdbcType="VARCHAR" />
+        <result column="tag_numer" property="tagNumer" jdbcType="VARCHAR" />
         <result column="meter" property="meter" jdbcType="VARCHAR" />
         <result column="measuring_range" property="measuringRange" jdbcType="VARCHAR" />
         <result column="meter_signal" property="meterSignal" jdbcType="VARCHAR" />
         <result column="connection_mode" property="connectionMode" jdbcType="VARCHAR" />
         <result column="tube" property="tube" jdbcType="VARCHAR" />
-        <result column="template_id" property="templateId" jdbcType="VARCHAR" />
-        <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+        <result column="template_id" property="templateId" jdbcType="BIGINT" />
     </resultMap>
 
     <resultMap id="SysProDetail" type="com.xzx.xzxms.inquiry.bean.SysProDetail">
@@ -56,10 +55,13 @@
     </resultMap>
 
     <select id="findItemsByProjectId" parameterType="long" resultMap="PurchaseItemsVO">
-        select id,contract_id,project_id,serial_number,item,brand,params,model,unit,number,is_inquiry,remark,is_active,operator,time,tag_number,meter,measuring_range,connection_mode,
-        tube,template_id,j.parent_id as parent_id,meter_signal
-        from purchase_items left join purchase_items j on purchase_items.parent_id = j.id
-        where project_id = #{projectId} and is_active = 1 and (purchase_items.parent_id is null or purchase_items.parent_id != -1)
+        select i.id, i.contract_id, i.project_id, i.serial_number, i.item, i.brand, i.params, i.model, i.unit, i.number,i.is_inquiry, i.remark,
+        i.is_active, u.username as operator,i.time, i.tag_numer, i.meter,
+        i.measuring_range, i.connection_mode,i.tube, i.template_id, j.parent_id as parent_id, i.meter_signal
+        from purchase_items i
+        left join purchase_items j on i.parent_id = j.id
+        left join sys_user u on u.id = i.operator
+        where i.project_id = #{projectId} and i.is_active = 1 and (i.parent_id is null or i.parent_id != -1)
         order by serial_number
     </select>
 

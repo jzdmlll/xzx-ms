@@ -516,7 +516,7 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
         List<PurchaseItems> list = purchaseItemsMapper.selectByExample(example);
         if(list.size() > 0){
             PurchaseItems purchaseItems = list.get(0);
-            if(purchaseItems.getContractId() != null){
+            if(purchaseItems.getContractId() == null){
                 //不存在合同则可以删除
                 purchaseSupply.setIsActive(CommonConstant.INVALID);
                 purchaseSupply.setUpdateTime(new Date().getTime());

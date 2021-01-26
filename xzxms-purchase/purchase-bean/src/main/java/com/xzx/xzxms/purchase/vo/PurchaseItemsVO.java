@@ -25,6 +25,79 @@ public class PurchaseItemsVO {
     private String operator;
     private Long time;
 
+    private String parentId;
+    private String tagNumer;
+    private String meter;
+    private String measuringRange;
+    private String meterSignal;
+    private String connectionMode;
+    private String tube;
+    private Long templateId;
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
+
+    public String getTagNumer() {
+        return tagNumer;
+    }
+
+    public void setTagNumer(String tagNumer) {
+        this.tagNumer = tagNumer;
+    }
+
+    public String getMeter() {
+        return meter;
+    }
+
+    public void setMeter(String meter) {
+        this.meter = meter;
+    }
+
+    public String getMeasuringRange() {
+        return measuringRange;
+    }
+
+    public void setMeasuringRange(String measuringRange) {
+        this.measuringRange = measuringRange;
+    }
+
+    public String getMeterSignal() {
+        return meterSignal;
+    }
+
+    public void setMeterSignal(String meterSignal) {
+        this.meterSignal = meterSignal;
+    }
+
+    public String getConnectionMode() {
+        return connectionMode;
+    }
+
+    public void setConnectionMode(String connectionMode) {
+        this.connectionMode = connectionMode;
+    }
+
+    public String getTube() {
+        return tube;
+    }
+
+    public void setTube(String tube) {
+        this.tube = tube;
+    }
+
+    public Long getTemplateId() {
+        return templateId;
+    }
+
+    public void setTemplateId(Long templateId) {
+        this.templateId = templateId;
+    }
+
     public Long getId() {
         return id;
     }
