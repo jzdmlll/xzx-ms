@@ -16,4 +16,11 @@ public interface PurchaseContractExtendMapper {
 
 
     List<SysFile> findContractFileByContractId(Long contractId);
+
+    /**
+     * 通过年月日模糊查询所有符合条件的合同编码contract_no
+     * @param contractNo
+     * @return
+     */
+    List<String> findContractNoByYMD(@Param("contractNo") String contractNo);
 }

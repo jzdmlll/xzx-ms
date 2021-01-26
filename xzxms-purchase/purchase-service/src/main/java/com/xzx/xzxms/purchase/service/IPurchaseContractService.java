@@ -47,4 +47,11 @@ public interface IPurchaseContractService {
      */
     List<SysFile> findContractFileByContractId(Long contractId);
 
+    /**
+     * tjz
+     * 自动生成合同编码
+     * @return
+     */
+    String AutomaticGenerationContractNo();
+
 }

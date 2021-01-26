@@ -23,4 +23,8 @@
             </if>
         </where>
     </select>
+
+    <select id="findContractNoByYMD" parameterType="string" resultType="string">
+        select contract_no from purchase_contract where contract_no like "%"#{contractNo}"%" GROUP BY contract_no
+    </select>
 </mapper>
