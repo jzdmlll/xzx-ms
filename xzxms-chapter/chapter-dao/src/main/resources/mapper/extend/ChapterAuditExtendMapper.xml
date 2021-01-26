@@ -17,6 +17,7 @@
         where role_id = (SELECT role_id
         FROM `sys_privilege` inner join sys_role_privilege on sys_privilege.id = sys_role_privilege.privilege_id
         where name='用章管理' and type='menu')
+        and sys_user.is_active = 1
     </select>
 
     <select id="findChapterAuditorInfoByLike" resultType="com.xzx.xzxms.chapter.bean.ChapterAudit">
