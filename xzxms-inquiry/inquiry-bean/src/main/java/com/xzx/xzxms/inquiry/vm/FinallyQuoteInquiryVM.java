@@ -27,6 +27,15 @@ public class FinallyQuoteInquiryVM extends Quote {
     private String correctPrice;
     private int minPrice;
 
+    private Long templateId;
+
+    public Long getTemplateId() {
+        return templateId;
+    }
+
+    public void setTemplateId(Long templateId) {
+        this.templateId = templateId;
+    }
 
     public String getFinallyPrice() {
         return finallyPrice;

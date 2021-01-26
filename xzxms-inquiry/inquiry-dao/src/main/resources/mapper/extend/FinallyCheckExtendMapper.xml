@@ -30,7 +30,8 @@
 
     <select id="cascadeFindAllByParams" resultType="com.xzx.xzxms.inquiry.vm.FinallyQuoteInquiryVM">
         select q.*,
-        i.model model,i.name name,i.number number,i.params params,i.unit unit,i.price price,i.total_price total_price,i.sort sort,i.veto veto,i.finally_price finally_price,i.correct_price,
+        i.model model,i.name name,i.number number,i.params params,i.unit unit,i.price price,i.total_price total_price,
+        i.sort sort,i.veto veto,i.finally_price finally_price,i.correct_price, i.template_id template_id,
         spc.id compare_id,
         spc.technical_audit technical_audit,spc.technical_remark technical_remark,
         spc.business_audit business_audit,spc.business_remark business_remark,
