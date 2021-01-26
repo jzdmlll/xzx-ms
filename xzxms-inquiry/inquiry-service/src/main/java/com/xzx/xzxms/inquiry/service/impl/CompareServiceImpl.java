@@ -305,7 +305,7 @@ public class CompareServiceImpl implements ICompareService {
     public void compareAddRemark(SysProCheck sysProCheck) {
 
         SysProCheckExample example = new SysProCheckExample();
-        example.createCriteria().andQuoteIdEqualTo(sysProCheck.getId());
+        example.createCriteria().andQuoteIdEqualTo(sysProCheck.getQuoteId());
         List<SysProCheck> proChecks = sysProCheckMapper.selectByExample(example);
         if (proChecks.size() > 0){
             SysProCheck proCheck = proChecks.get(0);

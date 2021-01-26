@@ -101,21 +101,6 @@ public class PurchaseContractManagementServiceImpl implements PurchaseContractMa
     @Transactional
     @Override
     public void uploadContractFile(PurchaseContract purchaseContract, List<SysFile> fileList) {
-
-        // 查询该合同下是否有文件
-        SysFileExample sysFileExample = new SysFileExample();
-        sysFileExample.createCriteria().andOtherIdEqualTo(purchaseContract.getId()).andIsActiveEqualTo(CommonConstant.EFFECTIVE)
-                .andTypeEqualTo(SysFileExtend.TYPE_PURCHASE_CONTRACT);
-        Long fileNum = sysFileMapper.countByExample(sysFileExample);
-
-        if (fileNum > 0) {
-            // 修改
-            // 覆盖之前文件
-            SysFile newFile = new SysFile();
-            newFile.setIsActive(CommonConstant.INVALID);
-            sysFileMapper.updateByExampleSelective(newFile, sysFileExample);
-        }
-
         uploadPurchaseContractFile(purchaseContract, fileList);
     }
 
@@ -136,6 +121,19 @@ public class PurchaseContractManagementServiceImpl implements PurchaseContractMa
      * @param fileList
      */
     public void uploadPurchaseContractFile(PurchaseContract purchaseContract, List<SysFile> fileList){
+        // 查询该合同下是否有文件
+        SysFileExample sysFileExample = new SysFileExample();
+        sysFileExample.createCriteria().andOtherIdEqualTo(purchaseContract.getId()).andIsActiveEqualTo(CommonConstant.EFFECTIVE)
+                .andTypeEqualTo(SysFileExtend.TYPE_PURCHASE_CONTRACT);
+        Long fileNum = sysFileMapper.countByExample(sysFileExample);
+
+        if (fileNum > 0) {
+            // 修改
+            // 覆盖之前文件
+            SysFile newFile = new SysFile();
+            newFile.setIsActive(CommonConstant.INVALID);
+            sysFileMapper.updateByExampleSelective(newFile, sysFileExample);
+        }
 
         Long time = new Date().getTime();
         // 遍历
