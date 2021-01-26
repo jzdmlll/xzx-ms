@@ -12,10 +12,14 @@ import com.xzx.xzxms.inquiry.dao.extend.InquiryExtendMapper;
 import com.xzx.xzxms.inquiry.dao.extend.QuoteAndInquiryExtendMapper;
 import com.xzx.xzxms.inquiry.dto.InquiryTree;
 import com.xzx.xzxms.inquiry.dto.InquiryTreeDTO;
+import com.xzx.xzxms.inquiry.service.IFinallyCheckService;
 import com.xzx.xzxms.inquiry.service.IInquiryService;
 import com.xzx.xzxms.inquiry.bean.*;
 import com.xzx.xzxms.inquiry.bean.extend.InquiryAndProDetailExtend;
 import com.xzx.xzxms.inquiry.bean.extend.InquiryExtend;
+import com.xzx.xzxms.purchase.bean.PurchaseItems;
+import com.xzx.xzxms.purchase.dao.PurchaseItemsMapper;
+import com.xzx.xzxms.purchase.dao.PurchaseMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +40,8 @@ public class InquiryServiceImpl implements IInquiryService {
     private QuoteMapper quoteMapper;
     @Resource
     private ProPoolMapper proPoolMapper;
+    @Resource
+    private PurchaseItemsMapper purchaseItemsMapper;
 
     @Override
     public List<InquiryExtend> findByProDetailId(Long proDetailId, String name, String model) {
@@ -164,16 +170,23 @@ public class InquiryServiceImpl implements IInquiryService {
 
     @Transactional
     @Override
-    public void batchSetInvalid(long[] ids) {
+    public void batchSetInvalid(Long[] ids) {
 
         long time = new Date().getTime();
-        for (long id : ids){
+        for (Long id : ids){
             Inquiry inquiry = inquiryMapper.selectByPrimaryKey(id);
             long num = isExistQuoteByInquiryId(inquiry);
             if(num > 0) {
                 throw new CustomerException(inquiry.getName() + ":下有报价内容，请删除对应报价内容后执行该操作");
             }
             if (inquiry != null && inquiry.getIsActive().equals(CommonConstant.EFFECTIVE)){
+                if (inquiry.getItemId() != null && inquiry.getItemId() != 0){
+                    //如果是采购发送过来的则需要同时将采购的is_inquiry重置
+                    PurchaseItems purchaseItems = new PurchaseItems();
+                    purchaseItems.setId(inquiry.getItemId());
+                    purchaseItems.setIsInquiry(CommonConstant.IS_NOT_INQUIRY);
+                    purchaseItemsMapper.updateByPrimaryKeySelective(purchaseItems);
+                }
                 inquiry.setIsActive(CommonConstant.INVALID);
                 inquiry.setTime(time);
                 inquiryMapper.updateByPrimaryKeySelective(inquiry);

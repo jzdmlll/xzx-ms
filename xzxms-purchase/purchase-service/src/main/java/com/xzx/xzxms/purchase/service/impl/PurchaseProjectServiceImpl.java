@@ -5,6 +5,7 @@ import com.xzx.xzxms.commons.utils.CustomerException;
 import com.xzx.xzxms.commons.utils.IDUtils;
 import com.xzx.xzxms.inquiry.bean.SysProDetail;
 import com.xzx.xzxms.inquiry.bean.SysProDetailExample;
+import com.xzx.xzxms.inquiry.bean.SysProDetailWithBLOBs;
 import com.xzx.xzxms.inquiry.dao.SysProDetailMapper;
 import com.xzx.xzxms.purchase.bean.PurchaseItems;
 import com.xzx.xzxms.purchase.bean.PurchaseItemsExample;
@@ -79,11 +80,24 @@ public class PurchaseProjectServiceImpl implements IPurchaseProjectService {
                 throw new CustomerException("该项目下已有采购项，不可删除。");
             }else {
                 //修改符合条件的采购项目对象的部分内容，is_active置为0代表对象无效
-                purchaseProject.setIsActive(0);
+                purchaseProject.setIsActive(CommonConstant.INVALID);
                 purchaseProject.setUpdateTime(time);
                 purchaseProject.setUpdateOperator(user + "");
                 //使用updateByPrimaryKeySelective方法，将不为空的字段进行修改操作
                 purchaseProjectMapper.updateByPrimaryKeySelective(purchaseProject);
+
+                //同时判断询价模块是否存在该采购项目，存在，则删
+                SysProDetailExample proDetailExample = new SysProDetailExample();
+                proDetailExample.createCriteria().andPurchaseProIdEqualTo(id).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
+                List<SysProDetailWithBLOBs> proDetails = sysProDetailMapper.selectByExampleWithBLOBs(proDetailExample);
+                if (proDetails.size() > 0){
+                    for(SysProDetailWithBLOBs sysProDetail : proDetails){
+                        sysProDetail.setIsActive(CommonConstant.INVALID);
+                        sysProDetail.setUpdateOperator(user + "");
+                        sysProDetail.setUpdateTime(time);
+                        sysProDetailMapper.updateByPrimaryKeySelective(sysProDetail);
+                    }
+                }
             }
         }
     }
@@ -96,10 +110,29 @@ public class PurchaseProjectServiceImpl implements IPurchaseProjectService {
     public void saveOrUpdate(PurchaseProject purchaseProject) {
         //获取操作时间
         long time = new Date().getTime();
+
+
+
+
         //如果采购项目的id不为空，设置更新时间，使用updateByPrimaryKeySelective方法，更新不为空的数据
         if(purchaseProject.getId() != null){
+
             purchaseProject.setUpdateTime(time);
-           purchaseProjectMapper.updateByPrimaryKeySelective(purchaseProject);
+            purchaseProjectMapper.updateByPrimaryKeySelective(purchaseProject);
+
+            //同时判断询价模块是否存在该采购项目，存在，则修改
+            SysProDetailExample proDetailExample = new SysProDetailExample();
+            proDetailExample.createCriteria().andPurchaseProIdEqualTo(purchaseProject.getId()).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
+            List<SysProDetailWithBLOBs> proDetails = sysProDetailMapper.selectByExampleWithBLOBs(proDetailExample);
+            if (proDetails.size() > 0){
+                for(SysProDetailWithBLOBs sysProDetail : proDetails){
+                    sysProDetail.setIsActive(CommonConstant.INVALID);
+                    sysProDetail.setUpdateOperator(purchaseProject.getUpdateOperator() + "");
+                    sysProDetail.setUpdateTime(time);
+                    sysProDetailMapper.updateByPrimaryKeySelective(sysProDetail);
+                }
+            }
+
         }else {
             //首先通过example类进行筛选，找出项目详情表中与参数对象中的采购项目名一样，且有效的数据。
             SysProDetailExample sysProDetailExample = new SysProDetailExample();

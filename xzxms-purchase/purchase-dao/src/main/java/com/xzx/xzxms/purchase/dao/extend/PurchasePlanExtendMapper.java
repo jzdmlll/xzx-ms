@@ -95,10 +95,10 @@ public interface PurchasePlanExtendMapper {
 
     /**
      * 周嘉玮
-     * 根据 projectName 在表 sys_pro_detail 中查询是否有相同项目名
-     * @param projectName
+     * 根据 projectId 在表 sys_pro_detail 中查询是否存在
+     * @param projectId
      */
-    Long findProNameByProName(@Param("name") String projectName);
+    Long findProNameByProName(@Param("id") Long projectId);
 
     /**
      * 周嘉玮

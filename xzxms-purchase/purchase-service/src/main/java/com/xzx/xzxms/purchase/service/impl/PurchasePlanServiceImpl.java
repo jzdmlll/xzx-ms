@@ -4,6 +4,8 @@ import com.xzx.xzxms.commons.constant.CommonConstant;
 import com.xzx.xzxms.commons.utils.CustomerException;
 import com.xzx.xzxms.commons.utils.IDUtils;
 import com.xzx.xzxms.inquiry.bean.Inquiry;
+import com.xzx.xzxms.inquiry.bean.SysProDetail;
+import com.xzx.xzxms.inquiry.bean.SysProDetailExample;
 import com.xzx.xzxms.inquiry.bean.SysProDetailWithBLOBs;
 import com.xzx.xzxms.inquiry.dao.InquiryMapper;
 import com.xzx.xzxms.inquiry.dao.SysProDetailMapper;
@@ -162,9 +164,14 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
     @Override
     public String insertSysProDetailService(PurchaseItemsListDTO purchaseItemsList) {
         // 获取项目id 判断该项目名是否已经存在
-        Long result = purchasePlanExtendMapper.findProNameByProName(purchaseItemsList.getSysProDetailWithBLOBs().getName());
-        // 当项目名称不重复
-        if (result == null){
+        //Long result = purchasePlanExtendMapper.findProNameByProName(purchaseItemsList.getSysProDetailWithBLOBs().getPurchaseProId());
+
+        SysProDetailExample example = new SysProDetailExample();
+        example.createCriteria().andPurchaseProIdEqualTo(purchaseItemsList.getSysProDetailWithBLOBs().getPurchaseProId()).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
+        List<SysProDetail> list = sysProDetailMapper.selectByExample(example);
+
+        // 当采购项目ID不存在
+        if (list.size() == 0){
             // 获取当前年月
             SimpleDateFormat df = new SimpleDateFormat("yyyyMM");//设置日期格式
             String YM = df.format(new Date());
@@ -249,10 +256,12 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
             return "success";
         // 当项目名存在时
         }else {
-            String name = purchaseItemsList.getSysProDetailWithBLOBs().getName();
+
+            SysProDetail sysProDetail = list.get(0);
+
             List<Long> itemIds = new ArrayList<>();
             for (PurchaseItems item : purchaseItemsList.getPurchaseItemsList()) {
-                Double sort = purchasePlanExtendMapper.findSort(name, item.getSerialNumber());
+                Double sort = purchasePlanExtendMapper.findSort(sysProDetail.getName(), item.getSerialNumber());
                 // 当该购买项不存在时
                 if (sort == null){
                     Inquiry inquiry = new Inquiry();
@@ -266,11 +275,11 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
                     inquiry.setUnit(itemInfo.getUnit());
                     inquiry.setNumber(itemInfo.getNumber());
                     inquiry.setSort(itemInfo.getSerialNumber());
-                    inquiry.setIsinquiry(1);
-                    inquiry.setVeto(0);
-                    inquiry.setProDetailId(result);
-                    inquiry.setIsActive(1);
-                    inquiry.setIsUseful(0);
+                    inquiry.setIsinquiry(CommonConstant.IS_INQUIRY);
+                    inquiry.setVeto(CommonConstant.NOT_VETOED);
+                    inquiry.setProDetailId(sysProDetail.getId());
+                    inquiry.setIsActive(CommonConstant.EFFECTIVE);
+                    inquiry.setIsUseful(CommonConstant.IS_NOT_USEFUL);
                     inquiry.setOperator(purchaseItemsList.getSysProDetailWithBLOBs().getOperator());
                     inquiry.setTime(new Date().getTime());
                     inquiry.setItemId(item.getId());
@@ -325,27 +334,6 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
         purchaseItems.setIsInquiry(0);
         purchaseItems.setIsActive(CommonConstant.EFFECTIVE);
         purchaseItemsMapper.insert(purchaseItems);
-    }
-
-    /**
-     * 孙乃裕
-     * 修改人：tjz
-     * @param purchaseItems
-     */
-    @Override
-    public void updatePurchaseItem(PurchaseItems purchaseItems) {
-        //增加了判断是否发往询价，没有才能修改
-        int num = checkSerialNumberIsExists(purchaseItems.getProjectId(), purchaseItems.getSerialNumber());
-        if (num > 0){
-            throw new CustomerException("此采购项序号已存在，不能重复插入!");
-        }else {
-            if(purchaseItems.getIsInquiry()!=0) {
-                throw new CustomerException("已经发往询价，请勿修改");
-            }else {
-                purchaseItems.setUpdateTime(new Date().getTime());
-                purchaseItemsMapper.updateByPrimaryKeySelective(purchaseItems);
-            }
-        }
     }
 
     /**
@@ -548,21 +536,28 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
     @Override
     public void updatePurchaseItems(PurchaseItems purchaseItems) {
 
-        PurchaseItemsExample example = new PurchaseItemsExample();
-        example.createCriteria().andIsActiveEqualTo(CommonConstant.EFFECTIVE).andIdEqualTo(purchaseItems.getId());
-        List<PurchaseItems> list = purchaseItemsMapper.selectByExample(example);
-        if(list.size() > 0){
-            if(CommonConstant.IS_INQUIRY.equals(list.get(0).getIsInquiry())){
-                throw new CustomerException("已发往询价，请勿修改操作!");
-            }else {
-                PurchaseSupplyExample supplyExample = new PurchaseSupplyExample();
-                supplyExample.createCriteria().andItemIdEqualTo(purchaseItems.getId()).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
-                List<PurchaseSupply> supplies = purchaseSupplyMapper.selectByExample(supplyExample);
-                if(supplies.size() > 0){
-                    throw new CustomerException("已存在供货商，请勿修改采购项信息，如需修改，先删除供货商!");
-                }else{
-                    purchaseItems.setUpdateTime(new Date().getTime());
-                    purchaseItemsMapper.updateByPrimaryKeySelective(purchaseItems);
+        //增加了判断是否发往询价，没有才能修改
+
+        int num = checkSerialNumberIsExists(purchaseItems.getProjectId(), purchaseItems.getSerialNumber());
+        if (num > 0){
+            throw new CustomerException("此采购项序号已存在，不能重复插入!");
+        }else {
+            PurchaseItemsExample example = new PurchaseItemsExample();
+            example.createCriteria().andIsActiveEqualTo(CommonConstant.EFFECTIVE).andIdEqualTo(purchaseItems.getId());
+            List<PurchaseItems> list = purchaseItemsMapper.selectByExample(example);
+            if(list.size() > 0){
+                if(CommonConstant.IS_INQUIRY.equals(list.get(0).getIsInquiry())){
+                    throw new CustomerException("已发往询价，请勿修改操作!");
+                }else {
+                    PurchaseSupplyExample supplyExample = new PurchaseSupplyExample();
+                    supplyExample.createCriteria().andItemIdEqualTo(purchaseItems.getId()).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
+                    List<PurchaseSupply> supplies = purchaseSupplyMapper.selectByExample(supplyExample);
+                    if(supplies.size() > 0){
+                        throw new CustomerException("已存在供货商，请勿修改采购项信息，如需修改，先删除供货商!");
+                    }else{
+                        purchaseItems.setUpdateTime(new Date().getTime());
+                        purchaseItemsMapper.updateByPrimaryKeySelective(purchaseItems);
+                    }
                 }
             }
         }
@@ -576,21 +571,28 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
     @Transactional
     @Override
     public void logicDeletePurchaseItems(Long[] purchaseItemIds,String operator) {
-        PurchaseItems purchaseItems = new PurchaseItems();
+        PurchaseItems purchaseItems;
         long time = new Date().getTime();
         for (Long purchaseItemId : purchaseItemIds) {
-            //判断采购项相关的采购供货数量是否大于0，有供货数量就不可删除采购项
-            PurchaseSupplyExample example = new PurchaseSupplyExample();
-            example.createCriteria().andItemIdEqualTo(purchaseItemId).andNumberGreaterThan(0.0).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
-            List<PurchaseSupply> list = purchaseSupplyMapper.selectByExample(example);
-            if(list.size()>0){
-                throw new CustomerException("采购项已有采购供货，不可删除");
+
+            purchaseItems = purchaseItemsMapper.selectByPrimaryKey(purchaseItemId);
+            if (purchaseItems.getIsInquiry() != null && purchaseItems.getIsInquiry() == CommonConstant.IS_INQUIRY){
+                throw new CustomerException("采购项已发往询价，请勿删除!");
             }else {
-                purchaseItems.setId(purchaseItemId);
-                purchaseItems.setIsActive(CommonConstant.INVALID);
-                purchaseItems.setUpdateOperator(operator);
-                purchaseItems.setUpdateTime(time);
-                purchaseItemsMapper.updateByPrimaryKeySelective(purchaseItems);
+
+                //判断采购项相关的采购供货数量是否大于0，有供货数量就不可删除采购项
+                PurchaseSupplyExample example = new PurchaseSupplyExample();
+                example.createCriteria().andItemIdEqualTo(purchaseItemId).andNumberGreaterThan(0.0).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
+                List<PurchaseSupply> list = purchaseSupplyMapper.selectByExample(example);
+                if(list.size()>0){
+                    throw new CustomerException("采购项已有采购供货，不可删除");
+                }else {
+                    purchaseItems.setId(purchaseItemId);
+                    purchaseItems.setIsActive(CommonConstant.INVALID);
+                    purchaseItems.setUpdateOperator(operator);
+                    purchaseItems.setUpdateTime(time);
+                    purchaseItemsMapper.updateByPrimaryKeySelective(purchaseItems);
+                }
             }
         }
     }

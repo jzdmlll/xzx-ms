@@ -86,7 +86,7 @@ public class InquiryController {
 
     @ApiOperation(value="批量删除询价内容")
     @PostMapping(value="batchSetInvalid")
-    public Message batchSetInvalid(long[] ids){
+    public Message batchSetInvalid(Long[] ids){
 
         iInquiryServiceImpl.batchSetInvalid(ids);
         return MessageUtil.success("删除成功");

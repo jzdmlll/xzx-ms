@@ -62,13 +62,6 @@ public interface PurchasePlanService {
     void addPurchaseItem(PurchaseItems purchaseItems);
 
     /**
-     * 修改采购计划项
-     * 修改人：tjz
-     * @param purchaseItems
-     */
-    void updatePurchaseItem(PurchaseItems purchaseItems);
-
-    /**
      * Execl导入采购计划
      * @param purchaseItemsDTO
      */

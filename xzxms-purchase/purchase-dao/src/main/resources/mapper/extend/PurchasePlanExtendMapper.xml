@@ -97,8 +97,8 @@
         select * from purchase_supply where item_id = #{id} and is_active != 0
     </select>
 
-    <select id="findProNameByProName" parameterType="string" resultType="long">
-        SELECT id FROM `sys_pro_detail` where `name` = #{name}
+    <select id="findProNameByProName" parameterType="long" resultType="long">
+        SELECT id FROM `sys_pro_detail` where purchase_pro_id = #{id} and is_active = 1
     </select>
 
     <select id="findProNoByYM" parameterType="string" resultType="string">
@@ -108,6 +108,6 @@
     <select id="findSort" parameterType="com.xzx.xzxms.inquiry.bean.SysProDetail" resultType="double">
         select sort
         from inquiry inner join sys_pro_detail on inquiry.pro_detail_id = sys_pro_detail.id
-        where sys_pro_detail.name = #{name} and sort=#{sort}
+        where sys_pro_detail.name = #{name} and sort=#{sort} and inquiry.is_active = 1
     </select>
 </mapper>

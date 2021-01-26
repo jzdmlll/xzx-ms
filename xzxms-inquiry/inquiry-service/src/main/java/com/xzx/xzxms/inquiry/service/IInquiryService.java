@@ -46,7 +46,7 @@ public interface IInquiryService {
      * 批量置为无效（假删）
      * @param ids
      */
-    void batchSetInvalid(long[] ids);
+    void batchSetInvalid(Long[] ids);
 
     /**
      * 根据项目id/比价状态查询
