@@ -145,7 +145,7 @@ public class PurchasePlanController {
     @PostMapping("updatePurchaseItem")
     public Message updatePurchaseItem(PurchaseItems purchaseItems){
 
-        purchasePlanServiceImpl.updatePurchaseItem(purchaseItems);
+        purchasePlanServiceImpl.updatePurchaseItems(purchaseItems);
         return MessageUtil.success("success");
     }
 

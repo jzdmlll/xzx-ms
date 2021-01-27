@@ -89,7 +89,7 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
                 return true;
             }
         }
-        if(autoAddPrivilege) {
+        if(userId == 1 && autoAddPrivilege) {
             // 自动添加权限
             SysPrivilegeExample example = new SysPrivilegeExample();
             example.createCriteria().andRouteEqualTo(path);
