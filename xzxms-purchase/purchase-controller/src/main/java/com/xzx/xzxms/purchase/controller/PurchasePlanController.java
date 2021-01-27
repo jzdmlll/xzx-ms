@@ -136,20 +136,6 @@ public class PurchasePlanController {
     }
 
     /**
-     * 孙乃裕
-     * 修改人：tjz
-     * @param purchaseItems
-     * @return
-     */
-    @ApiOperation("修改采购计划项")
-    @PostMapping("updatePurchaseItem")
-    public Message updatePurchaseItem(PurchaseItems purchaseItems){
-
-        purchasePlanServiceImpl.updatePurchaseItem(purchaseItems);
-        return MessageUtil.success("success");
-    }
-
-    /**
      * Lzc
      * @param projectId
      * @param serialNum
