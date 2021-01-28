@@ -13,6 +13,7 @@ import com.xzx.xzxms.inquiry.service.IProPurchaseService;
 import com.xzx.xzxms.inquiry.service.ISysProDetailService;
 import com.xzx.xzxms.inquiry.vm.BatchInquiryVM;
 import com.xzx.xzxms.inquiry.vm.ProPurchase;
+import com.xzx.xzxms.inquiry.vo.InquiryAndQuoteVO;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 

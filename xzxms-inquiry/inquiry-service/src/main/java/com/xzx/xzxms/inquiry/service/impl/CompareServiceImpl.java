@@ -13,6 +13,7 @@ import com.xzx.xzxms.inquiry.dao.extend.QuoteAndInquiryExtendMapper;
 import com.xzx.xzxms.inquiry.service.ICompareService;
 import com.xzx.xzxms.inquiry.bean.extend.SysCheckExtend;
 import com.xzx.xzxms.inquiry.vm.*;
+import com.xzx.xzxms.inquiry.vo.InquiryAndQuoteVO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -318,5 +319,12 @@ public class CompareServiceImpl implements ICompareService {
         }else {
             throw new CustomerException("查询有误! 请联系系统管理员");
         }
+    }
+
+    @Override
+    public List<InquiryAndQuoteVO> findInquiryAndQuote(Long proDetailId) {
+
+        List<InquiryAndQuoteVO> list = inquiryExtendMapper.findInquiryAndQuote(proDetailId);
+        return list;
     }
 }

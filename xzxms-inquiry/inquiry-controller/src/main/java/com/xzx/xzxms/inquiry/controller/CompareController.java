@@ -8,6 +8,7 @@ import com.xzx.xzxms.inquiry.service.ICompareService;
 import com.xzx.xzxms.inquiry.service.IInquiryService;
 import com.xzx.xzxms.inquiry.bean.extend.InquiryAndProDetailExtend;
 import com.xzx.xzxms.inquiry.vm.*;
+import com.xzx.xzxms.inquiry.vo.InquiryAndQuoteVO;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
@@ -106,6 +107,13 @@ public class CompareController {
     public Message compareAddRemark(SysProCheck sysProCheck){
         compareServiceImpl.compareAddRemark(sysProCheck);
         return MessageUtil.success("操作成功");
+    }
+
+    @ApiOperation(value = "查询出询价和报价汇总")
+    @PostMapping("findInquiryAndQuote")
+    public Message findInquiryAndQuote(Long proDetailId){
+        List<InquiryAndQuoteVO> list = compareServiceImpl.findInquiryAndQuote(proDetailId);
+        return MessageUtil.success("success", list);
     }
 }
 

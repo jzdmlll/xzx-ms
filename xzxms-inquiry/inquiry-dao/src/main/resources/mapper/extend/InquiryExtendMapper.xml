@@ -167,4 +167,21 @@
         select count(1) from quote q left join sys_pro_check spc on q.id = spc.quote_id
         where q.inquiry_id = #{id} and q.is_active = 1 and (spc.compare_audit = 0 or spc.compare_audit is NULL)
     </select>-->
+
+    <select id="findInquiryAndQuote" resultMap="quoteList">
+        select i.*,
+        q.id q_id,q.image q_image, q.supplier q_supplier, q.su_delivery q_su_delivery,q.su_model q_su_model,q.su_params q_su_params,q.su_brand q_su_brand,
+        q.su_price q_su_price,q.su_total_price q_su_total_price,q.warranty q_warranty,q.data_source q_data_source,q.su_remark q_su_remark
+        from inquiry i
+        left join quote q on i.id = q.inquiry_id
+        <where>
+            i.is_active = 1 and q.is_active = 1
+            <if test="proDetailId != null">
+                and i.pro_detail_id = #{proDetailId}
+            </if>
+        </where>
+    </select>
+    <resultMap id="quoteList" type="com.xzx.xzxms.inquiry.vo.InquiryAndQuoteVO" extends="com.xzx.xzxms.inquiry.dao.InquiryMapper.BaseResultMap">
+        <collection property="quotes" javaType="com.xzx.xzxms.inquiry.bean.Quote" autoMapping="true" columnPrefix="q_" />
+    </resultMap>
 </mapper>

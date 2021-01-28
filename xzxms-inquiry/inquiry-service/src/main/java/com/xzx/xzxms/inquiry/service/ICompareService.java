@@ -3,6 +3,7 @@ package com.xzx.xzxms.inquiry.service;
 import com.xzx.xzxms.inquiry.bean.Inquiry;
 import com.xzx.xzxms.inquiry.bean.SysProCheck;
 import com.xzx.xzxms.inquiry.vm.*;
+import com.xzx.xzxms.inquiry.vo.InquiryAndQuoteVO;
 
 import java.util.List;
 import java.util.Map;
@@ -69,4 +70,12 @@ public interface ICompareService {
      * @param sysProCheck
      */
     void compareAddRemark(SysProCheck sysProCheck);
+
+    /**
+     * sunny
+     * 2021/01/28
+     * 根据项目id 查询出询价和报价汇总
+     * @return
+     */
+    List<InquiryAndQuoteVO> findInquiryAndQuote(Long proDetailId);
 }
