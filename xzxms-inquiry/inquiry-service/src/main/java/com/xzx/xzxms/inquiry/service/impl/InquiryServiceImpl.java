@@ -92,12 +92,12 @@ public class InquiryServiceImpl implements IInquiryService {
     public void batchAddInquiry(List<Inquiry> inquiryList) throws SQLException {
 
         long time = new Date().getTime();
-        InquiryExample example = new InquiryExample();
+        /*InquiryExample example = new InquiryExample();
         example.createCriteria().andProDetailIdEqualTo(inquiryList.get(0).getProDetailId()).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
         long inquiryNum = inquiryMapper.countByExample(example);
         if (inquiryNum > 0){
             throw new CustomerException("已存在一条或多条询价信息,如需重新导入，请先全部删除后导入!");
-        }
+        }*/
 
         for (Inquiry inquiry : inquiryList) {
 

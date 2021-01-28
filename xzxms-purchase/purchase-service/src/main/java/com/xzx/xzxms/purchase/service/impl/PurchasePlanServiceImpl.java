@@ -537,30 +537,29 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
     public void updatePurchaseItems(PurchaseItems purchaseItems) {
 
         //增加了判断是否发往询价，没有才能修改
-
-        int num = checkSerialNumberIsExists(purchaseItems.getProjectId(), purchaseItems.getSerialNumber());
-        if (num > 0){
+        //int num = checkSerialNumberIsExists(purchaseItems.getProjectId(), purchaseItems.getSerialNumber());
+        /*if (num > 0){
             throw new CustomerException("此采购项序号已存在，不能重复插入!");
-        }else {
-            PurchaseItemsExample example = new PurchaseItemsExample();
-            example.createCriteria().andIsActiveEqualTo(CommonConstant.EFFECTIVE).andIdEqualTo(purchaseItems.getId());
-            List<PurchaseItems> list = purchaseItemsMapper.selectByExample(example);
-            if(list.size() > 0){
-                if(CommonConstant.IS_INQUIRY.equals(list.get(0).getIsInquiry())){
-                    throw new CustomerException("已发往询价，请勿修改操作!");
-                }else {
-                    PurchaseSupplyExample supplyExample = new PurchaseSupplyExample();
-                    supplyExample.createCriteria().andItemIdEqualTo(purchaseItems.getId()).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
-                    List<PurchaseSupply> supplies = purchaseSupplyMapper.selectByExample(supplyExample);
-                    if(supplies.size() > 0){
-                        throw new CustomerException("已存在供货商，请勿修改采购项信息，如需修改，先删除供货商!");
-                    }else{
-                        purchaseItems.setUpdateTime(new Date().getTime());
-                        purchaseItemsMapper.updateByPrimaryKeySelective(purchaseItems);
-                    }
+        }else {*/
+        PurchaseItemsExample example = new PurchaseItemsExample();
+        example.createCriteria().andIsActiveEqualTo(CommonConstant.EFFECTIVE).andIdEqualTo(purchaseItems.getId());
+        List<PurchaseItems> list = purchaseItemsMapper.selectByExample(example);
+        if(list.size() > 0){
+            if(CommonConstant.IS_INQUIRY.equals(list.get(0).getIsInquiry())){
+                throw new CustomerException("已发往询价，请勿修改操作!");
+            }else {
+                PurchaseSupplyExample supplyExample = new PurchaseSupplyExample();
+                supplyExample.createCriteria().andItemIdEqualTo(purchaseItems.getId()).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
+                List<PurchaseSupply> supplies = purchaseSupplyMapper.selectByExample(supplyExample);
+                if(supplies.size() > 0){
+                    throw new CustomerException("已存在供货商，请勿修改采购项信息，如需修改，先删除供货商!");
+                }else{
+                    purchaseItems.setUpdateTime(new Date().getTime());
+                    purchaseItemsMapper.updateByPrimaryKeySelective(purchaseItems);
                 }
             }
         }
+        /*}*/
     }
 
     /**
