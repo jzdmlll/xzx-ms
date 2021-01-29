@@ -10,6 +10,8 @@ import com.xzx.xzxms.purchase.bean.PurchaseContractExample;
 import com.xzx.xzxms.purchase.dao.PurchaseContractMapper;
 import com.xzx.xzxms.purchase.dao.extend.PurchaseContractManagementExtendMapper;
 import com.xzx.xzxms.purchase.service.PurchaseContractManagementService;
+import com.xzx.xzxms.purchase.vo.PurchaseContractGenerateNewVO;
+import com.xzx.xzxms.purchase.vo.PurchaseContractGenerateVO;
 import com.xzx.xzxms.purchase.vo.PurchaseContractVO;
 import com.xzx.xzxms.purchase.vo.PurchaseProjectVO;
 import com.xzx.xzxms.system.bean.SysFile;
@@ -112,6 +114,12 @@ public class PurchaseContractManagementServiceImpl implements PurchaseContractMa
         purchaseContract.setContractStatus(CommonConstant.TAKE_EFFECT);
         purchaseContractMapper.updateByPrimaryKeySelective(purchaseContract);
         uploadPurchaseContractFile(purchaseContract, fileList);
+    }
+
+    @Override
+    public List<PurchaseContractGenerateNewVO> findPurchaseMessageByContractId(Long contractId) {
+        List<PurchaseContractGenerateNewVO> list = purchaseContractManagementExtendMapper.findPurchaseMessageByContractId(contractId);
+        return list;
     }
 
     /**

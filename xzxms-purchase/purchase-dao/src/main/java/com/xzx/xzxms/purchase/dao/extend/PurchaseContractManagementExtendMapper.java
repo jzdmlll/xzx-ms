@@ -1,6 +1,7 @@
 package com.xzx.xzxms.purchase.dao.extend;
 
 import com.xzx.xzxms.purchase.dto.PurchaseContractDTO;
+import com.xzx.xzxms.purchase.vo.PurchaseContractGenerateNewVO;
 import com.xzx.xzxms.purchase.vo.PurchaseContractGenerateVO;
 import com.xzx.xzxms.purchase.vo.PurchaseContractVO;
 import com.xzx.xzxms.purchase.vo.PurchaseProjectVO;
@@ -65,4 +66,12 @@ public interface PurchaseContractManagementExtendMapper {
      * @return
      */
     List<PurchaseContractGenerateVO> findItemsInfoByContractId(@Param("contractId") Long contractId);
+
+    /**
+     * sunny
+     * NEW 根据合同id查询其购买项
+     * @param contractId
+     * @return
+     */
+    List<PurchaseContractGenerateNewVO> findPurchaseMessageByContractId(Long contractId);
 }

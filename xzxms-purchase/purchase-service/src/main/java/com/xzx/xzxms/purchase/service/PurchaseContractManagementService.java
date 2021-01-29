@@ -2,6 +2,8 @@ package com.xzx.xzxms.purchase.service;
 
 import com.xzx.xzxms.purchase.bean.PurchaseContract;
 import com.xzx.xzxms.purchase.dto.PurchaseContractDTO;
+import com.xzx.xzxms.purchase.vo.PurchaseContractGenerateNewVO;
+import com.xzx.xzxms.purchase.vo.PurchaseContractGenerateVO;
 import com.xzx.xzxms.purchase.vo.PurchaseContractVO;
 import com.xzx.xzxms.purchase.vo.PurchaseProjectVO;
 import com.xzx.xzxms.system.bean.SysFile;
@@ -58,5 +60,12 @@ public interface PurchaseContractManagementService {
      * @param fileList
      */
     void purchaseContractEffective(PurchaseContract purchaseContract, List<SysFile> fileList);
+
+    /**
+     * 一、二、三级合同审核页面（根据采购合同查询采购信息）
+     * @param contractId
+     * @return
+     */
+    List<PurchaseContractGenerateNewVO> findPurchaseMessageByContractId(Long contractId);
 
 }
