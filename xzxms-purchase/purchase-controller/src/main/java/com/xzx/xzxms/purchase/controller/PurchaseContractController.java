@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;
 
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+
 @RestController
 @RequestMapping("/purchase/contract")
 public class PurchaseContractController {
@@ -60,9 +62,9 @@ public class PurchaseContractController {
      * @return
      */
     @ApiOperation(value = "自动生成合同编码")
-    @PostMapping(value = "AutomaticGenerationContractNo")
-    public Message AutomaticGenerationContractNo(){
-        String contractNo = iPurchaseContractServiceImpl.AutomaticGenerationContractNo();
+    @GetMapping(value = "automaticGenerationContractNo")
+    public Message automaticGenerationContractNo(){
+        String contractNo = iPurchaseContractServiceImpl.automaticGenerationContractNo();
         return MessageUtil.success("success",contractNo);
     }
 }

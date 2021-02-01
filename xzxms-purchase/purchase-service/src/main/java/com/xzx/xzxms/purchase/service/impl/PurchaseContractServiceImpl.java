@@ -135,7 +135,7 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
      * @return
      */
     @Override
-    public String AutomaticGenerationContractNo() {
+    public String automaticGenerationContractNo() {
         //获取当前年月日，按照yyyyMMdd格式
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");//设置日期格式
         String YMD = df.format(new Date());
