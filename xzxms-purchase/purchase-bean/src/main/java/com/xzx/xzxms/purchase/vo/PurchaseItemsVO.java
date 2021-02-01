@@ -12,7 +12,7 @@ public class PurchaseItemsVO {
     private Long id;
     private Long contractId;
     private Long projectId;
-    private Integer serialNumber;
+    private Double serialNumber;
     private String item;
     private String brand;
     private String params;
@@ -122,11 +122,11 @@ public class PurchaseItemsVO {
         this.projectId = projectId;
     }
 
-    public Integer getSerialNumber() {
+    public Double getSerialNumber() {
         return serialNumber;
     }
 
-    public void setSerialNumber(Integer serialNumber) {
+    public void setSerialNumber(Double serialNumber) {
         this.serialNumber = serialNumber;
     }
 
@@ -220,10 +220,10 @@ public class PurchaseItemsVO {
 
     @Override
     public String toString() {
-        return "PurchaseItemsVM{" +
+        return "PurchaseItemsVO{" +
                 "id=" + id +
                 ", contractId=" + contractId +
-                ", projectId='" + projectId + '\'' +
+                ", projectId=" + projectId +
                 ", serialNumber=" + serialNumber +
                 ", item='" + item + '\'' +
                 ", brand='" + brand + '\'' +
@@ -234,7 +234,7 @@ public class PurchaseItemsVO {
                 ", isInquiry=" + isInquiry +
                 ", remark='" + remark + '\'' +
                 ", isActive=" + isActive +
-                ", operator=" + operator +
+                ", operator='" + operator + '\'' +
                 ", time=" + time +
                 '}';
     }

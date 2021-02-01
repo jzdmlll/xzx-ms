@@ -792,4 +792,34 @@ public class EquipmentContractOrder {
     public void setIsActive(Integer isActive) {
         this.isActive = isActive;
     }
+
+    @Override
+    public String toString() {
+        return "EquipmentContractOrder{" +
+                "id=" + id +
+                ", projectId=" + projectId +
+                ", contractId=" + contractId +
+                ", payType='" + payType + '\'' +
+                ", needPay=" + needPay +
+                ", unitMoney='" + unitMoney + '\'' +
+                ", currency='" + currency + '\'' +
+                ", schedulerPayTime=" + schedulerPayTime +
+                ", schedulerDeliveryTime=" + schedulerDeliveryTime +
+                ", alreadyPayment=" + alreadyPayment +
+                ", performanceBond=" + performanceBond +
+                ", performanceBondStatus=" + performanceBondStatus +
+                ", performanceBondPayTime=" + performanceBondPayTime +
+                ", performanceBondReturnTime=" + performanceBondReturnTime +
+                ", supplierInvoice=" + supplierInvoice +
+                ", paymentNotice=" + paymentNotice +
+                ", actualPayment=" + actualPayment +
+                ", orderStatus=" + orderStatus +
+                ", remark='" + remark + '\'' +
+                ", operator=" + operator +
+                ", time=" + time +
+                ", updateOperator=" + updateOperator +
+                ", updateTime=" + updateTime +
+                ", isActive=" + isActive +
+                '}';
+    }
 }
