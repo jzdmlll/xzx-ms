@@ -1,23 +1,25 @@
 package com.xzx.xzxms.commons.fileupload.impl;
 
+import com.xzx.xzxms.commons.constant.CommonConstant;
 import com.xzx.xzxms.commons.dao.redis.JedisDao;
 import com.xzx.xzxms.commons.utils.Base64Util;
 import com.xzx.xzxms.commons.utils.CustomerException;
 import com.xzx.xzxms.commons.utils.FtpUtil;
 import com.xzx.xzxms.commons.utils.IDUtils;
+import com.xzx.xzxms.system.bean.SysFile;
+import com.xzx.xzxms.system.bean.SysFileExample;
+import com.xzx.xzxms.system.bean.extend.SysFileExtend;
+import com.xzx.xzxms.system.dao.SysFileMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import com.xzx.xzxms.commons.fileupload.IFileUploadService;
 
-import java.io.BufferedInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import javax.annotation.Resource;
+import java.io.*;
+import java.util.*;
 
 @Service
 public class FileUploadServiceImpl implements IFileUploadService {
@@ -39,6 +41,11 @@ public class FileUploadServiceImpl implements IFileUploadService {
     private String dictory;
     @Value("${ftpclient.realHost}")
     private String realHost;
+
+    @Resource
+    private SysFileMapper sysFileMapper;
+    @Resource
+    private IFileUploadService fileUploadServiceImpl;
 
     @Override
     public Map<String, Object> upload(MultipartFile uploadFile) {
@@ -151,6 +158,56 @@ public class FileUploadServiceImpl implements IFileUploadService {
         map.put("url", "http://"+realHost+":8006"+"/images/"+fileName);
         return map;
         //return uploadBySFTP(uploadFile);
+    }
+
+    @Transactional
+    @Override
+    public void fileUpload(Long otherId, List<SysFile> fileList, Integer fileType) {
+
+        SysFileExample sysFileExample = new SysFileExample();
+        sysFileExample.createCriteria().andOtherIdEqualTo(otherId).andIsActiveEqualTo(CommonConstant.EFFECTIVE)
+                .andTypeEqualTo(fileType);
+        Long fileNum = sysFileMapper.countByExample(sysFileExample);
+
+        if (fileNum > 0) {
+            //因前端将已存在的文件查询出，并同新上传的文件的一并提交，故文件先置为无效
+            SysFile newFile = new SysFile();
+            newFile.setIsActive(CommonConstant.INVALID);
+            sysFileMapper.updateByExampleSelective(newFile, sysFileExample);
+        }
+
+        Long time = new Date().getTime();
+        // 遍历
+        for (SysFile file : fileList) {
+
+            // 文件上传 redis --> nginx
+            if (file.getOperator()==null || "".equals(file.getOperator())) {
+                if (jedisDaoImpl.exists(file.getId().toString())) {
+                    //从redis中取出base64文件码
+                    String base64File = jedisDaoImpl.get(file.getId().toString());
+                    //解码，还原成输入流
+                    InputStream inputStream = Base64Util.decodeBase64File(base64File);
+                    //清除redis该文件缓存
+                    jedisDaoImpl.del(file.getId().toString());
+                    //上传到Nginx
+                    Map<String, Object> map = fileUploadServiceImpl.uploadByStream(inputStream, file.getName());
+                    file.setUrl(map.get("url").toString());
+                }else {
+                    throw new CustomerException("文件上传信息过期，请重新上传");
+                }
+            }else {
+                // 新增 重新生成ID
+                file.setId(IDUtils.getId());
+            }
+            //文件信息插入到数据库
+
+            file.setType(fileType);
+            file.setOtherId(otherId);
+            file.setTime(time);
+            file.setIsActive(CommonConstant.EFFECTIVE);
+            file.setIsUseful(CommonConstant.IS_NOT_USEFUL);
+            sysFileMapper.insert(file);
+        }
     }
 }
 

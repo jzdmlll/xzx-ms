@@ -28,4 +28,9 @@ public class SysFileExtend extends SysFile {
      * 采购合同文件
      */
     public static final int TYPE_PURCHASE_CONTRACT  = 5;
+
+    /**
+     * 发票
+     */
+    public static final int TYPE_INVOICE = 6;
 }
