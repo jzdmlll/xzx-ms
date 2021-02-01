@@ -15,12 +15,14 @@ public class GeneratePurchaseContractServiceImpl implements IGeneratePurchaseCon
 
     /**
      *通过项目id查询生成采购合同的内容
-     * @param projectId
+     * @param projectIds
+     * @param name
      * @return
      */
     @Override
-    public List<PurchaseItemsAndSupplyVM> findItemsAndSupplyByProjectId(long projectId) {
-        List<PurchaseItemsAndSupplyVM> purchaseItemsAndSupplyVMS = generatePurchaseContractExtendMapper.findByProjectId(projectId);
+    public List<PurchaseItemsAndSupplyVM> findItemsAndSupplyByProjectId(Long[] projectIds, String name) {
+
+        List<PurchaseItemsAndSupplyVM> purchaseItemsAndSupplyVMS = generatePurchaseContractExtendMapper.findByProjectId(projectIds, name);
         return purchaseItemsAndSupplyVMS;
     }
 }

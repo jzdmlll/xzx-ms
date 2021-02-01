@@ -20,8 +20,8 @@ public class GeneratePurchaseContractController {
 
     @ApiOperation(value = "通过项目id查询采购项及供货")
     @GetMapping(value = "findItemsAndSupplyByProjectId")
-    public Message findItemsAndSupplyByProjectId(long projectId){
-        List<PurchaseItemsAndSupplyVM> purchaseItemsAndSupplyVMS = iGeneratePurchaseContractServiceImpl.findItemsAndSupplyByProjectId(projectId);
+    public Message findItemsAndSupplyByProjectId(Long[] projectIds, String name){
+        List<PurchaseItemsAndSupplyVM> purchaseItemsAndSupplyVMS = iGeneratePurchaseContractServiceImpl.findItemsAndSupplyByProjectId(projectIds, name);
         return MessageUtil.success("success",purchaseItemsAndSupplyVMS);
     }
 

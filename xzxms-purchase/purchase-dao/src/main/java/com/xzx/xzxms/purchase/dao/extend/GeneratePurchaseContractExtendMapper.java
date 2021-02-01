@@ -6,5 +6,5 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface GeneratePurchaseContractExtendMapper {
-    List<PurchaseItemsAndSupplyVM> findByProjectId(@Param("projectId") long projectId);
+    List<PurchaseItemsAndSupplyVM> findByProjectId(@Param("projectId") Long[] projectId, @Param("name") String name);
 }

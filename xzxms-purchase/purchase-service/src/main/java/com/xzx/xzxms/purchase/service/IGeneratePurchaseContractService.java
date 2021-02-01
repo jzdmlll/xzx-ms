@@ -7,8 +7,9 @@ public interface IGeneratePurchaseContractService {
 
     /**
      *通过项目id查询生成采购合同的内容
-     * @param projectId
+     * @param projectIds
+     * @param name
      * @return
      */
-    List<PurchaseItemsAndSupplyVM> findItemsAndSupplyByProjectId(long projectId);
+    List<PurchaseItemsAndSupplyVM> findItemsAndSupplyByProjectId(Long[] projectIds, String name);
 }

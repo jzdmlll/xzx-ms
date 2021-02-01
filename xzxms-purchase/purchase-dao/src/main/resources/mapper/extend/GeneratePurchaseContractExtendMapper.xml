@@ -5,7 +5,8 @@
         select
         i.*,
         s.supplier s_supplier,s.model s_model,s.brand s_brand,s.params s_params,s.price s_price,s.delivery s_delivery,s.remark s_remark,
-        s.total_price s_total_price,s.warranty s_warranty,s.arrival_status s_arrival_status,s.id s_id,s.number s_number
+        s.total_price s_total_price,s.warranty s_warranty,s.arrival_status s_arrival_status,s.id s_id,s.number s_number,
+        p.project_name as purchase_pro_name
         from purchase_items i
         left join purchase_supply s on s.item_id = i.id
         left join purchase_project p on p.id = i.project_id
@@ -14,7 +15,13 @@
             and s.is_active = 1
             and p.is_active = 1
             <if test="projectId != null">
-                and p.id = #{projectId,jdbcType = BIGINT}
+                and p.id in
+                <foreach collection="projectId" item="id" index="index" open="(" close=")" separator=",">
+                #{id, jdbcType = BIGINT}
+                </foreach>
+            </if>
+            <if test="name != null">
+                and i.name = #{name}
             </if>
         </where>
         order by time
