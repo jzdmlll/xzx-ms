@@ -44,7 +44,7 @@ public class PurchaseContractGenerateController {
     }
 
     /**
-     * 周嘉玮
+     * 周嘉玮 （放弃）
      * @param purchaseContractDTO
      * @return
      */
@@ -59,6 +59,18 @@ public class PurchaseContractGenerateController {
         }else {
             return MessageUtil.error("error");
         }
+    }
+
+    /**
+     * sunny
+     * @param purchaseContractDTO
+     * @return
+     */
+    @ApiOperation("生成采购合同")
+    @PostMapping("contractGenerate")
+    public Message contractGenerate(@Param("purchaseContractDTO") @RequestBody PurchaseContractDTO purchaseContractDTO){
+        purchaseContractGenerateService.contractGenerate(purchaseContractDTO);
+        return MessageUtil.success("success");
     }
 
     /**

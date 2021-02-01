@@ -38,4 +38,12 @@ public interface PurchaseContractGenerateExtendMapper {
      * @return
      */
     int findContractNoNumByContractNo(@Param("contractNo") String contractNo);
+
+    /**
+     * sunny
+     * 根据采购项ID查询出所有的项目ID（项目ID去重）
+     * @param itemIds
+     * @return
+     */
+    Long[] findPurchaseProIdByItemsId(Long[] itemIds);
 }

@@ -58,4 +58,15 @@
     <select id="findContractNoNumByContractNo" resultType="int">
         select count(contract_no) from purchase_contract where contract_no=#{contractNo, jdbcType = VARCHAR}
     </select>
+
+    <select id="findPurchaseProIdByItemsId" resultType="Long">
+        select project_id from purchase_items where is_active = 1
+        <if test="itemIds != null">
+        and id in
+            <foreach collection="itemIds" item="id" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+        group by project_id
+    </select>
 </mapper>
