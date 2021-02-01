@@ -210,44 +210,55 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
             for (PurchaseItems item : purchaseItemsList.getPurchaseItemsList()) {
                 inquiry.setId(IDUtils.getId());
                 // 在根据item_id去purchase_items表中获取该购买项相关信息
-                PurchaseItems itemInfo = purchasePlanExtendMapper.findItemInfoById(item.getId());
-                inquiry.setName(itemInfo.getItem());
-                inquiry.setRealBrand(itemInfo.getBrand());
-                inquiry.setParams(itemInfo.getParams());
-                inquiry.setModel(itemInfo.getModel());
-                inquiry.setUnit(itemInfo.getUnit());
-                inquiry.setNumber(itemInfo.getNumber());
-                inquiry.setSort(itemInfo.getSerialNumber());
-                inquiry.setIsinquiry(CommonConstant.IS_INQUIRY);
-                inquiry.setVeto(CommonConstant.NOT_VETOED);
-                inquiry.setProDetailId(id);
-                inquiry.setIsActive(CommonConstant.EFFECTIVE);
-                inquiry.setIsUseful(CommonConstant.IS_NOT_USEFUL);
-                inquiry.setOperator(purchaseItemsList.getSysProDetailWithBLOBs().getOperator());
-                inquiry.setTime(new Date().getTime());
-                inquiry.setItemId(item.getId());
+                //PurchaseItems itemInfo = purchasePlanExtendMapper.findItemInfoById(item.getId());
+                PurchaseItemsExample itemsExample = new PurchaseItemsExample();
+                itemsExample.createCriteria().andIsActiveEqualTo(CommonConstant.EFFECTIVE).andIdEqualTo(item.getId());
+                List<PurchaseItems> itemInfos = purchaseItemsMapper.selectByExample(itemsExample);
+                if (itemInfos.size() > 0){
 
-                //新增项
-                inquiry.setTagNumber(itemInfo.getTagNumer());
-                inquiry.setMeter(itemInfo.getMeter());
-                inquiry.setMeasuringRange(itemInfo.getMeasuringRange());
-                inquiry.setMeterSignal(itemInfo.getMeterSignal());
-                inquiry.setConnectionMode(itemInfo.getConnectionMode());
-                inquiry.setTube(itemInfo.getTube());
+                    PurchaseItems itemInfo = itemInfos.get(0);
+                    inquiry.setName(itemInfo.getItem());
+                    inquiry.setRealBrand(itemInfo.getBrand());
+                    inquiry.setParams(itemInfo.getParams());
+                    inquiry.setModel(itemInfo.getModel());
+                    inquiry.setUnit(itemInfo.getUnit());
+                    inquiry.setNumber(itemInfo.getNumber());
+                    inquiry.setSort(itemInfo.getSerialNumber());
+                    inquiry.setIsinquiry(CommonConstant.IS_INQUIRY);
+                    inquiry.setVeto(CommonConstant.NOT_VETOED);
+                    inquiry.setProDetailId(id);
+                    inquiry.setIsActive(CommonConstant.EFFECTIVE);
+                    inquiry.setIsUseful(CommonConstant.IS_NOT_USEFUL);
+                    inquiry.setOperator(purchaseItemsList.getSysProDetailWithBLOBs().getOperator());
+                    inquiry.setTime(new Date().getTime());
+                    inquiry.setItemId(item.getId());
 
-                inquiryMapper.insert(inquiry);
-                // 获取所有的item的id
-                itemIds.add(item.getId());
+                    //新增项
+                    inquiry.setTagNumber(itemInfo.getTagNumer());
+                    inquiry.setMeter(itemInfo.getMeter());
+                    inquiry.setMeasuringRange(itemInfo.getMeasuringRange());
+                    inquiry.setMeterSignal(itemInfo.getMeterSignal());
+                    inquiry.setConnectionMode(itemInfo.getConnectionMode());
+                    inquiry.setTube(itemInfo.getTube());
+                    inquiry.setTemplateId(itemInfo.getTemplateId());
+
+                    inquiry.setRequiredDelivery(itemInfo.getRequiredDelivery());
+                    inquiry.setRemark(itemInfo.getRemark());
+
+                    inquiryMapper.insert(inquiry);
+                    // 获取所有的item的id
+                    itemIds.add(item.getId());
+                }
             }
 
             // 更新采购项目是否需要询价
             PurchaseItemsExample purchaseItemsExample = new PurchaseItemsExample();
             // 根据 is_active、id 这两个字段去查询需要修改的结果集
-            purchaseItemsExample.createCriteria().andIsActiveEqualTo(1).andIdIn(itemIds);
+            purchaseItemsExample.createCriteria().andIsActiveEqualTo(CommonConstant.EFFECTIVE).andIdIn(itemIds);
 
             // 需修改内容：询价状态、修改人、修改时间
             PurchaseItems purchaseItems = new PurchaseItems();
-            purchaseItems.setIsInquiry(1);
+            purchaseItems.setIsInquiry(CommonConstant.IS_INQUIRY);
             purchaseItems.setUpdateOperator(purchaseItemsList.getSysProDetailWithBLOBs().getOperator());
             purchaseItems.setUpdateTime(new Date().getTime());
             purchaseItemsMapper.updateByExampleSelective(purchaseItems, purchaseItemsExample);
@@ -267,35 +278,45 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
                     Inquiry inquiry = new Inquiry();
                     inquiry.setId(IDUtils.getId());
                     // 在根据item_id去purchase_items表中获取该购买项相关信息
-                    PurchaseItems itemInfo = purchasePlanExtendMapper.findItemInfoById(item.getId());
-                    inquiry.setName(itemInfo.getItem());
-                    inquiry.setRealBrand(itemInfo.getBrand());
-                    inquiry.setParams(itemInfo.getParams());
-                    inquiry.setModel(itemInfo.getModel());
-                    inquiry.setUnit(itemInfo.getUnit());
-                    inquiry.setNumber(itemInfo.getNumber());
-                    inquiry.setSort(itemInfo.getSerialNumber());
-                    inquiry.setIsinquiry(CommonConstant.IS_INQUIRY);
-                    inquiry.setVeto(CommonConstant.NOT_VETOED);
-                    inquiry.setProDetailId(sysProDetail.getId());
-                    inquiry.setIsActive(CommonConstant.EFFECTIVE);
-                    inquiry.setIsUseful(CommonConstant.IS_NOT_USEFUL);
-                    inquiry.setOperator(purchaseItemsList.getSysProDetailWithBLOBs().getOperator());
-                    inquiry.setTime(new Date().getTime());
-                    inquiry.setItemId(item.getId());
+                    //PurchaseItems itemInfo = purchasePlanExtendMapper.findItemInfoById(item.getId());
 
-                    //新增项
-                    inquiry.setTagNumber(itemInfo.getTagNumer());
-                    inquiry.setMeter(itemInfo.getMeter());
-                    inquiry.setMeasuringRange(itemInfo.getMeasuringRange());
-                    inquiry.setMeterSignal(itemInfo.getMeterSignal());
-                    inquiry.setConnectionMode(itemInfo.getConnectionMode());
-                    inquiry.setTube(itemInfo.getTube());
+                    PurchaseItemsExample itemsExample = new PurchaseItemsExample();
+                    itemsExample.createCriteria().andIsActiveEqualTo(CommonConstant.EFFECTIVE).andIdEqualTo(item.getId());
+                    List<PurchaseItems> itemInfos = purchaseItemsMapper.selectByExample(itemsExample);
+                    if (itemInfos.size() > 0){
 
-                    inquiryMapper.insert(inquiry);
-                    System.out.println("添加：" + item.getSerialNumber());
-                    // 获取所有的item的id
-                    itemIds.add(item.getId());
+                        PurchaseItems itemInfo = itemInfos.get(0);
+
+                        inquiry.setName(itemInfo.getItem());
+                        inquiry.setRealBrand(itemInfo.getBrand());
+                        inquiry.setParams(itemInfo.getParams());
+                        inquiry.setModel(itemInfo.getModel());
+                        inquiry.setUnit(itemInfo.getUnit());
+                        inquiry.setNumber(itemInfo.getNumber());
+                        inquiry.setSort(itemInfo.getSerialNumber());
+                        inquiry.setIsinquiry(CommonConstant.IS_INQUIRY);
+                        inquiry.setVeto(CommonConstant.NOT_VETOED);
+                        inquiry.setProDetailId(sysProDetail.getId());
+                        inquiry.setIsActive(CommonConstant.EFFECTIVE);
+                        inquiry.setIsUseful(CommonConstant.IS_NOT_USEFUL);
+                        inquiry.setOperator(purchaseItemsList.getSysProDetailWithBLOBs().getOperator());
+                        inquiry.setTime(new Date().getTime());
+                        inquiry.setItemId(item.getId());
+
+                        //新增项
+                        inquiry.setTagNumber(itemInfo.getTagNumer());
+                        inquiry.setMeter(itemInfo.getMeter());
+                        inquiry.setMeasuringRange(itemInfo.getMeasuringRange());
+                        inquiry.setMeterSignal(itemInfo.getMeterSignal());
+                        inquiry.setConnectionMode(itemInfo.getConnectionMode());
+                        inquiry.setTube(itemInfo.getTube());
+                        inquiry.setTemplateId(itemInfo.getTemplateId());
+
+                        inquiryMapper.insert(inquiry);
+                        System.out.println("添加：" + item.getSerialNumber());
+                        // 获取所有的item的id
+                        itemIds.add(item.getId());
+                    }
                 // 当该购买项已存在时
                 }else {
                     System.out.println("该购买项已存在 " + item.getSerialNumber());
@@ -433,6 +454,7 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
                     purchaseItems.setMeterSignal(proPurchase.getInquiry().getMeterSignal());
                     purchaseItems.setConnectionMode(proPurchase.getInquiry().getConnectionMode());
                     purchaseItems.setTube(proPurchase.getInquiry().getTube());
+                    purchaseItems.setTemplateId(proPurchase.getInquiry().getTemplateId());
 
                     purchaseItemsMapper.insert(purchaseItems);
 
