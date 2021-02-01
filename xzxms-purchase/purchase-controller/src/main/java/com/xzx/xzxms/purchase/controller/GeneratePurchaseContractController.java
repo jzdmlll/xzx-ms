@@ -6,6 +6,7 @@ import com.xzx.xzxms.purchase.bean.vm.PurchaseItemsAndSupplyVM;
 import com.xzx.xzxms.purchase.service.IGeneratePurchaseContractService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,7 +20,7 @@ public class GeneratePurchaseContractController {
     private IGeneratePurchaseContractService iGeneratePurchaseContractServiceImpl;
 
     @ApiOperation(value = "通过项目id查询采购项及供货")
-    @GetMapping(value = "findItemsAndSupplyByProjectId")
+    @PostMapping(value = "findItemsAndSupplyByProjectId")
     public Message findItemsAndSupplyByProjectId(Long[] projectIds, String name){
         List<PurchaseItemsAndSupplyVM> purchaseItemsAndSupplyVMS = iGeneratePurchaseContractServiceImpl.findItemsAndSupplyByProjectId(projectIds, name);
         return MessageUtil.success("success",purchaseItemsAndSupplyVMS);

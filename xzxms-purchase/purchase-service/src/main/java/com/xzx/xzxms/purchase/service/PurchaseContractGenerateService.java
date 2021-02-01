@@ -17,4 +17,11 @@ import org.springframework.stereotype.Repository;
 public interface PurchaseContractGenerateService {
 //    String insertContractInfoService(PurchaseContract purchaseContract, Long[] ids);
     String insertContractInfoService(PurchaseContractDTO purchaseContractDTO);
+
+    /**
+     * 生成采购合同
+     * @param purchaseContractDTO
+     */
+    void contractGenerate(PurchaseContractDTO purchaseContractDTO);
+
 }
