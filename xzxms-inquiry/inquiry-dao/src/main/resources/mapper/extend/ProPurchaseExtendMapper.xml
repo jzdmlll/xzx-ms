@@ -33,7 +33,7 @@
         i.name as i_name,i.unit as i_unit,i.number as i_number,i.finally_price as i_finally_price,i.price as i_price,i.params as i_params,i.id as i_id,
         i.correct_price as i_correct_price,i.sort as i_sort,i.item_id as i_item_id,
         i.tag_number i_tag_number, i.meter i_meter, i.measuring_range i_measuring_range, i.meter_signal i_meter_signal,
-        i.connection_mode i_connection_mode, i.tube i_tube,
+        i.connection_mode i_connection_mode, i.tube i_tube, i.template_id i_template_id,
         q.supplier as q_supplier,q.id as q_id,q.su_brand as q_su_brand,q.su_params as q_su_params,q.su_price as q_su_price,q.su_total_price as q_su_total_price,
         q.su_delivery as q_su_delivery,q.warranty as q_warranty,q.su_remark q_su_remark
         from quote q
