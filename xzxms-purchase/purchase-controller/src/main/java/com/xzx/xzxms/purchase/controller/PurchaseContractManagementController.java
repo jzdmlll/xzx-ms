@@ -42,6 +42,9 @@ public class PurchaseContractManagementController {
     @Resource
     private IPurchaseContractService purchaseContractServiceImpl;
 
+    @Resource
+    private PurchaseContractManagementService purchaseContractManagementServiceImpl;
+
     /**
      * 周嘉玮
      * @param projectName
@@ -105,7 +108,8 @@ public class PurchaseContractManagementController {
     @ApiOperation("根据合同id查询所有与其相关的购买项信息")
     @GetMapping("findPurchaseMessageByContractId")
     public Message findPurchaseMessageByContractId(Long contractId){
-        List<PurchaseContractGenerateNewVO> itemsInfos = purchaseContractManagementExtendMapper.findPurchaseMessageByContractId(contractId);
+
+        List<PurchaseContractGenerateNewVO> itemsInfos = purchaseContractManagementServiceImpl.findPurchaseMessageByContractId(contractId);
         return MessageUtil.success("success",itemsInfos);
     }
 

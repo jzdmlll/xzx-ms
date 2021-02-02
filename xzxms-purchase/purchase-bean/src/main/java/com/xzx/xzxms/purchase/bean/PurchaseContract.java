@@ -891,4 +891,37 @@ public class PurchaseContract {
     public void setContractStatus(Integer contractStatus) {
         this.contractStatus = contractStatus;
     }
+
+    @Override
+    public String toString() {
+        return "PurchaseContract{" +
+                "id=" + id +
+                ", contractNo='" + contractNo + '\'' +
+                ", projectId=" + projectId +
+                ", attributeId=" + attributeId +
+                ", contractName='" + contractName + '\'' +
+                ", remark='" + remark + '\'' +
+                ", operator='" + operator + '\'' +
+                ", time=" + time +
+                ", updateOperator='" + updateOperator + '\'' +
+                ", updateTime=" + updateTime +
+                ", isActive=" + isActive +
+                ", sender='" + sender + '\'' +
+                ", sendTime=" + sendTime +
+                ", sendRemark='" + sendRemark + '\'' +
+                ", firstAudit=" + firstAudit +
+                ", firstOperator='" + firstOperator + '\'' +
+                ", firstTime=" + firstTime +
+                ", firstRemark='" + firstRemark + '\'' +
+                ", secondAudit=" + secondAudit +
+                ", secondOperator='" + secondOperator + '\'' +
+                ", secondTime=" + secondTime +
+                ", secondRemark='" + secondRemark + '\'' +
+                ", threeAudit=" + threeAudit +
+                ", threeOperator='" + threeOperator + '\'' +
+                ", threeTime=" + threeTime +
+                ", threeRemark='" + threeRemark + '\'' +
+                ", contractStatus=" + contractStatus +
+                '}';
+    }
 }
