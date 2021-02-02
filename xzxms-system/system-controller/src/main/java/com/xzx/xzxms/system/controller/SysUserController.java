@@ -60,7 +60,7 @@ public class SysUserController {
         // 超过15分钟，token过期，判断redis里该token是否过期，如果没过期，将token刷新返回，否则抛出token过期异常
         if(jedisDaoImpl.exists(token)) {
             String userJson = jedisDaoImpl.get(token);
-            SysUser user = JsonUtils.jsonToPojo(userJson, SysUser.class);
+            UserRoleVM user = JsonUtils.jsonToPojo(userJson, UserRoleVM.class);
             Long userId = user.getId();
             String username = user.getUsername();
             //刷新token

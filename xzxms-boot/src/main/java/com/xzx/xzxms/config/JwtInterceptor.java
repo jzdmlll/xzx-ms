@@ -3,6 +3,7 @@ package com.xzx.xzxms.config;
 
 import com.xzx.xzxms.commons.dao.redis.JedisDao;
 import com.xzx.xzxms.commons.dao.redis.impl.JedisDaoImpl;
+import com.xzx.xzxms.commons.model.base.service.BaseCommonService;
 import com.xzx.xzxms.commons.utils.*;
 import com.xzx.xzxms.system.bean.SysPrivilege;
 import com.xzx.xzxms.system.bean.SysPrivilegeExample;
@@ -42,6 +43,8 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
     private Boolean autoAddPrivilege;
     @Autowired
     private JedisDao jedisDaoImpl;
+    @Autowired
+    private BaseCommonService baseCommonService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -148,7 +151,7 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
                         sysRolePrivilege.setTime(time);
                         sysRolePrivilegeMapper.insert(sysRolePrivilege);
                     }
-
+                    baseCommonService.removePrivilegeRedis();
                     throw new CustomerException("权限不足--自动添加路由【"+path+"】成功--自动授权成功");
                 }
                 throw new CustomerException("权限不足--自动添加路由【"+path+"】失败，找不到父权限" );
