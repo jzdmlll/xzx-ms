@@ -110,6 +110,6 @@
        <table tableName="sys_pro_type" domainObjectName="SysProType" ></table>
    -->
 
-    <table tableName="inquiry" domainObjectName="Inquiry" ></table>
+    <table tableName="inquiry_template" domainObjectName="InquiryTemplate" ></table>
      </context>
    </generatorConfiguration>

@@ -12,7 +12,7 @@ public interface IPurchaseContractService {
      * @param projectId
      * @return
      */
-    List<PurchaseContract> findByProjectId(Long projectId);
+    List<PurchaseContract> findByProjectId(Long projectId, String contractName);
 
     /**
      * 逻辑假删

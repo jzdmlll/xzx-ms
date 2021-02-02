@@ -70,7 +70,7 @@ public class PurchaseContractGenerateController {
     @PostMapping("contractGenerate")
     public Message contractGenerate(@Param("purchaseContractDTO") @RequestBody PurchaseContractDTO purchaseContractDTO){
         purchaseContractGenerateService.contractGenerate(purchaseContractDTO);
-        return MessageUtil.success("success");
+        return MessageUtil.success("操作成功");
     }
 
     /**

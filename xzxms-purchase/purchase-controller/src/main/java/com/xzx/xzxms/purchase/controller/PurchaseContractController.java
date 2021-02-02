@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-
 @RestController
 @RequestMapping("/purchase/contract")
 public class PurchaseContractController {
@@ -23,8 +21,8 @@ public class PurchaseContractController {
 
     @ApiOperation(value = "通过项目id进行查询")
     @GetMapping(value ="findByProjectId")
-    public Message findByProjectId(Long projectId){
-        List<PurchaseContract> list = iPurchaseContractServiceImpl.findByProjectId(projectId);
+    public Message findByProjectId(Long projectId, String contractName){
+        List<PurchaseContract> list = iPurchaseContractServiceImpl.findByProjectId(projectId, contractName);
         return MessageUtil.success("success",list);
     }
 
