@@ -13,6 +13,7 @@ import com.xzx.xzxms.system.dao.SysFileMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import com.xzx.xzxms.commons.fileupload.IFileUploadService;
@@ -160,7 +161,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
         //return uploadBySFTP(uploadFile);
     }
 
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public void fileUpload(Long otherId, List<SysFile> fileList, Integer fileType) {
 
