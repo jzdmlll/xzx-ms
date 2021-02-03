@@ -46,8 +46,14 @@
             <if test="proDetailId!=null and proDetailId!=-1">
                 and i.pro_detail_id = #{proDetailId,jdbcType=BIGINT}
             </if>
+            <if test="name != null and name != ''">
+                and i.name = #{name}
+            </if>
         </where>
         order by i.sort,i.id,q.su_price
     </select>
 
+    <select id="findInquiryNameByProId" resultType="java.util.HashMap">
+        select name, count(1) from inquiry where is_active = 1 and pro_detail_id = #{proId} group by name
+    </select>
 </mapper>
