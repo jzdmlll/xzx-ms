@@ -44,6 +44,8 @@ public class Swagger {
 				.apis(basePackage(
 						"com.xzx.xzxms.system.controller"+splitor+
 						"com.xzx.xzxms.inquiry.controller"+splitor+
+						"com.xzx.xzxms.chapter.controller"+splitor+
+						"com.xzx.xzxms.equipment.controller"+splitor+
 						"com.xzx.xzxms.purchase.controller"))
 				.paths(PathSelectors.any())
 				.build()
