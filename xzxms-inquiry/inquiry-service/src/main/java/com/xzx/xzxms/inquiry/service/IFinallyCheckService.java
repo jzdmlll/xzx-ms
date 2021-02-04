@@ -10,9 +10,10 @@ public interface IFinallyCheckService {
     /**
      * 最终审核 数据查询
      * @param proDetailId 项目详情Id
+     * @param name 询价名
      * @return
      */
-    List<Map> cascadeFindAllByParams(long proDetailId);
+    List<Map> cascadeFindAllByParams(Long proDetailId, String name);
 
     /**
      * 最终审核提交
@@ -29,5 +30,9 @@ public interface IFinallyCheckService {
      */
     void refuseInquiry(Inquiry inquiry);
 
-
+    /**
+     * 根据项目ID查询出所有的询价名（询价名去重）
+     * @return
+     */
+    List<Map> findInquiryNameByProId(Long proId);
 }

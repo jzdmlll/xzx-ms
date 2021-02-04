@@ -20,8 +20,8 @@
                 #{id, jdbcType = BIGINT}
                 </foreach>
             </if>
-            <if test="name != null">
-                and i.name = #{name}
+            <if test="name != null and name != ''">
+                and i.item = #{name}
             </if>
         </where>
         order by time
