@@ -5,13 +5,10 @@ import com.xzx.xzxms.inquiry.vm.FinallyQuoteInquiryVM;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import java.util.Map;
 
 public interface FinallyCheckExtendMapper {
 
-    List<FinallyQuoteInquiryVM> cascadeFindAllByParams(@Param("proDetailId") Long proDetailId, @Param("name") String name);
+    List<FinallyQuoteInquiryVM> cascadeFindAllByParams(@Param("proDetailId") long proDetailId);
 
     List<SysProCheck> findCheckByQuoteId(long id);
-
-    List<Map> findInquiryNameByProId(Long proId);
 }

@@ -2,7 +2,6 @@ package com.xzx.xzxms.purchase.service;
 
 import com.xzx.xzxms.purchase.bean.PurchaseContract;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 /**
  * @author：ZJW

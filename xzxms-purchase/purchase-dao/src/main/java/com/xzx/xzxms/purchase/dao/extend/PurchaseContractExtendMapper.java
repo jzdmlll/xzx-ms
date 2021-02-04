@@ -23,6 +23,4 @@ public interface PurchaseContractExtendMapper {
      * @return
      */
     List<String> findContractNoByYMD(@Param("contractNo") String contractNo);
-
-    List<PurchaseContract> findByProjectId(@Param("projectId") Long projectId,@Param("contractName") String contractName);
 }

@@ -45,5 +45,5 @@ public interface PurchaseContractGenerateExtendMapper {
      * @param itemIds
      * @return
      */
-    Long[] findPurchaseProIdByItemsId(@Param("itemIds") Long[] itemIds);
+    Long[] findPurchaseProIdByItemsId(Long[] itemIds);
 }

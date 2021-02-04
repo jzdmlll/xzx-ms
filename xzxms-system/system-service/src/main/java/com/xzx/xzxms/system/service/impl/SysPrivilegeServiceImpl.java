@@ -1,17 +1,12 @@
 package com.xzx.xzxms.system.service.impl;
 
-import com.xzx.xzxms.commons.model.base.service.BaseCommonService;
 import com.xzx.xzxms.commons.utils.CustomerException;
 import com.xzx.xzxms.system.bean.SysPrivilege;
 import com.xzx.xzxms.system.bean.SysPrivilegeExample;
-import com.xzx.xzxms.system.bean.SysRole;
-import com.xzx.xzxms.system.bean.SysRoleExample;
 import com.xzx.xzxms.system.bean.extend.SysPrivilegeExtend;
 import com.xzx.xzxms.system.dao.SysPrivilegeMapper;
-import com.xzx.xzxms.system.dao.SysRoleMapper;
 import com.xzx.xzxms.system.dao.extend.SysPrivilegeExtendMapper;
 import com.xzx.xzxms.system.vm.PrivilegeTree;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.xzx.xzxms.system.service.ISysPrivilegeService;
 
@@ -24,8 +19,6 @@ public class SysPrivilegeServiceImpl implements ISysPrivilegeService {
     private SysPrivilegeMapper sysPrivilegeMapper;
     @Resource
     private SysPrivilegeExtendMapper sysPrivilegeExtendMapper;
-    @Autowired
-    private BaseCommonService baseCommonService;
     @Override
     public List<SysPrivilege> findAll() {
         return sysPrivilegeMapper.selectByExample(new SysPrivilegeExample());
@@ -50,7 +43,6 @@ public class SysPrivilegeServiceImpl implements ISysPrivilegeService {
         } else {
             sysPrivilegeMapper.insert(privilege);
         }
-        baseCommonService.removePrivilegeRedis();
     }
 
     @Override
@@ -71,6 +63,5 @@ public class SysPrivilegeServiceImpl implements ISysPrivilegeService {
     @Override
     public void deleteById(long id) {
         sysPrivilegeMapper.deleteByPrimaryKey(id);
-        baseCommonService.removePrivilegeRedis();
     }
 }
