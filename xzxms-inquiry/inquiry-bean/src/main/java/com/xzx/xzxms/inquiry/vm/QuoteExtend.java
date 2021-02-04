@@ -1,1 +1,0 @@
-package com.xzx.xzxms.inquiry.vm;import com.xzx.xzxms.inquiry.bean.Quote;public class QuoteExtend extends Quote {    private String remark;    public String getRemark() {        return remark;    }    public void setRemark(String remark) {        this.remark = remark;    }}
