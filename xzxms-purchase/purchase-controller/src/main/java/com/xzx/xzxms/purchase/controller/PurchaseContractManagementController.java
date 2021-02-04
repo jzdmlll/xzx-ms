@@ -4,7 +4,6 @@ import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
 import com.xzx.xzxms.purchase.bean.PurchaseContract;
 import com.xzx.xzxms.purchase.dao.extend.PurchaseContractManagementExtendMapper;
-import com.xzx.xzxms.purchase.dto.PurchaseContractDTO;
 import com.xzx.xzxms.purchase.dto.PurchaseContractFIleDTO;
 import com.xzx.xzxms.purchase.service.IPurchaseContractService;
 import com.xzx.xzxms.purchase.service.PurchaseContractManagementService;
@@ -41,9 +40,6 @@ public class PurchaseContractManagementController {
 
     @Resource
     private IPurchaseContractService purchaseContractServiceImpl;
-
-    @Resource
-    private PurchaseContractManagementService purchaseContractManagementServiceImpl;
 
     /**
      * 周嘉玮
@@ -108,8 +104,7 @@ public class PurchaseContractManagementController {
     @ApiOperation("根据合同id查询所有与其相关的购买项信息")
     @GetMapping("findPurchaseMessageByContractId")
     public Message findPurchaseMessageByContractId(Long contractId){
-
-        List<PurchaseContractGenerateNewVO> itemsInfos = purchaseContractManagementServiceImpl.findPurchaseMessageByContractId(contractId);
+        List<PurchaseContractGenerateNewVO> itemsInfos = purchaseContractManagementExtendMapper.findPurchaseMessageByContractId(contractId);
         return MessageUtil.success("success",itemsInfos);
     }
 

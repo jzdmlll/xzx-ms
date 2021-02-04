@@ -31,6 +31,4 @@ public interface BaseCommonService {
      */
     void addLog(String LogContent, Integer logType, Integer operateType);
 
-    void removePrivilegeRedis();
-
 }

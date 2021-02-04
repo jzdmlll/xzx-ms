@@ -3,6 +3,7 @@ package com.xzx.xzxms.equipment.dao.extend;
 import com.xzx.xzxms.equipment.bean.EquipmentOrder;
 import com.xzx.xzxms.equipment.dto.EquipmentSignDTO;
 import com.xzx.xzxms.equipment.vo.EquipmentSignVO;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -25,5 +26,5 @@ public interface EquipmentSignManagementExtendMapper {
      * 周嘉玮
      * 根据order_id获取其订单跟踪信息
      */
-    EquipmentOrder findEquipmentOrderInfoByOrderId(Long orderId);
+    EquipmentOrder findEquipmentOrderInfoByOrderId(@Param("orderId") Long orderId);
 }

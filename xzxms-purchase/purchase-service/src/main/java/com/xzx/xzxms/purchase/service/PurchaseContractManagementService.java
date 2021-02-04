@@ -1,9 +1,7 @@
 package com.xzx.xzxms.purchase.service;
 
 import com.xzx.xzxms.purchase.bean.PurchaseContract;
-import com.xzx.xzxms.purchase.dto.PurchaseContractDTO;
 import com.xzx.xzxms.purchase.vo.PurchaseContractGenerateNewVO;
-import com.xzx.xzxms.purchase.vo.PurchaseContractGenerateVO;
 import com.xzx.xzxms.purchase.vo.PurchaseContractVO;
 import com.xzx.xzxms.purchase.vo.PurchaseProjectVO;
 import com.xzx.xzxms.system.bean.SysFile;

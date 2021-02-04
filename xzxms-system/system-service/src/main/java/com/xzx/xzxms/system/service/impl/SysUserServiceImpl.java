@@ -2,13 +2,15 @@ package com.xzx.xzxms.system.service.impl;
 
 import com.xzx.xzxms.commons.aspect.annotation.AutoLog;
 import com.xzx.xzxms.commons.utils.*;
-import com.xzx.xzxms.system.bean.*;
+import com.xzx.xzxms.system.bean.SysUser;
+import com.xzx.xzxms.system.bean.SysUserExample;
+import com.xzx.xzxms.system.bean.SysUserRole;
+import com.xzx.xzxms.system.bean.SysUserRoleExample;
 import com.xzx.xzxms.system.bean.extend.SysUserExtend;
 import com.xzx.xzxms.system.dao.SysUserMapper;
 import com.xzx.xzxms.system.dao.SysUserRoleMapper;
 import com.xzx.xzxms.system.dao.extend.SysUserExtendMapper;
 import com.xzx.xzxms.commons.dao.redis.JedisDao;
-import com.xzx.xzxms.system.vm.UserRoleVM;
 import com.xzx.xzxms.system.vm.UserVM;
 import org.springframework.stereotype.Service;
 import com.xzx.xzxms.system.service.ISysUserService;
@@ -45,23 +47,8 @@ public class SysUserServiceImpl implements ISysUserService {
                 //通过jwt产生token
                 String token = JwtTokenUtil.createJWT(user.getId(), user.getUsername());
                 map.put("token", token);
-                // 将角色ID 放入
-                SysUserRoleExample sysUserRoleExample = new SysUserRoleExample();
-                sysUserRoleExample.createCriteria().andUserIdEqualTo(user.getId());
-                UserRoleVM userRoleVM = new UserRoleVM();
-                userRoleVM.setId(user.getId());
-                userRoleVM.setUsername(user.getUsername());
-                userRoleVM.setAvatar(user.getAvatar());
-                List<SysUserRole> userRoles = userRoleMapper.selectByExample(sysUserRoleExample);
-                if (userRoles != null && userRoles.size() > 0) {
-                    List<Long> roles = new ArrayList<>();
-                    for (SysUserRole sysUserRole:userRoles) {
-                        roles.add(sysUserRole.getRoleId());
-                    }
-                    userRoleVM.setRoles(roles);
-                }
                 //放入redis缓存
-                String userJson = JsonUtils.objectToJson(userRoleVM);
+                String userJson = JsonUtils.objectToJson(user);
                 jedisDaoImpl.setCode(token, userJson, JwtTokenUtil.REDIS_TOKEN_TIME);
                 return map;
             }else {

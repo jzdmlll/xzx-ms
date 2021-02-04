@@ -11,7 +11,6 @@ import com.xzx.xzxms.purchase.dao.PurchaseContractMapper;
 import com.xzx.xzxms.purchase.dao.extend.PurchaseContractManagementExtendMapper;
 import com.xzx.xzxms.purchase.service.PurchaseContractManagementService;
 import com.xzx.xzxms.purchase.vo.PurchaseContractGenerateNewVO;
-import com.xzx.xzxms.purchase.vo.PurchaseContractGenerateVO;
 import com.xzx.xzxms.purchase.vo.PurchaseContractVO;
 import com.xzx.xzxms.purchase.vo.PurchaseProjectVO;
 import com.xzx.xzxms.system.bean.SysFile;
