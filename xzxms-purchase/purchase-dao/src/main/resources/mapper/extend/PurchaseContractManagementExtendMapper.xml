@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzx.xzxms.purchase.dao.extend.PurchaseContractManagementExtendMapper">
+
+    <resultMap id="PurchaseProjectVO" type="com.xzx.xzxms.purchase.vo.PurchaseProjectVO">
+        <result column="id" property="id" jdbcType="BIGINT" />
+        <result column="project_name" property="projectName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <resultMap id="PurchaseContractVO" type="com.xzx.xzxms.purchase.vo.PurchaseContractVO">
+        <result column="id" property="id" jdbcType="BIGINT"/>
+        <result column="contract_no" property="contractNo" jdbcType="VARCHAR"/>
+        <result column="project_id" property="projectId" jdbcType="BIGINT"/>
+        <result column="attribute_id" property="attributeId" jdbcType="BIGINT"/>
+        <result column="contract_name" property="contractName" jdbcType="VARCHAR"/>
+        <result column="first_audit" property="firstAudit" jdbcType="INTEGER"/>
+        <result column="second_audit" property="secondAudit" jdbcType="INTEGER"/>
+        <result column="three_audit" property="threeAudit" jdbcType="INTEGER"/>
+        <result column="first_remark" property="firstRemark" jdbcType="VARCHAR"/>
+        <result column="second_remark" property="secondRemark" jdbcType="VARCHAR"/>
+        <result column="three_remark" property="threeRemark" jdbcType="INTEGER"/>
+        <result column="is_active" property="isActive" jdbcType="VARCHAR"/>
+        <result column="time" property="time" jdbcType="BIGINT"/>
+        <result column="operator" property="operator" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="PurchaseContractGenerateVO" type="com.xzx.xzxms.purchase.vo.PurchaseContractGenerateVO">
+        <result column="id" property="id" jdbcType="BIGINT" />
+        <result column="serial_number" property="serialNumber" jdbcType="INTEGER" />
+        <result column="supplier" property="supplier" jdbcType="VARCHAR" />
+        <result column="brand" property="brand" jdbcType="VARCHAR" />
+        <result column="model" property="model" jdbcType="VARCHAR" />
+        <result column="item" property="item" jdbcType="VARCHAR" />
+        <result column="unit" property="unit" jdbcType="VARCHAR" />
+        <result column="number" property="number" jdbcType="INTEGER" />
+        <result column="price" property="price" jdbcType="DOUBLE" />
+        <result column="total_price" property="totalPrice" jdbcType="DOUBLE" />
+        <result column="supply_params" property="supplyParams" jdbcType="VARCHAR" />
+        <result column="items_params" property="itemsParams" jdbcType="VARCHAR" />
+        <result column="warranty" property="warranty" jdbcType="VARCHAR" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="delivery" property="delivery" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="findAllProjects" parameterType="string" resultMap="PurchaseProjectVO">
+        SELECT id,project_name FROM `purchase_project`
+        where is_active = 1
+        <if test="projectName != null">
+            and project_name like "%"#{projectName}"%"
+        </if>
+        ORDER BY time DESC
+    </select>
+    
+    <select id="findContractByProjectId" parameterType="long" resultMap="PurchaseContractVO">
+        SELECT id, contract_no, project_id, attribute_id, first_audit, second_audit, three_audit,
+                first_remark, second_remark, three_remark, is_active, time, operator
+        FROM `purchase_contract`
+        where project_id=#{projectId}
+        and is_active=1
+    </select>
+
+    <update id="updateContractAuditById" parameterType="com.xzx.xzxms.purchase.vo.PurchaseContractVO">
+        update `purchase_contract`
+        set first_audit=#{firstAudit}, second_audit=#{secondAudit}, three_audit=#{threeAudit}
+        where id=#{id}
+    </update>
+
+    <select id="findItemsInfoByContractId" parameterType="long" resultMap="PurchaseContractGenerateVO">
+        SELECT purchase_items.id, purchase_items.serial_number, purchase_supply.supplier, purchase_supply.brand,
+                purchase_supply.model, purchase_items.item, purchase_items.unit,
+                purchase_supply.number, purchase_supply.price, purchase_supply.total_price,
+                purchase_supply.params supply_params, purchase_items.params items_params,
+                purchase_supply.warranty, purchase_supply.remark, purchase_supply.delivery
+        FROM purchase_items inner join purchase_supply
+            on purchase_items.id = purchase_supply.item_id
+        where purchase_items.is_active = 1
+            and purchase_supply.is_active=1
+            and contract_id=#{contractId, jdbcType = BIGINT}
+        order by purchase_supply.supplier
+    </select>
+    
+    
+    <select id="findPurchaseMessageByContractId" resultMap="selectPurchaseSupply">
+        select * from purchase_items
+        where is_active = 1 and contract_id = #{contractId, jdbcType = BIGINT}
+    </select>
+    <resultMap id="selectPurchaseSupply" type="com.xzx.xzxms.purchase.vo.PurchaseContractGenerateNewVO" extends="com.xzx.xzxms.purchase.dao.PurchaseItemsMapper.BaseResultMap">
+        <association property="purchaseSupply" column="id" select="findByItemId"></association>
+    </resultMap>
+    <select id="findByItemId" resultType="com.xzx.xzxms.purchase.bean.PurchaseSupply">
+        select * from purchase_supply
+        where item_id = #{itemId}
+    </select>
+</mapper>

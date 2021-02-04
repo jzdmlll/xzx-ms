@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzx.xzxms.inquiry.dao.extend.InquiryTemplateExtendMapper">
+    <select id="findAll" resultType="com.xzx.xzxms.inquiry.bean.InquiryTemplateWithBLOBs">
+        select *
+        from inquiry_template i
+        <where>
+            <if test="id != null">
+                and i.id = #{id,jdbcType=BIGINT}
+            </if>
+        </where>
+    </select>
+</mapper>
