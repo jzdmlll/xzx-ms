@@ -27,4 +27,21 @@
     <select id="findContractNoByYMD" parameterType="string" resultType="string">
         select contract_no from purchase_contract where contract_no like "%"#{contractNo}"%" GROUP BY contract_no
     </select>
+
+    <select id="findByProjectId" resultType="com.xzx.xzxms.purchase.bean.PurchaseContract">
+        select
+         pc.*
+        from purchase_contract pc
+        left join purchase_bridge pb on pc.id = pb.purchase_contract_id
+        left join purchase_project pp on pb.purchase_project_id = pp.id
+        <where>
+            pc.is_active != 0 and pp.is_active = 1
+            <if test="projectId != null">
+                and pp.id = #{projectId}
+            </if>
+            <if test="contractName != null and contractName != ''">
+                and pc.contract_name like "%"#{contractName}"%"
+            </if>
+        </where>
+    </select>
 </mapper>
