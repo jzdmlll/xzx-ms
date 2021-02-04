@@ -9,7 +9,7 @@ import java.util.Map;
 
 public interface FinallyCheckExtendMapper {
 
-    List<FinallyQuoteInquiryVM> cascadeFindAllByParams(@Param("proDetailId") Long proDetailId, String name);
+    List<FinallyQuoteInquiryVM> cascadeFindAllByParams(@Param("proDetailId") Long proDetailId, @Param("name") String name);
 
     List<SysProCheck> findCheckByQuoteId(long id);
 

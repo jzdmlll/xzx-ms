@@ -41,10 +41,8 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
     @Override
     public List<Map> cascadeFindAllByParams(Long proDetailId, String name) {
 
-        String sort = "";
         double minPrice = 0;
-        double price = 0;
-        List<Map> maps = new ArrayList<Map>();
+        List<Map> maps = new ArrayList<>();
         List<FinallyQuoteInquiryVM> finallyCheckCompareVMS = finallyCheckExtendMapper.cascadeFindAllByParams(proDetailId, name);
 
         Map map = new HashMap();
