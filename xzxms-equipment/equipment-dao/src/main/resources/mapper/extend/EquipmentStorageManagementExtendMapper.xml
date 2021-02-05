@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzx.xzxms.equipment.dao.extend.EquipmentStorageManagementExtendMapper">
+    <select id="findStorageInfos" resultType="com.xzx.xzxms.equipment.vo.EquipmentStorageVO">
+        SELECT  equipment_storage.id storage_id, equipment_storage.project_id,
+        equipment_storage.item_id, equipment_storage.item, equipment_storage.params,
+        equipment_storage.model, equipment_storage.number, equipment_storage.supplier_id,
+        equipment_storage.remark, equipment_storage.tag_numer, equipment_storage.meter,
+        equipment_storage.measuring_range, equipment_storage.meter_signal,
+        equipment_storage.connection_mode, equipment_storage.tube,
+        purchase_project.project_name, supplier.`name` supplier_name
+        FROM equipment_storage
+        inner join  purchase_project on equipment_storage.project_id = purchase_project.id
+        inner join supplier on equipment_storage.supplier_id = supplier.id
+        where equipment_storage.is_active=1 and purchase_project.is_active=1 and supplier.is_active=1
+        <if test="projectId != null">
+            and equipment_storage.project_id = #{projectId, jdbcType=BIGINT}
+        </if>
+        <if test="item != null">
+            and equipment_storage.item like "%"#{item, jdbcType=VARCHAR}"%"
+        </if>
+        <if test="supplierName != null">
+            and supplier.`name` like "%"#{supplierName, jdbcType=VARCHAR}"%"
+        </if>
+    </select>
+</mapper>
