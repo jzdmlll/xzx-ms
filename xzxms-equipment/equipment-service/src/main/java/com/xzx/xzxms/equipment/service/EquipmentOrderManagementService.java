@@ -1,8 +1,9 @@
 package com.xzx.xzxms.equipment.service;
 
 import com.xzx.xzxms.equipment.bean.EquipmentContractOrder;
-import com.xzx.xzxms.equipment.dto.EquipmentContractOrderDTO;
-import com.xzx.xzxms.equipment.dto.EquipmentOrderDTO;
+import com.xzx.xzxms.equipment.bean.EquipmentOrder;
+import com.xzx.xzxms.equipment.bean.EquipmentOrderStatus;
+import com.xzx.xzxms.equipment.dto.EquipmentOrderStatusDTO;
 import com.xzx.xzxms.equipment.vo.EquipmentContractVO;
 import com.xzx.xzxms.equipment.vo.EquipmentItemVO;
 import com.xzx.xzxms.equipment.vo.EquipmentOrderVO;
@@ -39,16 +40,11 @@ public interface EquipmentOrderManagementService {
      */
     List<EquipmentItemVO> findAllItemInfosByContractIdService(Long contractId);
 
-//    /**
-//     * 周嘉玮
-//     * 4.1、新添合同订单跟踪信息
-//     */
-//    String insertEquipmentContractOrderService(EquipmentContractOrder equipmentContractOrder);
     /**
      * 周嘉玮
      * 4.1、新添合同订单跟踪信息
      */
-    String insertEquipmentContractOrderService(EquipmentContractOrderDTO equipmentContractOrderDTO);
+    String insertEquipmentContractOrderService(EquipmentContractOrder equipmentContractOrder);
 
     /**
      * 周嘉玮
@@ -60,7 +56,7 @@ public interface EquipmentOrderManagementService {
      * 周嘉玮
      * 4.3、新添购买项订单跟踪
      */
-    String insertEquipmentOrderService(EquipmentOrderDTO equipmentOrderDTO);
+    String insertEquipmentOrderService(List<EquipmentOrder> equipmentOrders);
 
     /**
      * 周嘉玮

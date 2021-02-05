@@ -21,20 +21,4 @@ public class PurchaseContractFIleDTO {
      * fileList 文件List
      */
     private List<SysFile> fileList;
-
-    public PurchaseContract getPurchaseContract() {
-        return purchaseContract;
-    }
-
-    public void setPurchaseContract(PurchaseContract purchaseContract) {
-        this.purchaseContract = purchaseContract;
-    }
-
-    public List<SysFile> getFileList() {
-        return fileList;
-    }
-
-    public void setFileList(List<SysFile> fileList) {
-        this.fileList = fileList;
-    }
 }

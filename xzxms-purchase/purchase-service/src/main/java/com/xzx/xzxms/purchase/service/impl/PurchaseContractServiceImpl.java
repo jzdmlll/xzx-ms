@@ -8,6 +8,7 @@ import com.xzx.xzxms.purchase.dao.PurchaseContractMapper;
 import com.xzx.xzxms.purchase.dao.PurchaseItemsMapper;
 import com.xzx.xzxms.purchase.dao.PurchaseSupplyMapper;
 import com.xzx.xzxms.purchase.dao.extend.PurchaseContractExtendMapper;
+import com.xzx.xzxms.purchase.dto.PurchaseItemsExcelImportDTO;
 import com.xzx.xzxms.purchase.service.IPurchaseContractService;
 import com.xzx.xzxms.system.bean.SysFile;
 import org.springframework.stereotype.Service;
@@ -37,15 +38,8 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
      * @return
      */
     @Override
-    public List<PurchaseContract> findByProjectId(Long projectId) {
-        PurchaseContractExample example = new PurchaseContractExample();
-        if (projectId == null) {
-            example.createCriteria().andIsActiveNotEqualTo(0);
-        }else {
-            example.createCriteria().andProjectIdEqualTo(projectId).andIsActiveNotEqualTo(0);//查除了状态为0的其他合同
-        }
-        List<PurchaseContract> list = purchaseContractMapper.selectByExample(example);
-        return list;
+    public List<PurchaseContract> findByProjectId(Long projectId, String contractName) {
+        return purchaseContractExtendMapper.findByProjectId(projectId, contractName);
     }
 
     /**
@@ -134,7 +128,7 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
      * @return
      */
     @Override
-    public String AutomaticGenerationContractNo() {
+    public String automaticGenerationContractNo() {
         //获取当前年月日，按照yyyyMMdd格式
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");//设置日期格式
         String YMD = df.format(new Date());

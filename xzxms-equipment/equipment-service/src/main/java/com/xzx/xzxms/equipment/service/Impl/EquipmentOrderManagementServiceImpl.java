@@ -1,26 +1,20 @@
 package com.xzx.xzxms.equipment.service.Impl;
 
+import com.xzx.xzxms.commons.utils.CustomerException;
 import com.xzx.xzxms.commons.utils.IDUtils;
-import com.xzx.xzxms.equipment.bean.EquipmentContractOrder;
-import com.xzx.xzxms.equipment.bean.EquipmentOrder;
-import com.xzx.xzxms.equipment.bean.EquipmentOrderStatus;
-import com.xzx.xzxms.equipment.bean.EquipmentOrderStatusExample;
+import com.xzx.xzxms.equipment.bean.*;
 import com.xzx.xzxms.equipment.dao.EquipmentContractOrderMapper;
 import com.xzx.xzxms.equipment.dao.EquipmentOrderMapper;
 import com.xzx.xzxms.equipment.dao.EquipmentOrderStatusMapper;
 import com.xzx.xzxms.equipment.dao.extend.EquipmentOrderManagementExtendMapper;
-import com.xzx.xzxms.equipment.dto.EquipmentContractOrderDTO;
-import com.xzx.xzxms.equipment.dto.EquipmentOrderDTO;
+import com.xzx.xzxms.equipment.dto.EquipmentOrderStatusDTO;
 import com.xzx.xzxms.equipment.service.EquipmentOrderManagementService;
 import com.xzx.xzxms.equipment.vo.EquipmentContractVO;
 import com.xzx.xzxms.equipment.vo.EquipmentItemVO;
 import com.xzx.xzxms.equipment.vo.EquipmentOrderVO;
 import com.xzx.xzxms.equipment.vo.EquipmentProjectVO;
-import com.xzx.xzxms.purchase.bean.PurchaseContract;
-import com.xzx.xzxms.purchase.bean.PurchaseContractExample;
 import com.xzx.xzxms.purchase.bean.PurchaseItems;
 import com.xzx.xzxms.purchase.bean.PurchaseItemsExample;
-import com.xzx.xzxms.purchase.dao.PurchaseContractMapper;
 import com.xzx.xzxms.purchase.dao.PurchaseItemsMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,9 +48,6 @@ public class EquipmentOrderManagementServiceImpl implements EquipmentOrderManage
 
     @Resource
     EquipmentOrderStatusMapper equipmentOrderStatusMapper;
-
-    @Resource
-    PurchaseContractMapper purchaseContractMapper;
 
     /**
      * 周嘉玮
@@ -98,41 +89,41 @@ public class EquipmentOrderManagementServiceImpl implements EquipmentOrderManage
      */
     @Transactional
     @Override
-    public String insertEquipmentContractOrderService(EquipmentContractOrderDTO equipmentContractOrderDTO) {
-        // 获取合同id
-        Long contractId = equipmentContractOrderDTO.getContractId();
-        // 1、根据contract_id从purchase_contract表中获取数据
-        PurchaseContractExample purchaseContractExample = new PurchaseContractExample();
-        purchaseContractExample.createCriteria().andIdEqualTo(contractId).andIsActiveEqualTo(1).andContractStatusEqualTo(1);
-        List<PurchaseContract> purchaseContracts = purchaseContractMapper.selectByExample(purchaseContractExample);
-        // 判断是否存在该合同
-        if (purchaseContracts.size() > 0){
-            // contract_id在合同表中是唯一的，所以当存在查询结果时，集合中只存在一条数据
-            PurchaseContract purchaseContract = purchaseContracts.get(0);
-            // 判断该合同是否已经生成了订单跟踪
-            if (purchaseContract.getContactOrderId() == null){
-                EquipmentContractOrder equipmentContractOrder = equipmentContractOrderDTO.getEquipmentContractOrder();
-                // 生成主键id
-                Long contractOrderId = IDUtils.getId();
-                equipmentContractOrder.setId(contractOrderId);
-                // 生成跟踪订单默认为未完成--0
-                equipmentContractOrder.setOrderStatus(0);
-                // 录入时间
-                equipmentContractOrder.setTime(new Date().getTime());
-                // 设置为有效数据
-                equipmentContractOrder.setIsActive(1);
-                // 插入数据库表equipment_contract_order
-                equipmentContractOrderMapper.insert(equipmentContractOrder);
-                // 绑定合同订单跟踪id
-                purchaseContract.setContactOrderId(contractOrderId);
-                purchaseContractMapper.updateByExampleSelective(purchaseContract, purchaseContractExample);
-                return "success";
-            }else {
-                return "该合同已存在订单跟踪";
-            }
+    public String insertEquipmentContractOrderService(EquipmentContractOrder equipmentContractOrder) {
+        // 首先判断该合同是否已经生成了跟踪订单
+        EquipmentContractOrderExample equipmentContractOrderExample = new EquipmentContractOrderExample();
+        equipmentContractOrderExample.createCriteria().andContractIdEqualTo(equipmentContractOrder.getContractId()).andIsActiveEqualTo(1);
+        long count = equipmentContractOrderMapper.countByExample(equipmentContractOrderExample);
+        if (count ==0){
+            // 生成主键id
+            Long id = IDUtils.getId();
+            equipmentContractOrder.setId(id);
+            // 生成跟踪订单默认为未完成--0
+            equipmentContractOrder.setOrderStatus(0);
+            // 录入时间
+            equipmentContractOrder.setTime(new Date().getTime());
+            // 设置为有效数据
+            equipmentContractOrder.setIsActive(1);
+            // 插入数据库
+            equipmentContractOrderMapper.insert(equipmentContractOrder);
+
+            // 修改purchase_items表中数据：
+            PurchaseItemsExample purchaseItemsExample = new PurchaseItemsExample();
+            // 根据合同查询所有相关有效的购买项
+            purchaseItemsExample.createCriteria().andContractIdEqualTo(equipmentContractOrder.getContractId()).andIsActiveEqualTo(1);
+            PurchaseItems purchaseItems = new PurchaseItems();
+            // 绑定合同订单跟踪id
+            purchaseItems.setContractOrderId(id);
+            // 赋予合同订单跟踪状态：
+            // null-未生成合同订单跟踪，采购项不可选择生成订单跟踪；
+            // 1-已生成合同订单跟踪，采购项可选择生成订单跟踪；
+            // 2-已生成订单跟踪，并且采购项也已生成订单跟踪，采购项不可再选择生成订单跟踪
+            purchaseItems.setContractOrderStatus(1);
+            purchaseItemsMapper.updateByExampleSelective(purchaseItems, purchaseItemsExample);
+
+            return "success";
         }else {
-//            throw new CustomerException("查无此合同！");
-            return "查无此合同！";
+            return "该合同已存在订单跟踪";
         }
     }
 
@@ -142,12 +133,11 @@ public class EquipmentOrderManagementServiceImpl implements EquipmentOrderManage
      */
     @Override
     public List<EquipmentContractOrder> findEquipmentContractOrderInfoByContractIdService(Long contractId) {
-//        EquipmentContractOrderExample equipmentContractOrderExample = new EquipmentContractOrderExample();
-//        // 根据条件查询
-//        equipmentContractOrderExample.createCriteria().andContractIdEqualTo(contractId).andIsActiveEqualTo(1);
-//        List<EquipmentContractOrder> equipmentContractOrders = equipmentContractOrderMapper.selectByExample(equipmentContractOrderExample);
-//        return equipmentContractOrders;
-        return null;
+        EquipmentContractOrderExample equipmentContractOrderExample = new EquipmentContractOrderExample();
+        // 根据条件查询
+        equipmentContractOrderExample.createCriteria().andContractIdEqualTo(contractId).andIsActiveEqualTo(1);
+        List<EquipmentContractOrder> equipmentContractOrders = equipmentContractOrderMapper.selectByExample(equipmentContractOrderExample);
+        return equipmentContractOrders;
     }
 
     /**
@@ -156,60 +146,37 @@ public class EquipmentOrderManagementServiceImpl implements EquipmentOrderManage
      */
     @Transactional
     @Override
-    public String insertEquipmentOrderService(EquipmentOrderDTO equipmentOrderDTO) {
-        if (equipmentOrderDTO.getEquipmentOrders().size() > 0){
-            // 首先判断该设备是否可以生成订单跟踪，根据合同id去合同表中查询是否已生成了合同订单跟踪
-            // 根据contract_id从purchase_contract表中获取数据
-            PurchaseContractExample purchaseContractExample = new PurchaseContractExample();
-            purchaseContractExample.createCriteria().andIdEqualTo(equipmentOrderDTO.getContractId()).andIsActiveEqualTo(1).andContractStatusEqualTo(1);
-            List<PurchaseContract> purchaseContracts = purchaseContractMapper.selectByExample(purchaseContractExample);
-            // 判断是否存在该合同
-            if (purchaseContracts.size() > 0){
-                // contract_id在合同表中是唯一的，所以当存在查询结果时，集合中只存在一条数据
-                PurchaseContract purchaseContract = purchaseContracts.get(0);
-                // 判断该合同是否已经生成了订单跟踪         已生成
-                if (purchaseContract.getContactOrderId() != null){
-                    // 获取合同订单跟踪id
-                    Long contractOrderId = purchaseContract.getContactOrderId();
-                    for (EquipmentOrder equipmentOrder : equipmentOrderDTO.getEquipmentOrders()) {
-                        // 根据item_id从purchase_items表中获取数据
-                        PurchaseItemsExample purchaseItemsExample = new PurchaseItemsExample();
-                        purchaseItemsExample.createCriteria().andIdEqualTo(equipmentOrder.getItemId()).andIsActiveEqualTo(1);
-                        List<PurchaseItems> purchaseItems = purchaseItemsMapper.selectByExample(purchaseItemsExample);
-                        if (purchaseItems.size() > 0) {
-                            // item_id在采购项表中是唯一的，所以当存在查询结果时，集合中只存在一条数据
-                            PurchaseItems purchaseItem = purchaseItems.get(0);
-                            // 判断该采购项是否已经生成了订单跟踪  未生成
-                            if (purchaseItem.getOrderId() == null) {
-                                // 生成主键
-                                Long orderId = IDUtils.getId();
-                                equipmentOrder.setId(orderId);
-                                // 绑定合同订单跟踪id
-                                equipmentOrder.setContractOrderId(contractOrderId);
-                                // 录入时间
-                                equipmentOrder.setTime(new Date().getTime());
-                                // 是否有效 0-无效；1-有效
-                                equipmentOrder.setIsActive(1);
-                                // 插入数据库表equipment_order
-                                equipmentOrderMapper.insert(equipmentOrder);
-                                // 在purchase_items表中绑定order_id
-                                PurchaseItems purchaseItems1 = new PurchaseItems();
-                                purchaseItems1.setOrderId(orderId);
-                                purchaseItemsMapper.updateByExampleSelective(purchaseItems1, purchaseItemsExample);
-                            } else {
-                                return "该采购项已存在订单跟踪";
-                            }
-                        } else {
-                            return "查无此项！";
-                        }
-                    }
-                    return "success";
-                }else {
-                    return "该合同已未生成订单跟踪，请先生成合同订单跟踪！";
+    public String insertEquipmentOrderService(List<EquipmentOrder> equipmentOrders) {
+        if (equipmentOrders.size() > 0){
+            for (EquipmentOrder equipmentOrder : equipmentOrders) {
+                // 首先判断该设备是否可以生成订单跟踪 contract_order_status = 1 表示可以生成
+                Integer contractOrderStatus= equipmentOrderManagementExtendMapper.findContractOrderStatusByItemId(equipmentOrder.getItemId());
+                // 如果contract_order_status = 1，则可以进行生成
+                if (contractOrderStatus == 1){
+                    // 生成主键
+                    equipmentOrder.setId(IDUtils.getId());
+                    // 录入时间
+                    equipmentOrder.setTime(new Date().getTime());
+                    // 是否有效 0-无效；1-有效
+                    equipmentOrder.setIsActive(1);
+                    // 订单状态 0-未完成；1-已完成
+                    equipmentOrder.setOrderStatus(0);
+                    // 在purchases_items表中修改合同订单跟踪状态
+                    PurchaseItemsExample purchaseItemsExample = new PurchaseItemsExample();
+                    purchaseItemsExample.createCriteria().andIdEqualTo(equipmentOrder.getItemId()).andIsActiveEqualTo(1);
+                    PurchaseItems purchaseItems = new PurchaseItems();
+                    // 2-已生成订单跟踪，并且采购项也已生成订单跟踪，采购项不可再选择生成订单跟踪
+                    purchaseItems.setContractOrderStatus(2);
+                    purchaseItemsMapper.updateByExampleSelective(purchaseItems, purchaseItemsExample);
+                    // 写入设备订单跟踪表中
+                    equipmentOrderMapper.insert(equipmentOrder);
+                }else if (contractOrderStatus == null){
+                    throw new CustomerException("未生成合同订单跟踪，请先生成合同订单跟踪！");
+                }else if (contractOrderStatus == 2){
+                    throw new CustomerException(equipmentOrder.getItemId().toString());
                 }
-            }else {
-                return "查无此合同！";
             }
+            return "success";
         }else {
             return "error";
         }

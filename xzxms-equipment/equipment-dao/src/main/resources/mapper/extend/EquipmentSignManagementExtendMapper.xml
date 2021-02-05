@@ -37,8 +37,8 @@
 
     <!--  根据order_id获取其订单跟踪信息  -->
     <!--  周嘉玮  -->
-   <select id="findEquipmentOrderInfoByOrderId" resultType="com.xzx.xzxms.equipment.bean.EquipmentOrder">
-        select scheduler_arrival_num, unit_item
+    <select id="findEquipmentOrderInfoByOrderId" parameterType="long" resultType="com.xzx.xzxms.equipment.bean.EquipmentOrder">
+        select project_id,contract_id, item_id, supplier_id, scheduler_arrival_num, unit_item
         from equipment_order
         where id=#{orderId, jdbcType=BIGINT} and is_active=1
     </select>

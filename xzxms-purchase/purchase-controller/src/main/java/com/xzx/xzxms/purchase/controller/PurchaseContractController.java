@@ -21,8 +21,8 @@ public class PurchaseContractController {
 
     @ApiOperation(value = "通过项目id进行查询")
     @GetMapping(value ="findByProjectId")
-    public Message findByProjectId(Long projectId){
-        List<PurchaseContract> list = iPurchaseContractServiceImpl.findByProjectId(projectId);
+    public Message findByProjectId(Long projectId, String contractName){
+        List<PurchaseContract> list = iPurchaseContractServiceImpl.findByProjectId(projectId, contractName);
         return MessageUtil.success("success",list);
     }
 
@@ -60,9 +60,9 @@ public class PurchaseContractController {
      * @return
      */
     @ApiOperation(value = "自动生成合同编码")
-    @PostMapping(value = "AutomaticGenerationContractNo")
-    public Message AutomaticGenerationContractNo(){
-        String contractNo = iPurchaseContractServiceImpl.AutomaticGenerationContractNo();
+    @GetMapping(value = "automaticGenerationContractNo")
+    public Message automaticGenerationContractNo(){
+        String contractNo = iPurchaseContractServiceImpl.automaticGenerationContractNo();
         return MessageUtil.success("success",contractNo);
     }
 }

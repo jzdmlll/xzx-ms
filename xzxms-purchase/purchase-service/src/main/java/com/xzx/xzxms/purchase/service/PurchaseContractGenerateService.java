@@ -1,6 +1,8 @@
 package com.xzx.xzxms.purchase.service;
 
+import com.xzx.xzxms.purchase.bean.PurchaseContract;
 import com.xzx.xzxms.purchase.dto.PurchaseContractDTO;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 /**

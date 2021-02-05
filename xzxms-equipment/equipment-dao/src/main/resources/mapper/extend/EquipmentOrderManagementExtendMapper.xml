@@ -50,10 +50,11 @@
     <!--  根据项目id查询该项目下所有已生效合同  -->
     <!--  周嘉玮  -->
     <select id="findAllEffectContractsByProjectId" parameterType="long" resultMap="EquipmentContractVO">
-        SELECT purchase_contract.id, purchase_contract.contract_name
-        FROM purchase_project inner join purchase_bridge on purchase_project.id = purchase_bridge.purchase_project_id
-        inner join purchase_contract on purchase_contract.id = purchase_bridge.purchase_contract_id
-        where purchase_project.id = #{id} and purchase_contract.contract_status=1
+        select id, contract_name
+        from purchase_contract
+        where project_id = #{projectId, jdbcType=BIGINT}
+                and is_active=1
+                and contract_status=1
     </select>
 
     <!--  根据合同id查询该合同下所有购买项信息  -->
@@ -89,13 +90,10 @@
 
     <!--  根据order_id获取其订单跟踪信息  -->
     <!--  周嘉玮  -->
-<!--    select project_id,contract_id, item_id, supplier_id, scheduler_arrival_num, unit_item-->
-<!--    from equipment_order -->
-<!--    where id=#{orderId, jdbcType=BIGINT} and is_active=1-->
-<!--    <select id="findEquipmentOrderInfoByOrderId" parameterType="long" resultType="com.xzx.xzxms.equipment.bean.EquipmentOrder">-->
-<!--        select scheduler_arrival_num, unit_item-->
-<!--        from equipment_order-->
-<!--        where id=#{orderId, jdbcType=BIGINT} and is_active=1-->
-<!--    </select>-->
+    <select id="findEquipmentOrderInfoByOrderId" parameterType="long" resultType="com.xzx.xzxms.equipment.bean.EquipmentOrder">
+        select project_id,contract_id, item_id, supplier_id, scheduler_arrival_num, unit_item
+        from equipment_order
+        where id=#{orderId, jdbcType=BIGINT} and is_active=1
+    </select>
 
 </mapper>

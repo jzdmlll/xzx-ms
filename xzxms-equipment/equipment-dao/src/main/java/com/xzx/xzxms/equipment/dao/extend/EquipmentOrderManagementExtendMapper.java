@@ -1,5 +1,6 @@
 package com.xzx.xzxms.equipment.dao.extend;
 
+import com.xzx.xzxms.equipment.bean.EquipmentOrder;
 import com.xzx.xzxms.equipment.vo.EquipmentContractVO;
 import com.xzx.xzxms.equipment.vo.EquipmentItemVO;
 import com.xzx.xzxms.equipment.vo.EquipmentOrderVO;
