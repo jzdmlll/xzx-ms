@@ -21,7 +21,7 @@ import java.util.List;
 
 /**
  * @author：ZJW
- * @title：
+ * @title：订单跟踪界面
  * @date：2021/1/24 14:48
  * @修改人：
  * @修改时间：2021/1/24 14:48
@@ -32,7 +32,7 @@ import java.util.List;
 public class EquipmentOrderManagementController {
 
     @Autowired
-    EquipmentOrderManagementService equipmentOrderManagementService;
+    private EquipmentOrderManagementService equipmentOrderManagementService;
 
     // 周嘉玮
     @ApiOperation("1、获取所有的采购项目名，及其id")

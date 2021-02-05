@@ -35,25 +35,25 @@ import java.util.List;
  * @修改描述：默认描述
  */
 @Service
-public class EquipmentSignManagerServiceImpl implements EquipmentSignManagementService {
+public class EquipmentSignManagementServiceImpl implements EquipmentSignManagementService {
 
     @Resource
-    EquipmentSignManagementExtendMapper equipmentSignManagementExtendMapper;
+    private EquipmentSignManagementExtendMapper equipmentSignManagementExtendMapper;
 
     @Resource
-    EquipmentOrderStatusMapper equipmentOrderStatusMapper;
+    private EquipmentOrderStatusMapper equipmentOrderStatusMapper;
 
     @Resource
-    EquipmentInStorageMapper equipmentInStorageMapper;
+    private EquipmentInStorageMapper equipmentInStorageMapper;
 
     @Resource
-    PurchaseItemsMapper purchaseItemsMapper;
+    private PurchaseItemsMapper purchaseItemsMapper;
 
     @Resource
-    PurchaseSupplyMapper purchaseSupplyMapper;
+    private PurchaseSupplyMapper purchaseSupplyMapper;
 
     @Resource
-    EquipmentStorageMapper equipmentStorageMapper;
+    private EquipmentStorageMapper equipmentStorageMapper;
 
     /**
      * 周嘉玮

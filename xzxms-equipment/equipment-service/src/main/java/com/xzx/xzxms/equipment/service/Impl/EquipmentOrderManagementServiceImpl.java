@@ -41,22 +41,22 @@ import java.util.List;
 public class EquipmentOrderManagementServiceImpl implements EquipmentOrderManagementService {
 
     @Resource
-    EquipmentOrderManagementExtendMapper equipmentOrderManagementExtendMapper;
+    private EquipmentOrderManagementExtendMapper equipmentOrderManagementExtendMapper;
 
     @Resource
-    EquipmentOrderMapper equipmentOrderMapper;
+    private EquipmentOrderMapper equipmentOrderMapper;
 
     @Resource
-    EquipmentContractOrderMapper equipmentContractOrderMapper;
+    private EquipmentContractOrderMapper equipmentContractOrderMapper;
 
     @Resource
-    PurchaseItemsMapper purchaseItemsMapper;
+    private PurchaseItemsMapper purchaseItemsMapper;
 
     @Resource
-    EquipmentOrderStatusMapper equipmentOrderStatusMapper;
+    private EquipmentOrderStatusMapper equipmentOrderStatusMapper;
 
     @Resource
-    PurchaseContractMapper purchaseContractMapper;
+    private PurchaseContractMapper purchaseContractMapper;
 
     /**
      * 周嘉玮

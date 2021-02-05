@@ -1,5 +1,7 @@
 package com.xzx.xzxms.equipment.service;
 
+import com.xzx.xzxms.equipment.bean.EquipmentOutStorage;
+import com.xzx.xzxms.equipment.dto.EquipmentOutStorageListDTO;
 import com.xzx.xzxms.equipment.vo.EquipmentStorageVO;
 import org.springframework.stereotype.Repository;
 
@@ -22,8 +24,14 @@ public interface EquipmentStorageManagementService {
     List<EquipmentStorageVO> findStorageInfosService(EquipmentStorageVO equipmentStorageVO);
 
     /**
+     * 周嘉玮
      * new 5.1、单个出库
-     * @return
      */
-    String insertOutStorageSingleService();
+    String insertOutStorageSingleService(EquipmentOutStorage equipmentOutStorage);
+
+    /**
+     * 周嘉玮
+     * new 5.2、批量出库
+     */
+    String insertOutStorageService(EquipmentOutStorageListDTO equipmentOutStorageListDTO);
 }
