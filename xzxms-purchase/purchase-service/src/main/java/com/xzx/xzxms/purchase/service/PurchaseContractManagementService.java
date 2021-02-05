@@ -42,7 +42,7 @@ public interface PurchaseContractManagementService {
      * @param purchaseContract
      * @return
      */
-    String updateContractAuditByIdService(PurchaseContract purchaseContract);
+    void updateContractAuditByIdService(PurchaseContract purchaseContract);
 
     /**
      * Lzc 采购合同文件上传

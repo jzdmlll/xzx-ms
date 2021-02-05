@@ -10,6 +10,7 @@ import com.xzx.xzxms.purchase.dao.PurchaseSupplyMapper;
 import com.xzx.xzxms.purchase.dao.extend.PurchaseContractExtendMapper;
 import com.xzx.xzxms.purchase.service.IPurchaseContractService;
 import com.xzx.xzxms.system.bean.SysFile;
+import com.xzx.xzxms.system.bean.extend.SysFileExtend;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -123,7 +124,7 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
     @Override
     public List<SysFile> findContractFileByContractId(Long contractId) {
 
-        List<SysFile> sysFiles = purchaseContractExtendMapper.findContractFileByContractId(contractId);
+        List<SysFile> sysFiles = purchaseContractExtendMapper.findContractFileByContractId(contractId, SysFileExtend.TYPE_PURCHASE_CONTRACT);
         return sysFiles;
     }
 

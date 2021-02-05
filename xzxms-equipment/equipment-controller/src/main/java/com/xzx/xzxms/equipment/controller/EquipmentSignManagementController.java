@@ -9,7 +9,6 @@ import com.xzx.xzxms.equipment.dto.EquipmentOrderStatusDTO;
 import com.xzx.xzxms.equipment.dto.EquipmentSignDTO;
 import com.xzx.xzxms.equipment.service.EquipmentSignManagementService;
 import com.xzx.xzxms.equipment.vo.EquipmentSignVO;
-import com.xzx.xzxms.equipment.vo.EquipmentStorageVO;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -68,7 +67,7 @@ public class EquipmentSignManagementController {
 
     // 周嘉玮
     @ApiOperation("new 3.2、入库（批量）")
-    @PostMapping("insertEquipmentStorageSingle")
+    @PostMapping("insertEquipmentStorage")
     public Message insertEquipmentStorage(EquipmentInStorageListDTO equipmentInStorageListDTO){
         String result = equipmentSignManagementService.insertEquipmentStorageService(equipmentInStorageListDTO);
         return MessageUtil.success(result);

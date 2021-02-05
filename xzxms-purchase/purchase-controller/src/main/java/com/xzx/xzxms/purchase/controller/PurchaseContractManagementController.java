@@ -73,12 +73,9 @@ public class PurchaseContractManagementController {
     @ApiOperation("根据合同id修改合同审核级别(送审)")
     @PostMapping("updateContractAuditById")
     public Message updateContractAuditById(PurchaseContract purchaseContract){
-        String result = purchaseContractManagementService.updateContractAuditByIdService(purchaseContract);
-        if (result.equals("success")){
-            return MessageUtil.success("success");
-        }else {
-            return MessageUtil.error("error");
-        }
+
+        purchaseContractManagementService.updateContractAuditByIdService(purchaseContract);
+        return MessageUtil.success("success");
     }
 
     /**

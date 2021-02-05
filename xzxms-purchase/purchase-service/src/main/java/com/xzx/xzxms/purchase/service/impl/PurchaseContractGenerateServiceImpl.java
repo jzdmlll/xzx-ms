@@ -130,6 +130,5 @@ public class PurchaseContractGenerateServiceImpl implements PurchaseContractGene
             //purchaseItemsMapper.updateByExample(purchaseItems, purchaseItemsExample);
             purchaseItemsMapper.updateByExampleSelective(purchaseItems, purchaseItemsExample);
         }
-
     }
 }

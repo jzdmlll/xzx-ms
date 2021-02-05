@@ -87,16 +87,23 @@ public class PurchaseContractManagementServiceImpl implements PurchaseContractMa
      * @return
      */
     @Override
-    public String updateContractAuditByIdService(PurchaseContract purchaseContract) {
+    public void updateContractAuditByIdService(PurchaseContract purchaseContract) {
 
         PurchaseContractExample purchaseContractExample = new PurchaseContractExample();
-        purchaseContractExample.createCriteria().andIdEqualTo(purchaseContract.getId());
+        purchaseContractExample.createCriteria().andIdEqualTo(purchaseContract.getId()).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
+        List<PurchaseContract> list = purchaseContractMapper.selectByExample(purchaseContractExample);
+        if (list.size() > 0){
 
-        // 获取当前时间作为送审时间
-        purchaseContract.setSendTime(new Date().getTime());
-
-        purchaseContractMapper.updateByExampleSelective(purchaseContract, purchaseContractExample);
-        return "success";
+            PurchaseContract pc = list.get(0);
+            if (pc.getFirstAudit() != null && pc.getSecondAudit() != null && pc.getThreeAudit() != null){
+                throw new CustomerException("合同已送审,请勿重复送审");
+            }
+            // 获取当前时间作为送审时间
+            purchaseContract.setSendTime(new Date().getTime());
+            purchaseContractMapper.updateByPrimaryKeySelective(purchaseContract);
+        }else {
+            throw new CustomerException("合同未找到!");
+        }
     }
 
     @Transactional

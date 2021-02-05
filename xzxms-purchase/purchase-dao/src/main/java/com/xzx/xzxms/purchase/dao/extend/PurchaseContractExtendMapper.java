@@ -3,6 +3,7 @@ package com.xzx.xzxms.purchase.dao.extend;
 import com.xzx.xzxms.purchase.bean.PurchaseContract;
 import com.xzx.xzxms.system.bean.SysFile;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public interface PurchaseContractExtendMapper {
     List<PurchaseContract> findAllLikeByContractNo(@Param("contractNo") String contractNo);
 
 
-    List<SysFile> findContractFileByContractId(Long contractId);
+    List<SysFile> findContractFileByContractId(@Param("contractId") Long contractId, @Param("type") Integer type);
 
     /**
      * 通过年月日模糊查询所有符合条件的合同编码contract_no

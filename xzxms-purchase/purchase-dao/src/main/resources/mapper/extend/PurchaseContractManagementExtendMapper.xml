@@ -52,9 +52,11 @@
     </select>
     
     <select id="findContractByProjectId" parameterType="long" resultMap="PurchaseContractVO">
-        SELECT id, contract_no, project_id, attribute_id, first_audit, second_audit, three_audit,
+        SELECT id, contract_no, p.id project_id, attribute_id, first_audit, second_audit, three_audit,
                 first_remark, second_remark, three_remark, is_active, time, operator
-        FROM `purchase_contract`
+        FROM `purchase_contract` c
+        right join purchase_bridge b on c.id = b.purchase_contract_id
+        right join purchase_project p on b.purchase_project_id = p.id
         where project_id=#{projectId}
         and is_active=1
     </select>

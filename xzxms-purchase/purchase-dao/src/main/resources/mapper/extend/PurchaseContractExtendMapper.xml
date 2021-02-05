@@ -21,6 +21,9 @@
             <if test="contractId != null">
                 and other_id = #{contractId}
             </if>
+            <if test="type != null">
+                and f.type = #{type}
+            </if>
         </where>
     </select>
 
