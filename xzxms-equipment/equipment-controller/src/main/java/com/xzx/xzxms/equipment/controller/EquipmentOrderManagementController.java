@@ -72,9 +72,9 @@ public class EquipmentOrderManagementController {
 
     // 周嘉玮
     @ApiOperation("4.2、根据合同id获取该合同的订单跟踪信息")
-    @GetMapping("findEquipmentContractOrderInfoByContractId")
-    public Message findEquipmentContractOrderInfoByContractId(Long contractId){
-        List<EquipmentContractOrder> equipmentContractOrderInfo = equipmentOrderManagementService.findEquipmentContractOrderInfoByContractIdService(contractId);
+    @GetMapping("findEquipmentContractOrderInfoById")
+    public Message findEquipmentContractOrderInfoByContractId(Long contractOrderId){
+        List<EquipmentContractOrder> equipmentContractOrderInfo = equipmentOrderManagementService.findEquipmentContractOrderInfoByIdService(contractOrderId);
         return MessageUtil.success("success", equipmentContractOrderInfo);
     }
 

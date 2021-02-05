@@ -52,9 +52,9 @@ public interface EquipmentOrderManagementService {
 
     /**
      * 周嘉玮
-     * 4.2、根据合同id获取该合同的订单跟踪信息
+     * 4.2、根据合同订单id获取该合同的订单跟踪信息
      */
-    List<EquipmentContractOrder> findEquipmentContractOrderInfoByContractIdService(Long contractId);
+    List<EquipmentContractOrder> findEquipmentContractOrderInfoByIdService(Long contractOrderId);
 
     /**
      * 周嘉玮

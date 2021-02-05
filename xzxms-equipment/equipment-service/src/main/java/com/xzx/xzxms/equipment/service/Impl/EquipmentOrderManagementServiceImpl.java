@@ -1,10 +1,7 @@
 package com.xzx.xzxms.equipment.service.Impl;
 
 import com.xzx.xzxms.commons.utils.IDUtils;
-import com.xzx.xzxms.equipment.bean.EquipmentContractOrder;
-import com.xzx.xzxms.equipment.bean.EquipmentOrder;
-import com.xzx.xzxms.equipment.bean.EquipmentOrderStatus;
-import com.xzx.xzxms.equipment.bean.EquipmentOrderStatusExample;
+import com.xzx.xzxms.equipment.bean.*;
 import com.xzx.xzxms.equipment.dao.EquipmentContractOrderMapper;
 import com.xzx.xzxms.equipment.dao.EquipmentOrderMapper;
 import com.xzx.xzxms.equipment.dao.EquipmentOrderStatusMapper;
@@ -141,13 +138,12 @@ public class EquipmentOrderManagementServiceImpl implements EquipmentOrderManage
      * 4.2、根据合同id获取该合同的订单跟踪信息
      */
     @Override
-    public List<EquipmentContractOrder> findEquipmentContractOrderInfoByContractIdService(Long contractId) {
-//        EquipmentContractOrderExample equipmentContractOrderExample = new EquipmentContractOrderExample();
-//        // 根据条件查询
-//        equipmentContractOrderExample.createCriteria().andContractIdEqualTo(contractId).andIsActiveEqualTo(1);
-//        List<EquipmentContractOrder> equipmentContractOrders = equipmentContractOrderMapper.selectByExample(equipmentContractOrderExample);
-//        return equipmentContractOrders;
-        return null;
+    public List<EquipmentContractOrder> findEquipmentContractOrderInfoByIdService(Long contractOrderId) {
+        EquipmentContractOrderExample equipmentContractOrderExample = new EquipmentContractOrderExample();
+        // 根据条件查询
+        equipmentContractOrderExample.createCriteria().andIdEqualTo(contractOrderId).andIsActiveEqualTo(1);
+        List<EquipmentContractOrder> equipmentContractOrders = equipmentContractOrderMapper.selectByExample(equipmentContractOrderExample);
+        return equipmentContractOrders;
     }
 
     /**
