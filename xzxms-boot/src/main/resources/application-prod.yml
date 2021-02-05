@@ -1,0 +1,122 @@
+server:
+  port: 8081
+spring:
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://10.70.0.113:3306/xzx?characterEncoding=utf8
+    #url: jdbc:mysql://127.0.0.1:3306/xzx?characterEncoding=utf8
+    username: root
+    #password: root
+    password: jzdmlll@1217
+
+    druid:
+      # 数据库连接池
+      type: com.alibaba.druid.pool.DruidDataSource
+      # 下面为连接池的补充设置，应用到上面所有数据源中
+      initialSize: 5
+      minIdle: 5
+      maxActive: 100
+      # 配置获取连接等待超时的时间
+      maxWait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+
+  redis:
+    database: 0
+    host: "127.0.0.1"
+    port: 6379
+    password: "xzx@redis123"
+    timeout: 10000
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1ms
+        max-idle: 8
+        min-idle: 0
+
+        #cluster:
+        #nodes:
+        # - 111.231.244.18:10001
+        # - 111.231.244.18:10002
+        # - 111.231.244.18:10003
+        # - 111.231.244.18:10004
+        # - 111.231.244.18:10005
+        # - 111.231.244.18:10006
+#mybatis:
+  #mapper-locations: classpath*:/mapper/**/*.xml
+  # 开启驼峰命名自动映射
+  #configuration:
+    #map-underscore-to-camel-case: true
+#mybatis plus 设置
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  global-config:
+    # 关闭MP3.0自带的banner
+    banner: false
+    db-config:
+      #主键类型  0:"数据库ID自增",1:"该类型为未设置主键类型", 2:"用户输入ID",3:"全局唯一ID (数字类型唯一ID)", 4:"全局唯一ID UUID",5:"字符串全局唯一ID (idWorker 的字符串表示)";
+      id-type: 4
+      # 默认数据库表下划线命名
+      table-underline: true
+  configuration:
+    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # 返回类型为Map,显示null对应的字段
+    call-setters-on-nulls: true
+
+mail:
+  default-encoding: UTF-8
+  host: smtp.qq.com
+  port: 465
+  username: lzc@smalllei.cn
+  password: cydptnisqqhnbdfe
+  properties:
+    mail:
+      smtp:
+        auth: true
+        strttls:
+          enable: true
+          required: true
+        ssl:
+          enable: true
+
+ftpclient:
+  host: 10.70.0.113
+  realHost: 218.87.96.53
+  port: 22
+  username: root
+  password: "6293082"
+  basePath: /home/lzc
+  filePath: /
+
+  #dictory: D:\images\
+  dictory: /home/images/
+
+
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+# 生产环境移除日志打印 节约性能
+#logging:
+  #level:
+    #com.xzx.xzxms: debug
+
+webconfig:
+  test: false
+  auto-add-privilege: true
+
+
+
+
+
+
