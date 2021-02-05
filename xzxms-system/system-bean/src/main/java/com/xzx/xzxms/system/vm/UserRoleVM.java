@@ -1,17 +1,10 @@
 package com.xzx.xzxms.system.vm;
+import com.xzx.xzxms.system.bean.SysUser;
+
 import java.util.List;
 
-public class UserRoleVM {
-    private Long id;
+public class UserRoleVM extends SysUser {
     private List<Long> roles;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public List<Long> getRoles() {
         return roles;

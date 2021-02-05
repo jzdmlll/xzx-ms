@@ -60,7 +60,7 @@ public class SysUserController {
         // 超过15分钟，token过期，判断redis里该token是否过期，如果没过期，将token刷新返回，否则抛出token过期异常
         if(jedisDaoImpl.exists(token)) {
             String userJson = jedisDaoImpl.get(token);
-            SysUser user = JsonUtils.jsonToPojo(userJson, SysUser.class);
+            UserRoleVM user = JsonUtils.jsonToPojo(userJson, UserRoleVM.class);
             Long userId = user.getId();
             String username = user.getUsername();
             //刷新token
@@ -83,7 +83,7 @@ public class SysUserController {
         //从redis中获取用户id
         if (jedisDaoImpl.exists(token)) {
             String userJson = jedisDaoImpl.get(token);
-            SysUser user = JsonUtils.jsonToPojo(userJson, SysUser.class);
+            UserRoleVM user = JsonUtils.jsonToPojo(userJson, UserRoleVM.class);
             long id = user.getId();
             SysUserExtend userExtend = userServiceImpl.findById(id);
             return MessageUtil.success("success", userExtend);
@@ -95,7 +95,7 @@ public class SysUserController {
     public Message logout(HttpServletRequest request) {
         //从请求头中获取token
         String token = request.getHeader("X-Token");
-        // 1. 登录， token从缓存中移除掉
+        // 1. token从缓存中移除掉
         if (jedisDaoImpl.exists(token)) {
             jedisDaoImpl.del(token);
         }

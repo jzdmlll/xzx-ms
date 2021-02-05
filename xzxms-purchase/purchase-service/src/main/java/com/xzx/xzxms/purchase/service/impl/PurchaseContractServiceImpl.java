@@ -30,7 +30,6 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
     @Resource
     private PurchaseItemsMapper purchaseItemsMapper;
 
-
     /**
      * 通过项目id进行查询
      * @param projectId
@@ -90,7 +89,7 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
             purchaseContractMapper.updateByPrimaryKeySelective(purchaseContract);
         }else {
             purchaseContract.setId(IDUtils.getId());
-            purchaseContract.setIsActive(1);
+            purchaseContract.setIsActive(CommonConstant.EFFECTIVE);
             purchaseContract.setTime(time);
             purchaseContractMapper.insert(purchaseContract);
         }

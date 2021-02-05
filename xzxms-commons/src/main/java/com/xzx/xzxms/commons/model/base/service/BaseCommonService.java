@@ -31,4 +31,9 @@ public interface BaseCommonService {
      */
     void addLog(String LogContent, Integer logType, Integer operateType);
 
+    /**
+     * 移除权限redis缓存
+     */
+    void removePrivilegeRedis();
+
 }
