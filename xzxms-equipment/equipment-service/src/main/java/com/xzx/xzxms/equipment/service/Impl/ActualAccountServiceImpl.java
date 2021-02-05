@@ -56,7 +56,7 @@ public class ActualAccountServiceImpl implements ActualAccountService {
         if (moneys > 0){
             PurchaseContract purchaseContract = purchaseContractMapper.selectByPrimaryKey(equipmentActualAccount.getContractId());
             if (purchaseContract != null){
-                EquipmentContractOrder equipmentContractOrder = equipmentContractOrderMapper.selectByPrimaryKey(purchaseContract.getContractOrderId());
+                EquipmentContractOrder equipmentContractOrder = equipmentContractOrderMapper.selectByPrimaryKey(purchaseContract.getContactOrderId());
                 Double needPay = equipmentContractOrder.getNeedPay();
                 Double temp = needPay - moneys - Double.parseDouble(equipmentActualAccount.getMoney());
                 if (temp < 0){

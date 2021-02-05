@@ -110,7 +110,7 @@ public class EquipmentOrderManagementServiceImpl implements EquipmentOrderManage
             // contract_id在合同表中是唯一的，所以当存在查询结果时，集合中只存在一条数据
             PurchaseContract purchaseContract = purchaseContracts.get(0);
             // 判断该合同是否已经生成了订单跟踪
-            if (purchaseContract.getContractOrderId() == null){
+            if (purchaseContract.getContactOrderId() == null){
                 EquipmentContractOrder equipmentContractOrder = equipmentContractOrderDTO.getEquipmentContractOrder();
                 // 生成主键id
                 Long contractOrderId = IDUtils.getId();
@@ -124,7 +124,7 @@ public class EquipmentOrderManagementServiceImpl implements EquipmentOrderManage
                 // 插入数据库表equipment_contract_order
                 equipmentContractOrderMapper.insert(equipmentContractOrder);
                 // 绑定合同订单跟踪id
-                purchaseContract.setContractOrderId(contractOrderId);
+                purchaseContract.setContactOrderId(contractOrderId);
                 purchaseContractMapper.updateByExampleSelective(purchaseContract, purchaseContractExample);
                 return "success";
             }else {
@@ -168,9 +168,9 @@ public class EquipmentOrderManagementServiceImpl implements EquipmentOrderManage
                 // contract_id在合同表中是唯一的，所以当存在查询结果时，集合中只存在一条数据
                 PurchaseContract purchaseContract = purchaseContracts.get(0);
                 // 判断该合同是否已经生成了订单跟踪         已生成
-                if (purchaseContract.getContractOrderId() != null){
+                if (purchaseContract.getContactOrderId() != null){
                     // 获取合同订单跟踪id
-                    Long contractOrderId = purchaseContract.getContractOrderId();
+                    Long contractOrderId = purchaseContract.getContactOrderId();
                     for (EquipmentOrder equipmentOrder : equipmentOrderDTO.getEquipmentOrders()) {
                         // 根据item_id从purchase_items表中获取数据
                         PurchaseItemsExample purchaseItemsExample = new PurchaseItemsExample();
