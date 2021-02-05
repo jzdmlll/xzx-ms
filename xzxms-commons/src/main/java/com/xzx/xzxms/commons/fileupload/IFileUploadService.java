@@ -1,9 +1,11 @@
 package com.xzx.xzxms.commons.fileupload;
 
+import com.xzx.xzxms.system.bean.SysFile;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Map;
 
 public interface IFileUploadService {
@@ -27,4 +29,12 @@ public interface IFileUploadService {
      * @return
      */
     Map<String,Object> uploadByRedis(MultipartFile uploadFile) throws IOException;
+
+    /**
+     * 各模块文件上传
+     * @param otherId
+     * @param fileList 前端需写入操作人
+     * @param fileType 文件类型
+     */
+    void fileUpload(Long otherId, List<SysFile> fileList, Integer fileType);
 }
