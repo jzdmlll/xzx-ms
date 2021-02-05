@@ -22,8 +22,7 @@ public class EquipmentItemVO {
     private Double price;
     private Double totalPrice;
     private String warranty; //保质期
-    private Long contractOrderId;
-    private String contractOrderStatus;
+    private Long OrderId;
 
     public Long getId() {
         return id;
@@ -129,20 +128,12 @@ public class EquipmentItemVO {
         this.warranty = warranty;
     }
 
-    public Long getContractOrderId() {
-        return contractOrderId;
+    public Long getOrderId() {
+        return OrderId;
     }
 
-    public void setContractOrderId(Long contractOrderId) {
-        this.contractOrderId = contractOrderId;
-    }
-
-    public String getContractOrderStatus() {
-        return contractOrderStatus;
-    }
-
-    public void setContractOrderStatus(String contractOrderStatus) {
-        this.contractOrderStatus = contractOrderStatus;
+    public void setOrderId(Long orderId) {
+        OrderId = orderId;
     }
 
     @Override
@@ -161,8 +152,7 @@ public class EquipmentItemVO {
                 ", price=" + price +
                 ", totalPrice=" + totalPrice +
                 ", warranty='" + warranty + '\'' +
-                ", contractOrderId=" + contractOrderId +
-                ", contractOrderStatus='" + contractOrderStatus + '\'' +
+                ", OrderId=" + OrderId +
                 '}';
     }
 }
