@@ -1,6 +1,5 @@
 package com.xzx.xzxms.system.service.impl;
 
-import com.xzx.xzxms.commons.model.base.service.BaseCommonService;
 import com.xzx.xzxms.commons.utils.CustomerException;
 import com.xzx.xzxms.system.bean.SysRole;
 import com.xzx.xzxms.system.bean.SysRoleExample;
@@ -10,7 +9,6 @@ import com.xzx.xzxms.system.bean.extend.SysRoleExtend;
 import com.xzx.xzxms.system.dao.SysRoleMapper;
 import com.xzx.xzxms.system.dao.SysRolePrivilegeMapper;
 import com.xzx.xzxms.system.dao.extend.SysRoleExtendMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.xzx.xzxms.system.service.ISysRoleService;
 
@@ -26,8 +24,6 @@ public class SysRoleServiceImpl implements ISysRoleService {
     private SysRolePrivilegeMapper rolePrivilegeMapper;
     @Resource
     private SysRoleExtendMapper roleExtendMapper;
-    @Autowired
-    private BaseCommonService baseCommonService;
     @Override
     public void authorization(long roleId, List<Long> privilegeIds) {
         // 根据roleId查询出所有的权限
@@ -59,7 +55,6 @@ public class SysRoleServiceImpl implements ISysRoleService {
                 rolePrivilegeMapper.deleteByExample(example);
             }
         }
-        baseCommonService.removePrivilegeRedis();
     }
 
     @Override
@@ -88,7 +83,6 @@ public class SysRoleServiceImpl implements ISysRoleService {
             throw new CustomerException("要删除的角色不存在");
         }
         roleMapper.deleteByPrimaryKey(id);
-        baseCommonService.removePrivilegeRedis();
     }
 
     @Override

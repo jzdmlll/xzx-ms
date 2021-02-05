@@ -5,13 +5,20 @@ import com.xzx.xzxms.commons.utils.IDUtils;
 import com.xzx.xzxms.equipment.bean.*;
 import com.xzx.xzxms.equipment.dao.EquipmentInStorageMapper;
 import com.xzx.xzxms.equipment.dao.EquipmentOrderStatusMapper;
+import com.xzx.xzxms.equipment.dao.EquipmentStorageMapper;
 import com.xzx.xzxms.equipment.dao.extend.EquipmentSignManagementExtendMapper;
+import com.xzx.xzxms.equipment.dto.EquipmentInStorageDTO;
+import com.xzx.xzxms.equipment.dto.EquipmentInStorageListDTO;
 import com.xzx.xzxms.equipment.dto.EquipmentOrderStatusDTO;
 import com.xzx.xzxms.equipment.dto.EquipmentSignDTO;
 import com.xzx.xzxms.equipment.service.EquipmentSignManagementService;
-import com.xzx.xzxms.equipment.vo.EquipmentOrderVO;
 import com.xzx.xzxms.equipment.vo.EquipmentSignVO;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.xzx.xzxms.purchase.bean.PurchaseItems;
+import com.xzx.xzxms.purchase.bean.PurchaseItemsExample;
+import com.xzx.xzxms.purchase.bean.PurchaseSupply;
+import com.xzx.xzxms.purchase.bean.PurchaseSupplyExample;
+import com.xzx.xzxms.purchase.dao.PurchaseItemsMapper;
+import com.xzx.xzxms.purchase.dao.PurchaseSupplyMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,6 +46,14 @@ public class EquipmentSignManagerServiceImpl implements EquipmentSignManagementS
     @Resource
     EquipmentInStorageMapper equipmentInStorageMapper;
 
+    @Resource
+    PurchaseItemsMapper purchaseItemsMapper;
+
+    @Resource
+    PurchaseSupplyMapper purchaseSupplyMapper;
+
+    @Resource
+    EquipmentStorageMapper equipmentStorageMapper;
 
     /**
      * 周嘉玮
@@ -232,10 +247,10 @@ public class EquipmentSignManagerServiceImpl implements EquipmentSignManagementS
             Long id = IDUtils.getId();
             EquipmentOrderStatus equipmentOrderStatus = new EquipmentOrderStatus();
             equipmentOrderStatus.setId(id);
-            equipmentOrderStatus.setProjectId(equipmentOrderInfo.getProjectId());
-            equipmentOrderStatus.setContractId(equipmentOrderInfo.getContractId());
-            equipmentOrderStatus.setItemId(equipmentOrderInfo.getItemId());
-            equipmentOrderStatus.setSupplierId(equipmentOrderInfo.getSupplierId());
+//            equipmentOrderStatus.setProjectId(equipmentOrderInfo.getProjectId());
+//            equipmentOrderStatus.setContractId(equipmentOrderInfo.getContractId());
+//            equipmentOrderStatus.setItemId(equipmentOrderInfo.getItemId());
+//            equipmentOrderStatus.setSupplierId(equipmentOrderInfo.getSupplierId());
             equipmentOrderStatus.setOrderId(orderId);
             equipmentOrderStatus.setUnqualifiedNum(unqualifiedNum); // 批量签收默认认为无不合格产品
             equipmentOrderStatus.setUnitItem(equipmentOrderInfo.getUnitItem());
@@ -287,6 +302,279 @@ public class EquipmentSignManagerServiceImpl implements EquipmentSignManagementS
 
         }
 
+        return "success";
+    }
+
+    /**
+     * 周嘉玮
+     * new 3.1、入库（单个）
+     */
+    @Transactional
+    @Override
+    public String insertEquipmentStorageSingleService(EquipmentInStorageDTO equipmentInStorageDTO) {
+
+        if (equipmentInStorageDTO.getEquipmentInStorage().getNumber() == 0){
+            return "入库数量不能为0！";
+        }else {
+            // 拿到入库设备的item_id
+            Long itemId = equipmentInStorageDTO.getEquipmentStorage().getItemId();
+            // 获取order_id
+            Long orderId = equipmentInStorageDTO.getEquipmentInStorage().getOrderId();
+            // 获取此次入库数量
+            Double InStorageNum = equipmentInStorageDTO.getEquipmentInStorage().getNumber();
+
+            // 计算可入库数量，可入库数量 = 已签收数量 - 已入库数量
+            Double canInStorageNum = 0.0;
+            // 计算已签收数量
+            Double alreadySignNum = 0.0;
+            // 根据OrderId从equipment_order_status中获取所有real_sign_num（实际签收数量）---（已签收数量）
+            EquipmentOrderStatusExample equipmentOrderStatusExample = new EquipmentOrderStatusExample();
+            equipmentOrderStatusExample.createCriteria().andOrderIdEqualTo(orderId).andIsActiveEqualTo(1);
+            List<EquipmentOrderStatus> equipmentOrderStatuses = equipmentOrderStatusMapper.selectByExample(equipmentOrderStatusExample);
+
+            // 当无查询结果时，说明该购买项无签收记录
+            if (equipmentOrderStatuses.size() == 0){
+                // 可入库数量为0
+                return "可入库数量为0";
+            }else if (equipmentOrderStatuses.size() > 0){
+                // 遍历集合将real_sign_num累加
+                for (EquipmentOrderStatus orderStatus : equipmentOrderStatuses) {
+                    // 累加已签收数量
+                    alreadySignNum = alreadySignNum + orderStatus.getRealSignNum();
+                }
+                System.out.println("已签收量：" + alreadySignNum);
+
+                // 获取已入库数量
+                Double alreadyInStorageNum = 0.0;
+                // 根据order_id从equipment_in_storage中获取所有number（已入库量）
+                EquipmentInStorageExample equipmentInStorageExample = new EquipmentInStorageExample();
+                equipmentInStorageExample.createCriteria().andOrderIdEqualTo(orderId).andIsActiveEqualTo(1);
+                List<EquipmentInStorage> equipmentInStorages = equipmentInStorageMapper.selectByExample(equipmentInStorageExample);
+                // 当无查询结果时，说明无入库记录
+                if (equipmentInStorages.size() == 0){
+                    // 可入库量 = 已签收量
+                    canInStorageNum = alreadySignNum;
+                    // 当有查询结果时
+                }else if (equipmentInStorages.size() > 0) {
+                    // 遍历查询结果
+                    for (EquipmentInStorage equipmentInStorage : equipmentInStorages) {
+                        // 将入库记录累计
+                        alreadyInStorageNum = alreadyInStorageNum + equipmentInStorage.getNumber();
+                    }
+                    // 可入库量 = 已签收量 - 已入库量
+                    canInStorageNum = alreadySignNum - alreadyInStorageNum;
+                }
+                System.out.println("库入库数量：" + canInStorageNum);
+                // 可入库数量 >= 此次入库数量 即可入库
+                if (canInStorageNum >= InStorageNum) {
+                    // 库存id
+                    Long storageId = null;
+
+                    // 根据item_id从equipment_storage表中获取该设备的库存信息
+                    EquipmentStorageExample equipmentStorageExample = new EquipmentStorageExample();
+                    equipmentStorageExample.createCriteria().andItemIdEqualTo(itemId).andIsActiveEqualTo(1);
+                    List<EquipmentStorage> equipmentStorages = equipmentStorageMapper.selectByExample(equipmentStorageExample);
+                    // 如果有查询结果并且有库存量，则做数量更新
+                    if (equipmentStorages.size() > 0){
+                        EquipmentStorage equipmentStorage = equipmentStorages.get(0);
+                        if (equipmentStorage.getNumber() != null){
+                            // 新库存数量 = 旧库存数量 + 此次入库数量
+                            Double NewNumber = equipmentStorage.getNumber() + InStorageNum;
+                            equipmentStorage.setNumber(NewNumber);
+                            equipmentStorageMapper.updateByExample(equipmentStorage, equipmentStorageExample);
+                            // 库存id
+                            storageId = equipmentStorage.getId();
+                        }
+                        // 否则做新增
+                    }else {
+                        // 根据item_id从purchase_items表中获取该设备的详细信息
+                        PurchaseItemsExample purchaseItemsExample = new PurchaseItemsExample();
+                        purchaseItemsExample.createCriteria().andIdEqualTo(itemId).andIsActiveEqualTo(1);
+                        List<PurchaseItems> purchaseItems = purchaseItemsMapper.selectByExample(purchaseItemsExample);
+                        // item_id是唯一编码，所以所得结果必为一条数据
+                        PurchaseItems purchaseItem = purchaseItems.get(0);
+
+                        // 根据item_id从purchase_supply表中获取该设备的供应商信息
+                        PurchaseSupplyExample purchaseSupplyExample = new PurchaseSupplyExample();
+                        purchaseSupplyExample.createCriteria().andItemIdEqualTo(itemId).andIsActiveEqualTo(1);
+                        List<PurchaseSupply> purchaseSupplies = purchaseSupplyMapper.selectByExample(purchaseSupplyExample);
+                        // item_id是唯一编码，所以所得结果必为一条数据
+                        PurchaseSupply purchaseSupply = purchaseSupplies.get(0);
+
+                        // 新建一个库存对象
+                        EquipmentStorage equipmentStorageN = new EquipmentStorage();
+                        storageId = IDUtils.getId();
+                        equipmentStorageN.setId(storageId);
+                        equipmentStorageN.setProjectId(purchaseItem.getProjectId());
+                        equipmentStorageN.setItemId(purchaseItem.getId());
+                        equipmentStorageN.setItem(purchaseItem.getItem());
+                        equipmentStorageN.setUnit(purchaseItem.getUnit());
+                        equipmentStorageN.setParams(purchaseItem.getParams());
+                        equipmentStorageN.setModel(purchaseItem.getModel());
+                        equipmentStorageN.setNumber(InStorageNum);
+                        equipmentStorageN.setSupplierId(purchaseSupply.getSupplierId());
+//                        equipmentStorageN.setRemark(purchaseItem.getRemark());
+//                        equipmentStorageN.setOperator(purchaseItem.getOperator());
+                        equipmentStorageN.setTime(new Date().getTime());
+                        equipmentStorageN.setIsActive(1);
+                        equipmentStorageN.setTagNumer(purchaseItem.getTagNumer());
+                        equipmentStorageN.setMeter(purchaseItem.getMeter());
+                        equipmentStorageN.setMeasuringRange(purchaseItem.getMeasuringRange());
+                        equipmentStorageN.setMeterSignal(purchaseItem.getMeterSignal());
+                        equipmentStorageN.setConnectionMode(purchaseItem.getConnectionMode());
+                        equipmentStorageN.setTube(purchaseItem.getTube());
+                        // 入库
+                        equipmentStorageMapper.insert(equipmentStorageN);
+                    }
+
+                    // 新增入库日志信息
+                    EquipmentInStorage equipmentInStorage = equipmentInStorageDTO.getEquipmentInStorage();
+                    equipmentInStorage.setId(IDUtils.getId());
+                    equipmentInStorage.setStorageId(storageId);
+                    equipmentInStorage.setTime(new Date().getTime());
+                    equipmentInStorage.setIsActive(1);
+                    equipmentInStorageMapper.insert(equipmentInStorage);
+                } else {
+                    return "此次入库数量大于可入库数量，请刷新页面重新选择入库！";
+                }
+            }
+            return "success";
+        }
+    }
+
+
+    /**
+     * 周嘉玮
+     * new 3.2、入库（批量）批量入库默认认为将剩余可入库数量全部入库，并且为同一个人入库
+     */
+    @Transactional
+    @Override
+    public String insertEquipmentStorageService(EquipmentInStorageListDTO equipmentInStorageListDTO) {
+        // 获取订单跟踪id
+        List<Long> orderIds = equipmentInStorageListDTO.getOrderId();
+
+        for (Long orderId : orderIds) {
+            // 根据OrderId从equipment_order_status中获取所有real_sign_num（实际签收数量）---（已签收数量）
+            EquipmentOrderStatusExample equipmentOrderStatusExample = new EquipmentOrderStatusExample();
+            equipmentOrderStatusExample.createCriteria().andOrderIdEqualTo(orderId).andIsActiveEqualTo(1);
+            List<EquipmentOrderStatus> equipmentOrderStatuses = equipmentOrderStatusMapper.selectByExample(equipmentOrderStatusExample);
+
+            Double alreadySignNum = 0.0;
+            Double canInStorageNum = 0.0;
+            // 当无查询结果时，说明该购买项无签收记录
+            if (equipmentOrderStatuses.size() == 0){
+                // 可入库数量为0
+                return "存在购买项可入库数量为0，请刷新页面！";
+            }else if (equipmentOrderStatuses.size() > 0) {
+                // 遍历集合将real_sign_num累加
+                for (EquipmentOrderStatus orderStatus : equipmentOrderStatuses) {
+                    // 累加已签收数量
+                    alreadySignNum = alreadySignNum + orderStatus.getRealSignNum();
+                }
+
+                // 获取已入库数量
+                Double alreadyInStorageNum = 0.0;
+                // 根据order_id从equipment_in_storage中获取所有number（已入库量）
+                EquipmentInStorageExample equipmentInStorageExample = new EquipmentInStorageExample();
+                equipmentInStorageExample.createCriteria().andOrderIdEqualTo(orderId).andIsActiveEqualTo(1);
+                List<EquipmentInStorage> equipmentInStorages = equipmentInStorageMapper.selectByExample(equipmentInStorageExample);
+                // 当无查询结果时，说明无入库记录
+                if (equipmentInStorages.size() == 0){
+                    // 可入库量 = 已签收量
+                    canInStorageNum = alreadySignNum;
+                    // 当有查询结果时
+                }else if (equipmentInStorages.size() > 0) {
+                    // 遍历查询结果
+                    for (EquipmentInStorage equipmentInStorage : equipmentInStorages) {
+                        // 将入库记录累计
+                        alreadyInStorageNum = alreadyInStorageNum + equipmentInStorage.getNumber();
+                    }
+                    // 可入库量 = 已签收量 - 已入库量
+                    canInStorageNum = alreadySignNum - alreadyInStorageNum;
+                }
+
+                // 可入库数量 > 0 即可入库
+                if (canInStorageNum > 0) {
+                    // 库存id
+                    Long storageId = null;
+//===========================================================================
+                    // 根据order_id从purchase_items表中获取该设备的详细信息
+                    PurchaseItemsExample purchaseItemsExample = new PurchaseItemsExample();
+                    purchaseItemsExample.createCriteria().andOrderIdEqualTo(orderId).andIsActiveEqualTo(1);
+                    List<PurchaseItems> purchaseItems = purchaseItemsMapper.selectByExample(purchaseItemsExample);
+                    if (purchaseItems.size() > 0){
+                        // order_id是唯一编码，所以所得结果必为一条数据
+                        PurchaseItems purchaseItem = purchaseItems.get(0);
+                        // 获取该订单的item_id
+                        Long itemId = purchaseItem.getId();
+                        // 根据item_id从equipment_storage表中获取该设备的库存信息
+                        EquipmentStorageExample equipmentStorageExample = new EquipmentStorageExample();
+                        equipmentStorageExample.createCriteria().andItemIdEqualTo(itemId).andIsActiveEqualTo(1);
+                        List<EquipmentStorage> equipmentStorages = equipmentStorageMapper.selectByExample(equipmentStorageExample);
+                        // 如果有查询结果并且有库存量，则做数量更新
+                        if (equipmentStorages.size() > 0){
+                            EquipmentStorage equipmentStorage = equipmentStorages.get(0);
+                            if (equipmentStorage.getNumber() != null){
+                                // 新库存数量 = 旧库存数量 + 可入库数量
+                                Double NewNumber = equipmentStorage.getNumber() + canInStorageNum;
+                                equipmentStorage.setNumber(NewNumber);
+                                equipmentStorageMapper.updateByExample(equipmentStorage, equipmentStorageExample);
+                                // 库存id
+                                storageId = equipmentStorage.getId();
+                            }
+                            // 否则做新增
+                        }else {
+                            // 根据item_id从purchase_supply表中获取该设备的供应商信息
+                            PurchaseSupplyExample purchaseSupplyExample = new PurchaseSupplyExample();
+                            purchaseSupplyExample.createCriteria().andItemIdEqualTo(itemId).andIsActiveEqualTo(1);
+                            List<PurchaseSupply> purchaseSupplies = purchaseSupplyMapper.selectByExample(purchaseSupplyExample);
+                            // item_id是唯一编码，所以所得结果必为一条数据
+                            PurchaseSupply purchaseSupply = purchaseSupplies.get(0);
+
+                            // 新建一个库存对象
+                            EquipmentStorage equipmentStorageN = new EquipmentStorage();
+                            storageId = IDUtils.getId();
+                            equipmentStorageN.setId(storageId);
+                            equipmentStorageN.setProjectId(purchaseItem.getProjectId());
+                            equipmentStorageN.setItemId(purchaseItem.getId());
+                            equipmentStorageN.setItem(purchaseItem.getItem());
+                            equipmentStorageN.setUnit(purchaseItem.getUnit());
+                            equipmentStorageN.setParams(purchaseItem.getParams());
+                            equipmentStorageN.setModel(purchaseItem.getModel());
+                            equipmentStorageN.setNumber(canInStorageNum);
+                            equipmentStorageN.setSupplierId(purchaseSupply.getSupplierId());
+                            equipmentStorageN.setRemark(equipmentInStorageListDTO.getEquipmentInStorage().getRemark());
+                            equipmentStorageN.setOperator(equipmentInStorageListDTO.getEquipmentInStorage().getOperator());
+                            equipmentStorageN.setTime(new Date().getTime());
+                            equipmentStorageN.setIsActive(1);
+                            equipmentStorageN.setTagNumer(purchaseItem.getTagNumer());
+                            equipmentStorageN.setMeter(purchaseItem.getMeter());
+                            equipmentStorageN.setMeasuringRange(purchaseItem.getMeasuringRange());
+                            equipmentStorageN.setMeterSignal(purchaseItem.getMeterSignal());
+                            equipmentStorageN.setConnectionMode(purchaseItem.getConnectionMode());
+                            equipmentStorageN.setTube(purchaseItem.getTube());
+                            // 入库
+                            equipmentStorageMapper.insert(equipmentStorageN);
+                        }
+
+                        // 新增入库日志信息
+                        EquipmentInStorage equipmentInStorage = equipmentInStorageListDTO.getEquipmentInStorage();
+                        equipmentInStorage.setId(IDUtils.getId());
+                        equipmentInStorage.setOrderId(orderId);
+                        equipmentInStorage.setStorageId(storageId);
+                        equipmentInStorage.setNumber(canInStorageNum);
+                        equipmentInStorage.setUnit(purchaseItem.getUnit());
+                        equipmentInStorage.setTime(new Date().getTime());
+                        equipmentInStorage.setIsActive(1);
+                        equipmentInStorageMapper.insert(equipmentInStorage);
+                    }else {
+                        return "请核对该订单跟踪是否存在！";
+                    }
+                }else {
+                    return "存在购买项可入库数量为0，请刷新页面！";
+                }
+            }
+        }
         return "success";
     }
 }

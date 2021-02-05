@@ -11,13 +11,13 @@
 
   <!--<classPathEntry location="D:\gg\repository\mysql\mysql-connector-java\8.0.16\mysql-connector-java-8.0.16.jar" />-->
   <!--<classPathEntry location="C:\Maven\repository\mysql\mysql-connector-java\5.1.6\mysql-connector-java-5.1.6.jar" />-->
-  <classPathEntry location="D:\SVN-maven\repository\mysql\mysql-connector-java\5.1.6\mysql-connector-java-5.1.6.jar" />
+  <classPathEntry location="D:\WorkSoftware\Maven\apache-maven-3.5.4-bin\apache-maven-3.5.4\repository\mysql\mysql-connector-java\5.1.6\mysql-connector-java-5.1.6.jar" />
   <context id="DB2Tables" targetRuntime="MyBatis3">
 
     <jdbcConnection driverClass="com.mysql.jdbc.Driver"
         connectionURL="jdbc:mysql://127.0.0.1:3306/xzx"
         userId="root"
-        password="root">
+        password="Pass1234">
       <!--产生selectByPrimaryKey-->
       <property name="useInformationSchema" value="true" />
     </jdbcConnection>
@@ -47,14 +47,16 @@
 
 	<!-- 映射配置 -->
 
-    <!--
-        <table tableName="equipment_in_storage" domainObjectName="EquipmentInStorage" ></table>
-        <table tableName="equipment_order" domainObjectName="EquipmentOrder" ></table>
+
+<!--        <table tableName="equipment_in_storage" domainObjectName="EquipmentInStorage" ></table>-->
+<!--        <table tableName="equipment_order" domainObjectName="EquipmentOrder" ></table>-->
+<!--        <table tableName="equipment_contract_order" domainObjectName="EquipmentContractOrder" ></table>-->
         <table tableName="equipment_order_status" domainObjectName="EquipmentOrderStatus" ></table>
-        <table tableName="equipment_out_storage" domainObjectName="EquipmentOutStorage" ></table>
-        <table tableName="equipment_storage" domainObjectName="EquipmentStorage" ></table>
-        <table tableName="equipment_storage_total" domainObjectName="EquipmentStorageTotal" ></table>
-        -->
+<!--        <table tableName="equipment_out_storage" domainObjectName="EquipmentOutStorage" ></table>-->
+<!--        <table tableName="equipment_storage" domainObjectName="EquipmentStorage" ></table>-->
+<!--        <table tableName="equipment_storage_total" domainObjectName="EquipmentStorageTotal" ></table>-->
+
+<!--    <table tableName="equipment_in_storage" domainObjectName="EquipmentInStorage" ></table>-->
 
   </context>
 </generatorConfiguration>

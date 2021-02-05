@@ -1,34 +1,24 @@
 package com.xzx.xzxms.commons.model.base.service.impl;
 
-import com.xzx.xzxms.commons.dao.redis.JedisDao;
 import com.xzx.xzxms.commons.model.base.service.BaseCommonService;
 import com.xzx.xzxms.commons.utils.IDUtils;
 import com.xzx.xzxms.commons.utils.IPUtils;
 import com.xzx.xzxms.commons.utils.JwtTokenUtil;
 import com.xzx.xzxms.commons.utils.SpringContextUtils;
 import com.xzx.xzxms.system.bean.SysLog;
-import com.xzx.xzxms.system.bean.SysRole;
-import com.xzx.xzxms.system.bean.SysRoleExample;
 import com.xzx.xzxms.system.bean.SysUser;
 import com.xzx.xzxms.system.dao.SysLogMapper;
-import com.xzx.xzxms.system.dao.SysRoleMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
-import java.util.List;
 
 @Service
 public class BaseCommonServiceImpl implements BaseCommonService {
 
     @Resource
     private SysLogMapper sysLogMapper;
-    @Resource
-    private SysRoleMapper sysRoleMapper;
-    @Autowired
-    private JedisDao jedisDaoImpl;
 
     @Override
     public void addLog(SysLog log) {
@@ -81,19 +71,6 @@ public class BaseCommonServiceImpl implements BaseCommonService {
     @Override
     public void addLog(String LogContent, Integer logType, Integer operateType) {
         addLog(LogContent, logType, operateType, null);
-    }
-
-    @Override
-    public void removePrivilegeRedis() {
-        List<SysRole> sysRoles = sysRoleMapper.selectByExample(new SysRoleExample());
-        if (sysRoles!=null && sysRoles.size() > 0) {
-            for(SysRole role: sysRoles) {
-                String key = "xzx:privilege:"+role.getId();
-                if(jedisDaoImpl.exists(key)) {
-                    jedisDaoImpl.del(key);
-                }
-            }
-        }
     }
 
 }
