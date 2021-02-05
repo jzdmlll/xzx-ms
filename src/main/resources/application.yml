@@ -1,0 +1,95 @@
+server:
+  port: 80
+spring:
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/xzx?characterEncoding=utf8
+    username: root
+    password: jzdmlll@1217
+    #password: root
+
+    druid:
+      # 数据库连接池
+      type: com.alibaba.druid.pool.DruidDataSource
+      # 下面为连接池的补充设置，应用到上面所有数据源中
+      initialSize: 5
+      minIdle: 5
+      maxActive: 30
+      # 配置获取连接等待超时的时间
+      maxWait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      spring.datasource.minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+
+  redis:
+    database: 0
+    host: "smalllei.cn"
+    port: 6379
+    #password: "xzx@redis123"
+    timeout: 5000
+    jedis:
+      pool:
+        max-active: 50
+        max-wait: -1
+        max-idle: 50
+        min-idle: 5
+
+    #cluster:
+      #nodes:
+       # - 111.231.244.18:10001
+       # - 111.231.244.18:10002
+       # - 111.231.244.18:10003
+       # - 111.231.244.18:10004
+       # - 111.231.244.18:10005
+       # - 111.231.244.18:10006
+mybatis:
+  mapper-locations: classpath:/mapper/**/*.xml
+  # 开启驼峰命名自动映射
+  configuration:
+      map-underscore-to-camel-case: true
+
+mail:
+  default-encoding: UTF-8
+  host: smtp.qq.com
+  port: 465
+  username: lzc@smalllei.cn
+  password: cydptnisqqhnbdfe
+  properties:
+    mail:
+      smtp:
+        auth: true
+        strttls:
+          enable: true
+          required: true
+        ssl:
+          enable: true
+
+ftpclient:
+  host: 192.168.204.196
+  port: 22
+  username: root
+  password: "123456"
+  basePath: /home/lzc
+  filePath: /
+
+  dictory: /home/images
+
+pagehelper:
+  helperDialect: mysql
+
+logging:
+  level:
+    com.xzx.xzxms.dao: debug
+
+
+
+
+
+
