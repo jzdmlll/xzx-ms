@@ -3,9 +3,8 @@ package com.xzx.xzxms.equipment.controller;
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
 import com.xzx.xzxms.equipment.bean.EquipmentContractOrder;
-import com.xzx.xzxms.equipment.bean.EquipmentOrder;
-import com.xzx.xzxms.equipment.bean.EquipmentOrderStatus;
-import com.xzx.xzxms.equipment.dto.EquipmentOrderStatusDTO;
+import com.xzx.xzxms.equipment.dto.EquipmentContractOrderDTO;
+import com.xzx.xzxms.equipment.dto.EquipmentOrderDTO;
 import com.xzx.xzxms.equipment.service.EquipmentOrderManagementService;
 import com.xzx.xzxms.equipment.vo.EquipmentContractVO;
 import com.xzx.xzxms.equipment.vo.EquipmentItemVO;
@@ -62,8 +61,8 @@ public class EquipmentOrderManagementController {
     // 周嘉玮
     @ApiOperation("4.1、新添合同订单跟踪信息")
     @PostMapping("insertEquipmentContractOrder")
-    public Message insertEquipmentContractOrder(EquipmentContractOrder equipmentContractOrder){
-        String result = equipmentOrderManagementService.insertEquipmentContractOrderService(equipmentContractOrder);
+    public Message insertEquipmentContractOrder(EquipmentContractOrderDTO equipmentContractOrderDTO){
+        String result = equipmentOrderManagementService.insertEquipmentContractOrderService(equipmentContractOrderDTO);
         if (result.equals("success")){
             return MessageUtil.success("success");
         }else {
@@ -82,8 +81,8 @@ public class EquipmentOrderManagementController {
     // 周嘉玮
     @ApiOperation("4.3、新添购买项订单跟踪")
     @PostMapping("insertEquipmentOrder")
-    public Message insertEquipmentOrder(List<EquipmentOrder> equipmentOrders){
-        String result = equipmentOrderManagementService.insertEquipmentOrderService(equipmentOrders);
+    public Message insertEquipmentOrder(EquipmentOrderDTO equipmentOrderDTO){
+        String result = equipmentOrderManagementService.insertEquipmentOrderService(equipmentOrderDTO);
         if (result.equals("success")){
             return MessageUtil.success("success");
         }else {

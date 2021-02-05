@@ -5,12 +5,15 @@ package com.xzx.xzxms.inquiry.service.impl;/**
  */
 
 import com.xzx.xzxms.commons.dao.redis.JedisDao;
+import com.xzx.xzxms.commons.utils.IDUtils;
 import com.xzx.xzxms.commons.utils.JsonUtils;
 import com.xzx.xzxms.inquiry.bean.InquiryTemplate;
+import com.xzx.xzxms.inquiry.bean.InquiryTemplateExample;
 import com.xzx.xzxms.inquiry.bean.InquiryTemplateWithBLOBs;
 import com.xzx.xzxms.inquiry.dao.InquiryTemplateMapper;
 import com.xzx.xzxms.inquiry.dao.extend.InquiryTemplateExtendMapper;
 import com.xzx.xzxms.inquiry.service.IInquiryTemplateService;
+import io.swagger.models.auth.In;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
