@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzx.xzxms.inquiry.dao.extend.FinallyCheckExtendMapper">
+   <select id="cascadeFindAllByParams_old" resultMap="FinallyCheckExtendMap">
+        select
+          q.*,
+          i.model model,i.name name,i.number number,i.params params,i.unit unit,i.price price,i.total_price total_price,i.sort sort,
+          spc.id compare_id, spc.check_status compare_status, spc.remark compare_remark
+        from
+          inquiry i
+        right join quote q on q.inquiry_id = i.id
+        left join sys_pro_check spc on spc.content_id = q.id
+        <where>
+             spc.check_status != 0
+            and spc.type = "比价审核"
+            <if test="proDetailId!=null and proDetailId!=-1">
+                and i.pro_detail_id = #{proDetailId,jdbcType=BIGINT}
+            </if>
+        </where>
+        order by i.name
+    </select>
+    <resultMap id="FinallyCheckExtendMap" type="com.xzx.xzxms.inquiry.vm.FinallyCheckCompareVM" extends="com.xzx.xzxms.inquiry.dao.QuoteMapper.BaseResultMap">
+        <collection property="finalCheck" column="id" select="com.xzx.xzxms.inquiry.dao.extend.FinallyCheckExtendMapper.findCheckByQuoteId" />
+    </resultMap>
+    <select id="findCheckByQuoteId" resultType="com.xzx.xzxms.inquiry.bean.SysProCheck">
+        select * from sys_pro_check where content_id = #{id,jdbcType=BIGINT} and type = "最终审核"
+    </select>
+
+
+
+    <select id="cascadeFindAllByParams" resultType="com.xzx.xzxms.inquiry.vm.FinallyQuoteInquiryVM">
+        select q.*,
+        i.model model,i.name name,i.number number,i.params params,i.unit unit,i.price price,i.total_price total_price,
+        i.sort sort,i.veto veto,i.finally_price finally_price,i.correct_price, i.template_id template_id,
+        spc.id compare_id,
+        spc.technical_audit technical_audit,spc.technical_remark technical_remark,
+        spc.business_audit business_audit,spc.business_remark business_remark,
+        spc.compare_audit compareStatus,spc.compare_remark compare_remark,
+        spc.finally_audit finally_audit,spc.finally_remark finally_remark
+        from inquiry i
+        left join sys_pro_detail pro on pro.id = i.pro_detail_id
+        left join quote q on q.inquiry_id = i.id
+        left join sys_pro_check spc on q.id = spc.quote_id
+        <where>
+            pro.is_active = 1 and i.is_active= 1 and q.is_active = 1
+            <if test="proDetailId!=null and proDetailId!=-1">
+                and i.pro_detail_id = #{proDetailId,jdbcType=BIGINT}
+            </if>
+            <if test="name != null and name != ''">
+                and i.name = #{name}
+            </if>
+        </where>
+        order by i.sort,i.id,q.su_price
+    </select>
+
+    <select id="findInquiryNameByProId" resultType="java.util.HashMap">
+        select name, count(1) from inquiry where is_active = 1 and pro_detail_id = #{proId} group by name
+    </select>
+</mapper>

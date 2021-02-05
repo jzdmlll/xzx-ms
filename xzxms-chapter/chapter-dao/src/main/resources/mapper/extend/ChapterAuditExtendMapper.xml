@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzx.xzxms.chapter.dao.extend.ChapterAuditExtendMapper">
+
+    <resultMap id="ChapterAuditorDTO" type="com.xzx.xzxms.chapter.dto.ChapterAuditorDTO">
+        <result column="id" property="id" jdbcType="BIGINT" />
+        <result column="username" property="username" jdbcType="VARCHAR" />
+    </resultMap>
+
+<!--    <resultMap id="ChapterAuditFindDTO" type="com.xzx.xzxms.chapter.dto.ChapterAuditFindDTO">-->
+<!--        <result column=""-->
+<!--    </resultMap>-->
+
+    <select id="findAllChapterAuditor" resultMap="ChapterAuditorDTO">
+        select sys_user.id, username
+        from sys_user_role inner join sys_user on sys_user_role.user_id = sys_user.id
+        where role_id = (SELECT role_id
+        FROM `sys_privilege` inner join sys_role_privilege on sys_privilege.id = sys_role_privilege.privilege_id
+        where name='用章管理' and type='menu')
+        and sys_user.is_active = 1
+    </select>
+
+    <select id="findChapterAuditorInfoByLike" resultType="com.xzx.xzxms.chapter.bean.ChapterAudit">
+        SELECT username auditor, chapter_audit.id,project_name,contract_name,contract_no,main_content,price,file,first_party,second_party,type,sender,sender_time,audit_time,chapter_audit.is_active,sender_remark,audit_remark,audit_status
+        FROM `chapter_audit` inner join sys_user on auditor = sys_user.id
+        where chapter_audit.is_active=1 and sys_user.is_active=1
+        <if test="auditStatus != null">
+            and audit_status = #{auditStatus, jdbcType = INTEGER}
+        </if>
+        <if test="projectName != null">
+            and project_name like "%"#{projectName, jdbcType = VARCHAR}"%"
+        </if>
+        <if test="startTime != null">
+            and sender_time &gt;= #{startTime, jdbcType = BIGINT}
+        </if>
+        <if test="overTime != null">
+            and sender_time &lt;= #{overTime, jdbcType = BIGINT}
+        </if>
+    </select>
+</mapper>
