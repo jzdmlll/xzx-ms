@@ -52,6 +52,6 @@ public interface IPurchaseContractService {
      * 自动生成合同编码
      * @return
      */
-    String AutomaticGenerationContractNo();
+    String automaticGenerationContractNo();
 
 }
