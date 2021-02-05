@@ -62,6 +62,6 @@
     <!--    <table tableName="purchase_contract_actual_account" domainObjectName="PurchaseContractActualAccount" ></table>-->
 <!--    <table tableName="purchase_contract" domainObjectName="PurchaseContract" ></table>-->
 <!--    <table tableName="purchase_payment" domainObjectName="PurchasePayment" ></table>-->
-    <table tableName="purchase_items" domainObjectName="PurchaseItems" ></table>
+    <table tableName="purchase_contract" domainObjectName="PurchaseContract" ></table>
   </context>
 </generatorConfiguration>
