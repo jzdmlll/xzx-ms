@@ -32,4 +32,9 @@ public class EquipmentStorageManagementServiceImpl implements EquipmentStorageMa
         List<EquipmentStorageVO> storageInfos = equipmentStorageManagementExtendMapper.findStorageInfos(equipmentStorageVO);
         return storageInfos;
     }
+
+    @Override
+    public String insertOutStorageSingleService() {
+        return null;
+    }
 }
