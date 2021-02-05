@@ -30,7 +30,7 @@ public class SysFileExtend extends SysFile {
     public static final int TYPE_PURCHASE_CONTRACT  = 5;
 
     /**
-     * 合同发票
+     * 发票
      */
-    public static final int TYPE_INVOICE  = 6;
+    public static final int TYPE_INVOICE = 6;
 }
