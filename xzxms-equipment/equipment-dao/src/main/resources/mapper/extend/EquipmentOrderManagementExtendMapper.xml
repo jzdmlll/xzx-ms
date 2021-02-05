@@ -61,8 +61,7 @@
     <select id="findAllItemInfosByContractId" parameterType="long" resultMap="EquipmentItemVO">
         select purchase_items.id, purchase_items.serial_number, purchase_items.item,
                purchase_items.brand, purchase_items.params,purchase_items.model,
-               purchase_items.number, purchase_items.unit, purchase_items.contract_order_id,
-               purchase_items.contract_order_status,
+               purchase_items.number, purchase_items.unit, purchase_items.order_id,
                purchase_supply.id supply_id, purchase_supply.supplier, purchase_supply.price,
                purchase_supply.total_price, purchase_supply.warranty
         from purchase_items inner join purchase_supply on purchase_items.id = purchase_supply.item_id

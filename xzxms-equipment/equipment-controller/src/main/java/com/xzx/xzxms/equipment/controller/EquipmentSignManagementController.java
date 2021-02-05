@@ -68,7 +68,7 @@ public class EquipmentSignManagementController {
 
     // 周嘉玮
     @ApiOperation("new 3.2、入库（批量）")
-    @PostMapping("insertEquipmentStorageSingle")
+    @PostMapping("insertEquipmentStorage")
     public Message insertEquipmentStorage(EquipmentInStorageListDTO equipmentInStorageListDTO){
         String result = equipmentSignManagementService.insertEquipmentStorageService(equipmentInStorageListDTO);
         return MessageUtil.success(result);
