@@ -14,6 +14,7 @@
         <module>xzxms-purchase</module>
         <module>xzxms-chapter</module>
         <module>xzxms-equipment</module>
+        <module>xzxms-stock</module>
     </modules>
 
     <parent>

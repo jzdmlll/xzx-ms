@@ -103,23 +103,23 @@
         </dependency>
 
         <dependency>
-            <groupId>com.xzx.xzxms.equipment</groupId>
-            <artifactId>equipment-dao</artifactId>
+            <groupId>com.xzx.xzxms.stock</groupId>
+            <artifactId>stock-dao</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>com.xzx.xzxms.equipment</groupId>
-            <artifactId>equipment-service</artifactId>
+            <groupId>com.xzx.xzxms.stock</groupId>
+            <artifactId>stock-service</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>com.xzx.xzxms.equipment</groupId>
-            <artifactId>equipment-controller</artifactId>
+            <groupId>com.xzx.xzxms.stock</groupId>
+            <artifactId>stock-controller</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>com.xzx.xzxms.equipment</groupId>
-            <artifactId>equipment-bean</artifactId>
+            <groupId>com.xzx.xzxms.stock</groupId>
+            <artifactId>stock-bean</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
@@ -127,13 +127,6 @@
     <build>
         <plugins>
             <!-- 打包跳过测试 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <skipTests>true</skipTests>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
