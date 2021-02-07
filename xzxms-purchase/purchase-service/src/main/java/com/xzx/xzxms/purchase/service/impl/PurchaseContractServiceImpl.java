@@ -38,13 +38,14 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
      */
     @Override
     public List<PurchaseContract> findByProjectId(Long projectId) {
-        PurchaseContractExample example = new PurchaseContractExample();
+
+/*        PurchaseContractExample example = new PurchaseContractExample();
         if (projectId == null) {
             example.createCriteria().andIsActiveNotEqualTo(0);
         }else {
             example.createCriteria().andProjectIdEqualTo(projectId).andIsActiveNotEqualTo(0);//查除了状态为0的其他合同
-        }
-        List<PurchaseContract> list = purchaseContractMapper.selectByExample(example);
+        }*/
+        List<PurchaseContract> list = purchaseContractExtendMapper.findByProjectId(projectId, null);
         return list;
     }
 
@@ -134,7 +135,7 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
      * @return
      */
     @Override
-    public String AutomaticGenerationContractNo() {
+    public String automaticGenerationContractNo() {
         //获取当前年月日，按照yyyyMMdd格式
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");//设置日期格式
         String YMD = df.format(new Date());

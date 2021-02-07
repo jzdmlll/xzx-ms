@@ -25,5 +25,11 @@ public interface PurchaseContractExtendMapper {
      */
     List<String> findContractNoByYMD(@Param("contractNo") String contractNo);
 
-    List<PurchaseContract> findByProjectId(@Param("projectId") Long projectId,@Param("contractName") String contractName);
+    /**
+     * 通过项目ID 查询出项目下所有的合同(根据桥表查询)
+     * @param projectId
+     * @param contractName
+     * @return
+     */
+    List<PurchaseContract> findByProjectId(@Param("projectId") Long projectId, @Param("contractName") String contractName);
 }
