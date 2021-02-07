@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzx.xzxms.stock.dao.StockInvoiceMapper">
+  <select id="findInvoiceByContractId" resultMap="InvoiceVo">
+    select i.*,f.url url
+    from stock_invoice i
+    left join sys_file f on i.id = f.other_id
+    <where>
+      f.type = 6 and i.is_active = 1 and f.is_active = 1
+      <if test="contractId != null and contractId != ''">
+        i.contract_id = #{contractId}
+      </if>
+    </where>
+    order by i.time
+  </select>
+
+  <resultMap id="InvoiceVo" type="com.xzx.xzxms.stock.vo.StockInvoiceVO">
+    <result column="url" property="url" jdbcType="VARCHAR"/>
+  </resultMap>
+</mapper>
