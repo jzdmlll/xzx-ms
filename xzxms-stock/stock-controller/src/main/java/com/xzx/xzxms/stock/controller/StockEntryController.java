@@ -6,10 +6,11 @@ package com.xzx.xzxms.stock.controller;/**
 
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
-import com.xzx.xzxms.stock.bean.StockActualAccount;
-import com.xzx.xzxms.stock.bean.StockCheck;
+import com.xzx.xzxms.stock.bean.StockEntry;
 import com.xzx.xzxms.stock.service.StockCheckService;
+import com.xzx.xzxms.stock.service.StockEntryService;
 import com.xzx.xzxms.stock.vo.StockCheckVO;
+import com.xzx.xzxms.stock.vo.StockEntryVO;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,26 +27,25 @@ import java.util.List;
  *@Date DATE{TIME}
  */
 @RestController
-@RequestMapping("/stock/check")
-public class StockCheckController {
+@RequestMapping("/stock/entry")
+public class StockEntryController {
 
     @Resource
-    private StockCheckService stockCheckServiceImpl;
+    private StockEntryService stockEntryServiceImpl;
 
-    @ApiOperation(value = "根据参数查询出验收信息")
-    @GetMapping(value = "findStockCheck")
-    public Message findStockCheck(Long proId, Long contractId, Long startTime, Long endTime) {
+    @ApiOperation(value = "查询出入库信息")
+    @GetMapping(value = "findEntryByParams")
+    public Message findEntryByParams(String item) {
 
-        List<StockCheckVO> list = stockCheckServiceImpl.findStockCheck(proId, contractId, startTime, endTime);
+        List<StockEntryVO> list = stockEntryServiceImpl.findEntryByParams(item);
         return MessageUtil.success("success", list);
     }
 
-    @ApiOperation(value = "批量签收")
-    @PostMapping(value = "sign")
-    public Message sign(List<StockCheck> stockChecks) {
+    @ApiOperation(value = "批量入库")
+    @PostMapping(value = "entry")
+    public Message entry(List<StockEntry> stockEntries) {
 
-        stockCheckServiceImpl.sign(stockChecks);
+        stockEntryServiceImpl.entry(stockEntries);
         return MessageUtil.success("success");
     }
-
 }
