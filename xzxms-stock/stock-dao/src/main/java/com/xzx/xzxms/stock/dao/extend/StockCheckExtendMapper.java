@@ -5,6 +5,7 @@ package com.xzx.xzxms.stock.dao.extend;/**
  */
 
 import com.xzx.xzxms.stock.vo.StockCheckVO;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -24,5 +25,5 @@ public interface StockCheckExtendMapper {
      * @param endTime
      * @return
      */
-    List<StockCheckVO> findStockCheckByParams(Long proId, Long contractId, Long startTime, Long endTime);
+    List<StockCheckVO> findStockCheckByParams(@Param("proId") Long proId,@Param("contractId") Long contractId,@Param("startTime") Long startTime,@Param("endTime") Long endTime);
 }

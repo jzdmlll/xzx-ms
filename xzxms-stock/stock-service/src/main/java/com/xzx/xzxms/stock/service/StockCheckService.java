@@ -4,6 +4,11 @@ package com.xzx.xzxms.stock.service;/**
  * @Version 1.0
  */
 
+import com.xzx.xzxms.stock.bean.StockCheck;
+import com.xzx.xzxms.stock.vo.StockCheckVO;
+
+import java.util.List;
+
 /**
  *@ClassName StockCheckService
  *@Description TODO
@@ -12,6 +17,19 @@ package com.xzx.xzxms.stock.service;/**
  */
 public interface StockCheckService {
 
+    /**
+     * 根据参数查询出验收信息
+     * @param proId
+     * @param contractId
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    List<StockCheckVO> findStockCheck(Long proId, Long contractId, Long startTime, Long endTime);
 
-
+    /**
+     * 批量签收
+     * @param stockChecks
+     */
+    void sign(List<StockCheck> stockChecks);
 }
