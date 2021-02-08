@@ -9,6 +9,7 @@ import com.xzx.xzxms.stock.bean.StockContractAttribute;
  * @Version 1.0
  */
 public interface StockContractAttributeService {
+
     /**
      * 根据合同ID查询合同属性信息
      * @param ContractId 合同ID
@@ -16,5 +17,9 @@ public interface StockContractAttributeService {
      */
     StockContractAttribute findByContractId(Long ContractId);
 
-
+    /**
+     * 修改或新增合同属性
+     * @param stockContractAttribute
+     */
+    void saveOrUpdateStockContractAttribute(StockContractAttribute stockContractAttribute);
 }

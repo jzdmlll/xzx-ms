@@ -6,6 +6,7 @@ import com.xzx.xzxms.stock.bean.StockContractAttribute;
 import com.xzx.xzxms.stock.service.StockContractAttributeService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,7 +30,14 @@ public class StockContractAttributeController {
     public Message findByContractId(Long contractId) {
 
         StockContractAttribute stockContractAttribute = stockContractAttributeService.findByContractId(contractId);
-
         return MessageUtil.success("success", stockContractAttribute);
+    }
+
+    @ApiOperation(value = "修改或新增合同属性")
+    @PostMapping("saveOrUpdateStockContractAttribute")
+    public Message saveOrUpdateStockContractAttribute(StockContractAttribute stockContractAttribute) {
+
+        stockContractAttributeService.saveOrUpdateStockContractAttribute(stockContractAttribute);
+        return MessageUtil.success("success");
     }
 }
