@@ -4,6 +4,7 @@ import com.xzx.xzxms.commons.constant.CommonConstant;
 import com.xzx.xzxms.commons.utils.CustomerException;
 import com.xzx.xzxms.commons.utils.IDUtils;
 import com.xzx.xzxms.purchase.bean.*;
+import com.xzx.xzxms.purchase.dao.PurchaseBridgeMapper;
 import com.xzx.xzxms.purchase.dao.PurchaseContractMapper;
 import com.xzx.xzxms.purchase.dao.PurchaseItemsMapper;
 import com.xzx.xzxms.purchase.dao.PurchaseSupplyMapper;
@@ -30,6 +31,8 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
     private PurchaseSupplyMapper purchaseSupplyMapper;
     @Resource
     private PurchaseItemsMapper purchaseItemsMapper;
+    @Resource
+    private PurchaseBridgeMapper purchaseBridgeMapper;
 
     /**
      * 通过项目id进行查询
@@ -37,7 +40,7 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
      * @return
      */
     @Override
-    public List<PurchaseContract> findByProjectId(Long projectId) {
+    public List<PurchaseContract> findByProjectId(Long projectId, String contractName) {
 
 /*        PurchaseContractExample example = new PurchaseContractExample();
         if (projectId == null) {
@@ -45,7 +48,7 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
         }else {
             example.createCriteria().andProjectIdEqualTo(projectId).andIsActiveNotEqualTo(0);//查除了状态为0的其他合同
         }*/
-        List<PurchaseContract> list = purchaseContractExtendMapper.findByProjectId(projectId, null);
+        List<PurchaseContract> list = purchaseContractExtendMapper.findByProjectId(projectId, contractName);
         return list;
     }
 
@@ -83,6 +86,7 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
      * 新增或者修改合同
      * @param purchaseContract
      */
+    @Transactional
     @Override
     public void saveOrUpdate(PurchaseContract purchaseContract) {
         long time = new Date().getTime();
@@ -90,10 +94,17 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
             purchaseContract.setTime(time);
             purchaseContractMapper.updateByPrimaryKeySelective(purchaseContract);
         }else {
-            purchaseContract.setId(IDUtils.getId());
+            Long contractId = IDUtils.getId();
+            purchaseContract.setId(contractId);
             purchaseContract.setIsActive(CommonConstant.EFFECTIVE);
             purchaseContract.setTime(time);
             purchaseContractMapper.insert(purchaseContract);
+
+            PurchaseBridge purchaseBridge = new PurchaseBridge();
+            purchaseBridge.setId(IDUtils.getId());
+            purchaseBridge.setPurchaseProjectId(purchaseContract.getProjectId());
+            purchaseBridge.setPurchaseContractId(contractId);
+            purchaseBridgeMapper.insert(purchaseBridge);
         }
     }
 
