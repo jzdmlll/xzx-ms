@@ -138,7 +138,7 @@ public class SysUserController {
         return MessageUtil.success("设置成功");
     }
 
-    @ApiOperation(value = "通过用户id查询权限")
+    @ApiOperation(value = "通过用户id查询菜单")
     @GetMapping(value = "findMenuByUserId")
     public Message findMenuByUserId(long id) {
         List<SysPrivilegeExtend> menuList = privilegeServiceImpl.findMenuByUserId(id);
