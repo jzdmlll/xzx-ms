@@ -49,6 +49,7 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
             example.createCriteria().andProjectIdEqualTo(projectId).andIsActiveNotEqualTo(0);//查除了状态为0的其他合同
         }*/
         List<PurchaseContract> list = purchaseContractExtendMapper.findByProjectId(projectId, contractName);
+
         return list;
     }
 
