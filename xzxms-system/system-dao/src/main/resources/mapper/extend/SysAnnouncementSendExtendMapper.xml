@@ -5,4 +5,17 @@
 	   select sas.annt_id from sys_announcement_send sas
 	   where sas.user_id = #{userId}
 	</select>
+
+	<select id="getMyAnnouncementSendPage" resultType="com.xzx.xzxms.system.bean.extend.SysAnnouncementExtend">
+		select *
+		from sys_announcement sa
+		left join sys_announcement_send sas on sa.id = sas.annt_id
+		left join sys_user su on sas.user_id = su.id
+		<where>
+            su.is_active = 1 and su.id = #{userId}
+            <if test="readFlag">
+				and sas.read_flag = #{readFlag}
+			</if>
+        </where>
+	</select>
 </mapper>

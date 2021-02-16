@@ -1,5 +1,6 @@
 package com.xzx.xzxms.system.dao.extend;
 
+import com.xzx.xzxms.system.bean.extend.SysAnnouncementExtend;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -13,4 +14,5 @@ public interface SysAnnouncementSendExtendMapper {
 
     List<String> findByUserId(@Param("userId") String userId);
 
+    List<SysAnnouncementExtend> getMyAnnouncementSendPage(@Param("userId") Long userId,@Param("readFlag") String readFlag);
 }

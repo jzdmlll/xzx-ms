@@ -1,6 +1,8 @@
 package com.xzx.xzxms.system.service;
 
-import com.xzx.xzxms.system.bean.SysAnnouncementSend;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
+import com.xzx.xzxms.system.bean.extend.SysAnnouncementExtend;
 
 import java.util.List;
 
@@ -22,5 +24,5 @@ public interface ISysAnnouncementSendService {
      *
      * @return
      */
-    List<SysAnnouncementSend> getMyAnnouncementSendPage();
+    PageInfo<SysAnnouncementExtend> getMyAnnouncementSendPage(Page<SysAnnouncementExtend> page, Long userId, String readFlag);
 }

@@ -17,14 +17,15 @@ public class JwtTokenUtil {
 
     public static final String TOKEN_PREFIX = "Bearer ";
 
-    public static final Long REDIS_TOKEN_TIME = 4*60L;
+    public static final Long REDIS_TOKEN_TIME = 4*60L; // token 真正过期时间 单位：分钟（存入redis）
+
+    private static final int expiresSecond = 15*60*1000; // token 过期（刷新）时间 单位：毫秒 (间隔越短安全性越高)
 
     // jwt配置信息
     public static final String base64Secret ="MDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjY=";
     private static final String clientId = "098f6bcd4621d373cade4e832627b4f6";
     private static final String name = "restapiuser";
-    // token过期时间15分钟
-    private static final int expiresSecond = 15*60*1000;
+
     /**
      * 解析jwt
      * @param jsonWebToken

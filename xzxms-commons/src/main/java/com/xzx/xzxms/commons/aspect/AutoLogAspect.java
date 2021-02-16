@@ -92,7 +92,7 @@ public class AutoLogAspect {
         String token = request.getHeader("X-Token");
         Long userId = null;
         String username = "";
-        if("login".equals(methodName) && StringUtils.isEmpty(token)){
+        if("login".equals(methodName)){
             token = ((Map<String, String>)obj).get("token");
         }
         userId = Long.parseLong(JwtTokenUtil.getUserId(token, JwtTokenUtil.base64Secret).trim());

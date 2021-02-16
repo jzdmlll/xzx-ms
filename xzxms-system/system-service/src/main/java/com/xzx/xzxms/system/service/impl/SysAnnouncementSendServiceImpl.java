@@ -1,6 +1,10 @@
 package com.xzx.xzxms.system.service.impl;
 
-import com.xzx.xzxms.system.bean.SysAnnouncementSend;
+import com.github.pagehelper.IPage;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.xzx.xzxms.system.bean.extend.SysAnnouncementExtend;
 import com.xzx.xzxms.system.dao.SysAnnouncementSendMapper;
 import com.xzx.xzxms.system.dao.extend.SysAnnouncementSendExtendMapper;
 import com.xzx.xzxms.system.service.ISysAnnouncementSendService;
@@ -29,7 +33,11 @@ public class SysAnnouncementSendServiceImpl implements ISysAnnouncementSendServi
     }
 
     @Override
-    public List<SysAnnouncementSend> getMyAnnouncementSendPage() {
-        return null;
+    public PageInfo<SysAnnouncementExtend> getMyAnnouncementSendPage(Page<SysAnnouncementExtend> page, Long userId, String readFlag) {
+
+        List<SysAnnouncementExtend> announcementSendPage = sysAnnouncementSendExtendMapper.getMyAnnouncementSendPage(userId, readFlag);
+
+        PageHelper.startPage(page.getPageNum(), page.getPageSize(), page.getOrderBy());
+        return new PageInfo<>(announcementSendPage);
     }
 }
