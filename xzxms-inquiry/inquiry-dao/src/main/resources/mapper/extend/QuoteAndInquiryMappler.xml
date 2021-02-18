@@ -3,12 +3,13 @@
 <mapper namespace="com.xzx.xzxms.inquiry.dao.extend.QuoteAndInquiryExtendMapper">
     <select id="findBySupplierOrPro" resultMap="QuoteExtendMap">
         select
-          q.*,
+        q.su_model, q.su_brand, q.su_model, q.su_params, q.su_price, su_delivery, warranty, su_remark, su_total_price, s.supplier as supplier,
         i.model i_model,i.name i_name,i.number i_number,i.params i_params,i.sort i_sort,i.unit i_unit,i.real_brand i_real_brand,
         d.id spd_id
         from quote q
             left join inquiry i on q.inquiry_id=i.id
             left join sys_pro_detail d on d.id = i.pro_detail_id
+            left join supply_supplier s on q.supplier_id = s.id
         <where>
             q.is_active = 1 and i.is_active=1 and d.is_active = 1
             <if test="supplier!=null and supplier!=''">
