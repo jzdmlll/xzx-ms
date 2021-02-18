@@ -266,7 +266,7 @@ public class QuoteServiceImpl implements IQuoteService {
                     }
 
                     if("".equals(notFound)){
-                        String supplier = item.get("供应商").toString().trim();
+                        //String supplier = item.get("供应商").toString().trim();
 
                         Quote q = new Quote();
                         long quoteId = IDUtils.getId();
@@ -287,8 +287,13 @@ public class QuoteServiceImpl implements IQuoteService {
                             inquiryPool.setQuoteBrand(item.get("报价品牌").toString().trim());
                             q.setSuParams(item.get("实际技术参数").toString().trim());
                             inquiryPool.setTechnicalParams(item.get("实际技术参数").toString().trim());
-                            q.setSupplier(supplier);
-                            inquiryPool.setSupplier(supplier);
+
+                            /*q.setSupplier(supplier);
+                            inquiryPool.setSupplier(supplier);*/
+
+                            q.setSupplierId(quote.getSupplierId());
+                            inquiryPool.setSupplier(quote.getSupplierId()+"");
+
                             if(StringUtils.isEmpty(item.get("设备单价").toString().trim())){
                                 q.setSuPrice(0D);
                                 inquiryPool.setPrice(0D);
@@ -447,7 +452,7 @@ public class QuoteServiceImpl implements IQuoteService {
             inquiryPool.setTime(time);
             inquiryPool.setIsActive(1);
             inquiryPool.setOperator(quote.getOperator());
-            inquiryPool.setSupplier(quote.getSupplier());
+            inquiryPool.setSupplier(quote.getSupplierId()+"");
             inquiryPool.setEquipmentName(inquiry.getName());
             inquiryPool.setBrand(quote.getSuBrand());
             inquiryPool.setModel(quote.getSuModel());
