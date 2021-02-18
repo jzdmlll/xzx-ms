@@ -25,10 +25,10 @@ public class StockContractAttributeServiceImpl implements StockContractAttribute
     private StockContractAttributeMapper stockContractAttributeMapper;
 
     @Override
-    public StockContractAttribute findByContractId(Long ContractId) {
+    public StockContractAttribute findByContractId(Long contractId) {
 
         StockContractAttributeExample example = new StockContractAttributeExample();
-        example.createCriteria().andContractIdEqualTo(ContractId).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
+        example.createCriteria().andContractIdEqualTo(contractId).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
 
         List<StockContractAttribute> stockContractAttributes = stockContractAttributeMapper.selectByExample(example);
 
@@ -46,6 +46,7 @@ public class StockContractAttributeServiceImpl implements StockContractAttribute
             //新增
             long id = IDUtils.getId();
             stockContractAttribute.setId(id);
+            stockContractAttribute.setIsActive(CommonConstant.EFFECTIVE);
             stockContractAttribute.setTime(time);
             stockContractAttributeMapper.insert(stockContractAttribute);
         }else {
