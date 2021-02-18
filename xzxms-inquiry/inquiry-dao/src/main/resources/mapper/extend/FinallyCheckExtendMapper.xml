@@ -29,7 +29,7 @@
 
 
     <select id="cascadeFindAllByParams" resultType="com.xzx.xzxms.inquiry.vm.FinallyQuoteInquiryVM">
-        select q.*,
+        select q.su_price, s.supplier supplier,
         i.model model,i.name name,i.number number,i.params params,i.unit unit,i.price price,i.total_price total_price,
         i.sort sort,i.veto veto,i.finally_price finally_price,i.correct_price, i.template_id template_id,
         spc.id compare_id,
@@ -40,6 +40,7 @@
         from inquiry i
         left join sys_pro_detail pro on pro.id = i.pro_detail_id
         left join quote q on q.inquiry_id = i.id
+        left join supply_supplier s on q.supplier_id = s.id
         left join sys_pro_check spc on q.id = spc.quote_id
         <where>
             pro.is_active = 1 and i.is_active= 1 and q.is_active = 1
