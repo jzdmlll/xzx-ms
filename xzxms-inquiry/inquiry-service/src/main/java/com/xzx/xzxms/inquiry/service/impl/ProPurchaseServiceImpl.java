@@ -1,7 +1,6 @@
 package com.xzx.xzxms.inquiry.service.impl;
 
 import com.xzx.xzxms.inquiry.bean.Inquiry;
-import com.xzx.xzxms.inquiry.dao.InquiryMapper;
 import com.xzx.xzxms.inquiry.dao.extend.ProPurchaseExtendMapper;
 import com.xzx.xzxms.inquiry.service.IProPurchaseService;
 import com.xzx.xzxms.inquiry.vm.ProPurchase;

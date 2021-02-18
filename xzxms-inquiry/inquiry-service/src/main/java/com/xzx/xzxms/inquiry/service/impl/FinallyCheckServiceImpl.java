@@ -3,7 +3,6 @@ package com.xzx.xzxms.inquiry.service.impl;
 import com.xzx.xzxms.commons.constant.CommonConstant;
 import com.xzx.xzxms.commons.utils.BeanHelper;
 import com.xzx.xzxms.commons.utils.IDUtils;
-import com.xzx.xzxms.inquiry.dao.InquiryMapper;
 import com.xzx.xzxms.inquiry.dao.ProPoolMapper;
 import com.xzx.xzxms.inquiry.dao.SysProCheckMapper;
 import com.xzx.xzxms.inquiry.dao.extend.FinallyCheckExtendMapper;

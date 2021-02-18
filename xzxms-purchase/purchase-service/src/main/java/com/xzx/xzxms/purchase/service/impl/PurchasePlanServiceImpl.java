@@ -7,7 +7,6 @@ import com.xzx.xzxms.inquiry.bean.Inquiry;
 import com.xzx.xzxms.inquiry.bean.SysProDetail;
 import com.xzx.xzxms.inquiry.bean.SysProDetailExample;
 import com.xzx.xzxms.inquiry.bean.SysProDetailWithBLOBs;
-import com.xzx.xzxms.inquiry.dao.InquiryMapper;
 import com.xzx.xzxms.inquiry.dao.SysProDetailMapper;
 import com.xzx.xzxms.inquiry.dao.extend.ProPurchaseExtendMapper;
 import com.xzx.xzxms.inquiry.vm.ProPurchase;
