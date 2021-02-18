@@ -4,6 +4,7 @@ import com.xzx.xzxms.commons.constant.CommonConstant;
 import com.xzx.xzxms.commons.utils.BeanHelper;
 import com.xzx.xzxms.commons.utils.CustomerException;
 import com.xzx.xzxms.commons.utils.IDUtils;
+import com.xzx.xzxms.inquiry.dao.InquiryMapper;
 import com.xzx.xzxms.inquiry.dao.ProPoolMapper;
 import com.xzx.xzxms.inquiry.dao.QuoteMapper;
 import com.xzx.xzxms.inquiry.dao.extend.InquiryExtendMapper;

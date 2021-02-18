@@ -3,6 +3,7 @@ package com.xzx.xzxms.inquiry.service.impl;
 import com.xzx.xzxms.commons.constant.CommonConstant;
 import com.xzx.xzxms.commons.utils.CustomerException;
 import com.xzx.xzxms.inquiry.bean.*;
+import com.xzx.xzxms.inquiry.dao.InquiryMapper;
 import com.xzx.xzxms.inquiry.dao.QuoteMapper;
 import com.xzx.xzxms.inquiry.dao.SysProCheckMapper;
 import com.xzx.xzxms.inquiry.dao.extend.CompareExtendMapper;
