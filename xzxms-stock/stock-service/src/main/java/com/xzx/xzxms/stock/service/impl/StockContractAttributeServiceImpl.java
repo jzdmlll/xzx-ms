@@ -1,6 +1,7 @@
 package com.xzx.xzxms.stock.service.impl;
 
 import com.xzx.xzxms.commons.constant.CommonConstant;
+import com.xzx.xzxms.commons.utils.CustomerException;
 import com.xzx.xzxms.commons.utils.IDUtils;
 import com.xzx.xzxms.stock.bean.StockContractAttribute;
 import com.xzx.xzxms.stock.bean.StockContractAttributeExample;
@@ -45,6 +46,13 @@ public class StockContractAttributeServiceImpl implements StockContractAttribute
         if (stockContractAttribute.getId() == null){
             //新增
             long id = IDUtils.getId();
+            //验证是否已存在合同属性
+            StockContractAttributeExample example = new StockContractAttributeExample();
+            example.createCriteria().andContractIdEqualTo(stockContractAttribute.getContractId()).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
+            List<StockContractAttribute> list = stockContractAttributeMapper.selectByExample(example);
+            if (list.size() > 0){
+                throw new CustomerException("合同属性已存在，请勿重复提交!");
+            }
             stockContractAttribute.setId(id);
             stockContractAttribute.setIsActive(CommonConstant.EFFECTIVE);
             stockContractAttribute.setTime(time);

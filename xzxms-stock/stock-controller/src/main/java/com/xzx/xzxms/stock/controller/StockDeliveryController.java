@@ -1,15 +1,15 @@
 package com.xzx.xzxms.stock.controller;/**
  * @Author sunny
- * @Date 2021/2/8 16:40
+ * @Date 2021/2/18 10:26
  * @Version 1.0
  */
 
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
+import com.xzx.xzxms.stock.bean.StockDelivery;
 import com.xzx.xzxms.stock.bean.StockEntry;
-import com.xzx.xzxms.stock.service.StockCheckService;
-import com.xzx.xzxms.stock.service.StockEntryService;
-import com.xzx.xzxms.stock.vo.StockCheckVO;
+import com.xzx.xzxms.stock.service.StockDeliveryService;
+import com.xzx.xzxms.stock.vo.StockDeliveryVO;
 import com.xzx.xzxms.stock.vo.StockEntryVO;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,31 +21,31 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- *@ClassName StockCheckController
+ *@ClassName StockDeliveryController
  *@Description TODO
  *@Author sunny
  *@Date DATE{TIME}
  */
 @RestController
-@RequestMapping("/stock/entry")
-public class StockEntryController {
+@RequestMapping("/stock/delivery")
+public class StockDeliveryController {
 
     @Resource
-    private StockEntryService stockEntryServiceImpl;
+    private StockDeliveryService stockDeliveryServiceImpl;
 
-    @ApiOperation(value = "查询入库信息")
-    @GetMapping(value = "findEntryByParams")
-    public Message findEntryByParams(String item) {
+    @ApiOperation(value = "查询出库信息")
+    @GetMapping(value = "findDeliveryByParams")
+    public Message findDeliveryByParams(String item) {
 
-        List<StockEntryVO> list = stockEntryServiceImpl.findEntryByParams(item);
+        List<StockDeliveryVO> list = stockDeliveryServiceImpl.findDeliveryByParams(item);
         return MessageUtil.success("success", list);
     }
 
-    @ApiOperation(value = "批量入库")
-    @PostMapping(value = "entry")
-    public Message entry(List<StockEntry> stockEntries) {
+    @ApiOperation(value = "批量出库")
+    @PostMapping(value = "delivery")
+    public Message delivery(List<StockDelivery> stockDeliveries) {
 
-        stockEntryServiceImpl.entry(stockEntries);
+        stockDeliveryServiceImpl.delivery(stockDeliveries);
         return MessageUtil.success("success");
     }
 }

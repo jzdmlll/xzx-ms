@@ -9,7 +9,8 @@ import java.util.List;
 public class QuoteExtend extends Quote {
 
     private List<SysFile> files;
-    private long proDetailId;
+    private Long proDetailId;
+    private Long supplierId;
 
     public List<SysFile> getFiles() {
         return files;
@@ -19,11 +20,21 @@ public class QuoteExtend extends Quote {
         this.files = files;
     }
 
-    public long getProDetailId() {
+    public Long getProDetailId() {
         return proDetailId;
     }
 
-    public void setProDetailId(long proDetailId) {
+    public void setProDetailId(Long proDetailId) {
         this.proDetailId = proDetailId;
+    }
+
+    @Override
+    public Long getSupplierId() {
+        return supplierId;
+    }
+
+    @Override
+    public void setSupplierId(Long supplierId) {
+        this.supplierId = supplierId;
     }
 }
