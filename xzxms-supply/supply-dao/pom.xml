@@ -11,7 +11,14 @@
 
     <groupId>com.xzx.xzxms.supply</groupId>
     <artifactId>supply-dao</artifactId>
-
+    <dependencies>
+        <dependency>
+            <groupId>com.xzx.xzxms.supply</groupId>
+            <artifactId>supply-bean</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
     <build>
         <plugins>
             <plugin>
