@@ -13,7 +13,7 @@
 		left join sys_user su on sas.user_id = su.id
 		<where>
             su.is_active = 1 and su.id = #{userId}
-            <if test="readFlag">
+            <if test="readFlag != null and readFlag != ''">
 				and sas.read_flag = #{readFlag}
 			</if>
         </where>
