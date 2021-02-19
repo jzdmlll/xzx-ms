@@ -25,9 +25,9 @@
         group by i.name , i.params, i.pro_detail_id HAVING checknum/inquirynum = 2
     </select>
 -->
-    <select id="cascadeFindAllByParams" resultType="com.xzx.xzxms.inquiry.vm.QuoteRespVM">
+    <select id="cascadeFindAllByParams" resultMap="quoteRespVMMap">
         select
-        q.*, spc.id compare_id,
+        q.*, spc.id compare_id, ss.supplier ss_supplier,
         spc.technical_audit technical_audit,spc.technical_remark technical_remark,
         spc.business_audit business_audit,spc.business_remark business_remark,
         spc.compare_audit compare_status,spc.compare_remark compare_remark,
@@ -38,12 +38,17 @@
         inquiry i LEFT JOIN quote q ON i.id = q.inquiry_id
         LEFT JOIN sys_pro_detail spd ON i.pro_detail_id = spd.id
         LEFT JOIN sys_pro_check spc ON q.id = spc.quote_id
+        left join supply_supplier ss on q.supplier_id = ss.id
       <where>
           q.is_active = 1 and i.is_active = 1
           and i.id = #{inquiryId,jdbcType=BIGINT}
       </where>
         order by q.su_price
     </select>
+
+    <resultMap id="quoteRespVMMap" type="com.xzx.xzxms.inquiry.vm.QuoteRespVM" extends="com.xzx.xzxms.inquiry.dao.QuoteMapper.BaseResultMap">
+        <result column="ss_supplier" property="supplier"></result>
+    </resultMap>
 
 <!--    id i_id,i.name i_name,i,code i_code,i.real_brand i_real_brand,i.brand i_brand,i.params i_params,i.model i_model,i.unit i_unit,i.number i_number,i.total_price i_total_price-->
     <select id="findQuoteListByInquiry" resultMap="compareInquiry">

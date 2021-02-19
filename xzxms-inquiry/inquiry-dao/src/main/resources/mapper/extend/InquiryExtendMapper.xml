@@ -170,10 +170,11 @@
 
     <select id="findInquiryAndQuote" resultMap="quoteList">
         select i.*,
-        q.id q_id,q.image q_image, q.supplier q_supplier, q.su_delivery q_su_delivery,q.su_model q_su_model,q.su_params q_su_params,q.su_brand q_su_brand,
+        q.id q_id,q.image q_image, ss.supplier q_supplier, q.su_delivery q_su_delivery,q.su_model q_su_model,q.su_params q_su_params,q.su_brand q_su_brand,
         q.su_price q_su_price,q.su_total_price q_su_total_price,q.warranty q_warranty,q.data_source q_data_source,q.su_remark q_su_remark
         from inquiry i
         left join quote q on i.id = q.inquiry_id
+        left join supply_supplier ss on ss.id = q.supplier_id
         <where>
             i.is_active = 1 and q.is_active = 1
             <if test="proDetailId != null">
