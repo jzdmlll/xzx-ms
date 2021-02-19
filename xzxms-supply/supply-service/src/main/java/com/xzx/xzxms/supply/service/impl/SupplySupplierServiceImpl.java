@@ -56,6 +56,7 @@ public class SupplySupplierServiceImpl implements SupplySupplierService {
             long id = IDUtils.getId();
             supplySupplier.setId(id);
             supplySupplier.setAddTime(time);
+            supplySupplier.setIsActive(CommonConstant.EFFECTIVE);
             supplySupplierMapper.insert(supplySupplier);
         }else {
 

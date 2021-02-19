@@ -13,14 +13,19 @@
     </select>
 
 
-    <select id="findQuoteAndCheck" resultType="com.xzx.xzxms.inquiry.bean.extend.QuoteProCheckExtend">
-        select q.*,c.*
+    <select id="findQuoteAndCheck" resultMap="quoteAndCheckMap">
+        select q.*,c.*, ss.supplier ss_supplier
         from inquiry i
         LEFT JOIN quote q on i.id = q.inquiry_id
         LEFT JOIN sys_pro_check c on q.id = c.quote_id
+        LEFT JOIN supply_supplier ss on q.supplier_id = ss.id
         <where>
             q.is_active = 1 and i.is_active = 1
             and i.id = #{inquiryId,jdbcType=BIGINT}
         </where>
     </select>
+
+    <resultMap id="quoteAndCheckMap" type="com.xzx.xzxms.inquiry.bean.extend.QuoteProCheckExtend" extends="com.xzx.xzxms.inquiry.dao.QuoteMapper.BaseResultMap">
+        <result column="ss_supplier" jdbcType="VARCHAR" property="supplier" />
+    </resultMap>
 </mapper>
