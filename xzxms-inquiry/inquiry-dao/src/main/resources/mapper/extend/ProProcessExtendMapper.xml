@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzx.xzxms.inquiry.dao.extend.ProProcessExtendMapper">
+  <select id="findProProcessByProName" resultType="com.xzx.xzxms.inquiry.vo.ProProcessVO">
+    SELECT  pro.id proId, pro.`name` proName,
+        COUNT(i.id) iNum,
+        COUNT(q.id) qNum,
+        COUNT(c.technical_audit) ttNum,
+        COUNT(c.business_audit) btNum,
+        COUNT(c.compare_audit) ctNum,
+        COUNT(c.finally_audit) ftNum,
+        COUNT(if(c.technical_audit is not null and c.technical_audit != 0,true,null)) tNum,
+        COUNT(if(c.business_audit is not null and c.business_audit != 0,true,null)) bNum,
+        COUNT(if(c.compare_audit is not null and c.compare_audit != 0,true,null)) cNum,
+        COUNT(if(c.finally_audit is not null and c.finally_audit != 0,true,null)) fNum
+        FROM sys_pro_detail pro
+        LEFT JOIN inquiry i on pro.id = i.pro_detail_id
+        LEFT JOIN quote q on i.id = q.inquiry_id
+        LEFT JOIN sys_pro_check c on q.id = c.quote_id
+        <where>
+          pro.is_active = 1 and i.is_active = 1 and q.is_active = 1
+          <if test="proName != null and proName != ''">
+            and pro.name like "%"#{proName}"%"
+          </if>
+        </where>
+        GROUP BY pro.id
+  </select>
+</mapper>
