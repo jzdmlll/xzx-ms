@@ -28,8 +28,8 @@
 
 
 
-    <select id="cascadeFindAllByParams" resultType="com.xzx.xzxms.inquiry.vm.FinallyQuoteInquiryVM">
-        select q.su_price, s.supplier supplier,
+    <select id="cascadeFindAllByParams" resultMap="finallyQuoteInquiryVM">
+        select q.*, s.supplier s_supplier,
         i.model model,i.name name,i.number number,i.params params,i.unit unit,i.price price,i.total_price total_price,
         i.sort sort,i.veto veto,i.finally_price finally_price,i.correct_price, i.template_id template_id,
         spc.id compare_id,
@@ -53,6 +53,10 @@
         </where>
         order by i.sort,i.id,q.su_price
     </select>
+
+    <resultMap id="finallyQuoteInquiryVM" type="com.xzx.xzxms.inquiry.vm.FinallyQuoteInquiryVM" extends="com.xzx.xzxms.inquiry.dao.QuoteMapper.BaseResultMap">
+        <result column="s_supplier" property="supplier"></result>
+    </resultMap>
 
     <select id="findInquiryNameByProId" resultType="java.util.HashMap">
         select name, count(1) from inquiry where is_active = 1 and pro_detail_id = #{proId} group by name
