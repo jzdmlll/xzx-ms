@@ -26,7 +26,6 @@ public class POIExcelUtils {
         }
         catch (Exception ex)
         {
-            //ex.printStackTrace();
             try
             {
                 //2007版本的excel，用.xlsx结尾

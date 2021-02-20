@@ -4,11 +4,14 @@ package com.xzx.xzxms.stock.vo;/**
  * @Version 1.0
  */
 
+import com.xzx.xzxms.stock.bean.StockEntry;
+
 /**
  *@ClassName StockEntryVO
  *@Description TODO
  *@Author sunny
  *@Date DATE{TIME}
  */
-public class StockEntryVO {
+public class StockEntryVO extends StockEntry {
+
 }

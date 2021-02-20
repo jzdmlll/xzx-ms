@@ -7,9 +7,7 @@ package com.xzx.xzxms.stock.controller;/**
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
 import com.xzx.xzxms.stock.bean.StockEntry;
-import com.xzx.xzxms.stock.service.StockCheckService;
 import com.xzx.xzxms.stock.service.StockEntryService;
-import com.xzx.xzxms.stock.vo.StockCheckVO;
 import com.xzx.xzxms.stock.vo.StockEntryVO;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +31,7 @@ public class StockEntryController {
     @Resource
     private StockEntryService stockEntryServiceImpl;
 
-    @ApiOperation(value = "查询出入库信息")
+    @ApiOperation(value = "查询入库信息")
     @GetMapping(value = "findEntryByParams")
     public Message findEntryByParams(String item) {
 

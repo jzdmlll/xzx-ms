@@ -1,6 +1,5 @@
 package com.xzx.xzxms.inquiry.dao.extend;
 
-import com.xzx.xzxms.inquiry.bean.Supplier;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -11,5 +10,5 @@ public interface SupplierExtendMapper {
      * @param name
      * @return
      */
-    List<Supplier> findAllLike(@Param("name") String name);
+    // List<Supplier> findAllLike(@Param("name") String name);
 }

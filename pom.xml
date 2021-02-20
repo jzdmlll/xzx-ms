@@ -15,6 +15,7 @@
         <module>xzxms-chapter</module>
         <module>xzxms-equipment</module>
         <module>xzxms-stock</module>
+        <module>xzxms-supply</module>
         <module>xzxms-recruit</module>
     </modules>
 

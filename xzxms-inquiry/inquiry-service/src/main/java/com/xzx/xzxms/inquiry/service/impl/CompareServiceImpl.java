@@ -1,6 +1,5 @@
 package com.xzx.xzxms.inquiry.service.impl;
 
-import com.google.common.math.LongMath;
 import com.xzx.xzxms.commons.constant.CommonConstant;
 import com.xzx.xzxms.commons.utils.CustomerException;
 import com.xzx.xzxms.inquiry.bean.*;
@@ -18,10 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class CompareServiceImpl implements ICompareService {
