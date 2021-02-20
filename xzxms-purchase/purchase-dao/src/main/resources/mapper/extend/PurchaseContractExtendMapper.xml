@@ -28,7 +28,7 @@
     </select>
 
     <select id="findContractNoByYMD" parameterType="string" resultType="string">
-        select contract_no from purchase_contract where contract_no like "%"#{contractNo}"%" GROUP BY contract_no
+        select contract_no from purchase_contract where contract_no like concat('%',#{contractNo},'%') GROUP BY contract_no
     </select>
 
     <select id="findByProjectId" resultType="com.xzx.xzxms.purchase.bean.PurchaseContract">
