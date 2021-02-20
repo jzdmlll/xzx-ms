@@ -60,10 +60,10 @@ public class QuoteServiceImpl implements IQuoteService {
     @Override
     public synchronized void saveOrUpdate(QuoteExtend quote) {
         List<SysFile> inquiryFiles = quote.getInquiryFiles();
-        fileUploadServiceImpl.fileUpload(quote.getId(), inquiryFiles, SysFileExtend.TYPE_INQUIRY);
+        fileUploadServiceImpl.fileUpload(quote.getId(), inquiryFiles, SysFileExtend.TYPE_INQUIRY, quote.getOperator());
 
         List<SysFile> technologyFiles = quote.getTechnologyFiles();
-        fileUploadServiceImpl.fileUpload(quote.getId(), technologyFiles, SysFileExtend.TYPE_TECHNOLOGY);
+        fileUploadServiceImpl.fileUpload(quote.getId(), technologyFiles, SysFileExtend.TYPE_TECHNOLOGY, quote.getOperator());
     }
 
     @Transactional

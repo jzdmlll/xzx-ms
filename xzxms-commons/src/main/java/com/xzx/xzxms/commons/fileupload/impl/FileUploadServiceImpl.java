@@ -163,7 +163,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
-    public void fileUpload(Long otherId, List<SysFile> fileList, Integer fileType) {
+    public void fileUpload(Long otherId, List<SysFile> fileList, Integer fileType, String operator) {
 
         SysFileExample sysFileExample = new SysFileExample();
         sysFileExample.createCriteria().andOtherIdEqualTo(otherId).andIsActiveEqualTo(CommonConstant.EFFECTIVE)
@@ -193,6 +193,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
                     //上传到Nginx
                     Map<String, Object> map = fileUploadServiceImpl.uploadByStream(inputStream, file.getName());
                     file.setUrl(map.get("url").toString());
+                    file.setOperator(operator);
                 }else {
                     throw new CustomerException("文件上传信息过期，请重新上传");
                 }
