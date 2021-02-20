@@ -45,7 +45,7 @@ public interface QuoteAndInquiryExtendMapper {
     @Select("SELECT COUNT(1) FROM inquiry i " +
             "LEFT JOIN quote q on i.id = q.inquiry_id " +
             "LEFT JOIN sys_pro_check c on q.id = c.quote_id " +
-            "WHERE i.is_active = 1 AND q.is_active = 1 AND c.compare_audit != 0 OR c.compare_audit IS NOT NULL AND i.id = #{inquiryId}")
+            "WHERE i.is_active = 1 AND q.is_active = 1 AND (c.compare_audit != 0 OR c.compare_audit IS NOT NULL) AND i.id = #{inquiryId}")
     int findIsExistCompare(long inquiryId);
 
 
