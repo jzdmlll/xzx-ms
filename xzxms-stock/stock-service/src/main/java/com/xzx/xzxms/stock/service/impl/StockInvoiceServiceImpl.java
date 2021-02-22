@@ -52,7 +52,7 @@ public class StockInvoiceServiceImpl implements StockInvoiceService {
         stockInvoiceMapper.insert(stockInvoice);
 
         //文件上传
-        iFileUploadServiceImpl.fileUpload(stockInvoice.getId(), files, SysFileExtend.TYPE_INVOICE);
+        iFileUploadServiceImpl.fileUpload(stockInvoice.getId(), files, SysFileExtend.TYPE_INVOICE, stockInvoice.getOperator());
     }
 
     @Override

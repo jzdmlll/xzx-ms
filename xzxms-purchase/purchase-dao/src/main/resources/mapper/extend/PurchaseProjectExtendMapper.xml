@@ -18,5 +18,6 @@
                 and pro.project_name like "%"#{name}"%"
             </if>
         </where>
+        order by pro.time desc
     </select>
 </mapper>

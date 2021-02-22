@@ -1,6 +1,7 @@
 package com.xzx.xzxms.purchase.service.impl;
 
 import com.xzx.xzxms.commons.constant.CommonConstant;
+import com.xzx.xzxms.commons.utils.CustomerException;
 import com.xzx.xzxms.commons.utils.IDUtils;
 import com.xzx.xzxms.purchase.bean.PurchaseBridge;
 import com.xzx.xzxms.purchase.bean.PurchaseItems;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author：ZJW
@@ -38,6 +40,7 @@ public class PurchaseContractGenerateServiceImpl implements PurchaseContractGene
     private PurchaseItemsMapper purchaseItemsMapper;
     @Resource
     private PurchaseBridgeMapper purchaseBridgeMapper;
+
 
     /**
      * 周嘉玮
@@ -109,7 +112,17 @@ public class PurchaseContractGenerateServiceImpl implements PurchaseContractGene
 
             // 在购买项表中更新合同编号、更新操作人员、更新时间
             PurchaseItemsExample purchaseItemsExample = new PurchaseItemsExample();
-            purchaseItemsExample.createCriteria().andProjectIdEqualTo(purchaseContractDTO.getPurchaseContract().getProjectId()).andIdIn(purchaseContractDTO.getItemIds());
+            purchaseItemsExample.createCriteria().andIdIn(purchaseContractDTO.getItemIds()).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
+
+            PurchaseItemsExample example = new PurchaseItemsExample();
+            example.createCriteria().andIdIn(purchaseContractDTO.getItemIds());
+            List<PurchaseItems> Items = purchaseItemsMapper.selectByExample(example);
+            for(PurchaseItems p : Items){
+
+                if (p.getContractId() != null){
+                    throw new CustomerException("存在采购已有合同ID，请勿将其再次添加到合同中!");
+                }
+            }
 
             Long[] arr = new Long[purchaseContractDTO.getItemIds().size()];
             Long[] proIds = purchaseContractGenerateExtendMapper.findPurchaseProIdByItemsId(purchaseContractDTO.getItemIds().toArray(arr));
@@ -129,6 +142,9 @@ public class PurchaseContractGenerateServiceImpl implements PurchaseContractGene
             purchaseItems.setUpdateTime(new Date().getTime());
             //purchaseItemsMapper.updateByExample(purchaseItems, purchaseItemsExample);
             purchaseItemsMapper.updateByExampleSelective(purchaseItems, purchaseItemsExample);
+
+        }else {
+            throw new CustomerException("合同编号已存在，请勿重复添加!");
         }
     }
 }

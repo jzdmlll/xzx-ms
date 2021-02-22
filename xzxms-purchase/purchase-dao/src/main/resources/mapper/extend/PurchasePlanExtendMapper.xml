@@ -102,7 +102,7 @@
     </select>
 
     <select id="findProNoByYM" parameterType="string" resultType="string">
-        select pro_no from sys_pro_detail where pro_no like "%"#{proNo}"%" GROUP BY pro_no
+        select pro_no from sys_pro_detail where pro_no like concat('%',#{proNo},'%') GROUP BY pro_no
     </select>
 
     <select id="findSort" parameterType="com.xzx.xzxms.inquiry.bean.SysProDetail" resultType="double">

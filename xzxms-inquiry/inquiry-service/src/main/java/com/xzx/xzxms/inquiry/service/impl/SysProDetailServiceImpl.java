@@ -99,7 +99,7 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
                 file.setOperator(operatorId);
                 sysFileMapper.insert(file);
             }
-            proDetail.setProRate(proDetail.getProRate()*1000);
+            //proDetail.setProRate(proDetail.getProRate()*1000);
             sysProDetailMapper.updateByPrimaryKeySelective(proDetail);
 
         }else {

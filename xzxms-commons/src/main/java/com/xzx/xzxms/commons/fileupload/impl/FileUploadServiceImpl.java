@@ -163,7 +163,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
-    public void fileUpload(Long otherId, List<SysFile> fileList, Integer fileType) {
+    public void fileUpload(Long otherId, List<SysFile> fileList, Integer fileType, String operator) {
 
         SysFileExample sysFileExample = new SysFileExample();
         sysFileExample.createCriteria().andOtherIdEqualTo(otherId).andIsActiveEqualTo(CommonConstant.EFFECTIVE)
@@ -183,6 +183,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
 
             // 文件上传 redis --> nginx
             if (file.getOperator()==null || "".equals(file.getOperator())) {
+                // 如果是新上传文件
                 if (jedisDaoImpl.exists(file.getId().toString())) {
                     //从redis中取出base64文件码
                     String base64File = jedisDaoImpl.get(file.getId().toString());
@@ -193,11 +194,12 @@ public class FileUploadServiceImpl implements IFileUploadService {
                     //上传到Nginx
                     Map<String, Object> map = fileUploadServiceImpl.uploadByStream(inputStream, file.getName());
                     file.setUrl(map.get("url").toString());
+                    file.setOperator(operator);
                 }else {
                     throw new CustomerException("文件上传信息过期，请重新上传");
                 }
             }else {
-                // 新增 重新生成ID
+                // 不是新上传文件 重新生成ID
                 file.setId(IDUtils.getId());
             }
             //文件信息插入到数据库
