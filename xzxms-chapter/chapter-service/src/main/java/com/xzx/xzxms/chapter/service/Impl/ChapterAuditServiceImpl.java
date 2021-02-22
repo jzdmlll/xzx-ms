@@ -132,14 +132,8 @@ public class ChapterAuditServiceImpl implements ChapterAuditService {
      */
     @Override
     public String updateChapterAuditService(ChapterAudit chapterAudit) {
-
-        ChapterAuditExample chapterAuditExample = new ChapterAuditExample();
-        // 查询需要审核的那条数据
-        chapterAuditExample.createCriteria().andIdEqualTo(chapterAudit.getId());
-
         chapterAudit.setAuditTime(new Date().getTime());
-        chapterAuditMapper.updateByExampleSelective(chapterAudit, chapterAuditExample);
-
+        chapterAuditMapper.updateByPrimaryKeySelective(chapterAudit);
         return "success";
     }
 

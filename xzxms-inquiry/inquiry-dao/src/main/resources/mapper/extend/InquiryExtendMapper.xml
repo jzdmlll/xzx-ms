@@ -14,7 +14,6 @@
             left join sys_pro_check c on q.id = c.quote_id
             <where>
                 i.is_active = 1 and s.is_active = 1 AND q.is_active = 1
---                 and c.business_audit != 0 and c.technical_audit != 0
                 <if test="proDetailId != -1">
                     and s.id = #{proDetailId}
                 </if>
