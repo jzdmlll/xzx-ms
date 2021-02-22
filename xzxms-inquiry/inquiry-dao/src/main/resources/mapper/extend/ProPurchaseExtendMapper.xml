@@ -6,13 +6,14 @@
         i.sort as i_sort,i.model i_model,
         i.name as i_name,i.unit as i_unit,i.number as i_number,i.finally_price as i_finally_price,i.price as i_price,i.params as i_params,i.id as i_id,
         i.correct_price as i_correct_price,i.item_id as i_item_id, i.template_id as i_template_id, j.name as i_parent_id,
-        q.supplier as q_supplier,q.id as q_id,q.su_brand as q_su_brand,q.su_params as q_su_params,q.su_price as q_su_price,q.su_total_price as q_su_total_price,
-        q.su_delivery as q_su_delivery,q.warranty as q_warranty,q.su_remark q_su_remark,q.su_model q_su_model
+        ss.supplier as q_supplier,q.id as q_id,q.su_brand as q_su_brand,q.su_params as q_su_params,q.su_price as q_su_price,q.su_total_price as q_su_total_price,
+        q.su_delivery as q_su_delivery,q.warranty as q_warranty,q.su_remark q_su_remark,q.su_model q_su_model, q.supplier_id q_supplier_id
         from sys_pro_detail pro
         LEFT JOIN inquiry i on pro.id = i.pro_detail_id
         LEFT JOIN quote q on i.id = q.inquiry_id
         LEFT JOIN sys_pro_check c on q.id = c.quote_id
         LEFT JOIN inquiry j on i.parent_id = j.id
+        left join supply_supplier ss on q.supplier_id = ss.id
       <where>
           pro.is_active = 1 AND i.is_active = 1 AND q.is_active = 1 AND c.finally_audit = 1
           <if test="proDetailId != null and proDetailId != -1">
@@ -35,7 +36,7 @@
         i.tag_number i_tag_number, i.meter i_meter, i.measuring_range i_measuring_range, i.meter_signal i_meter_signal,
         i.connection_mode i_connection_mode, i.tube i_tube, i.template_id i_template_id,
         q.supplier as q_supplier,q.id as q_id,q.su_brand as q_su_brand,q.su_params as q_su_params,q.su_price as q_su_price,q.su_total_price as q_su_total_price,
-        q.su_delivery as q_su_delivery,q.warranty as q_warranty,q.su_remark q_su_remark
+        q.su_delivery as q_su_delivery,q.warranty as q_warranty,q.su_remark q_su_remark, q.su_model q_su_model, q.supplier_id q_supplier_id
         from quote q
         left join inquiry i on q.inquiry_id = i.id
         left join sys_pro_detail pro on i.pro_detail_id = pro.id
