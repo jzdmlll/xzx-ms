@@ -112,7 +112,7 @@ public class PurchaseContractGenerateServiceImpl implements PurchaseContractGene
 
             // 在购买项表中更新合同编号、更新操作人员、更新时间
             PurchaseItemsExample purchaseItemsExample = new PurchaseItemsExample();
-            purchaseItemsExample.createCriteria().andProjectIdEqualTo(purchaseContractDTO.getPurchaseContract().getProjectId()).andIdIn(purchaseContractDTO.getItemIds());
+            purchaseItemsExample.createCriteria().andIdIn(purchaseContractDTO.getItemIds()).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
 
             PurchaseItemsExample example = new PurchaseItemsExample();
             example.createCriteria().andIdIn(purchaseContractDTO.getItemIds());
