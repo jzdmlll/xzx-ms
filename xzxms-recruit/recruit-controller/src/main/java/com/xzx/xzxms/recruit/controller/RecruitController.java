@@ -25,7 +25,7 @@ import javax.annotation.Resource;
 public class RecruitController {
 
     @Resource
-    RecruitService recruitService;
+    private RecruitService recruitService;
 
     /**
      * 周嘉玮
