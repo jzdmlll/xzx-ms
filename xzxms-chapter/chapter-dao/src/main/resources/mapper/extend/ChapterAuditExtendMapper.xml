@@ -14,7 +14,7 @@
     <select id="findAllChapterAuditor" resultMap="ChapterAuditorDTO">
         select sys_user.id, username
         from sys_user_role inner join sys_user on sys_user_role.user_id = sys_user.id
-        where role_id = (SELECT role_id
+        where role_id = any(SELECT role_id
         FROM `sys_privilege` inner join sys_role_privilege on sys_privilege.id = sys_role_privilege.privilege_id
         where name='用章管理' and type='menu')
         and sys_user.is_active = 1
