@@ -6,6 +6,7 @@ import com.xzx.xzxms.commons.utils.IDUtils;
 import com.xzx.xzxms.purchase.bean.PurchaseBridge;
 import com.xzx.xzxms.purchase.bean.PurchaseItems;
 import com.xzx.xzxms.purchase.bean.PurchaseItemsExample;
+import com.xzx.xzxms.purchase.bean.PurchaseSupplyExample;
 import com.xzx.xzxms.purchase.dao.PurchaseBridgeMapper;
 import com.xzx.xzxms.purchase.dao.PurchaseContractMapper;
 import com.xzx.xzxms.purchase.dao.PurchaseItemsMapper;
@@ -125,6 +126,13 @@ public class PurchaseContractGenerateServiceImpl implements PurchaseContractGene
             }
 
             Long[] arr = new Long[purchaseContractDTO.getItemIds().size()];
+
+            //判断所有采购项item中的供应商ID是否为同一家，不同则不能生成采购合同
+            int supplierNum = purchaseContractGenerateExtendMapper.findPurchaseItemSupplier(purchaseContractDTO.getItemIds().toArray(arr));
+            if (supplierNum > 2){
+                throw new CustomerException("所选项存在两家或两家以上的供货商,请重新选择!");
+            }
+
             Long[] proIds = purchaseContractGenerateExtendMapper.findPurchaseProIdByItemsId(purchaseContractDTO.getItemIds().toArray(arr));
             //桥表插入
             PurchaseBridge purchaseBridge = new PurchaseBridge();
