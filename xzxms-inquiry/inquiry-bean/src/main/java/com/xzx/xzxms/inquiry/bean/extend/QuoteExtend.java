@@ -8,9 +8,12 @@ import java.util.List;
 
 public class QuoteExtend extends Quote {
 
-    private List<SysFile> files;
     private Long proDetailId;
     private Long supplierId;
+    private List<SysFile> inquiryFiles;
+    private List<SysFile> technologyFiles;
+
+    private List<SysFile> files;
 
     public List<SysFile> getFiles() {
         return files;
@@ -18,6 +21,22 @@ public class QuoteExtend extends Quote {
 
     public void setFiles(List<SysFile> files) {
         this.files = files;
+    }
+
+    public List<SysFile> getInquiryFiles() {
+        return inquiryFiles;
+    }
+
+    public void setInquiryFiles(List<SysFile> inquiryFiles) {
+        this.inquiryFiles = inquiryFiles;
+    }
+
+    public List<SysFile> getTechnologyFiles() {
+        return technologyFiles;
+    }
+
+    public void setTechnologyFiles(List<SysFile> technologyFiles) {
+        this.technologyFiles = technologyFiles;
     }
 
     public Long getProDetailId() {

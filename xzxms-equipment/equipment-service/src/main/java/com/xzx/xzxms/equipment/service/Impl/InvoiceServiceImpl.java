@@ -58,7 +58,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         equipmentInvoiceMapper.insert(equipmentInvoice);
 
         //文件上传
-        iFileUploadServiceImpl.fileUpload(equipmentInvoice.getId(), files, SysFileExtend.TYPE_INVOICE);
+        iFileUploadServiceImpl.fileUpload(equipmentInvoice.getId(), files, SysFileExtend.TYPE_INVOICE, equipmentInvoice.getOperator());
     }
 
     @Override

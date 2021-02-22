@@ -36,5 +36,5 @@ public interface IFileUploadService {
      * @param fileList 前端需写入操作人
      * @param fileType 文件类型
      */
-    void fileUpload(Long otherId, List<SysFile> fileList, Integer fileType);
+    void fileUpload(Long otherId, List<SysFile> fileList, Integer fileType, String operator);
 }
