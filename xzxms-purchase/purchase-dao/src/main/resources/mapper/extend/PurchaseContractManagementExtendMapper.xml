@@ -73,8 +73,7 @@
                 purchase_supply.number, purchase_supply.price, purchase_supply.total_price,
                 purchase_supply.params supply_params, purchase_items.params items_params,
                 purchase_supply.warranty, purchase_supply.remark, purchase_supply.delivery
-        FROM purchase_items inner join purchase_supply
-            on purchase_items.id = purchase_supply.item_id
+        FROM purchase_items inner join purchase_supply on purchase_items.id = purchase_supply.item_id
         where purchase_items.is_active = 1
             and purchase_supply.is_active=1
             and contract_id=#{contractId, jdbcType = BIGINT}
