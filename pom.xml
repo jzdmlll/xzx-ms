@@ -17,6 +17,7 @@
         <module>xzxms-stock</module>
         <module>xzxms-supply</module>
         <module>xzxms-recruit</module>
+        <module>xzxms-tender</module>
     </modules>
 
     <parent>
