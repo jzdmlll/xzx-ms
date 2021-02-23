@@ -77,14 +77,14 @@ public class POIExcelUtils {
             Map<String, Object> map = new HashMap<>();
             for (int j = 0; j < totalColNum; j ++) {
                 cell = row.getCell(j);
+                Cell colCell = rowHead.getCell(j);
+                colCell.setCellType(CellType.STRING);
+                String rowName = colCell.getStringCellValue();
+                String cellValueByCell = "";
                 if (cell != null){
-
-                    Cell colCell = rowHead.getCell(j);
-                    colCell.setCellType(CellType.STRING);
-                    String rowName = colCell.getStringCellValue();
-                    String cellValueByCell = getCellValueByCell(cell);
-                    map.put(rowName, cellValueByCell);
+                    cellValueByCell = getCellValueByCell(cell);
                 }
+                map.put(rowName, cellValueByCell);
             }
             if(maplist.get(i)!=null){
                 PictureData pictureData = (PictureData)maplist.get(i);
@@ -210,7 +210,7 @@ public class POIExcelUtils {
                 }
                 break;
             case Cell.CELL_TYPE_STRING: // 字符串
-                cellValue = cell.getStringCellValue();
+                cellValue = cell.getStringCellValue()==null?"":cell.getStringCellValue();
                 break;
             case Cell.CELL_TYPE_BOOLEAN: // Boolean
                 cellValue = cell.getBooleanCellValue()+"";;
