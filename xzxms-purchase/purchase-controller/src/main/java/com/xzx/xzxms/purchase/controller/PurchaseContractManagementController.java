@@ -70,7 +70,7 @@ public class PurchaseContractManagementController {
      * @param purchaseContract
      * @return
      */
-    @ApiOperation("根据合同id修改合同审核级别(送审)")
+    @ApiOperation("根据合同id修改合同审核级别(送审)(作废)")
     @PostMapping("updateContractAuditById")
     public Message updateContractAuditById(PurchaseContract purchaseContract){
 

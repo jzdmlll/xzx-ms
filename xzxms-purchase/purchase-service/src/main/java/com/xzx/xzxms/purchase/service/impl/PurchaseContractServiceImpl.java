@@ -175,4 +175,16 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
             return newContractNo;
         }
     }
+
+    @Override
+    public void purchaseContractSend(PurchaseContract purchaseContract) {
+
+        //先判定是否已送审(是否有送审人)
+        PurchaseContract pc = purchaseContractMapper.selectByPrimaryKey(purchaseContract.getId());
+        if (pc.getIsActive() == CommonConstant.EFFECTIVE && pc.getSender() != null){
+            throw new CustomerException("已送审!请勿重复提交");
+        }
+        purchaseContract.setSendTime(new Date().getTime());
+        purchaseContractMapper.updateByPrimaryKeySelective(purchaseContract);
+    }
 }

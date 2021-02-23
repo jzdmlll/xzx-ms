@@ -82,7 +82,7 @@ public class PurchaseContractManagementServiceImpl implements PurchaseContractMa
 
     /**
      * 周嘉玮
-     * 根据合同id修改合同审核级别 (送审)
+     * 根据合同id修改合同审核级别 (送审)(作废)
      * @param purchaseContract
      * @return
      */
