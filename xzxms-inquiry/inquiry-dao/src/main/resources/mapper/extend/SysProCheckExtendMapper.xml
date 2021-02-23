@@ -55,7 +55,7 @@
                 AND spd.id = #{proDetailId,jdbcType=BIGINT}
             </if>
             <if test="supplier!=null and supplier!=''">
-                AND q.supplier like "%"#{supplier,jdbcType=VARCHAR}"%"
+                AND q.supplier like CONCAT('%',#{supplier,jdbcType=VARCHAR},'%')
             </if>
         </where>
         order by i.name, i.model

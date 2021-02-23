@@ -65,22 +65,27 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
         PurchaseContract purchaseContract = purchaseContractMapper.selectByPrimaryKey(id);
         if(purchaseContract == null || (CommonConstant.INVALID).equals(purchaseContract.getIsActive())){
             throw new CustomerException("数据已不存在");
-        }else {
-            long time = new Date().getTime();
-            PurchaseItemsExample example = new PurchaseItemsExample();
-            example.createCriteria().andContractIdEqualTo(id).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
-            List<PurchaseItems> list = purchaseItemsMapper.selectByExample(example);
-            if (list.size() > 0){
-                for(PurchaseItems p : list){
-                    p.setContractId(null);
-                    purchaseItemsMapper.updateByPrimaryKey(p);
-                }
-            }
-
-            purchaseContract.setIsActive(CommonConstant.INVALID);
-            purchaseContract.setUpdateTime(time);
-            purchaseContractMapper.updateByPrimaryKeySelective(purchaseContract);
         }
+
+        if (purchaseContract.getFirstAudit() != null){
+            throw new CustomerException("合同已发往审核,请勿删除!");
+        }
+
+        long time = new Date().getTime();
+        PurchaseItemsExample example = new PurchaseItemsExample();
+        example.createCriteria().andContractIdEqualTo(id).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
+        List<PurchaseItems> list = purchaseItemsMapper.selectByExample(example);
+        if (list.size() > 0){
+            for(PurchaseItems p : list){
+                p.setContractId(null);
+                purchaseItemsMapper.updateByPrimaryKey(p);
+            }
+        }
+
+        purchaseContract.setIsActive(CommonConstant.INVALID);
+        purchaseContract.setUpdateTime(time);
+        purchaseContractMapper.updateByPrimaryKeySelective(purchaseContract);
+
     }
 
     /**
