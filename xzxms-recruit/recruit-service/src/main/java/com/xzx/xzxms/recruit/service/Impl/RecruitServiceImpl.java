@@ -7,6 +7,7 @@ import com.xzx.xzxms.recruit.bean.RecruitProjectExample;
 import com.xzx.xzxms.recruit.dao.RecruitProjectMapper;
 import com.xzx.xzxms.recruit.service.RecruitService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -105,6 +106,7 @@ public class RecruitServiceImpl implements RecruitService {
      * 周嘉玮
      * 2.3.1 - 发往工程审核
      */
+    @Transactional
     @Override
     public String updateRecruitEngineeringService(RecruitProject recruitProject) {
         // 根据id获取该招标信息
@@ -139,6 +141,7 @@ public class RecruitServiceImpl implements RecruitService {
      * 周嘉玮
      * 2.4.1 - 发往发布审核
      */
+    @Transactional
     @Override
     public String updateRecruitReleaseService(RecruitProject recruitProject) {
         // 根据id获取该招标信息
@@ -173,6 +176,7 @@ public class RecruitServiceImpl implements RecruitService {
      * 周嘉玮
      * 2.5.1 - 发往投标公司资质审核
      */
+    @Transactional
     @Override
     public String updateRecruitQualificationService(RecruitProject recruitProject) {
         // 根据id获取该招标信息
@@ -207,6 +211,7 @@ public class RecruitServiceImpl implements RecruitService {
      * 周嘉玮
      * 2.6.1 - 发往评标、开标审核
      */
+    @Transactional
     @Override
     public String updateRecruitBidEvaluationService(RecruitProject recruitProject) {
         // 根据id获取该招标信息
@@ -241,6 +246,7 @@ public class RecruitServiceImpl implements RecruitService {
      * 周嘉玮
      * 2.7.1 - 发往汇总评标报告审核
      */
+    @Transactional
     @Override
     public String updateRecruitReportService(RecruitProject recruitProject) {
         // 根据id获取该招标信息
@@ -275,6 +281,7 @@ public class RecruitServiceImpl implements RecruitService {
      * 周嘉玮
      * 3 - 更新中标人
      */
+    @Transactional
     @Override
     public String updateRecruitSuccessfulBidderService(RecruitProject recruitProject) {
         // 根据id获取该招标信息

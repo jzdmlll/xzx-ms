@@ -37,6 +37,9 @@ public class RecruitController {
         return  MessageUtil.success("success", recruitProjectInfo);
     }
 
+    /**
+     * 周嘉玮
+     */
     @ApiOperation("新建招标项目")
     @PostMapping("insertRecruitProject")
     public Message insertRecruitProject(RecruitProject recruitProject){
@@ -48,6 +51,9 @@ public class RecruitController {
         }
     }
 
+    /**
+     * 周嘉玮
+     */
     @ApiOperation("修改招标项目的基本信息")
     @PostMapping("updateRecruitProjectInfo")
     public Message updateRecruitProjectInfo(RecruitProject recruitProject){
@@ -59,6 +65,9 @@ public class RecruitController {
         }
     }
 
+    /**
+     * 周嘉玮
+     */
     @ApiOperation("发往商务审核")
     @PostMapping("updateRecruitBusiness")
     public Message updateRecruitBusiness(RecruitProject recruitProject){
@@ -70,6 +79,9 @@ public class RecruitController {
         }
     }
 
+    /**
+     * 周嘉玮
+     */
     @ApiOperation("商务审核")
     @PostMapping("updateRecruitBusinessAudit")
     public Message updateRecruitBusinessAudit(RecruitProject recruitProject){
@@ -81,6 +93,9 @@ public class RecruitController {
         }
     }
 
+    /**
+     * 周嘉玮
+     */
     @ApiOperation("发往工程审核")
     @PostMapping("updateRecruitEngineering")
     public Message updateRecruitEngineering(RecruitProject recruitProject){
@@ -92,6 +107,9 @@ public class RecruitController {
         }
     }
 
+    /**
+     * 周嘉玮
+     */
     @ApiOperation("工程审核")
     @PostMapping("updateRecruitEngineeringAudit")
     public Message updateRecruitEngineeringAudit(RecruitProject recruitProject){
@@ -103,6 +121,9 @@ public class RecruitController {
         }
     }
 
+    /**
+     * 周嘉玮
+     */
     @ApiOperation("发往发布审核")
     @PostMapping("updateRecruitRelease")
     public Message updateRecruitRelease(RecruitProject recruitProject){
@@ -114,6 +135,9 @@ public class RecruitController {
         }
     }
 
+    /**
+     * 周嘉玮
+     */
     @ApiOperation("发布审核")
     @PostMapping("updateRecruitReleaseAudit")
     public Message updateRecruitReleaseAudit(RecruitProject recruitProject){
@@ -125,6 +149,9 @@ public class RecruitController {
         }
     }
 
+    /**
+     * 周嘉玮
+     */
     @ApiOperation("发往投标公司资质审核")
     @PostMapping("updateRecruitQualification")
     public Message updateRecruitQualification(RecruitProject recruitProject){
@@ -136,6 +163,9 @@ public class RecruitController {
         }
     }
 
+    /**
+     * 周嘉玮
+     */
     @ApiOperation("投标公司资质审核")
     @PostMapping("updateRecruitQualificationAudit")
     public Message updateRecruitQualificationAudit(RecruitProject recruitProject){
@@ -147,6 +177,9 @@ public class RecruitController {
         }
     }
 
+    /**
+     * 周嘉玮
+     */
     @ApiOperation("发往评标、开标审核")
     @PostMapping("updateRecruitBidEvaluation")
     public Message updateRecruitBidEvaluation(RecruitProject recruitProject){
@@ -158,6 +191,9 @@ public class RecruitController {
         }
     }
 
+    /**
+     * 周嘉玮
+     */
     @ApiOperation("评标、开标审核")
     @PostMapping("updateRecruitBidEvaluationAudit")
     public Message updateRecruitBidEvaluationAudit(RecruitProject recruitProject){
@@ -169,6 +205,9 @@ public class RecruitController {
         }
     }
 
+    /**
+     * 周嘉玮
+     */
     @ApiOperation("发往汇总评标报告审核")
     @PostMapping("updateRecruitReport")
     public Message updateRecruitReport(RecruitProject recruitProject){
@@ -180,6 +219,9 @@ public class RecruitController {
         }
     }
 
+    /**
+     * 周嘉玮
+     */
     @ApiOperation("汇总评标报告审核")
     @PostMapping("updateRecruitReportAudit")
     public Message updateRecruitReportAudit(RecruitProject recruitProject){
@@ -191,6 +233,9 @@ public class RecruitController {
         }
     }
 
+    /**
+     * 周嘉玮
+     */
     @ApiOperation("更新中标人")
     @PostMapping("updateRecruitSuccessfulBidder")
     public Message updateRecruitSuccessfulBidder(RecruitProject recruitProject){
