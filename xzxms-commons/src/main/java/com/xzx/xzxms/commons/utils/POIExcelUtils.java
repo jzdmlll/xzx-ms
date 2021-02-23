@@ -210,7 +210,7 @@ public class POIExcelUtils {
                 }
                 break;
             case Cell.CELL_TYPE_STRING: // 字符串
-                cellValue = cell.getStringCellValue();
+                cellValue = cell.getStringCellValue()==null?"":cell.getStringCellValue();
                 break;
             case Cell.CELL_TYPE_BOOLEAN: // Boolean
                 cellValue = cell.getBooleanCellValue()+"";;
