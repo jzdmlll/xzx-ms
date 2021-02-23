@@ -46,4 +46,11 @@ public interface PurchaseContractGenerateExtendMapper {
      * @return
      */
     Long[] findPurchaseProIdByItemsId(@Param("itemIds") Long[] itemIds);
+
+    /**
+     * 查询采购项供货商存在几个（根据供货商ID去重）
+     * @param itemsIds
+     * @return
+     */
+    int findPurchaseItemSupplier(@Param("itemIds") Long[] itemsIds);
 }

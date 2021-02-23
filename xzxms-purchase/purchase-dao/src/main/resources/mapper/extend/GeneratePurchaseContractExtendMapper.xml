@@ -3,7 +3,7 @@
 <mapper namespace="com.xzx.xzxms.purchase.dao.extend.GeneratePurchaseContractExtendMapper">
     <select id="findByProjectId" resultMap="GenerateExtendMap1">
         select
-        i.id id, i.contract_id contract_id,i.item item, i.project_id project_id,
+        i.*,
         s.supplier s_supplier,s.model s_model,s.brand s_brand,s.params s_params,s.price s_price,s.delivery s_delivery,s.remark s_remark,
         s.total_price s_total_price,s.warranty s_warranty,s.arrival_status s_arrival_status,s.id s_id,s.number s_number,
         p.project_name as purchaseProName

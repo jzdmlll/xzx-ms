@@ -3,8 +3,8 @@ server:
 spring:
   servlet:
     multipart:
-      max-file-size: 20MB
-      max-request-size: 20MB
+      max-file-size: 100MB
+      max-request-size: 100MB
   datasource:
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://10.70.0.113:3306/xzx?characterEncoding=utf8

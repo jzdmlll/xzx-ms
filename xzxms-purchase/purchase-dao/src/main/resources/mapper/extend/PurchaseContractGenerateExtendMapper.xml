@@ -69,4 +69,14 @@
         </if>
         group by project_id
     </select>
+
+
+    <select id="findPurchaseItemSupplier" resultType="int">
+        select count(supplier_id) from purchase_supply where is_active = 1 and
+        item_id in
+        <foreach collection="itemsIds" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        group by supplier_id
+    </select>
 </mapper>
