@@ -15,7 +15,6 @@
         <module>tender-bean</module>
         <module>tender-controller</module>
         <module>tender-dao</module>
-        <module>tender-dao</module>
         <module>tender-service</module>
     </modules>
 
