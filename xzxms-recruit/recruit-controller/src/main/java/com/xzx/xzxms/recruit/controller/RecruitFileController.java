@@ -3,7 +3,6 @@ package com.xzx.xzxms.recruit.controller;
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
 import com.xzx.xzxms.recruit.bean.RecruitFile;
-import com.xzx.xzxms.recruit.bean.RecruitProject;
 import com.xzx.xzxms.recruit.service.RecruitFileService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
