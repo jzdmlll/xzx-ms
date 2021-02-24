@@ -65,22 +65,27 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
         PurchaseContract purchaseContract = purchaseContractMapper.selectByPrimaryKey(id);
         if(purchaseContract == null || (CommonConstant.INVALID).equals(purchaseContract.getIsActive())){
             throw new CustomerException("数据已不存在");
-        }else {
-            long time = new Date().getTime();
-            PurchaseItemsExample example = new PurchaseItemsExample();
-            example.createCriteria().andContractIdEqualTo(id).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
-            List<PurchaseItems> list = purchaseItemsMapper.selectByExample(example);
-            if (list.size() > 0){
-                for(PurchaseItems p : list){
-                    p.setContractId(null);
-                    purchaseItemsMapper.updateByPrimaryKey(p);
-                }
-            }
-
-            purchaseContract.setIsActive(CommonConstant.INVALID);
-            purchaseContract.setUpdateTime(time);
-            purchaseContractMapper.updateByPrimaryKeySelective(purchaseContract);
         }
+
+        if (purchaseContract.getFirstAudit() != null){
+            throw new CustomerException("合同已发往审核,请勿删除!");
+        }
+
+        long time = new Date().getTime();
+        PurchaseItemsExample example = new PurchaseItemsExample();
+        example.createCriteria().andContractIdEqualTo(id).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
+        List<PurchaseItems> list = purchaseItemsMapper.selectByExample(example);
+        if (list.size() > 0){
+            for(PurchaseItems p : list){
+                p.setContractId(null);
+                purchaseItemsMapper.updateByPrimaryKey(p);
+            }
+        }
+
+        purchaseContract.setIsActive(CommonConstant.INVALID);
+        purchaseContract.setUpdateTime(time);
+        purchaseContractMapper.updateByPrimaryKeySelective(purchaseContract);
+
     }
 
     /**
@@ -124,11 +129,18 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
     @Override
     public void updateSupplyPrice(PurchaseSupply purchaseSupply) {
 
-        if(purchaseSupply.getPrice() != null && purchaseSupply.getNumber() != null){
+        PurchaseSupply ps = purchaseSupplyMapper.selectByPrimaryKey(purchaseSupply.getId());
 
-            purchaseSupply.setTotalPrice(purchaseSupply.getPrice()*purchaseSupply.getNumber());
-            purchaseSupply.setUpdateTime(new Date().getTime());
-            purchaseSupplyMapper.updateByPrimaryKeySelective(purchaseSupply);
+        if(ps.getPrice() != null && ps.getNumber() != null){
+            //将修改前的供货价存入到被修正价保存
+            ps.setRevisedPrice(ps.getPrice());
+            //再将修正后的价格覆盖掉修正前的价格
+            ps.setPrice(purchaseSupply.getRevisedPrice());
+            ps.setRevisePeople(purchaseSupply.getRevisePeople());
+            ps.setRevisedRemark(purchaseSupply.getRevisedRemark());
+            ps.setReviseTime(new Date().getTime());
+            ps.setTotalPrice(purchaseSupply.getRevisedPrice() * ps.getNumber());
+            purchaseSupplyMapper.updateByPrimaryKeySelective(ps);
         }else {
             throw new CustomerException("供货单价或供货数量不能为空!");
         }
@@ -174,5 +186,17 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
             String newContractNo = "XGXZXGX" + YMD + "-" + "01";
             return newContractNo;
         }
+    }
+
+    @Override
+    public void purchaseContractSend(PurchaseContract purchaseContract) {
+
+        //先判定是否已送审(是否有送审人)
+        PurchaseContract pc = purchaseContractMapper.selectByPrimaryKey(purchaseContract.getId());
+        if (pc.getIsActive() == CommonConstant.EFFECTIVE && pc.getSender() != null){
+            throw new CustomerException("已送审!请勿重复提交");
+        }
+        purchaseContract.setSendTime(new Date().getTime());
+        purchaseContractMapper.updateByPrimaryKeySelective(purchaseContract);
     }
 }

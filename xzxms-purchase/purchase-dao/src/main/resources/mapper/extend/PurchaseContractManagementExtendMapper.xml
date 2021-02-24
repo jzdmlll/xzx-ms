@@ -46,7 +46,7 @@
         SELECT id,project_name FROM `purchase_project`
         where is_active = 1
         <if test="projectName != null">
-            and project_name like "%"#{projectName}"%"
+            and project_name like CONCAT('%', #{projectName},'%')
         </if>
         ORDER BY time DESC
     </select>
@@ -76,7 +76,7 @@
         FROM purchase_items inner join purchase_supply on purchase_items.id = purchase_supply.item_id
         where purchase_items.is_active = 1
             and purchase_supply.is_active=1
-            and contract_id=#{contractId, jdbcType = BIGINT}
+            and contract_id = #{contractId, jdbcType = BIGINT}
         order by purchase_supply.supplier
     </select>
     

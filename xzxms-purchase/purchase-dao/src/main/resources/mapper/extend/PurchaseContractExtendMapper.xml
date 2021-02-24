@@ -6,7 +6,7 @@
         <where>
             is_active = 1
             <if test="contractNo!=null and contractNo!=''">
-                and contract_no like "%"#{contractNo}"%"
+                and contract_no like CONCAT('%',#{contractNo},'%')
             </if>
         </where>
     </select>
@@ -43,7 +43,7 @@
                 and pp.id = #{projectId}
             </if>
             <if test="contractName != null and contractName != ''">
-                and pc.contract_name like "%"#{contractName}"%"
+                and pc.contract_name like CONCAT('%',#{contractName},'%')
             </if>
         </where>
     </select>

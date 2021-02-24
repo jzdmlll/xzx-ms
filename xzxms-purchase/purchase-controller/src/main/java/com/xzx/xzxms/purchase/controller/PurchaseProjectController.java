@@ -3,6 +3,7 @@ package com.xzx.xzxms.purchase.controller;
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
 import com.xzx.xzxms.purchase.bean.PurchaseProject;
+import com.xzx.xzxms.purchase.bean.vm.PurchaseProjectExtend;
 import com.xzx.xzxms.purchase.service.IPurchaseProjectService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,14 +34,16 @@ public class PurchaseProjectController {
 
     /**
      * tjz
-     * @param id
+     * @param
      * @return
      */
-    @ApiOperation(value = "通过项目id进行查询")
-    @GetMapping(value ="findById")
-    public Message findById(Long id){
-        List<PurchaseProject> list = iPurchaseProjectServiceImpl.findById(id);
-        return MessageUtil.success("success",list);
+
+
+    @ApiOperation(value = "查询所有采购项目的类型")
+    @GetMapping(value = "findByAll")
+    public Message findByAll(){
+        List<PurchaseProjectExtend> purchaseProjectExtends = iPurchaseProjectServiceImpl.findByAll();
+        return MessageUtil.success("success",purchaseProjectExtends);
     }
 
     /**
