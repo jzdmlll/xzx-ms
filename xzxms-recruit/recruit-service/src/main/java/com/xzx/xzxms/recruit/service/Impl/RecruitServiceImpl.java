@@ -61,12 +61,20 @@ public class RecruitServiceImpl implements RecruitService {
      * 周嘉玮
      * 2 - 修改招标项目信息（公共）
      */
+    @Transactional
     @Override
     public String updateRecruitProjectService(RecruitProject recruitProject) {
         RecruitProjectExample recruitProjectExample = new RecruitProjectExample();
         recruitProjectExample.createCriteria().andIdEqualTo(recruitProject.getId()).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
-        recruitProjectMapper.updateByExampleSelective(recruitProject, recruitProjectExample);
-        return "success";
+        List<RecruitProject> recruitProjects = recruitProjectMapper.selectByExample(recruitProjectExample);
+        if (recruitProjects.size() == 1){
+            recruitProjectMapper.updateByExampleSelective(recruitProject, recruitProjectExample);
+            return "success";
+        }else if (recruitProjects.size() == 0){
+            return "查无此项";
+        }else {
+            return "error";
+        }
     }
 
     /**
