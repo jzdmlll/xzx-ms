@@ -9,13 +9,14 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>com.xzx</groupId>
     <artifactId>xzxms-tender</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>tender-bean</module>
         <module>tender-controller</module>
-        <module>tender-dao</module>
         <module>tender-service</module>
+        <module>tender-dao</module>
+        <module>tender-bean</module>
     </modules>
 
     <build>
@@ -27,5 +28,6 @@
             </plugin>
         </plugins>
     </build>
+
 
 </project>
