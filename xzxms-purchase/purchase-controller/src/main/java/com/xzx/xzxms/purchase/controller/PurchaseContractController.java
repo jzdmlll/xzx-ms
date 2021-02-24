@@ -40,6 +40,13 @@ public class PurchaseContractController {
         return MessageUtil.success("success");
     }
 
+    @ApiOperation(value = "采购合同送审")
+    @PostMapping(value = "purchaseContractSend")
+    public Message purchaseContractSend(PurchaseContract purchaseContract){
+        iPurchaseContractServiceImpl.purchaseContractSend(purchaseContract);
+        return MessageUtil.success("success");
+    }
+
     @ApiOperation(value = "根据合同编码进行模糊查询")
     @GetMapping(value = "findAllLikeByContractNo")
     public Message findAllLikeByContractNo(String contractNo){

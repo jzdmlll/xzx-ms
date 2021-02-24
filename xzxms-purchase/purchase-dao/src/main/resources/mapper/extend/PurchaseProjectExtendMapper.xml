@@ -15,7 +15,7 @@
         <where>
             pro.is_active = 1
             <if test="name!=null and name!=''">
-                and pro.project_name like "%"#{name}"%"
+                and pro.project_name like CONCAT('%',#{name},'%')
             </if>
         </where>
         order by pro.time desc

@@ -54,4 +54,11 @@ public interface IPurchaseContractService {
      */
     String automaticGenerationContractNo();
 
+    /**
+     * 采购合同送审
+     * sunny
+     * 2021/02/23
+     * @param purchaseContract
+     */
+    void purchaseContractSend(PurchaseContract purchaseContract);
 }

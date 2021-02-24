@@ -20,7 +20,7 @@
         <where>
           pro.is_active = 1 and i.is_active = 1 and q.is_active = 1
           <if test="proName != null and proName != ''">
-            and pro.name like "%"#{proName}"%"
+            and pro.name like CONCAT('%',#{proName},'%')
           </if>
         </where>
         GROUP BY pro.id
