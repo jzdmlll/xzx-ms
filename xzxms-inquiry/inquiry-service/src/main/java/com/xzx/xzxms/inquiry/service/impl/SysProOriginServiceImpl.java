@@ -1,5 +1,6 @@
 package com.xzx.xzxms.inquiry.service.impl;
 
+import com.xzx.xzxms.commons.constant.CommonConstant;
 import com.xzx.xzxms.commons.utils.CustomerException;
 import com.xzx.xzxms.commons.utils.IDUtils;
 import com.xzx.xzxms.inquiry.dao.SysProOriginMapper;
@@ -19,7 +20,8 @@ public class SysProOriginServiceImpl  implements ISysProOriginService {
     @Override
     public List<SysProOrigin> findAll() {
         SysProOriginExample example = new SysProOriginExample();
-        example.createCriteria().andIsActiveEqualTo(1);
+        example.createCriteria().andIsActiveEqualTo(CommonConstant.EFFECTIVE);
+        example.setOrderByClause("time desc");
         return sysProOriginMapper.selectByExample(example);
     }
 
