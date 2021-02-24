@@ -10,7 +10,7 @@ import com.xzx.xzxms.inquiry.dao.SysProDetailMapper;
 import com.xzx.xzxms.purchase.bean.PurchaseItems;
 import com.xzx.xzxms.purchase.bean.PurchaseItemsExample;
 import com.xzx.xzxms.purchase.bean.PurchaseProject;
-import com.xzx.xzxms.purchase.bean.PurchaseProjectExample;
+import com.xzx.xzxms.purchase.bean.vm.PurchaseProjectExtend;
 import com.xzx.xzxms.purchase.dao.PurchaseItemsMapper;
 import com.xzx.xzxms.purchase.dao.PurchaseProjectMapper;
 import com.xzx.xzxms.purchase.dao.extend.PurchaseProjectExtendMapper;
@@ -32,6 +32,9 @@ public class PurchaseProjectServiceImpl implements IPurchaseProjectService {
     private SysProDetailMapper sysProDetailMapper;
     @Resource
     private PurchaseItemsMapper purchaseItemsMapper;
+
+
+
     /**
      * 模糊查询项目名
      * @param name
@@ -45,15 +48,12 @@ public class PurchaseProjectServiceImpl implements IPurchaseProjectService {
 
     /**
      * 通过主键id查询采购项目对象
-     * @param id
+     * @param
      * @return
      */
     @Override
-    //使用example的筛选方式，通过selectByExample方法进行查询
-    public List<PurchaseProject> findById(Long id) {
-        PurchaseProjectExample example = new PurchaseProjectExample();
-        example.createCriteria().andIdEqualTo(id).andIsActiveEqualTo(1);
-        return purchaseProjectMapper.selectByExample(example);
+    public List<PurchaseProjectExtend> findByAll() {
+        return purchaseProjectExtendMapper.findByAll();
     }
 
     /**

@@ -20,4 +20,22 @@
         </where>
         order by pro.time desc
     </select>
+
+    <select id="findByAll" resultMap="PurchaseProjectExtendResultMap2">
+       SELECT
+       p.*,
+       t.type as purchaseProjectType
+       FROM purchase_project p
+       LEFT JOIN purchase_pro_type t on t.id = p.purchase_pro_type_id
+        <where>
+          p.is_active=1
+          and t.is_active=1
+        </where>
+    </select>
+
+    <resultMap id="PurchaseProjectExtendResultMap2" type="com.xzx.xzxms.purchase.bean.vm.PurchaseProjectExtend" extends="com.xzx.xzxms.purchase.dao.PurchaseProjectMapper.BaseResultMap">
+        <result property="purchaseProjectType" column="purchaseProjectType"></result>
+
+    </resultMap>
+
 </mapper>
