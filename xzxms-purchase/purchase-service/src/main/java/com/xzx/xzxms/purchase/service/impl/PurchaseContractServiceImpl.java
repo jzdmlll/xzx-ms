@@ -129,11 +129,18 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
     @Override
     public void updateSupplyPrice(PurchaseSupply purchaseSupply) {
 
-        if(purchaseSupply.getPrice() != null && purchaseSupply.getNumber() != null){
+        PurchaseSupply ps = purchaseSupplyMapper.selectByPrimaryKey(purchaseSupply.getId());
 
-            purchaseSupply.setTotalPrice(purchaseSupply.getPrice()*purchaseSupply.getNumber());
-            purchaseSupply.setUpdateTime(new Date().getTime());
-            purchaseSupplyMapper.updateByPrimaryKeySelective(purchaseSupply);
+        if(ps.getPrice() != null && ps.getNumber() != null){
+            //将修改前的供货价存入到被修正价保存
+            ps.setRevisedPrice(ps.getPrice());
+            //再将修正后的价格覆盖掉修正前的价格
+            ps.setPrice(purchaseSupply.getRevisedPrice());
+            ps.setRevisePeople(purchaseSupply.getRevisePeople());
+            ps.setRevisedRemark(purchaseSupply.getRevisedRemark());
+            ps.setReviseTime(new Date().getTime());
+            ps.setTotalPrice(purchaseSupply.getRevisedPrice() * ps.getNumber());
+            purchaseSupplyMapper.updateByPrimaryKeySelective(ps);
         }else {
             throw new CustomerException("供货单价或供货数量不能为空!");
         }
