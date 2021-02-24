@@ -1,5 +1,6 @@
 package com.xzx.xzxms.inquiry.service.impl;
 
+import com.xzx.xzxms.commons.constant.CommonConstant;
 import com.xzx.xzxms.commons.utils.CustomerException;
 import com.xzx.xzxms.commons.utils.IDUtils;
 import com.xzx.xzxms.inquiry.dao.SysProTypeMapper;
@@ -20,7 +21,9 @@ public class SysProTypeServiceImpl implements ISysProTypeService {
     @Override
     public List<SysProType> findAll() {
         SysProTypeExample example = new SysProTypeExample();
-        example.createCriteria().andIsActiveEqualTo(1);
+
+        example.createCriteria().andIsActiveEqualTo(CommonConstant.EFFECTIVE);
+        example.setOrderByClause("time desc");
         return sysProTypeMapper.selectByExample(example);
     }
 

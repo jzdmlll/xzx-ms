@@ -142,7 +142,7 @@ public class RecruitFileServiceImpl implements RecruitFileService {
     @Override
     public String deleteFileByIdService(Long id) {
         RecruitFileExample recruitFileExample = new RecruitFileExample();
-        recruitFileExample.createCriteria().andIdEqualTo(id).andIsActiveEqualTo(1);
+        recruitFileExample.createCriteria().andIdEqualTo(id).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
         recruitFileMapper.deleteByExample(recruitFileExample);
         return "success";
     }
@@ -154,7 +154,7 @@ public class RecruitFileServiceImpl implements RecruitFileService {
     @Override
     public List<RecruitFile> findFileByOrderIdAndTypeService(RecruitFile recruitFile) {
         RecruitFileExample recruitFileExample = new RecruitFileExample();
-        recruitFileExample.createCriteria().andOrderIdEqualTo(recruitFile.getOrderId()).andTypeEqualTo(recruitFile.getType()).andIsActiveEqualTo(1);
+        recruitFileExample.createCriteria().andOrderIdEqualTo(recruitFile.getOrderId()).andTypeEqualTo(recruitFile.getType()).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
         List<RecruitFile> recruitFiles = recruitFileMapper.selectByExample(recruitFileExample);
         return recruitFiles;
     }
