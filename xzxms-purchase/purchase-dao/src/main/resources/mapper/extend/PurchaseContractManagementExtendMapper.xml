@@ -86,10 +86,10 @@
         where is_active = 1 and contract_id = #{contractId, jdbcType = BIGINT}
     </select>
     <resultMap id="selectPurchaseSupply" type="com.xzx.xzxms.purchase.vo.PurchaseContractGenerateNewVO" extends="com.xzx.xzxms.purchase.dao.PurchaseItemsMapper.BaseResultMap">
-        <association property="purchaseSupply" column="id" select="findByItemId"></association>
+        <collection  property="purchaseSupply" column="id" select="findByItemId"></collection>
     </resultMap>
     <select id="findByItemId" resultType="com.xzx.xzxms.purchase.bean.PurchaseSupply">
         select * from purchase_supply
-        where item_id = #{itemId}
+        where item_id = #{itemId} and is_active = 1
     </select>
 </mapper>
