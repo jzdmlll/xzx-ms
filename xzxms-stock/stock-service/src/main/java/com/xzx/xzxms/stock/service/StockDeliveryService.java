@@ -5,6 +5,7 @@ package com.xzx.xzxms.stock.service;/**
  */
 
 import com.xzx.xzxms.stock.bean.StockDelivery;
+import com.xzx.xzxms.stock.bean.StockEntry;
 import com.xzx.xzxms.stock.vo.StockDeliveryVO;
 
 import java.util.List;
@@ -28,5 +29,11 @@ public interface StockDeliveryService {
      * 批量出库
      * @param stockDeliveries
      */
-    void delivery(List<StockDelivery> stockDeliveries);
+    void batchDelivery(List<StockDelivery> stockDeliveries);
+
+    /**
+     * 单个出库
+     * @param stockDelivery
+     */
+    void signalDelivery(StockDelivery stockDelivery);
 }

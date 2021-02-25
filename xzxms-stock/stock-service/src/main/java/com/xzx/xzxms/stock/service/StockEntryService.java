@@ -28,5 +28,29 @@ public interface StockEntryService {
      * 批量入库
      * @param stockEntries
      */
-    void entry(List<StockEntry> stockEntries);
+    void batchEntry(List<StockEntry> stockEntries);
+
+    /**
+     * 单个入库
+     * @param stockEntry
+     */
+    void signalEntry(StockEntry stockEntry);
+
+    /**
+     * 批量入库撤销
+     * @param stockEntries
+     */
+    void revokeBatchEntry(List<StockEntry> stockEntries);
+
+    /**
+     * 单个入库撤销
+     * @param stockEntry
+     */
+    void revokeSignalEntry(StockEntry stockEntry);
+
+    /**
+     * 单个入库数量修改
+     * @param stockEntry
+     */
+    void updateEntryNumber(StockEntry stockEntry);
 }

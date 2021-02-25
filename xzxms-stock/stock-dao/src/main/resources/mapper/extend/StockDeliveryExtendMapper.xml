@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzx.xzxms.stock.dao.extend.StockDeliveryExtendMapper">
+    <select id="findDeliveryByParams" resultType="com.xzx.xzxms.stock.vo.StockDeliveryVO">
+        select * from stock_delivery_vo
+        <if test="item != null and item != ''">
+            and item like CONCAT('%',{#item},'%')
+        </if>
+    </select>
+    
+    <select id="findStockNumberByItemId">
+        select sum(delivery_number) from stock_delivery where is_active = 1 and item_id = {#itemId} group by item_id
+    </select>
+</mapper>
