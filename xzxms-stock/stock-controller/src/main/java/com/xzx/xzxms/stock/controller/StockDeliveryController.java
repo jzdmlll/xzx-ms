@@ -42,10 +42,18 @@ public class StockDeliveryController {
     }
 
     @ApiOperation(value = "批量出库")
-    @PostMapping(value = "delivery")
-    public Message delivery(List<StockDelivery> stockDeliveries) {
+    @PostMapping(value = "batchDelivery")
+    public Message batchDelivery(List<StockDelivery> stockDeliveries) {
 
-        stockDeliveryServiceImpl.delivery(stockDeliveries);
+        stockDeliveryServiceImpl.batchDelivery(stockDeliveries);
+        return MessageUtil.success("success");
+    }
+
+    @ApiOperation(value = "单个出库")
+    @PostMapping(value = "signalDelivery")
+    public Message signalDelivery(StockDelivery stockDelivery) {
+
+        stockDeliveryServiceImpl.signalDelivery(stockDelivery);
         return MessageUtil.success("success");
     }
 }

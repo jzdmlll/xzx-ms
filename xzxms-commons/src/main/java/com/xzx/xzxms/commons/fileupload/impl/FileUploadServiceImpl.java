@@ -208,9 +208,37 @@ public class FileUploadServiceImpl implements IFileUploadService {
             file.setOtherId(otherId);
             file.setTime(time);
             file.setIsActive(CommonConstant.EFFECTIVE);
-            file.setIsUseful(CommonConstant.IS_NOT_USEFUL);
             sysFileMapper.insert(file);
         }
+    }
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public void commonFileUpload(Long otherId, List<SysFile> fileList, Integer fileType, String operator) {
+        Long time = new Date().getTime();
+
+        // 遍历
+        for (SysFile file : fileList) {
+            if (jedisDaoImpl.exists(file.getId().toString())) {
+                //从redis中取出base64文件码
+                String base64File = jedisDaoImpl.get(file.getId().toString());
+                //解码，还原成输入流
+                InputStream inputStream = Base64Util.decodeBase64File(base64File);
+                //清除redis该文件缓存
+                jedisDaoImpl.del(file.getId().toString());
+                //上传到Nginx
+                Map<String, Object> map = fileUploadServiceImpl.uploadByStream(inputStream, file.getName());
+                file.setOtherId(otherId);
+                file.setType(fileType);
+                file.setTime(time);
+                file.setUrl(map.get("url").toString());
+                file.setIsActive(CommonConstant.EFFECTIVE);
+                file.setOperator(operator);
+                sysFileMapper.insert(file);
+            }else {
+                throw new CustomerException("文件上传信息过期，请重新上传");
+            }
+        }
+
     }
 }
 

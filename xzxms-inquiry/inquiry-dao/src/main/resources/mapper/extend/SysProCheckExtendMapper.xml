@@ -73,42 +73,42 @@
 
 
     <select id="findBusinessAuditDeal" resultType="com.xzx.xzxms.inquiry.vm.ToDoList">
-        SELECT 	pro.`name` as pro_name
+        SELECT 	pro.`name` as pro_name, pro.id pro_id
 				FROM inquiry i LEFT JOIN quote q on i.id = q.inquiry_id
 				LEFT JOIN sys_pro_check c on q.id = c.quote_id
 				LEFT JOIN sys_pro_detail pro on pro.id = i.pro_detail_id
 				WHERE i.is_active = 1 and q.is_active = 1 AND pro.is_active = 1 AND c.business_audit = 0
-				group by pro.name
+				group by pro.name, pro.id
 				ORDER BY pro.time desc
     </select>
 
     <select id="findTechnicalAuditDeal" resultType="com.xzx.xzxms.inquiry.vm.ToDoList">
-        SELECT 	pro.`name` as pro_name
+        SELECT 	pro.`name` as pro_name, pro.id pro_id
 				FROM inquiry i LEFT JOIN quote q on i.id = q.inquiry_id
 				LEFT JOIN sys_pro_check c on q.id = c.quote_id
 				LEFT JOIN sys_pro_detail pro on pro.id = i.pro_detail_id
 				WHERE i.is_active = 1 and q.is_active = 1 AND pro.is_active = 1 AND c.technical_audit = 0
-				group by pro.name
+				group by pro.name, pro.id
 				ORDER BY pro.time desc
     </select>
 
     <select id="findCompareAuditDeal" resultType="com.xzx.xzxms.inquiry.vm.ToDoList">
-        SELECT 	pro.`name` as pro_name
+        SELECT 	pro.`name` as pro_name, pro.id pro_id
 				FROM inquiry i LEFT JOIN quote q on i.id = q.inquiry_id
 				LEFT JOIN sys_pro_check c on q.id = c.quote_id
 				LEFT JOIN sys_pro_detail pro on pro.id = i.pro_detail_id
 				WHERE i.is_active = 1 and q.is_active = 1 AND pro.is_active = 1 AND c.technical_audit != 0 AND c.business_audit != 0 AND c.compare_audit = 0
-                group by pro.name
+                group by pro.name, pro.id
 				ORDER BY pro.time desc
     </select>
 
     <select id="findFinallyAuditDeal" resultType="com.xzx.xzxms.inquiry.vm.ToDoList">
-        SELECT 	pro.`name` as pro_name
+        SELECT 	pro.`name` as pro_name, pro.id pro_id
 				FROM inquiry i LEFT JOIN quote q on i.id = q.inquiry_id
 				LEFT JOIN sys_pro_check c on q.id = c.quote_id
 				LEFT JOIN sys_pro_detail pro on pro.id = i.pro_detail_id
 				WHERE i.is_active = 1 and q.is_active = 1 AND pro.is_active = 1 AND c.technical_audit != 0 AND c.business_audit != 0 AND c.compare_audit != 0 AND c.finally_audit = 0
-				group by pro.name
+				group by pro.name, pro.id
 				ORDER BY pro.time desc
     </select>
 

@@ -5,5 +5,6 @@
     select *
     FROM sys_pro_type
     where id=#{proTypeId,jdbcType=BIGINT}
+    order by time desc
   </select>
 </mapper>

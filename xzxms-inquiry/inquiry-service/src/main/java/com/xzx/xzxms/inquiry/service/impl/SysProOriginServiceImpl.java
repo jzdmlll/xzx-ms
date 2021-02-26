@@ -1,5 +1,6 @@
 package com.xzx.xzxms.inquiry.service.impl;
 
+import com.xzx.xzxms.commons.constant.CommonConstant;
 import com.xzx.xzxms.commons.utils.CustomerException;
 import com.xzx.xzxms.commons.utils.IDUtils;
 import com.xzx.xzxms.inquiry.dao.SysProOriginMapper;
@@ -9,6 +10,7 @@ import com.xzx.xzxms.inquiry.bean.SysProOriginExample;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -19,7 +21,8 @@ public class SysProOriginServiceImpl  implements ISysProOriginService {
     @Override
     public List<SysProOrigin> findAll() {
         SysProOriginExample example = new SysProOriginExample();
-        example.createCriteria().andIsActiveEqualTo(1);
+        example.createCriteria().andIsActiveEqualTo(CommonConstant.EFFECTIVE);
+        example.setOrderByClause("time desc");
         return sysProOriginMapper.selectByExample(example);
     }
 
@@ -32,6 +35,7 @@ public class SysProOriginServiceImpl  implements ISysProOriginService {
             if (list.size()>0){
                 throw new CustomerException("该项目编码已被使用，请重新输入!");
             }
+            proOrigin.setUpdateTime(new Date().getTime());
             sysProOriginMapper.updateByPrimaryKeySelective(proOrigin);
         }else {
             SysProOriginExample example = new SysProOriginExample();
@@ -41,7 +45,8 @@ public class SysProOriginServiceImpl  implements ISysProOriginService {
                 throw new CustomerException("该项目来源已存在，请勿重复插入!");
             }
             proOrigin.setId(IDUtils.getId());
-            proOrigin.setIsActive(1);
+            proOrigin.setIsActive(CommonConstant.EFFECTIVE);
+            proOrigin.setTime(new Date().getTime());
             sysProOriginMapper.insert(proOrigin);
         }
     }

@@ -1,5 +1,7 @@
 package com.xzx.xzxms.inquiry.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
 import com.xzx.xzxms.inquiry.service.ISysProDetailService;
@@ -29,8 +31,15 @@ public class SysProDetailController {
 
     @ApiOperation(value = "查询所有项目的类型和来源")
     @GetMapping(value = "findByAll")
-    public Message findByAll(){
+    public Message findByAll( @RequestParam(value = "pageFlag",required = false,defaultValue = "0")Integer pageFlag,
+                              @RequestParam(value = "pageNum",required = false,defaultValue = "1")Integer pageNum,
+                              @RequestParam(value = "pageSize",required = false,defaultValue = "20")Integer pageSize){
         List<SysProDetailExtend> sysProDetailExtend = sysProDetailServiceImpl.findById();
+        if (pageFlag == 1) {
+            PageHelper.startPage(pageNum, pageSize, "time desc");
+            PageInfo<SysProDetailExtend> pageInfo = new PageInfo<>(sysProDetailExtend);
+            return MessageUtil.success("success", pageInfo);
+        }
         return MessageUtil.success("success",sysProDetailExtend);
     }
 

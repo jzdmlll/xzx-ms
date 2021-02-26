@@ -6,7 +6,7 @@
     from stock_invoice i
     left join sys_file f on i.id = f.other_id
     <where>
-      f.type = 6 and i.is_active = 1 and f.is_active = 1
+      i.is_active = 1
       <if test="contractId != null and contractId != ''">
         and i.contract_id = #{contractId}
       </if>

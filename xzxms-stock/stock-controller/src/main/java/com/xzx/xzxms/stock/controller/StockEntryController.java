@@ -40,10 +40,18 @@ public class StockEntryController {
     }
 
     @ApiOperation(value = "批量入库")
-    @PostMapping(value = "entry")
-    public Message entry(List<StockEntry> stockEntries) {
+    @PostMapping(value = "batchEntry")
+    public Message batchEntry(List<StockEntry> stockEntries) {
 
-        stockEntryServiceImpl.entry(stockEntries);
+        stockEntryServiceImpl.batchEntry(stockEntries);
+        return MessageUtil.success("success");
+    }
+
+    @ApiOperation(value = "单个入库")
+    @PostMapping(value = "signalEntry")
+    public Message signalEntry(StockEntry stockEntry) {
+
+        stockEntryServiceImpl.signalEntry(stockEntry);
         return MessageUtil.success("success");
     }
 }
