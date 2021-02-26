@@ -100,6 +100,8 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
                 sysFileMapper.insert(file);
             }
             //proDetail.setProRate(proDetail.getProRate()*1000);
+            proDetail.setTime(new Date().getTime());
+            proDetail.setIsActive(CommonConstant.EFFECTIVE);
             sysProDetailMapper.updateByPrimaryKeySelective(proDetail);
 
         }else {
