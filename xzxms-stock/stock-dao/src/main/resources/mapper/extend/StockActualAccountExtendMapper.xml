@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xzx.xzxms.equipment.dao.extend.EquipmentOrderManagementExtendMapper">
+<mapper namespace="com.xzx.xzxms.stock.dao.extend.StockActualAccountExtendMapper">
     <select id="statisticsActualAccountByContractId" resultType="java.lang.Double">
-        select sum(money) from equipment_actual_account where is_active = 1
+        select sum(money) from stock_actual_account where is_active = 1
         <if test="contractId != null">
            and contract_id = #{contractId}
         </if>

@@ -31,10 +31,19 @@ public interface IFileUploadService {
     Map<String,Object> uploadByRedis(MultipartFile uploadFile) throws IOException;
 
     /**
-     * 各模块文件上传
+     * 各模块文件上传(带回显)
      * @param otherId
      * @param fileList 前端需写入操作人
      * @param fileType 文件类型
      */
     void fileUpload(Long otherId, List<SysFile> fileList, Integer fileType, String operator);
+
+    /**
+     * 各模块文件上传（普通，不带回显）
+     * @param otherId
+     * @param fileList
+     * @param fileType
+     * @param operator
+     */
+    void commonFileUpload(Long otherId, List<SysFile> fileList, Integer fileType, String operator);
 }

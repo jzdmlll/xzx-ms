@@ -5,10 +5,7 @@ import com.xzx.xzxms.commons.utils.MessageUtil;
 import com.xzx.xzxms.stock.bean.StockActualAccount;
 import com.xzx.xzxms.stock.service.StockActualAccountService;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -37,7 +34,7 @@ public class StockActualAccountController {
 
     @ApiOperation(value = "添加实际付款情况")
     @PostMapping(value = "addActualAccount")
-    public Message addActualAccount(StockActualAccount equipmentActualAccount){
+    public Message addActualAccount(@RequestBody StockActualAccount equipmentActualAccount){
 
         stockActualAccountService.addActualAccount(equipmentActualAccount);
         return MessageUtil.success("success");

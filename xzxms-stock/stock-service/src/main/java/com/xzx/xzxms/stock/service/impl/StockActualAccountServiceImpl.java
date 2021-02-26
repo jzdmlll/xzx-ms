@@ -45,7 +45,7 @@ public class StockActualAccountServiceImpl implements StockActualAccountService 
     public void addActualAccount(StockActualAccount stockActualAccount) {
 
         Double moneys = statisticsActualAccountByContractId(stockActualAccount.getContractId());
-        if (moneys > 0){
+        if (moneys!=null && moneys > 0){
             StockContractAttributeExample attributeExample = new StockContractAttributeExample();
             attributeExample.createCriteria().andContractIdEqualTo(stockActualAccount.getContractId()).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
             List<StockContractAttribute> stockContractAttributes = stockContractAttributeMapper.selectByExample(attributeExample);
@@ -59,6 +59,7 @@ public class StockActualAccountServiceImpl implements StockActualAccountService 
             }
         }
         stockActualAccount.setId(IDUtils.getId());
+        stockActualAccount.setTime(new Date().getTime());
         stockActualAccount.setIsActive(CommonConstant.EFFECTIVE);
         stockActualAccountMapper.insert(stockActualAccount);
     }
