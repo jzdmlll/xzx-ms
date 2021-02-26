@@ -402,7 +402,8 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
 
                 ProPurchase proPurchase = proPurchases.get(0);
 
-                if (proPurchase.getInquiry().getItemId() == null){
+                Long itemId = proPurchase.getInquiry().getItemId();
+                if (itemId == null){
 
                     purchaseProjectId = proPurchase.getPurchaseProId();
 
@@ -485,7 +486,35 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
                     inquiryMapper.updateByPrimaryKeySelective(inquiry);
 
                 }else {
-                    throw new CustomerException("提交异常, 此询价结果已发往采购!");
+                    //修改 2021/02/26
+                    //若询价表中的采购项ID存在,则表明此询价项已在采购项中,若采购项未有对应的供货项,则需要添加到对应的供货项中
+                    PurchaseSupplyExample supplyExample = new PurchaseSupplyExample();
+                    supplyExample.createCriteria().andItemIdEqualTo(itemId).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
+                    long supplyNum = purchaseSupplyMapper.countByExample(supplyExample);
+                    if (supplyNum != 0){
+                        throw new CustomerException(proPurchase.getInquiry().getName() + "已存在供货信息,请勿发往采购!");
+                    }
+                    //如果不存在供货项,则需要将信息插入到对应的供货表中
+                    //最后生成供货表
+                    PurchaseSupply purchaseSupply = new PurchaseSupply();
+                    long purchaseSupplyId = IDUtils.getId();
+                    purchaseSupply.setId(purchaseSupplyId);
+                    purchaseSupply.setSupplierId(proPurchase.getQuote().getSupplierId());
+                    purchaseSupply.setSupplier(proPurchase.getQuote().getSupplier());
+                    purchaseSupply.setItemId(itemId);
+                    purchaseSupply.setModel(proPurchase.getQuote().getSuModel());
+                    purchaseSupply.setBrand(proPurchase.getQuote().getSuBrand());
+                    purchaseSupply.setParams(proPurchase.getQuote().getSuParams());
+                    purchaseSupply.setPrice(proPurchase.getQuote().getSuPrice());
+                    purchaseSupply.setDelivery(proPurchase.getQuote().getSuDelivery());
+                    purchaseSupply.setRemark(proPurchase.getQuote().getSuRemark());
+                    purchaseSupply.setNumber(proPurchase.getInquiry().getNumber());
+                    purchaseSupply.setWarranty(proPurchase.getQuote().getWarranty());
+                    purchaseSupply.setIsActive(CommonConstant.EFFECTIVE);
+                    purchaseSupply.setOperator(operator+"");
+                    purchaseSupply.setTime(new Date().getTime());
+                    purchaseSupply.setImage(proPurchase.getQuote().getImage());
+                    purchaseSupplyMapper.insert(purchaseSupply);
                 }
             }else {
                 throw new CustomerException("提交异常，存在询价结果供应商报价无效!");
