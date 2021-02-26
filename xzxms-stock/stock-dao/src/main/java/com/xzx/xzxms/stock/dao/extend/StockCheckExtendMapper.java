@@ -5,6 +5,7 @@ package com.xzx.xzxms.stock.dao.extend;/**
  */
 
 import com.xzx.xzxms.stock.vo.StockCheckVO;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
  *@Author sunny
  *@Date DATE{TIME}
  */
+@Mapper
 public interface StockCheckExtendMapper {
 
     /**
