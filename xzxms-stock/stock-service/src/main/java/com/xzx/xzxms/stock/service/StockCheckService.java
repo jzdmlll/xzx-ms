@@ -28,8 +28,8 @@ public interface StockCheckService {
     List<StockCheckVO> findStockCheck(Long proId, Long contractId, Long startTime, Long endTime);
 
     /**
-     * 批量签收
+     * 签收
      * @param stockChecks
      */
-    void sign(List<StockCheck> stockChecks);
+    void sign(StockCheck stockChecks);
 }

@@ -44,9 +44,9 @@ public class StockEntryServiceImpl implements StockEntryService {
     private StockMapper stockMapper;
 
     @Override
-    public List<StockEntryVO> findEntryByParams(String item) {
+    public List<StockEntryVO> findEntryByParams(String item, String contractId, String beginTime, String endTime) {
 
-        List<StockEntryVO> list = stockEntryExtendMapper.findEntryByParams(item);
+        List<StockEntryVO> list = stockEntryExtendMapper.findEntryByParams(item, contractId, beginTime, endTime);
         return list;
     }
 

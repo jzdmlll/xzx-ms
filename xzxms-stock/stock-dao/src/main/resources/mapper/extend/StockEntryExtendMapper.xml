@@ -3,8 +3,21 @@
 <mapper namespace="com.xzx.xzxms.stock.dao.extend.StockEntryExtendMapper">
     <select id="findEntryByParams" resultType="com.xzx.xzxms.stock.vo.StockEntryVO">
         select * from stock_entry_vo
-        <if test="item != null and item != ''">
-            and item like CONCAT('%',{#item},'%')
-        </if>
+        <where>
+            purchase_item.is_active = 1 and purchase_supply.is_active = 1 and stock_entry.is_active = 1
+            <if test="item != null and item != ''">
+                and item like CONCAT('%',{#item},'%')
+            </if>
+            <if test="contractId != null and contractId != ''">
+                and contractId = #{contractId}
+            </if>
+            <if test="beginTime != null and beginTime != ''">
+                and stock_entry.time >= #{beginTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                and stock_entry.time
+            </if>
+        </where>
+        order by stock_entry.time desc
     </select>
 </mapper>
