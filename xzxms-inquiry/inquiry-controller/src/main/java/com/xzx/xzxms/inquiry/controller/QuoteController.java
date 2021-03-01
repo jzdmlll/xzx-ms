@@ -64,6 +64,7 @@ public class QuoteController {
         PageHelper.startPage(pageNum, pageSize);
         List<QuoteExtendInquiry> list = iQuoteServiceImpl.findBySupplierOrPro(supplier,proId);
         PageInfo<QuoteExtendInquiry> pageInfo = new PageInfo<>(list);
+        PageHelper.clearPage();
         return MessageUtil.success("success",pageInfo);
     }
 

@@ -38,6 +38,7 @@ public class SysProDetailController {
         if (pageFlag == 1) {
             PageHelper.startPage(pageNum, pageSize, "time desc");
             PageInfo<SysProDetailExtend> pageInfo = new PageInfo<>(sysProDetailExtend);
+            PageHelper.clearPage();
             return MessageUtil.success("success", pageInfo);
         }
         return MessageUtil.success("success",sysProDetailExtend);

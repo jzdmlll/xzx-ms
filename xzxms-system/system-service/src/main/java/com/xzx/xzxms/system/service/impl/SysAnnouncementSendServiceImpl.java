@@ -38,6 +38,8 @@ public class SysAnnouncementSendServiceImpl implements ISysAnnouncementSendServi
         List<SysAnnouncementExtend> announcementSendPage = sysAnnouncementSendExtendMapper.getMyAnnouncementSendPage(userId, readFlag);
 
         PageHelper.startPage(page.getPageNum(), page.getPageSize(), page.getOrderBy());
-        return new PageInfo<>(announcementSendPage);
+        PageInfo<SysAnnouncementExtend> pageInfo = new PageInfo<>(announcementSendPage);
+        PageHelper.clearPage();
+        return pageInfo;
     }
 }

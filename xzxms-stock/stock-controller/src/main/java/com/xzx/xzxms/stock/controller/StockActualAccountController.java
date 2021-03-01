@@ -49,7 +49,7 @@ public class StockActualAccountController {
     }
 
     @ApiOperation(value = "根据合同ID查询已付款总金额")
-    @GetMapping(value = "setInvalidActualAccount")
+    @GetMapping(value = "statisticsActualAccountByContractId")
     public Message statisticsActualAccountByContractId(Long contractId){
 
         Double money = stockActualAccountService.statisticsActualAccountByContractId(contractId);

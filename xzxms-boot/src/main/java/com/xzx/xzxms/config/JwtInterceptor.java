@@ -11,6 +11,7 @@ import com.xzx.xzxms.system.bean.SysRolePrivilege;
 import com.xzx.xzxms.system.bean.extend.SysUserExtend;
 import com.xzx.xzxms.system.dao.SysPrivilegeMapper;
 import com.xzx.xzxms.system.dao.SysRolePrivilegeMapper;
+import com.xzx.xzxms.system.dao.extend.SysPrivilegeExtendMapper;
 import com.xzx.xzxms.system.service.ISysPrivilegeService;
 import com.xzx.xzxms.system.service.ISysUserService;
 import com.xzx.xzxms.system.vm.UserRoleVM;
@@ -30,8 +31,8 @@ import java.util.List;
 
 public class JwtInterceptor extends HandlerInterceptorAdapter {
 
-    @Autowired
-    private ISysPrivilegeService privilegeService;
+    @Resource
+    private SysPrivilegeExtendMapper sysPrivilegeExtendMapper;
     @Resource
     private SysPrivilegeMapper sysPrivilegeMapper;
     @Resource
@@ -55,38 +56,38 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
         // 获取请求头信息authorization信息
         String token = request.getHeader(JwtTokenUtil.AUTH_HEADER_KEY);
         String webSocketToken = null;
-        if(StringUtils.isEmpty(token)){
+        if (StringUtils.isEmpty(token)) {
             // 获取WebSocket请求token
             webSocketToken = request.getParameter("token");
             if (StringUtils.isEmpty(webSocketToken)) {
                 throw new UnAuthorizedException("用户还未登录");
-            }else {
+            } else {
                 token = webSocketToken;
             }
         }
 
         // 验证token是否有效--无效已做异常抛出，由全局异常处理后返回对应信息
         Claims claims = JwtTokenUtil.parseJWT(token, JwtTokenUtil.base64Secret);
-        if(claims == null ){
-            if(jedisDaoImpl.exists(token)) {
+        if (claims == null) {
+            if (jedisDaoImpl.exists(token)) {
                 response.setHeader("Access-Control-Expose-Headers", "refresh");
                 response.setHeader("refresh", "true");
             } else {
                 throw new AuthenticationException("token过期, 请重新登陆");
             }
-        }else {
+        } else {
 
             if (webSocketToken != null && !"".equals(webSocketToken)) {
                 // 验证WebSocket 请求token 是否有效
                 String userId = JwtTokenUtil.getUserId(token, JwtTokenUtil.base64Secret);
                 String path = request.getServletPath();
-                String substring = path.substring(path.lastIndexOf("/")+1, path.length());
-                if (substring!=null && substring.equals(userId)) {
+                String substring = path.substring(path.lastIndexOf("/") + 1, path.length());
+                if (substring != null && substring.equals(userId)) {
                     return true;
-                }else {
+                } else {
                     throw new AuthenticationException("token验证失败");
                 }
-            }else {
+            } else {
                 // 验证权限，通过token获取用户id，通过用户id获取权限，这里使用redis将用户信息维护在缓存中，减少与数据库交互次数
                 this.auth(token, request.getServletPath());
             }
@@ -95,47 +96,47 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
     }
 
     // 判断权限
-    private boolean auth(String token, String path){
+    private boolean auth(String token, String path) {
         long userId = Long.parseLong(JwtTokenUtil.getUserId(token, JwtTokenUtil.base64Secret));
         if (jedisDaoImpl.exists(token)) {
             String userJson = jedisDaoImpl.get(token);
             UserRoleVM userRoleVM = JsonUtils.jsonToPojo(userJson, UserRoleVM.class);
             List<Long> roleIds = userRoleVM.getRoles();
             if (roleIds != null && roleIds.size() > 0) {
-                for (Long roleId:roleIds) {
-                    String key = "xzx:privilege:"+roleId;
+                for (Long roleId : roleIds) {
+                    String key = "xzx:privilege:" + roleId;
                     List<SysPrivilege> privileges = new ArrayList<>();
                     if (jedisDaoImpl.exists(key)) {
                         String privilegeJson = jedisDaoImpl.get(key);
                         privileges = JsonUtils.jsonToList(privilegeJson, SysPrivilege.class);
-                    }else {
+                    } else {
                         // 查询出该用户的所有权限
-                        privileges = privilegeService.findByUserId(userId);
+                        privileges = sysPrivilegeExtendMapper.selectByRoleId(roleId);
                         jedisDaoImpl.set(key, JsonUtils.objectToJson(privileges));
                     }
                     // 匹配
-                    for(SysPrivilege p : privileges){
-                        if(p.getRoute().matches(path)){
+                    for (SysPrivilege p : privileges) {
+                        if (p.getRoute().matches(path)) {
                             return true;
                         }
                     }
                 }
             }
-        }else {
+        } else {
             throw new UnAuthorizedException("token过期，请重新登录");
         }
-        if(userId == 1 && autoAddPrivilege) {
+        if (userId == 1 && autoAddPrivilege) {
             // 自动添加权限
             SysPrivilegeExample example = new SysPrivilegeExample();
             example.createCriteria().andRouteEqualTo(path);
             Long result = sysPrivilegeMapper.countByExample(example);
-            if(result == 0) {
+            if (result == 0) {
                 String[] split = path.split("/");
                 String pathParentLike = split[1];
                 example = new SysPrivilegeExample();
-                example.createCriteria().andParentIdIsNull().andRouteLike("%"+pathParentLike+"%");
+                example.createCriteria().andParentIdIsNull().andRouteLike("%" + pathParentLike + "%");
                 List<SysPrivilege> sysPrivileges = sysPrivilegeMapper.selectByExample(example);
-                if(sysPrivileges.size() == 1) {
+                if (sysPrivileges.size() == 1) {
                     Long pId = sysPrivileges.get(0).getId();
                     SysPrivilege privilege = new SysPrivilege();
                     Long privilegeId = IDUtils.getId();
@@ -151,7 +152,7 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
                     sysPrivilegeMapper.insert(privilege);
                     // 自动授权
                     List<SysRole> roles = sysUserService.findById(userId).getRoles();
-                    if(roles.size() > 0) {
+                    if (roles.size() > 0) {
                         SysRolePrivilege sysRolePrivilege = new SysRolePrivilege();
                         sysRolePrivilege.setRoleId(roles.get(0).getId());
                         sysRolePrivilege.setPrivilegeId(privilegeId);
@@ -160,9 +161,9 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
                     }
 
                     baseCommonService.removePrivilegeRedis();
-                    throw new CustomerException("权限不足--自动添加路由【"+path+"】成功--自动授权成功");
+                    throw new CustomerException("权限不足--自动添加路由【" + path + "】成功--自动授权成功");
                 }
-                throw new CustomerException("权限不足--自动添加路由【"+path+"】失败，找不到父权限" );
+                throw new CustomerException("权限不足--自动添加路由【" + path + "】失败，找不到父权限");
             }
         }
         throw new PermissionException("权限不足");

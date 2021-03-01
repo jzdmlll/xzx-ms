@@ -13,6 +13,8 @@ import com.xzx.xzxms.system.dao.extend.SysRoleExtendMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.xzx.xzxms.system.service.ISysRoleService;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -28,6 +30,8 @@ public class SysRoleServiceImpl implements ISysRoleService {
     private SysRoleExtendMapper roleExtendMapper;
     @Autowired
     private BaseCommonService baseCommonService;
+
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     @Override
     public void authorization(long roleId, List<Long> privilegeIds) {
         // 根据roleId查询出所有的权限
