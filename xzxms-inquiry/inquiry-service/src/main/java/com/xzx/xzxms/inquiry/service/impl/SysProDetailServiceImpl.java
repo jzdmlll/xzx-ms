@@ -100,6 +100,7 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
                 sysFileMapper.insert(file);
             }
             //proDetail.setProRate(proDetail.getProRate()*1000);
+            proDetail.setUpdateTime(new Date().getTime());
             sysProDetailMapper.updateByPrimaryKeySelective(proDetail);
 
         }else {
@@ -197,19 +198,13 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
     @Override
     public List<SysProDetail> inquiryResultFindPro(String proName, Long startTime, Long overTime) {
 
-        SysProOriginExample example = new SysProOriginExample();
-        example.createCriteria().andNameEqualTo("招投标项目").andIsActiveEqualTo(CommonConstant.EFFECTIVE);
-        List<SysProOrigin> list = sysProOriginMapper.selectByExample(example);
-        if (list.size() > 0){
-            if(overTime == 0){
-                overTime = new Date().getTime();
-            }
-            SysProDetailExample sysProDetailExample = new SysProDetailExample();
-            sysProDetailExample.createCriteria().andIsActiveEqualTo(CommonConstant.EFFECTIVE).andNameLike("%"+proName+"%").andTimeBetween(startTime, overTime).andProOriginIdEqualTo(list.get(0).getId());
-            List<SysProDetail> sysProDetails = sysProDetailMapper.selectByExample(sysProDetailExample);
-            return sysProDetails;
+        if(overTime == 0){
+            overTime = new Date().getTime();
         }
-        return null;
+        SysProDetailExample sysProDetailExample = new SysProDetailExample();
+        sysProDetailExample.createCriteria().andIsActiveEqualTo(CommonConstant.EFFECTIVE).andNameLike("%"+proName+"%").andTimeBetween(startTime, overTime);
+        List<SysProDetail> sysProDetails = sysProDetailMapper.selectByExample(sysProDetailExample);
+        return sysProDetails;
     }
 
     @Override

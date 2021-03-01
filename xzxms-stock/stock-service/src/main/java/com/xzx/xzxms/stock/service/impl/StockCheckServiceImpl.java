@@ -45,19 +45,17 @@ public class StockCheckServiceImpl implements StockCheckService {
 
     @Transactional
     @Override
-    public void sign(List<StockCheck> stockChecks) {
+    public void sign(StockCheck stockCheck) {
 
         long time = new Date().getTime();
-        for(StockCheck stockCheck : stockChecks){
-            PurchaseItems purchaseItems = purchaseItemsMapper.selectByPrimaryKey(stockCheck.getItemId());
-            if (purchaseItems.getNumber() < stockCheck.getCheckNumber()){
-                throw new CustomerException("签收数量已大于应签收数量,签收失败!");
-            }
-            if (stockCheck.getCheckTime() == null){
-                stockCheck.setCheckTime(time+"");
-            }
-            stockCheck.setIsActive(CommonConstant.EFFECTIVE);
-            stockCheckMapper.insert(stockCheck);
+        PurchaseItems purchaseItems = purchaseItemsMapper.selectByPrimaryKey(stockCheck.getItemId());
+        if (purchaseItems.getNumber() < stockCheck.getCheckNumber()){
+            throw new CustomerException("签收数量已大于应签收数量,签收失败!");
         }
+        if (stockCheck.getCheckTime() == null){
+            stockCheck.setCheckTime(time+"");
+        }
+        stockCheck.setIsActive(CommonConstant.EFFECTIVE);
+        stockCheckMapper.insert(stockCheck);
     }
 }

@@ -6,6 +6,7 @@ package com.xzx.xzxms.stock.dao.extend;/**
 
 import com.xzx.xzxms.stock.vo.StockEntryVO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -21,7 +22,10 @@ public interface StockEntryExtendMapper {
     /**
      * 根据参数查询入库信息
      * @param item
+     * @param contractId
+     * @param beginTime
+     * @param endTime
      * @return
      */
-    List<StockEntryVO> findEntryByParams(String item);
+    List<StockEntryVO> findEntryByParams(@Param("item") String item, @Param("contractId") String contractId, @Param("beginTime") String beginTime, @Param("endTime") String endTime);
 }

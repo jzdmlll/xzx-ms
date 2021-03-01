@@ -27,8 +27,8 @@
         <if test="auditStatus != null">
             and audit_status = #{auditStatus, jdbcType = INTEGER}
         </if>
-        <if test="projectName != null">
-            and project_name like "%"#{projectName, jdbcType = VARCHAR}"%"
+        <if test="proId != null">
+            and proId = #{proId, jdbcType = VARCHAR}
         </if>
         <if test="startTime != null">
             and sender_time &gt;= #{startTime, jdbcType = BIGINT}

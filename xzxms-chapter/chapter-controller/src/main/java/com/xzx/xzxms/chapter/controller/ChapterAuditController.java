@@ -132,11 +132,11 @@ public class ChapterAuditController {
      */
     @ApiOperation("根据输入条件进行查询、模糊查询")
     @GetMapping("findChapterAuditorInfos")
-    public Message findChapterAuditorInfos(@Param("projectName") String projectName,
+    public Message findChapterAuditorInfos(@Param("proId") String proId,
                                            @Param("startTime") Long startTime,
                                            @Param("overTime") Long overTime,
                                            @Param("auditStatus") Integer auditStatus){
-        List<ChapterAudit> chapterAuditorInfos = chapterAuditExtendMapper.findChapterAuditorInfoByLike(projectName, startTime, overTime, auditStatus);
+        List<ChapterAudit> chapterAuditorInfos = chapterAuditExtendMapper.findChapterAuditorInfoByLike(proId, startTime, overTime, auditStatus);
         if (chapterAuditorInfos.size() > 0){
             return MessageUtil.success("success", chapterAuditorInfos);
         }else {

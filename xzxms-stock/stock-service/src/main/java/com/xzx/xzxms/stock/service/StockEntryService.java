@@ -18,11 +18,14 @@ import java.util.List;
 public interface StockEntryService {
 
     /**
-     * 查询出入库信息
+     * 查询入库信息
      * @param item
+     * @param contractId
+     * @param beginTime
+     * @param endTime
      * @return
      */
-    List<StockEntryVO> findEntryByParams(String item);
+    List<StockEntryVO> findEntryByParams(String item, String contractId, String beginTime, String endTime);
 
     /**
      * 批量入库

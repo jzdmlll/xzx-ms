@@ -33,9 +33,9 @@ public class StockEntryController {
 
     @ApiOperation(value = "查询入库信息")
     @GetMapping(value = "findEntryByParams")
-    public Message findEntryByParams(String item) {
+    public Message findEntryByParams(String item, String contractId, String beginTime, String endTime) {
 
-        List<StockEntryVO> list = stockEntryServiceImpl.findEntryByParams(item);
+        List<StockEntryVO> list = stockEntryServiceImpl.findEntryByParams(item, contractId, beginTime, endTime);
         return MessageUtil.success("success", list);
     }
 

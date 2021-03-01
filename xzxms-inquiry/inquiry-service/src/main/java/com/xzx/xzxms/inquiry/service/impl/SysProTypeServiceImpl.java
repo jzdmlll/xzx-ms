@@ -10,6 +10,7 @@ import com.xzx.xzxms.inquiry.bean.SysProTypeExample;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -31,6 +32,7 @@ public class SysProTypeServiceImpl implements ISysProTypeService {
     public void saveOrUpdate(SysProType proType) {
 
         if(proType.getId() != null){
+            proType.setUpdateTime(new Date().getTime());
             sysProTypeMapper.updateByPrimaryKeySelective(proType);
         }else {
             SysProTypeExample example=new SysProTypeExample();
@@ -41,6 +43,7 @@ public class SysProTypeServiceImpl implements ISysProTypeService {
             }
 
             proType.setId(IDUtils.getId());
+            proType.setTime(new Date().getTime());
             proType.setIsActive(1);
             sysProTypeMapper.insert(proType);
         }
