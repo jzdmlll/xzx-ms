@@ -53,7 +53,7 @@ public class ProductPoolController {
         PageHelper.startPage(pageNum, pageSize, "time desc");
         List<ProPoolExtend> list = productPoolServiceImpl.findByParams(name, brand, proName, model);
         PageInfo<ProPoolExtend> pageInfo = new PageInfo<>(list);
-
+        PageHelper.clearPage();
         return MessageUtil.success("success", pageInfo);
     }
 

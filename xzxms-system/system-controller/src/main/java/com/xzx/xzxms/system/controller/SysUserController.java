@@ -45,6 +45,7 @@ public class SysUserController {
         List<SysUser> all = userServiceImpl.findAll();
         PageInfo<SysUser> pi=new PageInfo<SysUser>(all);
         ms.setData(pi);
+        PageHelper.clearPage();
         return ms;
     }
 

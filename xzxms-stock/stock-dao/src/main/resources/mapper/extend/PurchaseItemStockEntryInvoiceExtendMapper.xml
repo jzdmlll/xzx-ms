@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzx.xzxms.stock.dao.extend.PurchaseItemStockEntryInvoiceExtendMapper">
+    <sql id="StockCheckAliases">
+      sc.id as sc_id,
+      sc.check_number as sc_check_number,
+      sc.check_operator as sc_check_operator,
+      sc.check_remark as sc_check_remark,
+      sc.check_time as sc_check_time,
+      sc.update_operator as sc_update_operator,
+      sc.update_time as sc_update_time
+    </sql>
+    <sql id="StockEntryAliases">
+      se.id as se_id,
+      se.entry_number as se_entry_number,
+      se.entry_person as se_entry_person,
+      se.entry_remark as se_entry_remark,
+      se.operator as se_operator,
+      se.time as se_time,
+      se.entry_time as se_entry_time,
+      se.update_operator as se_update_operator,
+      se.update_time as se_update_time
+    </sql>
+    <select id="findPurchaseItemStockEntryInvoiceByContractId" resultMap="PurchaseItemStockEntryInvoiceMap">
+        select
+          ps.*,
+          pi.item,
+          <include refid="StockCheckAliases" />,
+          <include refid="StockCheckAliases" />
+        from purchase_supply ps
+        left join purchase_items pi on ps.item_id = pi.id
+        left join stock_check sc on sc.item_id = pi.id
+        left join stock_entry se on se.purchase_item_id = pi.id
+        where
+          ps.is_active = 1
+          and pi.is_active = 1
+          and (sc.is_active = 1 and se.is_active = 1 or sc.is_active is null or se.is_active is null)
+          and pi.contract_id = #{contractId}
+    </select>
+
+    <resultMap id="PurchaseItemStockEntryInvoiceMap" type="com.xzx.xzxms.stock.vo.PurchaseItemStockEntryInvoiceVO" extends="com.xzx.xzxms.purchase.dao.PurchaseSupplyMapper.BaseResultMap">
+        <result column="item" property="name"></result>
+        <collection property="stockChecks" ofType="StockCheck" autoMapping="true" columnPrefix="sc_">
+        </collection>
+        <collection property="stockEntries" ofType="StockEntry" autoMapping="true" columnPrefix="se_">
+        </collection>
+    </resultMap>
+</mapper>

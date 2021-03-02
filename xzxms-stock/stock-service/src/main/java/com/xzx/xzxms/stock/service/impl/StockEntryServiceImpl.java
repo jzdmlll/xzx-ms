@@ -18,6 +18,7 @@ import com.xzx.xzxms.stock.service.StockEntryService;
 import com.xzx.xzxms.stock.vo.StockEntryVO;
 import org.apache.sshd.client.session.ClientUserAuthService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
@@ -51,7 +52,7 @@ public class StockEntryServiceImpl implements StockEntryService {
         return list;
     }
 
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     @Override
     public void batchEntry(List<StockEntry> stockEntries) {
 
@@ -60,7 +61,7 @@ public class StockEntryServiceImpl implements StockEntryService {
         }
     }
 
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     @Override
     public void signalEntry(StockEntry stockEntry) {
         entry(stockEntry);

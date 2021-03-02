@@ -69,6 +69,7 @@ public class SysIndexController {
         List<ToDoList> ToDoLists = sysIndexServiceImpl.findTechnicalAuditDeal();
 
         PageInfo<ToDoList> pageInfo = new PageInfo<>(ToDoLists);
+        PageHelper.clearPage();
         return MessageUtil.success("success", pageInfo);
     }
 
@@ -80,6 +81,7 @@ public class SysIndexController {
         List<ToDoList> ToDoLists = sysIndexServiceImpl.findBusinessAuditDeal();
 
         PageInfo<ToDoList> pageInfo = new PageInfo<>(ToDoLists);
+        PageHelper.clearPage();
         return MessageUtil.success("success", pageInfo);
     }
 
@@ -91,6 +93,7 @@ public class SysIndexController {
         List<ToDoList> ToDoLists = sysIndexServiceImpl.findCompareAuditDeal();
 
         PageInfo<ToDoList> pageInfo = new PageInfo<>(ToDoLists);
+        PageHelper.clearPage();
         return MessageUtil.success("success", pageInfo);
     }
 
@@ -102,6 +105,7 @@ public class SysIndexController {
         List<ToDoList> ToDoLists = sysIndexServiceImpl.findFinallyAuditDeal();
 
         PageInfo<ToDoList> pageInfo = new PageInfo<>(ToDoLists);
+        PageHelper.clearPage();
         return MessageUtil.success("success", pageInfo);
     }
 
