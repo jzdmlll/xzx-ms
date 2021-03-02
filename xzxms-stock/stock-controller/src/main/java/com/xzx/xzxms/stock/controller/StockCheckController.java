@@ -42,7 +42,7 @@ public class StockCheckController {
 
     @ApiOperation(value = "批量签收")
     @PostMapping(value = "sign")
-    public Message sign(List<StockCheck> stockChecks) {
+    public Message sign(StockCheck stockChecks) {
 
         stockCheckServiceImpl.sign(stockChecks);
         return MessageUtil.success("success");

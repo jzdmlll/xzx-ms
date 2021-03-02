@@ -9,9 +9,8 @@ import com.xzx.xzxms.commons.utils.CustomerException;
 import com.xzx.xzxms.commons.utils.IDUtils;
 import com.xzx.xzxms.purchase.bean.PurchaseItems;
 import com.xzx.xzxms.purchase.dao.PurchaseItemsMapper;
-import com.xzx.xzxms.stock.bean.Stock;
-import com.xzx.xzxms.stock.bean.StockEntry;
-import com.xzx.xzxms.stock.bean.StockExample;
+import com.xzx.xzxms.stock.bean.*;
+import com.xzx.xzxms.stock.dao.StockCheckMapper;
 import com.xzx.xzxms.stock.dao.StockEntryMapper;
 import com.xzx.xzxms.stock.dao.StockMapper;
 import com.xzx.xzxms.stock.dao.extend.StockEntryExtendMapper;
@@ -42,6 +41,8 @@ public class StockEntryServiceImpl implements StockEntryService {
     private PurchaseItemsMapper purchaseItemsMapper;
     @Resource
     private StockMapper stockMapper;
+    @Resource
+    private StockCheckMapper stockCheckMapper;
 
     @Override
     public List<StockEntryVO> findEntryByParams(String item, String contractId, String beginTime, String endTime) {
@@ -59,6 +60,7 @@ public class StockEntryServiceImpl implements StockEntryService {
         }
     }
 
+    @Transactional
     @Override
     public void signalEntry(StockEntry stockEntry) {
         entry(stockEntry);
@@ -86,34 +88,39 @@ public class StockEntryServiceImpl implements StockEntryService {
     private void entry(StockEntry stockEntry){
 
         Double entryNum = stockEntry.getEntryNumber();
-        PurchaseItems purchaseItems = purchaseItemsMapper.selectByPrimaryKey(stockEntry.getPurchaseItemId());
-        //应入库数量
-        Double shouldEntryNum = purchaseItems.getNumber();
-        //实际入库数量
-        Double actualEntryNum;
-        StockExample example = new StockExample();
-        example.createCriteria().andItemIdEqualTo(stockEntry.getPurchaseItemId()).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
-        List<Stock> stocks = stockMapper.selectByExample(example);
-        if (stocks != null){
-            actualEntryNum = stocks.get(0).getStockNumber();
-        }else {
-            actualEntryNum = 0D;
-        }
-        if((shouldEntryNum - actualEntryNum) >= entryNum){
-            //先插入入库表
-            stockEntry.setId(IDUtils.getId());
-            stockEntry.setTime(new Date().getTime());
-            stockEntry.setIsActive(CommonConstant.EFFECTIVE);
-            stockEntryMapper.insertSelective(stockEntry);
-            //再插入库存表
-            Stock stock = new Stock();
-            stock.setId(IDUtils.getId());
-            stock.setItemId(stockEntry.getPurchaseItemId());
-            stock.setStockNumber(entryNum);
-            stock.setIsActive(CommonConstant.EFFECTIVE);
-            stockMapper.insertSelective(stock);
-        }else {
-            throw new CustomerException("入库数量大于剩余入库数量,入库失败!请核对入库数量后入库");
+        //先从签收表中取出最多入库数量（只有签收了才能入库）
+        StockCheckExample checkExample = new StockCheckExample();
+        checkExample.createCriteria().andItemIdEqualTo(stockEntry.getPurchaseItemId()).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
+        List<StockCheck> stockChecks = stockCheckMapper.selectByExample(checkExample);
+        if (stockChecks.size() > 0){
+            StockCheck stockCheck = stockChecks.get(0);
+            //应入库数量
+            Double checkNum = stockCheck.getCheckNumber();
+            //已入库数量
+            Double storedNum = stockEntryExtendMapper.storedNum(stockEntry.getPurchaseItemId());
+            if ((checkNum - storedNum) >= entryNum){
+                //先插入入库表
+                StockEntry se = new StockEntry();
+                se.setId(IDUtils.getId());
+                se.setPurchaseItemId(stockEntry.getPurchaseItemId());
+                se.setEntryNumber(entryNum);
+                se.setEntryTime(stockEntry.getEntryTime());
+                se.setEntryPerson(stockEntry.getEntryPerson());
+                se.setOperator(stockEntry.getOperator());
+                se.setTime(new Date().getTime());
+                se.setIsActive(CommonConstant.EFFECTIVE);
+                se.setEntryRemark(stockEntry.getEntryRemark());
+                stockEntryMapper.insert(se);
+                //再插入库存表
+                Stock stock = new Stock();
+                stock.setId(IDUtils.getId());
+                stock.setItemId(stockEntry.getPurchaseItemId());
+                stock.setStockNumber(entryNum);
+                stock.setIsActive(CommonConstant.EFFECTIVE);
+                stockMapper.insert(stock);
+            }else {
+                throw new CustomerException("入库数量大于已签收未入库的数量!");
+            }
         }
     }
 }

@@ -20,4 +20,8 @@
         </where>
         order by stock_entry.time desc
     </select>
+
+    <select id="storedNum" resultType="double">
+        select sum(entry_number) from stock_entry where purchase_item_id = #{itemId} and is_active = 1
+    </select>
 </mapper>

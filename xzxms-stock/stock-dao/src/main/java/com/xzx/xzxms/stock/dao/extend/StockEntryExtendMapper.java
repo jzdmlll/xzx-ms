@@ -28,4 +28,11 @@ public interface StockEntryExtendMapper {
      * @return
      */
     List<StockEntryVO> findEntryByParams(@Param("item") String item, @Param("contractId") String contractId, @Param("beginTime") String beginTime, @Param("endTime") String endTime);
+
+    /**
+     * 在入库表中查询已入库数量
+     * @param itemId
+     * @return
+     */
+    Double storedNum(@Param("itemId") Long itemId);
 }
