@@ -12,12 +12,13 @@
 <!--    </resultMap>-->
 
     <select id="findAllChapterAuditor" resultMap="ChapterAuditorDTO">
-        select sys_user.id, username
-        from sys_user_role inner join sys_user on sys_user_role.user_id = sys_user.id
-        where role_id = any(SELECT role_id
-        FROM `sys_privilege` inner join sys_role_privilege on sys_privilege.id = sys_role_privilege.privilege_id
-        where name='用章管理' and type='menu')
-        and sys_user.is_active = 1
+        select
+        su.id,
+        su.username
+        from sys_user_role sur
+        inner join sys_user su on sur.user_id = su.id
+		inner join sys_role sr on sr.id = sur.role_id
+        where su.is_active = 1 and sr.check_name is not null and sr.check_name != ''
     </select>
 
     <select id="findChapterAuditorInfoByLike" resultType="com.xzx.xzxms.chapter.bean.ChapterAudit">

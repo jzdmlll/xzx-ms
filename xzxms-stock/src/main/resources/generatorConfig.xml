@@ -49,14 +49,15 @@
 
 	<!-- 映射配置 -->
 
-        <table tableName="stock" domainObjectName="Stock" ></table>
+        <!--<table tableName="stock" domainObjectName="Stock" ></table>-->
         <!--<table tableName="stock_invoice" domainObjectName="StockInvoice" ></table>
         <table tableName="stock_entry" domainObjectName="StockEntry" ></table>
         <table tableName="stock_delivery" domainObjectName="StockDelivery" ></table>
         <table tableName="stock_contract_attribute" domainObjectName="StockContractAttribute" ></table>
-        <table tableName="stock_check" domainObjectName="StockCheck" ></table>
+
 
         <table tableName="stock_actual_account" domainObjectName="StockActualAccount" ></table>
 -->
+    <table tableName="stock_check" domainObjectName="StockCheck" ></table>
   </context>
    </generatorConfiguration>

@@ -91,14 +91,17 @@ public class StockEntryServiceImpl implements StockEntryService {
         PurchaseItems purchaseItems = purchaseItemsMapper.selectByPrimaryKey(stockEntry.getPurchaseItemId());
         //应入库数量
         Double shouldEntryNum = purchaseItems.getNumber();
-        //实际入库数量
+        //实际入库数量 (写的啥鬼东西, 库存出库了怎么算)
         Double actualEntryNum;
         StockExample example = new StockExample();
         example.createCriteria().andItemIdEqualTo(stockEntry.getPurchaseItemId()).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
         List<Stock> stocks = stockMapper.selectByExample(example);
+        // 要加stocks.size() > 0
         if (stocks != null){
+            // (只取第一条？不遍历？)
             actualEntryNum = stocks.get(0).getStockNumber();
         }else {
+            // (不初始化？)
             actualEntryNum = 0D;
         }
         if((shouldEntryNum - actualEntryNum) >= entryNum){

@@ -4,8 +4,9 @@
     <sql id="StockCheckAliases">
       sc.id as sc_id,
       sc.check_number as sc_check_number,
-      sc.check_operator as sc_check_operator,
+      sc.check_person as sc_check_person,
       sc.check_remark as sc_check_remark,
+      sc.operator as sc_operator,
       sc.check_time as sc_check_time,
       sc.update_operator as sc_update_operator,
       sc.update_time as sc_update_time

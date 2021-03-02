@@ -50,11 +50,7 @@ public class ChapterAuditController {
     @GetMapping("findAllChapterAuditor")
     public Message findAllChapterAuditor(){
         List<ChapterAuditorDTO> allChapterAuditor = chapterAuditExtendMapper.findAllChapterAuditor();
-        if (allChapterAuditor.size() > 0){
-            return MessageUtil.success("success", allChapterAuditor);
-        }else {
-            return MessageUtil.error("无审核人");
-        }
+        return MessageUtil.success("success", allChapterAuditor);
     }
 
     /**
@@ -78,11 +74,7 @@ public class ChapterAuditController {
     @GetMapping("findChapterAuditInfosByProjectName")
     public Message findChapterAuditInfosByProjectName(String projectName){
         List<ChapterAudit> chapterAuditInfos = chapterAuditService.findChapterAuditInfosByProjectNameService(projectName);
-        if (chapterAuditInfos.size() > 0){
-            return MessageUtil.success("success", chapterAuditInfos);
-        }else {
-            return MessageUtil.error("error");
-        }
+        return MessageUtil.success("success", chapterAuditInfos);
     }
 
     /**
