@@ -39,8 +39,6 @@ public class StockEntryServiceImpl implements StockEntryService {
     @Resource
     private StockEntryMapper stockEntryMapper;
     @Resource
-    private PurchaseItemsMapper purchaseItemsMapper;
-    @Resource
     private StockMapper stockMapper;
     @Resource
     private StockCheckMapper stockCheckMapper;
