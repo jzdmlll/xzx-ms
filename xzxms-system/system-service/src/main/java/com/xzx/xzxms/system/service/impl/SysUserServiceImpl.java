@@ -94,6 +94,7 @@ public class SysUserServiceImpl implements ISysUserService {
             throw new CustomerException("该用户不存在");
         }
         userMapper.deleteByPrimaryKey(id);
+        jedisDaoImpl.del("xzx:user:all");
     }
 
     @Override
@@ -110,6 +111,7 @@ public class SysUserServiceImpl implements ISysUserService {
             }
             register(user);
         }
+        jedisDaoImpl.del("xzx:user:all");
     }
 
     @Override

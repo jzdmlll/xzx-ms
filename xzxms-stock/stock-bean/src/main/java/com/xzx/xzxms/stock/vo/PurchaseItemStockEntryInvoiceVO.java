@@ -19,6 +19,11 @@ public class PurchaseItemStockEntryInvoiceVO extends PurchaseSupply {
     List<StockCheck> stockChecks;
     // 入库记录
     List<StockEntry> stockEntries;
+    // 已验收数量
+    private Double checkNum;
+    // 已入库数量
+    private Double entryNum;
+
 
     public String getName() {
         return name;
@@ -42,5 +47,21 @@ public class PurchaseItemStockEntryInvoiceVO extends PurchaseSupply {
 
     public void setStockEntries(List<StockEntry> stockEntries) {
         this.stockEntries = stockEntries;
+    }
+
+    public Double getCheckNum() {
+        return checkNum;
+    }
+
+    public void setCheckNum(Double checkNum) {
+        this.checkNum = checkNum;
+    }
+
+    public Double getEntryNum() {
+        return entryNum;
+    }
+
+    public void setEntryNum(Double entryNum) {
+        this.entryNum = entryNum;
     }
 }

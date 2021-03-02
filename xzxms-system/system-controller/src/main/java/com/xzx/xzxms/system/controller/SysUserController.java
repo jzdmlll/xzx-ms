@@ -110,6 +110,23 @@ public class SysUserController {
         return MessageUtil.success("success", list);
     }
 
+    @ApiOperation(value = "查询所有")
+    @GetMapping(value = "findAllIdToName")
+    public Message findAllIdToName() {
+        Map<Long, String> userMap = new HashMap<>();
+        String key = "xzx:user:all";
+        if (jedisDaoImpl.exists(key)) {
+            userMap = JsonUtils.jsonToPojo(jedisDaoImpl.get(key), HashMap.class);
+        }else {
+            List<SysUser> list = userServiceImpl.findAll();
+            for (SysUser user : list) {
+                userMap.put(user.getId(), user.getUsername());
+            }
+            jedisDaoImpl.set(key, JsonUtils.objectToJson(userMap));
+        }
+        return MessageUtil.success("success", userMap);
+    }
+
     @ApiOperation(value = "查询所有", notes = "级联用户角色")
     @GetMapping(value = "cascadeRoleFindAll")
     public Message cascadeRoleFindAll() {

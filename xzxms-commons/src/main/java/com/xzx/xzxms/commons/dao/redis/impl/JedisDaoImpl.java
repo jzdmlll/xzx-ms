@@ -19,7 +19,10 @@ public class JedisDaoImpl implements JedisDao {
 
     @Override
     public boolean del(String key) {
-        return stringRedisTemplate.delete(key);
+        if (exists(key)) {
+            return stringRedisTemplate.delete(key);
+        }
+        return false;
     }
 
     @Override
