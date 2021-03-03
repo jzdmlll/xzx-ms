@@ -45,7 +45,7 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
         List<Map> maps = new ArrayList<>();
         List<FinallyQuoteInquiryVM> finallyCheckCompareVMS = finallyCheckExtendMapper.cascadeFindAllByParams(proDetailId, name);
 
-        Map map = new HashMap();
+        Map<String,Object> map = new HashMap<>();
 
         long inquiryId = 0L;
 
@@ -53,20 +53,15 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
         for(FinallyQuoteInquiryVM f : finallyCheckCompareVMS){
 
             if (inquiryId == f.getInquiryId()){
-                Object value =  map.get(f.getSupplier());
-                if (value != null && f.getTechnicalAudit() == CommonConstant.CHOOSE && f.getBusinessAudit() == CommonConstant.CHOOSE && f.getCompareStatus() == CommonConstant.CHOOSE){
-                    //如果存在一样的供货商，技审、商审通过则替换掉
-                    map.replace(f.getSupplier(),f);
-                }else {
-                    if (f.getSuPrice() == minPrice){
-                        f.setMinPrice(1);
-                    }
-                    map.put(f.getSupplier(),f);
+
+                if (f.getSuPrice() == minPrice){
+                    f.setMinPrice(1);
                 }
+                map.put(f.getSupplier() + "-" + f.getId(),f);
             }else {
                 if (inquiryId != 0){
                     maps.add(map);
-                    map = new HashMap();
+                    map = new HashMap<>();
                 }
                 inquiryId = f.getInquiryId();
                 //最低价
@@ -76,7 +71,7 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
                 _map.put("price", f.getPrice());
                 _map.put("totalPrice", f.getTotalPrice());
                 map.put("draft", _map);
-                map.put(f.getSupplier(),f);
+                map.put(f.getSupplier() + "-" + f.getId(),f);
                 minPrice = f.getSuPrice();
             }
 

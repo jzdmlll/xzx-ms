@@ -1,8 +1,10 @@
 package com.xzx.xzxms.inquiry.service;
 
 
+import com.google.common.collect.Multimap;
 import com.xzx.xzxms.inquiry.bean.Inquiry;
 
+import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 
