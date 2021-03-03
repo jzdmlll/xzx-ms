@@ -14,15 +14,25 @@ public class ProProcessVO {
 
     private Long proId;
     private String proName;
+    //询价数量
     private Long iNum;
+    //报价数量
     private Long qNum;
+    //技审总数量
     private Long ttNum;
+    //商审总数量
     private Long btNum;
+    //比价总数量
     private Long ctNum;
+    //终审总数量
     private Long ftNum;
+    //技审已审核数量
     private Long tNum;
+    //商审已审核数量
     private Long bNum;
+    //比价已审核数量
     private Long cNum;
+    //终审已审核数量
     private Long fNum;
 
     public Long getProId() {
