@@ -29,7 +29,7 @@ public class ProCheckServiceImpl implements ISysProCheckService {
             if (sysProCheck.getCompareAudit() !=null && 0 != sysProCheck.getCompareAudit()){
                 throw new CustomerException("已有比价结果，请勿再修改审核状态!");
             }
-            sysProCheck.setTime(new Date().getTime());
+            sysProCheck.setTechnicalTime(new Date().getTime());
             sysProCheckMapper.updateByPrimaryKeySelective(sysProCheck);
         }
     }
@@ -41,7 +41,7 @@ public class ProCheckServiceImpl implements ISysProCheckService {
             if (sysProCheck.getCompareAudit() !=null && 0 != sysProCheck.getBusinessAudit()){
                 throw new CustomerException("已有比价结果，请勿再修改审核状态!");
             }
-            sysProCheck.setTime(new Date().getTime());
+            sysProCheck.setBusinessTime(new Date().getTime());
             sysProCheckMapper.updateByPrimaryKeySelective(sysProCheck);
         }
     }

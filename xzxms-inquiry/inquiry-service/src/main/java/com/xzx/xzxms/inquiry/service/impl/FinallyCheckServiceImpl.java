@@ -54,10 +54,17 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
 
             if (inquiryId == f.getInquiryId()){
 
+                Object v = map.get(f.getSupplier());
+                System.out.println(f.getSupplier());
+                System.out.println(v);
+                if (v != null){
+                    map.put(f.getSupplier() + "*" + "1", f);
+                }else {
+                    map.put(f.getSupplier(), f);
+                }
                 if (f.getSuPrice() == minPrice){
                     f.setMinPrice(1);
                 }
-                map.put(f.getSupplier() + "-" + f.getId(),f);
             }else {
                 if (inquiryId != 0){
                     maps.add(map);
@@ -71,7 +78,7 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
                 _map.put("price", f.getPrice());
                 _map.put("totalPrice", f.getTotalPrice());
                 map.put("draft", _map);
-                map.put(f.getSupplier() + "-" + f.getId(),f);
+                map.put(f.getSupplier(), f);
                 minPrice = f.getSuPrice();
             }
 
@@ -143,7 +150,7 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
         // 更新选中比价
         proCheck.setFinallyAudit(SysCheckExtend.PASS_STATUS); //1选用
         proCheck.setOperator(userId+"");
-        proCheck.setTime(time);
+        proCheck.setFinallyTime(time);
         for (long id : checkIds) {
             proCheck.setId(id);
             sysProCheckMapper.updateByPrimaryKeySelective(proCheck);
@@ -201,7 +208,7 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
         proCheck = new SysProCheck();
         proCheck.setFinallyAudit(SysCheckExtend.REFUSE_STATUS); //2未选用
         proCheck.setOperator(userId+"");
-        proCheck.setTime(time);
+        proCheck.setFinallyTime(time);
         for (long id : unCheckIds) {
             proCheck.setId(id);
             sysProCheckMapper.updateByPrimaryKeySelective(proCheck);
