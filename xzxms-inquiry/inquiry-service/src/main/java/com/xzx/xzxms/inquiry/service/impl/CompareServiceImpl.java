@@ -239,7 +239,7 @@ public class CompareServiceImpl implements ICompareService {
     @Override
     public void compareResultCommit(CompareVM compareVM) {
 
-
+        long time = new Date().getTime();
         for (QuoteExtend quoteExtend : compareVM.getQuoteList()) {
 
             List<Long> longs = new ArrayList<>();
@@ -270,6 +270,7 @@ public class CompareServiceImpl implements ICompareService {
 
                 check.setCompareAudit(2);
                 check.setFinallyAudit(0);
+                check.setCompareTime(time);
                 sysProCheckMapper.updateByPrimaryKeySelective(check);
             }
             //再将选用的报价比价状态置为选用
