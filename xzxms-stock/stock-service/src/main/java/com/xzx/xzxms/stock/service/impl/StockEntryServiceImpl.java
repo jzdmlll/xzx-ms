@@ -96,7 +96,11 @@ public class StockEntryServiceImpl implements StockEntryService {
             //应入库数量
             Double checkNum = stockCheck.getCheckNumber();
             //已入库数量
-            Double storedNum = stockEntryExtendMapper.storedNum(stockEntry.getPurchaseItemId());
+            Double storedNum = 0D;
+            Double storedNumTemp = stockEntryExtendMapper.storedNum(stockEntry.getPurchaseItemId());
+            if (storedNumTemp != null) {
+                storedNum = storedNumTemp;
+            }
             if ((checkNum - storedNum) >= entryNum){
                 //先插入入库表
                 StockEntry se = new StockEntry();

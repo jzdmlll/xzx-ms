@@ -4,6 +4,7 @@ import com.xzx.xzxms.inquiry.bean.extend.SysCheckAndScheduleExtend;
 import com.xzx.xzxms.inquiry.vm.ProIsFinallyVM;
 import com.xzx.xzxms.inquiry.vm.ProjectSchedule;
 import com.xzx.xzxms.inquiry.vm.ToDoList;
+import com.xzx.xzxms.inquiry.vo.ProjectCompletionVO;
 
 import java.util.List;
 import java.util.Map;
@@ -78,5 +79,11 @@ public interface ISysIndexService {
      * @return
      */
     List<ToDoList> findFinallyAuditDeal();
+
+    /**
+     * 查询项目完成进度
+     * @return
+     */
+    List<ProjectCompletionVO> findProAndCompletion(String orderBy);
 
 }

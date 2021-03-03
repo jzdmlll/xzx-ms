@@ -40,7 +40,7 @@ public class ChapterAuditController {
     public Message insertChapterAudit(@RequestBody ChapterAuditDTO chapterAuditDTO){
         String result = chapterAuditService.insertChapterAuditService(chapterAuditDTO.getChapterAudit(), chapterAuditDTO.getFiles());
         if (result.equals("success")){
-            return MessageUtil.success("success");
+            return MessageUtil.success("操作成功");
         }else {
             return MessageUtil.error("error");
         }
@@ -50,7 +50,7 @@ public class ChapterAuditController {
     @GetMapping("findAllChapterAuditor")
     public Message findAllChapterAuditor(){
         List<ChapterAuditorDTO> allChapterAuditor = chapterAuditExtendMapper.findAllChapterAuditor();
-        return MessageUtil.success("success", allChapterAuditor);
+        return MessageUtil.success("查询成功", allChapterAuditor);
     }
 
     /**
@@ -60,11 +60,7 @@ public class ChapterAuditController {
     @GetMapping("findAllProjectName")
     public Message findAllProjectName(){
         List<ChapterAudit> projectNames = chapterAuditService.findAllProjectNameService();
-        if (projectNames.size() > 0){
-            return MessageUtil.success("success", projectNames);
-        }else {
-            return MessageUtil.error("无查询结果");
-        }
+        return MessageUtil.success("查询成功", projectNames);
     }
 
     /**
@@ -74,7 +70,7 @@ public class ChapterAuditController {
     @GetMapping("findChapterAuditInfosByProjectName")
     public Message findChapterAuditInfosByProjectName(String projectName){
         List<ChapterAudit> chapterAuditInfos = chapterAuditService.findChapterAuditInfosByProjectNameService(projectName);
-        return MessageUtil.success("success", chapterAuditInfos);
+        return MessageUtil.success("查询成功", chapterAuditInfos);
     }
 
     /**
@@ -85,7 +81,7 @@ public class ChapterAuditController {
     public Message updateChapterAudit(@RequestBody ChapterAudit chapterAudit){
         String result = chapterAuditService.updateChapterAuditService(chapterAudit);
         if (result.equals("success")){
-            return MessageUtil.success("success");
+            return MessageUtil.success("操作成功");
         }else {
             return MessageUtil.error("error");
         }
@@ -99,7 +95,7 @@ public class ChapterAuditController {
     public Message deleteChapterAuditService(Long id){
         String result = chapterAuditService.deleteChapterAuditService(id);
         if (result.equals("success")){
-            return MessageUtil.success("success");
+            return MessageUtil.success("操作成功");
         }else {
             return MessageUtil.error("error");
         }
@@ -113,7 +109,7 @@ public class ChapterAuditController {
     public Message findFileUrlByOtherId(Long id){
         List<SysFile> fileUrls = chapterAuditService.findFileUrlByOtherIdService(id);
         if (fileUrls.size()>0){
-            return MessageUtil.success("success",fileUrls);
+            return MessageUtil.success("查询成功", fileUrls);
         }else {
             return MessageUtil.error("无上传文件");
         }
@@ -130,7 +126,7 @@ public class ChapterAuditController {
                                            @Param("auditStatus") Integer auditStatus){
         List<ChapterAudit> chapterAuditorInfos = chapterAuditExtendMapper.findChapterAuditorInfoByLike(proId, startTime, overTime, auditStatus);
         if (chapterAuditorInfos.size() > 0){
-            return MessageUtil.success("success", chapterAuditorInfos);
+            return MessageUtil.success("查询成功", chapterAuditorInfos);
         }else {
             return MessageUtil.error("无查询结果");
         }

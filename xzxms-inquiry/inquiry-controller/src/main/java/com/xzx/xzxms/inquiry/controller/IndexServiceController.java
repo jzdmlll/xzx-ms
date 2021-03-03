@@ -36,4 +36,5 @@ public class IndexServiceController {
         List<ProProcessVO> list = iIndexServiceImpl.findProProcess(proName);
         return MessageUtil.success("success", list);
     }
+
 }

@@ -7,6 +7,7 @@ import com.xzx.xzxms.commons.utils.MessageUtil;
 import com.xzx.xzxms.inquiry.service.ISysIndexService;
 import com.xzx.xzxms.inquiry.bean.extend.SysCheckAndScheduleExtend;
 import com.xzx.xzxms.inquiry.vm.ToDoList;
+import com.xzx.xzxms.inquiry.vo.ProjectCompletionVO;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -105,6 +106,18 @@ public class SysIndexController {
         List<ToDoList> ToDoLists = sysIndexServiceImpl.findFinallyAuditDeal();
 
         PageInfo<ToDoList> pageInfo = new PageInfo<>(ToDoLists);
+        PageHelper.clearPage();
+        return MessageUtil.success("success", pageInfo);
+    }
+
+    @ApiOperation("查询项目完成进度")
+    @GetMapping("findProAndCompletion")
+    public Message findProAndCompletion(@RequestParam(value = "pageNum",required = false,defaultValue = "1")int pageNum,
+                                        @RequestParam(value = "pageSize",required = false,defaultValue = "15")int pageSize,
+                                        @RequestParam(value = "orderBy",required = false,defaultValue = "`completion` asc")String orderBy){
+        PageHelper.startPage(pageNum, pageSize);
+        List<ProjectCompletionVO> proAndCompletionList = sysIndexServiceImpl.findProAndCompletion(orderBy);
+        PageInfo<ProjectCompletionVO> pageInfo = new PageInfo<>(proAndCompletionList);
         PageHelper.clearPage();
         return MessageUtil.success("success", pageInfo);
     }

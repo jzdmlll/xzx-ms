@@ -27,7 +27,7 @@
           ps.*,
           pi.item,
           <include refid="StockCheckAliases" />,
-          <include refid="StockCheckAliases" />
+          <include refid="StockEntryAliases" />
         from purchase_supply ps
         left join purchase_items pi on ps.item_id = pi.id
         left join stock_check sc on sc.item_id = pi.id
