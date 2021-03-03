@@ -57,7 +57,7 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
                 if (f.getSuPrice() == minPrice){
                     f.setMinPrice(1);
                 }
-                map.put(f.getSupplier() + "-" + f.getId(),f);
+                map.put(f.getSupplier() + "*" + f.getId(),f);
             }else {
                 if (inquiryId != 0){
                     maps.add(map);
@@ -71,7 +71,7 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
                 _map.put("price", f.getPrice());
                 _map.put("totalPrice", f.getTotalPrice());
                 map.put("draft", _map);
-                map.put(f.getSupplier() + "-" + f.getId(),f);
+                map.put(f.getSupplier() + "*" + f.getId(),f);
                 minPrice = f.getSuPrice();
             }
 
