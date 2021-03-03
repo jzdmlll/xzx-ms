@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xzx.xzxms.inquiry.dao.extend.ProProcessExtendMapper">
-  <select id="findProProcessByProName" resultType="com.xzx.xzxms.inquiry.vo.ProProcessVO">
+  <select id="findProProcessByProId" resultType="com.xzx.xzxms.inquiry.vo.ProProcessVO">
     SELECT  pro.id proId, pro.`name` proName,
         COUNT(i.id) iNum,
         COUNT(q.id) qNum,
@@ -19,8 +19,8 @@
         LEFT JOIN sys_pro_check c on q.id = c.quote_id
         <where>
           pro.is_active = 1 and i.is_active = 1 and q.is_active = 1
-          <if test="proName != null and proName != ''">
-            and pro.name like CONCAT('%',#{proName},'%')
+          <if test="proId != null and proId != ''">
+            and pro.id = #{proId}
           </if>
         </where>
         GROUP BY pro.id

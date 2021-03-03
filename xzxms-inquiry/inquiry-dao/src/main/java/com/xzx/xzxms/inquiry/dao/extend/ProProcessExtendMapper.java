@@ -6,6 +6,7 @@ package com.xzx.xzxms.inquiry.dao.extend;/**
 
 import com.xzx.xzxms.inquiry.vo.ProProcessVO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -20,8 +21,8 @@ public interface ProProcessExtendMapper {
 
     /**
      * 查询项目流程进展
-     * @param proName
+     * @param proId
      * @return
      */
-    List<ProProcessVO> findProProcessByProName(String proName);
+    List<ProProcessVO> findProProcessByProId(@Param("proId") Long proId);
 }
