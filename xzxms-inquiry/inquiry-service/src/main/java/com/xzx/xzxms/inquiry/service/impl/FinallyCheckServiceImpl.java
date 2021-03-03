@@ -50,15 +50,16 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
         long inquiryId = 0L;
 
         int i = 1;
+        //临时变量,区别供应商
+        int j = 0;
         for(FinallyQuoteInquiryVM f : finallyCheckCompareVMS){
 
             if (inquiryId == f.getInquiryId()){
 
                 Object v = map.get(f.getSupplier());
-                System.out.println(f.getSupplier());
-                System.out.println(v);
                 if (v != null){
-                    map.put(f.getSupplier() + "*" + "1", f);
+                    j++;
+                    map.put(f.getSupplier() + "*" + j, f);
                 }else {
                     map.put(f.getSupplier(), f);
                 }
@@ -80,6 +81,8 @@ public class FinallyCheckServiceImpl implements IFinallyCheckService {
                 map.put("draft", _map);
                 map.put(f.getSupplier(), f);
                 minPrice = f.getSuPrice();
+                //初始化 j
+                j = 0;
             }
 
             if (i < finallyCheckCompareVMS.size()){
