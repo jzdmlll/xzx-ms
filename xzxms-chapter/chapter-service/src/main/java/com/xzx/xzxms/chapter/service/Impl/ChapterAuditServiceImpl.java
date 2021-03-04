@@ -119,10 +119,7 @@ public class ChapterAuditServiceImpl implements ChapterAuditService {
      * @return
      */
     @Override
-    public List<ChapterAudit> findChapterAuditInfosByProjectNameService(String proId,
-                                                                        Long startTime,
-                                                                        Long overTime,
-                                                                        Integer auditStatus) {
+    public List<ChapterAudit> findChapterAuditInfosByProjectNameService(String proId, Long startTime, Long overTime,Integer auditStatus) {
 
         List<ChapterAudit> chapterAuditInfos = chapterAuditExtendMapper.findChapterAuditor(proId, startTime, overTime, auditStatus);
         return chapterAuditInfos;

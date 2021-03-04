@@ -21,46 +21,27 @@
         where su.is_active = 1 and sr.check_name is not null and sr.check_name != ''
     </select>
 
-    <select id="findChapterAuditorInfoByLike" resultType="com.xzx.xzxms.chapter.bean.ChapterAudit">
-        SELECT s1.username auditor, chapter_audit.id,project_name,contract_name,contract_no,main_content,price,file,first_party,second_party,type,
-        s2.username sender,sender_time,audit_time,chapter_audit.is_active,sender_remark,audit_remark,audit_status
-        FROM `chapter_audit`
-        left join sys_user s1 on auditor = s1.id
-        left join sys_user s2 on sender = s2.id
-        where chapter_audit.is_active=1
-        <if test="auditStatus != null and auditStatus != ''">
-            and audit_status = #{auditStatus, jdbcType = INTEGER}
-        </if>
-        <if test="proName != null">
-            and project_name like CONCAT('%',#{proName, jdbcType = VARCHAR},'%')
-        </if>
-        <if test="startTime != null">
-            and sender_time &gt;= #{startTime, jdbcType = BIGINT}
-        </if>
-        <if test="overTime != null">
-            and sender_time &lt;= #{overTime, jdbcType = BIGINT}
-        </if>
-    </select>
-
     <select id="findChapterAuditor" resultType="com.xzx.xzxms.chapter.bean.ChapterAudit">
         SELECT s1.username auditor, chapter_audit.id,project_name,contract_name,contract_no,main_content,price,file,first_party,second_party,type,
         s2.username sender,sender_time,audit_time,chapter_audit.is_active,sender_remark,audit_remark,audit_status
         FROM `chapter_audit`
         left join sys_user s1 on auditor = s1.id
         left join sys_user s2 on sender = s2.id
-        where chapter_audit.is_active=1
-        <if test="auditStatus != null">
-            and audit_status = #{auditStatus, jdbcType = INTEGER}
-        </if>
-        <if test="proId != null">
-            and `chapter_audit`.id = #{proId, jdbcType = VARCHAR}
-        </if>
-        <if test="startTime != null">
-            and sender_time &gt;= #{startTime, jdbcType = BIGINT}
-        </if>
-        <if test="overTime != null">
-            and sender_time &lt;= #{overTime, jdbcType = BIGINT}
-        </if>
+        <where>
+            chapter_audit.is_active=1
+            <if test="auditStatus != null">
+                and audit_status = #{auditStatus}
+            </if>
+            <if test="proName != null">
+                and project_name like CONCAT('%',#{proName, jdbcType = VARCHAR},'%')
+            </if>
+            <if test="startTime != null">
+                and sender_time &gt;= #{startTime, jdbcType = BIGINT}
+            </if>
+            <if test="overTime != null">
+                and sender_time &lt;= #{overTime, jdbcType = BIGINT}
+            </if>
+        </where>
         order by audit_status, sender_time
     </select>
 </mapper>

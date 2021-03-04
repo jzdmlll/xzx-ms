@@ -72,11 +72,8 @@ public class ChapterAuditController {
      */
     @ApiOperation("根据项目名称查询该项目下所有审核信息审核信息")
     @GetMapping("findChapterAuditInfosByParams")
-    public Message findChapterAuditInfosByParams(@Param("proId") String proId,
-                                                      @Param("startTime") Long startTime,
-                                                      @Param("overTime") Long overTime,
-                                                      @Param("auditStatus") Integer auditStatus){
-        List<ChapterAudit> chapterAuditInfos = chapterAuditService.findChapterAuditInfosByProjectNameService(proId, startTime, overTime, auditStatus);
+    public Message findChapterAuditInfosByParams(String proName, Long startTime, Long overTime, Integer auditStatus){
+        List<ChapterAudit> chapterAuditInfos = chapterAuditService.findChapterAuditInfosByProjectNameService(proName, startTime, overTime, auditStatus);
         return MessageUtil.success("success", chapterAuditInfos);
     }
 
@@ -121,22 +118,4 @@ public class ChapterAuditController {
             return MessageUtil.error("无上传文件");
         }
     }
-
-    /**
-     * 周嘉玮
-     */
-    @ApiOperation("根据输入条件进行查询、模糊查询")
-    @GetMapping("findChapterAuditorInfos")
-    public Message findChapterAuditorInfos(@Param("proName") String proName,
-                                           @Param("startTime") Long startTime,
-                                           @Param("overTime") Long overTime,
-                                           @Param("auditStatus") Integer auditStatus){
-        List<ChapterAudit> chapterAuditorInfos = chapterAuditExtendMapper.findChapterAuditorInfoByLike(proName, startTime, overTime, auditStatus);
-        if (chapterAuditorInfos.size() > 0){
-            return MessageUtil.success("success", chapterAuditorInfos);
-        }else {
-            return MessageUtil.error("无查询结果");
-        }
-    }
-
 }
