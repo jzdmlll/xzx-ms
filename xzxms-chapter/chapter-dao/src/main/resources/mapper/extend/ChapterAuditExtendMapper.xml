@@ -18,7 +18,7 @@
         from sys_user_role sur
         inner join sys_user su on sur.user_id = su.id
 		inner join sys_role sr on sr.id = sur.role_id
-        where su.is_active = 1 and sr.check_name is not null and sr.check_name != ''
+        where sr.check_name is not null or sr.check_name != ''
     </select>
 
     <select id="findChapterAuditor" resultType="com.xzx.xzxms.chapter.bean.ChapterAudit">

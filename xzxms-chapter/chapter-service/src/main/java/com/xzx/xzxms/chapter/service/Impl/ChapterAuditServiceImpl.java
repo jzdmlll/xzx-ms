@@ -8,6 +8,7 @@ import com.xzx.xzxms.chapter.service.ChapterAuditService;
 import com.xzx.xzxms.commons.dao.redis.JedisDao;
 import com.xzx.xzxms.commons.fileupload.IFileUploadService;
 import com.xzx.xzxms.commons.utils.Base64Util;
+import com.xzx.xzxms.commons.utils.CustomerException;
 import com.xzx.xzxms.commons.utils.IDUtils;
 import com.xzx.xzxms.system.bean.SysFile;
 import com.xzx.xzxms.system.bean.SysFileExample;
@@ -57,46 +58,56 @@ public class ChapterAuditServiceImpl implements ChapterAuditService {
     @Override
     public String insertChapterAuditService(ChapterAudit chapterAudit, List<SysFile> files) {
 
-        // 生成用章审核信息id
-        long id = IDUtils.getId();
+        if(chapterAudit.getId() == null) {
 
-        //文件上传
-        for (SysFile file : files) {
-            //如果redis中存在该文件
-            if (jedisDaoImpl.exists(file.getId().toString())) {
-                //从redis中取出base64文件码
-                String base64File = jedisDaoImpl.get(file.getId().toString());
-                //解码，还原成输入流
-                InputStream inputStream = Base64Util.decodeBase64File(base64File);
-                System.out.println("redis");
-                //清除redis该文件缓存
-                jedisDaoImpl.del(file.getId().toString());
-                //上传到Nginx
-                Map<String, Object> map = fileUploadServiceImpl.uploadByStream(inputStream, file.getName());
+            // 生成用章审核信息id
+            long id = IDUtils.getId();
 
-                //文件信息持久化到数据库
-                file.setType(SysFileExtend.TYPE_CHAPTER);
-                file.setOtherId(id);
-                file.setTime(new Date().getTime());
-                file.setUrl(map.get("url").toString());
-                file.setIsActive(1);
-                file.setIsUseful(1);
-                file.setOperator(chapterAudit.getSender());
-                sysFileMapper.insert(file);
-                System.out.println("数据库");
+            //文件上传
+            for (SysFile file : files) {
+                //如果redis中存在该文件
+                if (jedisDaoImpl.exists(file.getId().toString())) {
+                    //从redis中取出base64文件码
+                    String base64File = jedisDaoImpl.get(file.getId().toString());
+                    //解码，还原成输入流
+                    InputStream inputStream = Base64Util.decodeBase64File(base64File);
+                    System.out.println("redis");
+                    //清除redis该文件缓存
+                    jedisDaoImpl.del(file.getId().toString());
+                    //上传到Nginx
+                    Map<String, Object> map = fileUploadServiceImpl.uploadByStream(inputStream, file.getName());
+
+                    //文件信息持久化到数据库
+                    file.setType(SysFileExtend.TYPE_CHAPTER);
+                    file.setOtherId(id);
+                    file.setTime(new Date().getTime());
+                    file.setUrl(map.get("url").toString());
+                    file.setIsActive(1);
+                    file.setIsUseful(1);
+                    file.setOperator(chapterAudit.getSender());
+                    sysFileMapper.insert(file);
+                    System.out.println("数据库");
+                }
+            }
+
+            // 新增用章审核
+            // 送审时间
+            chapterAudit.setId(id);
+            chapterAudit.setSenderTime(new Date().getTime());
+            chapterAudit.setIsActive(1);
+            // 审核状态初始化 0-未审核
+            chapterAudit.setAuditStatus(0);
+
+            chapterAuditMapper.insert(chapterAudit);
+
+        }else {
+
+            if (chapterAudit.getAuditStatus() == 0){
+                chapterAuditMapper.updateByPrimaryKeySelective(chapterAudit);
+            }else {
+                throw new CustomerException("已审核,请勿修改!");
             }
         }
-
-        // 新增用章审核
-        // 送审时间
-        chapterAudit.setId(id);
-        chapterAudit.setSenderTime(new Date().getTime());
-        chapterAudit.setIsActive(1);
-        // 审核状态初始化 0-未审核
-        chapterAudit.setAuditStatus(0);
-
-        chapterAuditMapper.insert(chapterAudit);
-
         return "success";
     }
 
