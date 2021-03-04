@@ -44,16 +44,19 @@
   <select id="selectMenuByUserId" resultMap="PrivilegeTreeResultWithPrivilegeMap">
     select p.*, #{id,jdbcType=BIGINT} as roleId
        from sys_privilege p
-       where p.parent_id
-       <choose>
-         <when test="privilegeParentId != null">
-           = #{privilegeParentId}
+      <choose>
+          <when test="privilegeParentId != null">
+              , sys_role_privilege rp
+          where
+              rp.privilege_id = p.id and
+              p.parent_id = #{privilegeParentId} and (p.type = 'menu' or p.type = 'parent')
+              and rp.role_id = #{id}
          </when>
          <otherwise>
-           is null
+             where p.parent_id is null
          </otherwise>
        </choose>
-      and (p.type = 'menu' or p.type = 'parent')
+
   </select>
 
   <resultMap id="PrivilegeTreeResultWithPrivilegeMap" type="com.xzx.xzxms.system.vm.PrivilegeTree" extends="com.xzx.xzxms.system.dao.SysPrivilegeMapper.BaseResultMap">
