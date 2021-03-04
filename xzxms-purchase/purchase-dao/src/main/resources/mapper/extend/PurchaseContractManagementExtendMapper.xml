@@ -81,15 +81,57 @@
     </select>
     
     
-    <select id="findPurchaseMessageByContractId" resultMap="selectPurchaseSupply">
+   <!-- <select id="findPurchaseMessageByContractId" resultMap="selectPurchaseSupply">
         select * from purchase_items
-        where is_active = 1 and contract_id = #{contractId, jdbcType = BIGINT}
+        <where>
+            is_active = 1
+            <if test="contractId != null and contractId != ''">
+                and contract_id = #{contractId, jdbcType = BIGINT}
+            </if>
+        </where>
     </select>
     <resultMap id="selectPurchaseSupply" type="com.xzx.xzxms.purchase.vo.PurchaseContractGenerateNewVO" extends="com.xzx.xzxms.purchase.dao.PurchaseItemsMapper.BaseResultMap">
-        <collection  property="purchaseSupply" column="id" select="findByItemId"></collection>
+        <collection property="purchaseSupply" column="id" select="findByItemId"></collection>
+        <collection property="purchaseContract" column="id" select="findByContractId"></collection>
     </resultMap>
     <select id="findByItemId" resultType="com.xzx.xzxms.purchase.bean.PurchaseSupply">
         select * from purchase_supply
         where item_id = #{itemId} and is_active = 1
+    </select>
+    <select id="findByContractId" resultType="com.xzx.xzxms.purchase.bean.PurchaseContract">
+        select contract_no contractNo,
+        first_audit firstAudit, s1.username firstOperator, first_time firstTime,
+        second_audit secondAudit, s2.username secondOperator, second_time secondTime,
+        three_audit threeAudit, s3.username threeOperator, three_time threeTime
+        from purchase_contract
+        left join sys_user s1 on first_operator = s1.id
+        left join sys_user s2 on second_operator = s2.id
+        left join sys_user s3 on three_operator = s3.id
+        where purchase_contract.id = #{contractId} and purchase_contract.is_active = 1
+    </select>-->
+
+    <select id="findPurchaseMessageByContractId" resultType="com.xzx.xzxms.purchase.vo.PurchaseContractGenerateNewVO">
+        select pi.*,
+        pc.contract_no contractNo,
+        pp.project_name projectName,
+        ps.supplier supplySupplier, ps.model supplyModel, ps.brand supplyBrand, ps.params supplyParams ,ps.price supplyPrice, ps.delivery supplyDelivery, ps.remark supplyRemark,
+        ps.warranty supplyWarranty, ps.image supplyImage,
+        first_audit firstAudit, s1.username firstOperator, first_time firstTime,
+        second_audit secondAudit, s2.username secondOperator, second_time secondTime,
+        three_audit threeAudit, s3.username threeOperator, three_time threeTime
+        from purchase_contract pc
+        left join purchase_items pi on pc.id = pi.contract_id
+        left join purchase_project pp on pi.project_id = pp.id
+        left join purchase_supply ps on pi.id = ps.item_id
+        left join sys_user s1 on first_operator = s1.id
+        left join sys_user s2 on second_operator = s2.id
+        left join sys_user s3 on three_operator = s3.id
+        <where>
+            pc.is_active = 1 and pi.is_active = 1 and pp.is_active = 1 and ps.is_active = 1
+            <if test="contractId != null and contractId != ''">
+                and pc.id = #{contractId, jdbcType = BIGINT}
+            </if>
+        </where>
+        order by pc.send_time
     </select>
 </mapper>
