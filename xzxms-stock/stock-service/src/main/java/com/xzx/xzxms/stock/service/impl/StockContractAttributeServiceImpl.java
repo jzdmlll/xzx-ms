@@ -3,9 +3,11 @@ package com.xzx.xzxms.stock.service.impl;
 import com.xzx.xzxms.commons.constant.CommonConstant;
 import com.xzx.xzxms.commons.utils.CustomerException;
 import com.xzx.xzxms.commons.utils.IDUtils;
+import com.xzx.xzxms.purchase.bean.PurchaseContract;
 import com.xzx.xzxms.stock.bean.StockContractAttribute;
 import com.xzx.xzxms.stock.bean.StockContractAttributeExample;
 import com.xzx.xzxms.stock.dao.StockContractAttributeMapper;
+import com.xzx.xzxms.stock.dao.extend.StockContractAttributeExtendMapper;
 import com.xzx.xzxms.stock.service.StockContractAttributeService;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +25,8 @@ public class StockContractAttributeServiceImpl implements StockContractAttribute
 
     @Resource
     private StockContractAttributeMapper stockContractAttributeMapper;
-
+    @Resource
+    private StockContractAttributeExtendMapper stockContractAttributeExtendMapper;
     @Override
     public StockContractAttribute findByContractId(Long contractId) {
 
@@ -61,5 +64,10 @@ public class StockContractAttributeServiceImpl implements StockContractAttribute
             stockContractAttribute.setUpdateTime(time);
             stockContractAttributeMapper.updateByPrimaryKeySelective(stockContractAttribute);
         }
+    }
+
+    @Override
+    public List<PurchaseContract> findContractHasContractAttributeByProId(Long projectId) {
+        return stockContractAttributeExtendMapper.findContractHasContractAttributeByProId(projectId);
     }
 }

@@ -33,7 +33,7 @@
         SELECT
           spd.id,
           spd.name,
-          convert(count(if(spc.finally_audit=0,null,true))*100/count(1), decimal(15,2)) `completion`
+          convert(count(if(spc.finally_audit=0 or spc.finally_audit is null,null,true))*100/count(1), decimal(15,2)) `completion`
         from sys_pro_detail spd
         LEFT JOIN inquiry i on spd.id = i.pro_detail_id
         LEFT JOIN quote q on q.inquiry_id = i.id

@@ -12,6 +12,7 @@ import com.xzx.xzxms.purchase.dao.extend.PurchaseContractExtendMapper;
 import com.xzx.xzxms.purchase.service.IPurchaseContractService;
 import com.xzx.xzxms.system.bean.SysFile;
 import com.xzx.xzxms.system.bean.extend.SysFileExtend;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -193,7 +194,7 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
 
         //先判定是否已送审(是否有送审人)
         PurchaseContract pc = purchaseContractMapper.selectByPrimaryKey(purchaseContract.getId());
-        if (pc.getIsActive() == CommonConstant.EFFECTIVE && pc.getSender() != null){
+        if (pc.getIsActive() == CommonConstant.EFFECTIVE && !StringUtils.isEmpty(pc.getSender())){
             throw new CustomerException("已送审!请勿重复提交");
         }
         purchaseContract.setSendTime(new Date().getTime());
