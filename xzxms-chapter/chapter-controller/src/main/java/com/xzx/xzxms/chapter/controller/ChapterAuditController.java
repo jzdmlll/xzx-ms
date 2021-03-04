@@ -63,14 +63,7 @@ public class ChapterAuditController {
         return MessageUtil.success("查询成功", projectNames);
     }
 
-    /**
-     * 周嘉玮
-     */
-    @ApiOperation("根据项目名称查询该项目下所有审核信息审核信息")
-    @GetMapping("findChapterAuditInfosByProjectName")
-    public Message findChapterAuditInfosByProjectName(String projectName){
-        List<ChapterAudit> chapterAuditInfos = chapterAuditService.findChapterAuditInfosByProjectNameService(projectName);
-        return MessageUtil.success("查询成功", chapterAuditInfos);
+
     @GetMapping("findChapterAuditInfosByParams")
     public Message findChapterAuditInfosByParams(@Param("proId") String proId,
                                                       @Param("startTime") Long startTime,

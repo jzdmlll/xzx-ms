@@ -7,13 +7,13 @@ import java.util.List;
 
 
 public class PrivilegeTree extends SysPrivilege {
-    private List<SysPrivilege> children;
+    private List<PrivilegeTree> children;
 
-    public List<SysPrivilege> getChildren() {
+    public List<PrivilegeTree> getChildren() {
         return children;
     }
 
-    public void setChildren(List<SysPrivilege> children) {
+    public void setChildren(List<PrivilegeTree> children) {
         this.children = children;
     }
 }
