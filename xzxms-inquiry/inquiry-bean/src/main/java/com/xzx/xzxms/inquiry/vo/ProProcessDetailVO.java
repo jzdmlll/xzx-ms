@@ -12,6 +12,18 @@ package com.xzx.xzxms.inquiry.vo;/**
  */
 public class ProProcessDetailVO {
 
-
+    private Long proId;
+    private String proName;
+    private String proType;
+    private String proOrigin;
+    private String inquiryName;
+    private Double quoteNum;
+    private Long quoteFinallyTime;
+    private Double businessNum;
+    private Long businessFinallyTime;
+    private Double technicalNum;
+    private Long technicalFinallyTime;
+    private Double finallyNum;
+    private Long finallyFinallyTime;
 
 }

@@ -8,6 +8,7 @@ import com.xzx.xzxms.inquiry.service.ISysIndexService;
 import com.xzx.xzxms.inquiry.bean.extend.SysCheckAndScheduleExtend;
 import com.xzx.xzxms.inquiry.vm.ToDoList;
 import com.xzx.xzxms.inquiry.vo.ProjectCompletionVO;
+import com.xzx.xzxms.inquiry.vo.ContractAuditDealVO;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -122,4 +123,39 @@ public class SysIndexController {
         return MessageUtil.success("success", pageInfo);
     }
 
+    @ApiOperation(value = "查询一审待办事项")
+    @GetMapping(value = "dataSourceFirst")
+    public Message dataSourceFirst(@RequestParam(value = "pageNum",required = false,defaultValue = "1")int pageNum,
+                                        @RequestParam(value = "pageSize",required = false,defaultValue = "15")int pageSize){
+        PageHelper.startPage(pageNum, pageSize);
+        List<ContractAuditDealVO> list = sysIndexServiceImpl.dataSourceFirst();
+
+        PageInfo<ContractAuditDealVO> pageInfo = new PageInfo<>(list);
+        PageHelper.clearPage();
+        return MessageUtil.success("success", pageInfo);
+    }
+
+    @ApiOperation(value = "查询二审待办事项")
+    @GetMapping(value = "dataSourceSecond")
+    public Message dataSourceSecond(@RequestParam(value = "pageNum",required = false,defaultValue = "1")int pageNum,
+                                   @RequestParam(value = "pageSize",required = false,defaultValue = "15")int pageSize){
+        PageHelper.startPage(pageNum, pageSize);
+        List<ContractAuditDealVO> list = sysIndexServiceImpl.dataSourceSecond();
+
+        PageInfo<ContractAuditDealVO> pageInfo = new PageInfo<>(list);
+        PageHelper.clearPage();
+        return MessageUtil.success("success", pageInfo);
+    }
+
+    @ApiOperation(value = "查询三审待办事项")
+    @GetMapping(value = "dataSourceThree")
+    public Message dataSourceThree(@RequestParam(value = "pageNum",required = false,defaultValue = "1")int pageNum,
+                                   @RequestParam(value = "pageSize",required = false,defaultValue = "15")int pageSize){
+        PageHelper.startPage(pageNum, pageSize);
+        List<ContractAuditDealVO> list = sysIndexServiceImpl.dataSourceThree();
+
+        PageInfo<ContractAuditDealVO> pageInfo = new PageInfo<>(list);
+        PageHelper.clearPage();
+        return MessageUtil.success("success", pageInfo);
+    }
 }

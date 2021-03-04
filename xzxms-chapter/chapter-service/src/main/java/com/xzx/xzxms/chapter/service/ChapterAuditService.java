@@ -35,10 +35,12 @@ public interface ChapterAuditService {
     /**
      * 周嘉玮
      * 根据项目名称查询该项目下所有审核信息审核信息
-     * @param projectName
      * @return
      */
-    List<ChapterAudit> findChapterAuditInfosByProjectNameService(String projectName);
+    List<ChapterAudit> findChapterAuditInfosByProjectNameService(@Param("proId") String proId,
+                                                                 @Param("startTime") Long startTime,
+                                                                 @Param("overTime") Long overTime,
+                                                                 @Param("auditStatus") Integer auditStatus);
 
     /**
      * 周嘉玮

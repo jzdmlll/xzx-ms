@@ -27,13 +27,26 @@ public interface ChapterAuditExtendMapper {
 
     /**
      * 根据输入条件进行查询、模糊查询
+     * @param proName
+     * @param startTime
+     * @param overTime
+     * @param auditStatus
+     * @return
+     */
+    List<ChapterAudit> findChapterAuditorInfoByLike(@Param("proName") String proName,
+                                                    @Param("startTime") Long startTime,
+                                                    @Param("overTime") Long overTime,
+                                                    @Param("auditStatus") Integer auditStatus);
+
+    /**
+     * 根据输入条件进行查询、模糊查询
      * @param proId
      * @param startTime
      * @param overTime
      * @param auditStatus
      * @return
      */
-    List<ChapterAudit> findChapterAuditorInfoByLike(@Param("proId") String proId,
+    List<ChapterAudit> findChapterAuditor(@Param("proId") String proId,
                                                     @Param("startTime") Long startTime,
                                                     @Param("overTime") Long overTime,
                                                     @Param("auditStatus") Integer auditStatus);

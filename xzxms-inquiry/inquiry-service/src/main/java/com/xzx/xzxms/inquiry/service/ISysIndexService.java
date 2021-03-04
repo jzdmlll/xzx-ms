@@ -5,6 +5,7 @@ import com.xzx.xzxms.inquiry.vm.ProIsFinallyVM;
 import com.xzx.xzxms.inquiry.vm.ProjectSchedule;
 import com.xzx.xzxms.inquiry.vm.ToDoList;
 import com.xzx.xzxms.inquiry.vo.ProjectCompletionVO;
+import com.xzx.xzxms.inquiry.vo.ContractAuditDealVO;
 
 import java.util.List;
 import java.util.Map;
@@ -79,6 +80,24 @@ public interface ISysIndexService {
      * @return
      */
     List<ToDoList> findFinallyAuditDeal();
+
+    /**
+     * 查询一审待办事项
+     * @return
+     */
+    List<ContractAuditDealVO> dataSourceFirst();
+
+    /**
+     * 查询二审待办事项
+     * @return
+     */
+    List<ContractAuditDealVO> dataSourceSecond();
+
+    /**
+     * 查询三审待办事项
+     * @return
+     */
+    List<ContractAuditDealVO> dataSourceThree();
 
     /**
      * 查询项目完成进度

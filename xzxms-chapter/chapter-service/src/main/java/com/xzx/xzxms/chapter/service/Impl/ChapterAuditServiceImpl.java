@@ -3,6 +3,7 @@ package com.xzx.xzxms.chapter.service.Impl;
 import com.xzx.xzxms.chapter.bean.ChapterAudit;
 import com.xzx.xzxms.chapter.bean.ChapterAuditExample;
 import com.xzx.xzxms.chapter.dao.ChapterAuditMapper;
+import com.xzx.xzxms.chapter.dao.extend.ChapterAuditExtendMapper;
 import com.xzx.xzxms.chapter.service.ChapterAuditService;
 import com.xzx.xzxms.commons.dao.redis.JedisDao;
 import com.xzx.xzxms.commons.fileupload.IFileUploadService;
@@ -41,6 +42,8 @@ public class ChapterAuditServiceImpl implements ChapterAuditService {
     private SysFileMapper sysFileMapper;
     @Resource
     private ChapterAuditMapper chapterAuditMapper;
+    @Resource
+    private ChapterAuditExtendMapper chapterAuditExtendMapper;
 
 
     /**
@@ -113,14 +116,15 @@ public class ChapterAuditServiceImpl implements ChapterAuditService {
     /**
      * 周嘉玮
      * 根据id查询该条审核信息
-     * @param ProjectName
      * @return
      */
     @Override
-    public List<ChapterAudit> findChapterAuditInfosByProjectNameService(String ProjectName) {
-        ChapterAuditExample chapterAuditExample = new ChapterAuditExample();
-        chapterAuditExample.createCriteria().andProjectNameEqualTo(ProjectName).andIsActiveEqualTo(1);
-        List<ChapterAudit> chapterAuditInfos = chapterAuditMapper.selectByExample(chapterAuditExample);
+    public List<ChapterAudit> findChapterAuditInfosByProjectNameService(String proId,
+                                                                        Long startTime,
+                                                                        Long overTime,
+                                                                        Integer auditStatus) {
+
+        List<ChapterAudit> chapterAuditInfos = chapterAuditExtendMapper.findChapterAuditor(proId, startTime, overTime, auditStatus);
         return chapterAuditInfos;
     }
 

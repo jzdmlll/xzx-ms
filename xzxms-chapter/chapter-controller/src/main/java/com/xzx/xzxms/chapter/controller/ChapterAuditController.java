@@ -71,6 +71,13 @@ public class ChapterAuditController {
     public Message findChapterAuditInfosByProjectName(String projectName){
         List<ChapterAudit> chapterAuditInfos = chapterAuditService.findChapterAuditInfosByProjectNameService(projectName);
         return MessageUtil.success("查询成功", chapterAuditInfos);
+    @GetMapping("findChapterAuditInfosByParams")
+    public Message findChapterAuditInfosByParams(@Param("proId") String proId,
+                                                      @Param("startTime") Long startTime,
+                                                      @Param("overTime") Long overTime,
+                                                      @Param("auditStatus") Integer auditStatus){
+        List<ChapterAudit> chapterAuditInfos = chapterAuditService.findChapterAuditInfosByProjectNameService(proId, startTime, overTime, auditStatus);
+        return MessageUtil.success("success", chapterAuditInfos);
     }
 
     /**
@@ -120,11 +127,11 @@ public class ChapterAuditController {
      */
     @ApiOperation("根据输入条件进行查询、模糊查询")
     @GetMapping("findChapterAuditorInfos")
-    public Message findChapterAuditorInfos(@Param("proId") String proId,
+    public Message findChapterAuditorInfos(@Param("proName") String proName,
                                            @Param("startTime") Long startTime,
                                            @Param("overTime") Long overTime,
                                            @Param("auditStatus") Integer auditStatus){
-        List<ChapterAudit> chapterAuditorInfos = chapterAuditExtendMapper.findChapterAuditorInfoByLike(proId, startTime, overTime, auditStatus);
+        List<ChapterAudit> chapterAuditorInfos = chapterAuditExtendMapper.findChapterAuditorInfoByLike(proName, startTime, overTime, auditStatus);
         if (chapterAuditorInfos.size() > 0){
             return MessageUtil.success("查询成功", chapterAuditorInfos);
         }else {

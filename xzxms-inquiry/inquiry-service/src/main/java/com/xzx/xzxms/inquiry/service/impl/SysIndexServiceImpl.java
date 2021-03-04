@@ -1,6 +1,5 @@
 package com.xzx.xzxms.inquiry.service.impl;
 
-import com.xzx.xzxms.inquiry.dao.SysProDetailMapper;
 import com.xzx.xzxms.inquiry.dao.extend.SysIndexExtendMapper;
 import com.xzx.xzxms.inquiry.dao.extend.SysProCheckExtendMapper;
 import com.xzx.xzxms.inquiry.service.ISysIndexService;
@@ -9,6 +8,8 @@ import com.xzx.xzxms.inquiry.vm.ProIsFinallyVM;
 import com.xzx.xzxms.inquiry.vm.ProjectSchedule;
 import com.xzx.xzxms.inquiry.vm.ToDoList;
 import com.xzx.xzxms.inquiry.vo.ProjectCompletionVO;
+import com.xzx.xzxms.inquiry.vo.ContractAuditDealVO;
+import com.xzx.xzxms.purchase.dao.extend.PurchaseContractAuditExtendMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -20,7 +21,7 @@ public class SysIndexServiceImpl implements ISysIndexService {
     @Resource
     private SysIndexExtendMapper sysIndexExtendMapper;
     @Resource
-    private SysProDetailMapper sysProDetailMapper;
+    private PurchaseContractAuditExtendMapper purchaseContractAuditExtendMapper;
     @Resource
     private SysProCheckExtendMapper sysProCheckExtendMapper;
 
@@ -155,6 +156,21 @@ public class SysIndexServiceImpl implements ISysIndexService {
     @Override
     public List<ProjectCompletionVO> findProAndCompletion(String orderBy) {
         return sysIndexExtendMapper.findProAndCompletion(orderBy);
+    }
+
+    @Override
+    public List<ContractAuditDealVO> dataSourceFirst() {
+        return purchaseContractAuditExtendMapper.dataSourceFirst();
+    }
+
+    @Override
+    public List<ContractAuditDealVO> dataSourceSecond() {
+        return purchaseContractAuditExtendMapper.dataSourceSecond();
+    }
+
+    @Override
+    public List<ContractAuditDealVO> dataSourceThree() {
+        return purchaseContractAuditExtendMapper.dataSourceThree();
     }
 
 

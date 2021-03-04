@@ -97,8 +97,13 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
     @Override
     public void saveOrUpdate(PurchaseContract purchaseContract) {
         long time = new Date().getTime();
-        if(purchaseContract.getId()!= null){
-            purchaseContract.setTime(time);
+        if(purchaseContract.getId() != null){
+            //先判定是否已送审(是否有送审人)
+            PurchaseContract pc = purchaseContractMapper.selectByPrimaryKey(purchaseContract.getId());
+            if (pc.getIsActive() == CommonConstant.EFFECTIVE && pc.getSender() != null){
+                throw new CustomerException("已送审!请勿修改合同信息");
+            }
+            purchaseContract.setUpdateTime(time);
             purchaseContractMapper.updateByPrimaryKeySelective(purchaseContract);
         }else {
             Long contractId = IDUtils.getId();
