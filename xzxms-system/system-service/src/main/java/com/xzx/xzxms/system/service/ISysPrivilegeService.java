@@ -50,7 +50,7 @@ public interface ISysPrivilegeService {
      * @Param: [id]
      * @return: java.util.List<PrivilegeExtend>
      */
-    List<SysPrivilegeExtend> findMenuByUserId(long id);
+    List<PrivilegeTree> findMenuByUserId(long id, Long privilegeParentId);
 
     /**
      * 删除权限

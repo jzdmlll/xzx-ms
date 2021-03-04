@@ -32,8 +32,9 @@ public class IndexServiceController {
 
     @ApiOperation("查询项目流程")
     @GetMapping("findProProcess")
-    public Message findProProcess(String proName){
-        List<ProProcessVO> list = iIndexServiceImpl.findProProcess(proName);
+    public Message findProProcess(Long proId){
+        List<ProProcessVO> list = iIndexServiceImpl.findProProcess(proId);
         return MessageUtil.success("success", list);
     }
+
 }

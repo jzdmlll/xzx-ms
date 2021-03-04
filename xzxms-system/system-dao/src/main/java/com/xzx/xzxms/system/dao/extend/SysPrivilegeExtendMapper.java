@@ -4,6 +4,7 @@ package com.xzx.xzxms.system.dao.extend;
 import com.xzx.xzxms.system.bean.SysPrivilege;
 import com.xzx.xzxms.system.bean.extend.SysPrivilegeExtend;
 import com.xzx.xzxms.system.vm.PrivilegeTree;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,5 +17,5 @@ public interface SysPrivilegeExtendMapper {
 
     List<SysPrivilege> selectByUserId(long id);
 
-    List<SysPrivilegeExtend> selectMenuByUserId(long id);
+    List<PrivilegeTree> selectMenuByUserId(@Param("id") long id, @Param("privilegeParentId") Long privilegeParentId);
 }

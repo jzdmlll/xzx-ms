@@ -29,4 +29,22 @@
         ORDER BY time,pro.id
     </select>
 
+    <select id="findProAndCompletion" resultType="ProjectCompletionVO">
+        SELECT
+          spd.id,
+          spd.name,
+          convert(count(if(spc.finally_audit=0 or spc.finally_audit is null,null,true))*100/count(1), decimal(15,2)) `completion`
+        from sys_pro_detail spd
+        LEFT JOIN inquiry i on spd.id = i.pro_detail_id
+        LEFT JOIN quote q on q.inquiry_id = i.id
+        LEFT JOIN sys_pro_check spc on spc.quote_id = q.id
+        where
+          spd.is_active = 1
+        and (i.is_active = 1 and q.is_active = 1 or i.is_active is null or q.is_active is null)
+        GROUP BY spd.id, spd.name
+        <if test="orderBy!=null and orderBy!=''">
+            ORDER BY ${orderBy}
+        </if>
+    </select>
+
 </mapper>

@@ -1,28 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xzx.xzxms.inquiry.dao.extend.ProProcessExtendMapper">
-  <select id="findProProcessByProName" resultType="com.xzx.xzxms.inquiry.vo.ProProcessVO">
-    SELECT  pro.id proId, pro.`name` proName,
-        COUNT(i.id) iNum,
-        COUNT(q.id) qNum,
-        COUNT(c.technical_audit) ttNum,
-        COUNT(c.business_audit) btNum,
-        COUNT(c.compare_audit) ctNum,
-        COUNT(c.finally_audit) ftNum,
-        COUNT(if(c.technical_audit is not null and c.technical_audit != 0,true,null)) tNum,
-        COUNT(if(c.business_audit is not null and c.business_audit != 0,true,null)) bNum,
-        COUNT(if(c.compare_audit is not null and c.compare_audit != 0,true,null)) cNum,
-        COUNT(if(c.finally_audit is not null and c.finally_audit != 0,true,null)) fNum
-        FROM sys_pro_detail pro
-        LEFT JOIN inquiry i on pro.id = i.pro_detail_id
-        LEFT JOIN quote q on i.id = q.inquiry_id
-        LEFT JOIN sys_pro_check c on q.id = c.quote_id
-        <where>
-          pro.is_active = 1 and i.is_active = 1 and q.is_active = 1
-          <if test="proName != null and proName != ''">
-            and pro.name like CONCAT('%',#{proName},'%')
-          </if>
-        </where>
-        GROUP BY pro.id
+  <select id="findProProcessByProId" resultType="com.xzx.xzxms.inquiry.vo.ProProcessVO">
+    SELECT
+    spd.id proId,
+    spd.name proName,
+    count(DISTINCT i.id) iNum,
+    count(DISTINCT q.id) qNum,
+    count(if(spc.technical_audit=0 or spc.technical_audit is null,null,true)) tNum,
+    count(if(spc.business_audit=0 or spc.business_audit is null,null,true)) bNum,
+    count(if(spc.compare_audit=0 or spc.compare_audit is null,null,true)) cNum,
+    count(if(spc.finally_audit=0 or spc.finally_audit is null,null,true)) fNum
+    from sys_pro_detail spd
+    LEFT JOIN inquiry i on spd.id = i.pro_detail_id
+    LEFT JOIN quote q on q.inquiry_id = i.id
+    LEFT JOIN sys_pro_check spc on spc.quote_id = q.id
+    where
+      spd.is_active = 1
+      and (i.is_active = 1 and q.is_active = 1 or i.is_active is null or q.is_active is null)
+      <if test="proId != null and proId != ''">
+          and spd.id = #{proId}
+      </if>
+    GROUP BY spd.id, spd.name
   </select>
 </mapper>

@@ -12,6 +12,7 @@ import com.xzx.xzxms.system.bean.extend.SysPrivilegeExtend;
 import com.xzx.xzxms.system.bean.extend.SysUserExtend;
 import com.xzx.xzxms.system.service.ISysPrivilegeService;
 import com.xzx.xzxms.system.service.ISysUserService;
+import com.xzx.xzxms.system.vm.PrivilegeTree;
 import com.xzx.xzxms.system.vm.UserRoleVM;
 import com.xzx.xzxms.system.vm.UserVM;
 import io.swagger.annotations.ApiOperation;
@@ -159,7 +160,7 @@ public class SysUserController {
     @ApiOperation(value = "通过用户id查询菜单")
     @GetMapping(value = "findMenuByUserId")
     public Message findMenuByUserId(long id) {
-        List<SysPrivilegeExtend> menuList = privilegeServiceImpl.findMenuByUserId(id);
+        List<PrivilegeTree> menuList = privilegeServiceImpl.findMenuByUserId(id, null);
         return MessageUtil.success("success",menuList);
     }
 

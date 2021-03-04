@@ -1,6 +1,9 @@
 package com.xzx.xzxms.stock.service;
 
+import com.xzx.xzxms.purchase.bean.PurchaseContract;
 import com.xzx.xzxms.stock.bean.StockContractAttribute;
+
+import java.util.List;
 
 /**
  * 收发存模块 合同属性表 业务层
@@ -22,4 +25,12 @@ public interface StockContractAttributeService {
      * @param stockContractAttribute
      */
     void saveOrUpdateStockContractAttribute(StockContractAttribute stockContractAttribute);
+
+    /**
+     * 根据项目Id查询设置过属性的合同
+     * @param projectId
+     * @return
+     */
+    List<PurchaseContract> findContractHasContractAttributeByProId(Long projectId);
+
 }

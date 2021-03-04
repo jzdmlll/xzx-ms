@@ -7,5 +7,4 @@
            and contract_id = #{contractId}
         </if>
     </select>
-
 </mapper>

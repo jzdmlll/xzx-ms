@@ -11,28 +11,29 @@ package com.xzx.xzxms.inquiry.vo;/**
  *@Date DATE{TIME}
  */
 public class ProProcessVO {
-
+    // 项目ID
     private Long proId;
+    // 项目名
     private String proName;
-    //询价数量
+    // 询价数量
     private Long iNum;
-    //报价数量
+    // 报价数量
     private Long qNum;
-    //技审总数量
+    // 技审总数量
     private Long ttNum;
-    //商审总数量
+    // 商审总数量
     private Long btNum;
-    //比价总数量
+    // 比价总数量
     private Long ctNum;
-    //终审总数量
+    // 终审总数量
     private Long ftNum;
-    //技审已审核数量
+    // 技审已审核数量
     private Long tNum;
-    //商审已审核数量
+    // 商审已审核数量
     private Long bNum;
-    //比价已审核数量
+    // 比价已审核数量
     private Long cNum;
-    //终审已审核数量
+    // 终审已审核数量
     private Long fNum;
 
     public Long getProId() {

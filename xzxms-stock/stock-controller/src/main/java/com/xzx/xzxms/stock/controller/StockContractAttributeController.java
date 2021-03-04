@@ -2,6 +2,7 @@ package com.xzx.xzxms.stock.controller;
 
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
+import com.xzx.xzxms.purchase.bean.PurchaseContract;
 import com.xzx.xzxms.stock.bean.StockContractAttribute;
 import com.xzx.xzxms.stock.service.StockContractAttributeService;
 import io.swagger.annotations.ApiOperation;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 收发存模块 合同属性表 控制器
@@ -39,5 +41,12 @@ public class StockContractAttributeController {
 
         stockContractAttributeService.saveOrUpdateStockContractAttribute(stockContractAttribute);
         return MessageUtil.success("success");
+    }
+
+    @ApiOperation(value = "根据项目Id查询设置过属性的合同")
+    @GetMapping("findContractHasContractAttributeByProId")
+    public Message findContractHasContractAttributeByProId(Long projectId) {
+        List<PurchaseContract> PurchaseContractList = stockContractAttributeService.findContractHasContractAttributeByProId(projectId);
+        return MessageUtil.success("success", PurchaseContractList);
     }
 }

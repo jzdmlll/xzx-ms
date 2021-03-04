@@ -7,6 +7,7 @@ import com.xzx.xzxms.inquiry.bean.extend.SysCheckAndScheduleExtend;
 import com.xzx.xzxms.inquiry.vm.ProIsFinallyVM;
 import com.xzx.xzxms.inquiry.vm.ProjectSchedule;
 import com.xzx.xzxms.inquiry.vm.ToDoList;
+import com.xzx.xzxms.inquiry.vo.ProjectCompletionVO;
 import com.xzx.xzxms.inquiry.vo.ContractAuditDealVO;
 import com.xzx.xzxms.purchase.dao.extend.PurchaseContractAuditExtendMapper;
 import org.springframework.stereotype.Service;
@@ -150,6 +151,11 @@ public class SysIndexServiceImpl implements ISysIndexService {
     public List<ToDoList> findFinallyAuditDeal() {
         List<ToDoList> ToDoLists = sysProCheckExtendMapper.findFinallyAuditDeal();
         return ToDoLists;
+    }
+
+    @Override
+    public List<ProjectCompletionVO> findProAndCompletion(String orderBy) {
+        return sysIndexExtendMapper.findProAndCompletion(orderBy);
     }
 
     @Override

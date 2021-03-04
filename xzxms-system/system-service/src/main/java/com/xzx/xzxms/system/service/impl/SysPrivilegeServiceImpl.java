@@ -64,8 +64,12 @@ public class SysPrivilegeServiceImpl implements ISysPrivilegeService {
     }
 
     @Override
-    public List<SysPrivilegeExtend> findMenuByUserId(long id) {
-        return sysPrivilegeExtendMapper.selectMenuByUserId(id);
+    public List<PrivilegeTree> findMenuByUserId(long id, Long privilegeParentId) {
+        List<PrivilegeTree> sysPrivilegeExtends = sysPrivilegeExtendMapper.selectMenuByUserId(id, privilegeParentId);
+        for (PrivilegeTree privilegeExtend : sysPrivilegeExtends) {
+            privilegeExtend.setChildren(findMenuByUserId(id, privilegeExtend.getId()));
+        }
+        return sysPrivilegeExtends;
     }
 
     @Override
@@ -73,4 +77,5 @@ public class SysPrivilegeServiceImpl implements ISysPrivilegeService {
         sysPrivilegeMapper.deleteByPrimaryKey(id);
         baseCommonService.removePrivilegeRedis();
     }
+
 }

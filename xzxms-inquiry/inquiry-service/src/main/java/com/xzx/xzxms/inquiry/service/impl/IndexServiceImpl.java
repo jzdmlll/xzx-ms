@@ -32,9 +32,9 @@ public class IndexServiceImpl implements IIndexService {
 
 
     @Override
-    public List<ProProcessVO> findProProcess(String proName) {
+    public List<ProProcessVO> findProProcess(Long proId) {
 
-        List<ProProcessVO> list = proProcessExtendMapper.findProProcessByProName(proName);
+        List<ProProcessVO> list = proProcessExtendMapper.findProProcessByProId(proId);
         return list;
     }
 }

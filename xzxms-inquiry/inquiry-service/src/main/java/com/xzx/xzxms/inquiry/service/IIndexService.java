@@ -18,10 +18,8 @@ public interface IIndexService {
 
     /**
      * 查询项目流程
-     * @param proName
+     * @param proId
      * @return
      */
-    List<ProProcessVO> findProProcess(String proName);
-
-
+    List<ProProcessVO> findProProcess(Long proId);
 }
