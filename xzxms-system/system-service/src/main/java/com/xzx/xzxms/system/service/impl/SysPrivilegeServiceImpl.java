@@ -1,7 +1,10 @@
 package com.xzx.xzxms.system.service.impl;
 
+import com.xzx.xzxms.commons.dao.redis.JedisDao;
+import com.xzx.xzxms.commons.dao.redis.impl.JedisDaoImpl;
 import com.xzx.xzxms.commons.model.base.service.BaseCommonService;
 import com.xzx.xzxms.commons.utils.CustomerException;
+import com.xzx.xzxms.commons.utils.JsonUtils;
 import com.xzx.xzxms.system.bean.SysPrivilege;
 import com.xzx.xzxms.system.bean.SysPrivilegeExample;
 import com.xzx.xzxms.system.bean.SysRole;
@@ -26,6 +29,8 @@ public class SysPrivilegeServiceImpl implements ISysPrivilegeService {
     private SysPrivilegeExtendMapper sysPrivilegeExtendMapper;
     @Autowired
     private BaseCommonService baseCommonService;
+    @Resource
+    private JedisDao jedisDaoImpl;
     @Override
     public List<SysPrivilege> findAll() {
         return sysPrivilegeMapper.selectByExample(new SysPrivilegeExample());
@@ -33,7 +38,7 @@ public class SysPrivilegeServiceImpl implements ISysPrivilegeService {
 
     @Override
     public List<PrivilegeTree> findByParentId(Long parentId) {
-        return findMenuByUserId(null, null);
+        return findPrivilegeTree();
     }
 
     @Override
@@ -48,8 +53,14 @@ public class SysPrivilegeServiceImpl implements ISysPrivilegeService {
 
     @Override
     public List<PrivilegeTree> findPrivilegeTree() {
-
-        return findMenuByUserId(null, null);
+        String key = "xzx:menu:all";
+        if (jedisDaoImpl.exists(key)) {
+            return JsonUtils.jsonToList(jedisDaoImpl.get(key), PrivilegeTree.class);
+        }else {
+            List<PrivilegeTree> privilegeTrees = recursionFindPrivilegeTree(null, null);
+            jedisDaoImpl.set(key, JsonUtils.objectToJson(privilegeTrees));
+            return privilegeTrees;
+        }
     }
 
     @Override
@@ -59,13 +70,22 @@ public class SysPrivilegeServiceImpl implements ISysPrivilegeService {
 
     @Override
     public List<PrivilegeTree> findMenuByUserId(Long id, Long privilegeParentId) {
+        String key = "xzx:menu:" + id;
+        if (jedisDaoImpl.exists(key)) {
+            return JsonUtils.jsonToList(jedisDaoImpl.get(key), PrivilegeTree.class);
+        }else {
+            List<PrivilegeTree> privilegeTrees = recursionFindPrivilegeTree(id, privilegeParentId);
+            jedisDaoImpl.set(key, JsonUtils.objectToJson(privilegeTrees));
+            return privilegeTrees;
+        }
+    }
+    List<PrivilegeTree> recursionFindPrivilegeTree(Long id, Long privilegeParentId) {
         List<PrivilegeTree> sysPrivilegeExtends = sysPrivilegeExtendMapper.selectMenuByUserId(id, privilegeParentId);
         for (PrivilegeTree privilegeExtend : sysPrivilegeExtends) {
-            privilegeExtend.setChildren(findMenuByUserId(id, privilegeExtend.getId()));
+            privilegeExtend.setChildren(recursionFindPrivilegeTree(id, privilegeExtend.getId()));
         }
         return sysPrivilegeExtends;
     }
-
     @Override
     public void deleteById(long id) {
         sysPrivilegeMapper.deleteByPrimaryKey(id);

@@ -89,10 +89,20 @@ public class BaseCommonServiceImpl implements BaseCommonService {
         if (sysRoles!=null && sysRoles.size() > 0) {
             for(SysRole role: sysRoles) {
                 String key = "xzx:privilege:"+role.getId();
+                String menuKey = "xzx:menu:"+role.getId();
                 if(jedisDaoImpl.exists(key)) {
                     jedisDaoImpl.del(key);
                 }
+                if(jedisDaoImpl.exists(menuKey)) {
+                    jedisDaoImpl.del(menuKey);
+                }
             }
+        }
+        if (jedisDaoImpl.exists("xzx:menu:all")) {
+            jedisDaoImpl.del("xzx:menu:all");
+        }
+        if (jedisDaoImpl.exists("xzx:privilege:all")) {
+            jedisDaoImpl.del("xzx:privilege:all");
         }
     }
 
