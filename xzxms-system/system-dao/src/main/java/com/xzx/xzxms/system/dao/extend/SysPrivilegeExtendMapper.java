@@ -17,5 +17,5 @@ public interface SysPrivilegeExtendMapper {
 
     List<SysPrivilege> selectByUserId(long id);
 
-    List<PrivilegeTree> selectMenuByUserId(@Param("id") long id, @Param("privilegeParentId") Long privilegeParentId);
+    List<PrivilegeTree> selectMenuByUserId(@Param("id") Long id, @Param("privilegeParentId") Long privilegeParentId);
 }

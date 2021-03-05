@@ -15,12 +15,22 @@
 
   <select id="selectByParentIdWithPrivilege" resultType="com.xzx.xzxms.system.vm.PrivilegeTree">
     select p.*
-       from sys_role r, sys_role_privilege rp ,sys_privilege p
-       where rp.role_id = r.id
-       and rp.privilege_id = p.id
-       and p.parent_id = #{id,jdbcType=BIGINT}
-       and p.type = 'menu'
-       and r.id = #{roleId,jdbcType=BIGINT}
+       from sys_privilege p
+      <choose>
+          <when test="roleId != null">
+              , sys_role r, sys_role_privilege rp
+              where rp.role_id = r.id
+              and rp.privilege_id = p.id
+              and r.id = #{roleId,jdbcType=BIGINT}
+              and p.type = 'menu'
+              and p.parent_id = #{id,jdbcType=BIGINT}
+          </when>
+          <otherwise>
+              where
+                p.parent_id = #{id,jdbcType=BIGINT}
+          </otherwise>
+      </choose>
+
   </select>
 
   <select id="selectByRoleId" resultType="com.xzx.xzxms.system.bean.SysPrivilege">
@@ -42,15 +52,17 @@
   </select>
 
   <select id="selectMenuByUserId" resultMap="PrivilegeTreeResultWithPrivilegeMap">
-    select p.*, #{id,jdbcType=BIGINT} as roleId
+    select distinct p.*, #{id,jdbcType=BIGINT} as roleId
        from sys_privilege p
       <choose>
           <when test="privilegeParentId != null">
               , sys_role_privilege rp
           where
-              rp.privilege_id = p.id and
-              p.parent_id = #{privilegeParentId} and (p.type = 'menu' or p.type = 'parent')
-              and rp.role_id = #{id}
+              rp.privilege_id = p.id and p.parent_id = #{privilegeParentId}
+              <if test="id != null">
+                  and rp.role_id = #{id}
+                  and (p.type = 'menu' or p.type = 'parent')
+              </if>
          </when>
          <otherwise>
              where p.parent_id is null

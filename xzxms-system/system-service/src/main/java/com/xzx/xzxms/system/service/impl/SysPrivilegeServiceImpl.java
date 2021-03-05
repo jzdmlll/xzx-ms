@@ -32,15 +32,8 @@ public class SysPrivilegeServiceImpl implements ISysPrivilegeService {
     }
 
     @Override
-    public List<SysPrivilege> findByParentId(Long parentId) {
-        SysPrivilegeExample example = new SysPrivilegeExample();
-        if(parentId == null){
-            example.createCriteria().andParentIdIsNull();
-        } else {
-            example.createCriteria().andParentIdEqualTo(parentId);
-        }
-
-        return sysPrivilegeMapper.selectByExample(example);
+    public List<PrivilegeTree> findByParentId(Long parentId) {
+        return findMenuByUserId(null, null);
     }
 
     @Override
@@ -55,7 +48,8 @@ public class SysPrivilegeServiceImpl implements ISysPrivilegeService {
 
     @Override
     public List<PrivilegeTree> findPrivilegeTree() {
-        return sysPrivilegeExtendMapper.selectAll();
+
+        return findMenuByUserId(null, null);
     }
 
     @Override
@@ -64,7 +58,7 @@ public class SysPrivilegeServiceImpl implements ISysPrivilegeService {
     }
 
     @Override
-    public List<PrivilegeTree> findMenuByUserId(long id, Long privilegeParentId) {
+    public List<PrivilegeTree> findMenuByUserId(Long id, Long privilegeParentId) {
         List<PrivilegeTree> sysPrivilegeExtends = sysPrivilegeExtendMapper.selectMenuByUserId(id, privilegeParentId);
         for (PrivilegeTree privilegeExtend : sysPrivilegeExtends) {
             privilegeExtend.setChildren(findMenuByUserId(id, privilegeExtend.getId()));

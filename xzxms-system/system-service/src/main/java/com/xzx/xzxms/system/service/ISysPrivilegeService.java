@@ -22,7 +22,7 @@ public interface ISysPrivilegeService {
      * @Param: [parentId]
      * @return: java.util.List<Privilege>
      */
-    List<SysPrivilege> findByParentId(Long parentId);
+    List<PrivilegeTree> findByParentId(Long parentId);
 
     /**
      * @Description: 保存或更新权限
@@ -50,7 +50,7 @@ public interface ISysPrivilegeService {
      * @Param: [id]
      * @return: java.util.List<PrivilegeExtend>
      */
-    List<PrivilegeTree> findMenuByUserId(long id, Long privilegeParentId);
+    List<PrivilegeTree> findMenuByUserId(Long id, Long privilegeParentId);
 
     /**
      * 删除权限

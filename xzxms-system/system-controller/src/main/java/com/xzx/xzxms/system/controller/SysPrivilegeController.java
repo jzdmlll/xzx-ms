@@ -35,7 +35,7 @@ public class SysPrivilegeController {
     @ApiOperation(value = "通过parentId查询")
     @GetMapping(value = "findByParentId")
     public Message findByParentId(Long id){
-        List<SysPrivilege> list = sysPrivilegeService.findByParentId(id);
+        List<PrivilegeTree> list = sysPrivilegeService.findByParentId(id);
         return MessageUtil.success("success",list);
     }
 
