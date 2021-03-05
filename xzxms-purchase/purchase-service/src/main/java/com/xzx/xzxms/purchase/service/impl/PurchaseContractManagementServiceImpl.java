@@ -123,8 +123,24 @@ public class PurchaseContractManagementServiceImpl implements PurchaseContractMa
     }
 
     @Override
-    public List<PurchaseContractGenerateNewVO> findPurchaseMessageByContractId(Long contractId) {
-        List<PurchaseContractGenerateNewVO> list = purchaseContractManagementExtendMapper.findPurchaseMessageByContractId(contractId);
+    public List<PurchaseContractGenerateNewVO> findPurchaseMessageByContractId(Long contractId, Long startTime, Long overTime, Integer auditStatus, Integer auditLevel) {
+
+        String level;
+        switch (auditLevel){
+            case 1:
+                level = "first_audit";
+                break;
+            case 2:
+                level = "second_audit";
+                break;
+            case 3:
+                level = "three_audit";
+                break;
+            default:
+                level = "";
+                break;
+        }
+        List<PurchaseContractGenerateNewVO> list = purchaseContractManagementExtendMapper.findPurchaseMessageByContractId(contractId ,startTime, overTime, auditStatus, level);
         return list;
     }
 

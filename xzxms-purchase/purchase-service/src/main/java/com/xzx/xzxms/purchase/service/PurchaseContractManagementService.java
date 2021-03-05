@@ -62,8 +62,11 @@ public interface PurchaseContractManagementService {
     /**
      * 一、二、三级合同审核页面（根据采购合同查询采购信息）
      * @param contractId
+     * @param startTime
+     * @param overTime
+     * @param auditStatus
+     * @param auditLevel
      * @return
      */
-    List<PurchaseContractGenerateNewVO> findPurchaseMessageByContractId(Long contractId);
-
+    List<PurchaseContractGenerateNewVO> findPurchaseMessageByContractId(Long contractId, Long startTime, Long overTime, Integer auditStatus, Integer auditLevel);
 }

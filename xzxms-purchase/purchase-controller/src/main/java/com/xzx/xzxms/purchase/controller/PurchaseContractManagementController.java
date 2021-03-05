@@ -32,12 +32,8 @@ import java.util.List;
 @RequestMapping("/purchase/contractManagement")
 public class PurchaseContractManagementController {
 
-    @Autowired
-    PurchaseContractManagementService purchaseContractManagementService;
-
     @Resource
-    PurchaseContractManagementExtendMapper purchaseContractManagementExtendMapper;
-
+    private PurchaseContractManagementService purchaseContractManagementServiceImpl;
     @Resource
     private IPurchaseContractService purchaseContractServiceImpl;
 
@@ -49,7 +45,7 @@ public class PurchaseContractManagementController {
     @ApiOperation("根据输入项目名模糊查询")
     @GetMapping("findAllProjects")
     public Message findAllProjects(@Param("projectName") String projectName){
-        List<PurchaseProjectVO> allProjects = purchaseContractManagementService.findAllProjectsService(projectName);
+        List<PurchaseProjectVO> allProjects = purchaseContractManagementServiceImpl.findAllProjectsService(projectName);
         return MessageUtil.success("success",allProjects);
     }
 
@@ -61,7 +57,7 @@ public class PurchaseContractManagementController {
     @ApiOperation("根据项目id查询所有与其相关的合同信息")
     @GetMapping("findContractByProjectId")
     public Message findContractByProjectId(@Param("projectId") Long projectId){
-        List<PurchaseContractVO> contractList = purchaseContractManagementService.findContractByProjectId(projectId);
+        List<PurchaseContractVO> contractList = purchaseContractManagementServiceImpl.findContractByProjectId(projectId);
         return MessageUtil.success("success",contractList);
     }
 
@@ -74,22 +70,8 @@ public class PurchaseContractManagementController {
     @PostMapping("updateContractAuditById")
     public Message updateContractAuditById(PurchaseContract purchaseContract){
 
-        purchaseContractManagementService.updateContractAuditByIdService(purchaseContract);
+        purchaseContractManagementServiceImpl.updateContractAuditByIdService(purchaseContract);
         return MessageUtil.success("success");
-    }
-
-    /**
-     * sunny 作废
-     * 2021/1/29
-     * 周嘉玮
-     * @param contractId
-     * @return
-     */
-    @ApiOperation("根据合同id查询所有与其相关的购买项信息")
-    @GetMapping("findItemsInfoByContractId")
-    public Message findItemsInfoByContractId(@Param("contractId") Long contractId){
-        List<PurchaseContractGenerateVO> itemsInfos = purchaseContractManagementExtendMapper.findItemsInfoByContractId(contractId);
-        return MessageUtil.success("success",itemsInfos);
     }
 
     /**
@@ -100,8 +82,8 @@ public class PurchaseContractManagementController {
      */
     @ApiOperation("根据合同id查询所有与其相关的购买项信息")
     @GetMapping("findPurchaseMessageByContractId")
-    public Message findPurchaseMessageByContractId(Long contractId){
-        List<PurchaseContractGenerateNewVO> itemsInfos = purchaseContractManagementExtendMapper.findPurchaseMessageByContractId(contractId);
+    public Message findPurchaseMessageByContractId(Long contractId, Long startTime, Long overTime, Integer auditStatus, Integer auditLevel){
+        List<PurchaseContractGenerateNewVO> itemsInfos = purchaseContractManagementServiceImpl.findPurchaseMessageByContractId(contractId, startTime, overTime, auditStatus, auditLevel);
         return MessageUtil.success("success",itemsInfos);
     }
 
@@ -120,7 +102,7 @@ public class PurchaseContractManagementController {
     @ApiOperation("合同文件上传")
     @PostMapping("uploadContractFile")
     public Message uploadContractFile(@RequestBody PurchaseContractFIleDTO purchaseContractFIleDTO){
-        purchaseContractManagementService.uploadContractFile(purchaseContractFIleDTO.getPurchaseContract(), purchaseContractFIleDTO.getFileList());
+        purchaseContractManagementServiceImpl.uploadContractFile(purchaseContractFIleDTO.getPurchaseContract(), purchaseContractFIleDTO.getFileList());
         return MessageUtil.success("success");
     }
 
@@ -133,7 +115,7 @@ public class PurchaseContractManagementController {
     @ApiOperation("合同生效并上传正式合同等文件")
     @PostMapping("purchaseContractEffective")
     public Message purchaseContractEffective(@RequestBody PurchaseContractFIleDTO purchaseContractFIleDTO){
-        purchaseContractManagementService.purchaseContractEffective(purchaseContractFIleDTO.getPurchaseContract(), purchaseContractFIleDTO.getFileList());
+        purchaseContractManagementServiceImpl.purchaseContractEffective(purchaseContractFIleDTO.getPurchaseContract(), purchaseContractFIleDTO.getFileList());
         return MessageUtil.success("success");
     }
 }
