@@ -128,7 +128,7 @@
         left join sys_user s3 on three_operator = s3.id
         <where>
             pc.is_active = 1 and pi.is_active = 1 and pp.is_active = 1 and ps.is_active = 1
-            <if test="contractId != null and contractId != ''">
+            <if test="contractId != null">
                 and pc.id = #{contractId, jdbcType = BIGINT}
             </if>
         </where>
