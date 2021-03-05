@@ -131,6 +131,17 @@
             <if test="contractId != null">
                 and pc.id = #{contractId, jdbcType = BIGINT}
             </if>
+            <if test="auditLevel != null">
+                <if test="auditStatus != null">
+                    and pc.${auditLevel} = #{auditStatus}
+                </if>
+            </if>
+            <if test="startTime != null">
+                and sender_time &gt;= #{startTime, jdbcType = BIGINT}
+            </if>
+            <if test="overTime != null">
+                and sender_time &lt;= #{overTime, jdbcType = BIGINT}
+            </if>
         </where>
         order by pc.send_time
     </select>

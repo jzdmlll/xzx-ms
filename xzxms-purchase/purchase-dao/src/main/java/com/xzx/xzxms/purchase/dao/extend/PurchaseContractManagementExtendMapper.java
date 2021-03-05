@@ -73,5 +73,5 @@ public interface PurchaseContractManagementExtendMapper {
      * @param contractId
      * @return
      */
-    List<PurchaseContractGenerateNewVO> findPurchaseMessageByContractId(Long contractId);
+    List<PurchaseContractGenerateNewVO> findPurchaseMessageByContractId(@Param("contractId") Long contractId, @Param("startTime") Long startTime, @Param("overTime") Long overTime, @Param("auditStatus") Integer auditStatus, @Param("auditLevel") String auditLevel);
 }
