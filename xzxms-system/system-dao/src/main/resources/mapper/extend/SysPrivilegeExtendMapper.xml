@@ -17,7 +17,7 @@
     select p.*
        from sys_privilege p
       <choose>
-          <when test="roleId != null">
+          <when test="roleId != null and roleId > 0">
               , sys_role r, sys_role_privilege rp
               where rp.role_id = r.id
               and rp.privilege_id = p.id
