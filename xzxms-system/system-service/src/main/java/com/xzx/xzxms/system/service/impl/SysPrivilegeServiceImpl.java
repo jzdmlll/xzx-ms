@@ -82,7 +82,9 @@ public class SysPrivilegeServiceImpl implements ISysPrivilegeService {
     List<PrivilegeTree> recursionFindPrivilegeTree(Long id, Long privilegeParentId) {
         List<PrivilegeTree> sysPrivilegeExtends = sysPrivilegeExtendMapper.selectMenuByUserId(id, privilegeParentId);
         for (PrivilegeTree privilegeExtend : sysPrivilegeExtends) {
-            privilegeExtend.setChildren(recursionFindPrivilegeTree(id, privilegeExtend.getId()));
+            for (PrivilegeTree child : privilegeExtend.getChildren()) {
+                child.setChildren(recursionFindPrivilegeTree(id, child.getId()));
+            }
         }
         return sysPrivilegeExtends;
     }
