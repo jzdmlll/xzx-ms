@@ -1,5 +1,7 @@
 package com.xzx.xzxms.chapter.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xzx.xzxms.chapter.bean.ChapterAudit;
 import com.xzx.xzxms.chapter.dao.extend.ChapterAuditExtendMapper;
 import com.xzx.xzxms.chapter.dto.ChapterAuditDTO;
@@ -72,9 +74,13 @@ public class ChapterAuditController {
      */
     @ApiOperation("根据项目名称查询该项目下所有审核信息审核信息")
     @GetMapping("findChapterAuditInfosByParams")
-    public Message findChapterAuditInfosByParams(String proName, Long startTime, Long overTime, Integer auditStatus){
+    public Message findChapterAuditInfosByParams(String proName, Long startTime, Long overTime, Integer auditStatus,
+                                                 @RequestParam(name = "pageSize", defaultValue = "10") int pageSize,
+                                                 @RequestParam(name = "pageNum", defaultValue = "1") int pageNum){
+        PageHelper.startPage(pageNum, pageSize, "sender_time desc");
         List<ChapterAudit> chapterAuditInfos = chapterAuditService.findChapterAuditInfosByProjectNameService(proName, startTime, overTime, auditStatus);
-        return MessageUtil.success("success", chapterAuditInfos);
+        PageInfo<ChapterAudit> pageInfo = new PageInfo<>(chapterAuditInfos);
+        return MessageUtil.success("success", pageInfo);
     }
 
     /**
