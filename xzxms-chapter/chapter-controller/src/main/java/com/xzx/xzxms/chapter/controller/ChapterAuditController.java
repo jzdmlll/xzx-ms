@@ -7,6 +7,7 @@ import com.xzx.xzxms.chapter.dao.extend.ChapterAuditExtendMapper;
 import com.xzx.xzxms.chapter.dto.ChapterAuditDTO;
 import com.xzx.xzxms.chapter.dto.ChapterAuditorDTO;
 import com.xzx.xzxms.chapter.service.ChapterAuditService;
+import com.xzx.xzxms.chapter.vo.ChapterAuditVO;
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
 import com.xzx.xzxms.system.bean.SysFile;
@@ -15,6 +16,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -29,10 +31,10 @@ import java.util.List;
 @RequestMapping("/chapter/chapterAudit")
 public class ChapterAuditController {
 
-    @Autowired
-    ChapterAuditService chapterAuditService;
-    @Autowired
-    ChapterAuditExtendMapper chapterAuditExtendMapper;
+    @Resource
+    private ChapterAuditService chapterAuditService;
+    @Resource
+    private ChapterAuditExtendMapper chapterAuditExtendMapper;
 
     /**
      * 周嘉玮
@@ -78,8 +80,8 @@ public class ChapterAuditController {
                                                  @RequestParam(name = "pageSize", defaultValue = "10") int pageSize,
                                                  @RequestParam(name = "pageNum", defaultValue = "1") int pageNum){
         PageHelper.startPage(pageNum, pageSize, "sender_time desc");
-        List<ChapterAudit> chapterAuditInfos = chapterAuditService.findChapterAuditInfosByProjectNameService(proName, startTime, overTime, auditStatus);
-        PageInfo<ChapterAudit> pageInfo = new PageInfo<>(chapterAuditInfos);
+        List<ChapterAuditVO> chapterAuditInfos = chapterAuditService.findChapterAuditInfosByProjectNameService(proName, startTime, overTime, auditStatus);
+        PageInfo<ChapterAuditVO> pageInfo = new PageInfo<>(chapterAuditInfos);
         PageHelper.clearPage();
         return MessageUtil.success("success", pageInfo);
     }

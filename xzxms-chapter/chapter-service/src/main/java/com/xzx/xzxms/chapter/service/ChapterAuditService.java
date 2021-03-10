@@ -1,8 +1,8 @@
 package com.xzx.xzxms.chapter.service;
 
 import com.xzx.xzxms.chapter.bean.ChapterAudit;
+import com.xzx.xzxms.chapter.vo.ChapterAuditVO;
 import com.xzx.xzxms.system.bean.SysFile;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -37,7 +37,7 @@ public interface ChapterAuditService {
      * 根据项目名称查询该项目下所有审核信息审核信息
      * @return
      */
-    List<ChapterAudit> findChapterAuditInfosByProjectNameService(String proName, Long startTime, Long overTime, Integer auditStatus);
+    List<ChapterAuditVO> findChapterAuditInfosByProjectNameService(String proName, Long startTime, Long overTime, Integer auditStatus);
 
     /**
      * 周嘉玮
