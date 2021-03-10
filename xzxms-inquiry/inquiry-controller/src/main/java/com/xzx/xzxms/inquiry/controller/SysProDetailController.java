@@ -2,6 +2,7 @@ package com.xzx.xzxms.inquiry.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.xzx.xzxms.commons.utils.JwtTokenUtil;
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
 import com.xzx.xzxms.inquiry.service.ISysProDetailService;
@@ -12,6 +13,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -74,8 +76,10 @@ public class SysProDetailController {
 
     @ApiOperation(value = "逻辑删除项目")
     @PostMapping(value = "setInvalid")
-    public Message setInvalid(long proDetailId) {
-        sysProDetailServiceImpl.setInvalid(proDetailId);
+    public Message setInvalid(HttpServletRequest request, long proDetailId) {
+        String token = request.getHeader(JwtTokenUtil.AUTH_HEADER_KEY);
+        String id = JwtTokenUtil.getUserId(token, JwtTokenUtil.base64Secret);
+        sysProDetailServiceImpl.setInvalid(proDetailId, id);
         return MessageUtil.success("操作成功");
     }
 }

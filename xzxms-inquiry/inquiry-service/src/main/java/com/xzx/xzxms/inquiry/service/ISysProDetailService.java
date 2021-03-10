@@ -56,7 +56,7 @@ public interface ISysProDetailService {
      * 置为无效（假删）
      * @param id
      */
-    void setInvalid(long id);
+    void setInvalid(Long id, String loginId);
 
     /**
      * 询价页面查询招投标项目

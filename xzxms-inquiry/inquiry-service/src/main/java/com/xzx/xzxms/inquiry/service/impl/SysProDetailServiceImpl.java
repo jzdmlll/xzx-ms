@@ -249,11 +249,27 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
     }
 
     @Override
-    public void setInvalid(long id) {
-        SysProDetailWithBLOBs proDetail = new SysProDetailWithBLOBs();
-        proDetail.setId(id);
-        proDetail.setIsActive(0);
-        sysProDetailMapper.updateByPrimaryKeySelective(proDetail);
+    public void setInvalid(Long id, String loginId) {
+
+        SysProDetailExample example = new SysProDetailExample();
+        example.createCriteria().andIdEqualTo(id).andIsActiveEqualTo(CommonConstant.EFFECTIVE);
+        List<SysProDetail> list = sysProDetailMapper.selectByExample(example);
+        if (list == null){
+            throw new CustomerException("此项目已失效,删除失败!");
+        }else {
+            SysProDetail sysProDetail = list.get(0);
+            if (loginId.equals(sysProDetail.getOperator())){
+
+                SysProDetailWithBLOBs proDetail = new SysProDetailWithBLOBs();
+                proDetail.setId(id);
+                proDetail.setIsActive(CommonConstant.INVALID);
+                proDetail.setUpdateTime(new Date().getTime());
+                proDetail.setUpdateOperator(loginId);
+                sysProDetailMapper.updateByPrimaryKeySelective(proDetail);
+            }else {
+                throw new CustomerException("当前项目不是由您所创建,无删除权限!");
+            }
+        }
     }
 
     @Override
