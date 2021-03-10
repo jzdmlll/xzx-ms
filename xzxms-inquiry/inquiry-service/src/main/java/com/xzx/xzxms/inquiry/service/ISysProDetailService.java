@@ -23,7 +23,7 @@ public interface ISysProDetailService {
      * @param proDetail
      * @param files
      */
-    void saveOrUpdate(SysProDetailWithBLOBs proDetail, List<SysFile> files);
+    void saveOrUpdate(SysProDetailWithBLOBs proDetail, List<SysFile> files, String loginId);
 
     /**
      * 验证项目名称是否存在

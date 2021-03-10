@@ -51,10 +51,16 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
     }
     @Transactional
     @Override
-    public void saveOrUpdate(SysProDetailWithBLOBs proDetail, List<SysFile> files) {
+    public void saveOrUpdate(SysProDetailWithBLOBs proDetail, List<SysFile> files, String loginId) {
         long time = new Date().getTime();
         String operatorId = proDetail.getOperator();
         if (proDetail.getId() != null){
+
+            //修改前根据登录用户ID和项目创建ID判断是否有权限删除
+            if (!loginId.equals(proDetail.getOperator())){
+                throw new CustomerException("当前项目不是由您所创建,无修改权限!");
+            }
+
             // 查询该项目是否有文件
             SysFileExample sysFileExample = new SysFileExample();
             sysFileExample.createCriteria().andOtherIdEqualTo(proDetail.getId()).andIsActiveEqualTo(CommonConstant.EFFECTIVE)
@@ -259,7 +265,6 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
         }else {
             SysProDetail sysProDetail = list.get(0);
             if (loginId.equals(sysProDetail.getOperator())){
-
                 SysProDetailWithBLOBs proDetail = new SysProDetailWithBLOBs();
                 proDetail.setId(id);
                 proDetail.setIsActive(CommonConstant.INVALID);

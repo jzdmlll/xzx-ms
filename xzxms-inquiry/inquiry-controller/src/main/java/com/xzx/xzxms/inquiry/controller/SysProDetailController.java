@@ -48,8 +48,10 @@ public class SysProDetailController {
 
     @ApiOperation(value = "新增或修改项目")
     @PostMapping(value = "saveOrUpdate")
-    public Message saveOrUpdate(@RequestBody ProDetailReqVM proDetailReqVM) throws Exception {
-        sysProDetailServiceImpl.saveOrUpdate(proDetailReqVM.getProDetails(), proDetailReqVM.getFiles());
+    public Message saveOrUpdate(HttpServletRequest request, @RequestBody ProDetailReqVM proDetailReqVM){
+        String token = request.getHeader(JwtTokenUtil.AUTH_HEADER_KEY);
+        String id = JwtTokenUtil.getUserId(token, JwtTokenUtil.base64Secret);
+        sysProDetailServiceImpl.saveOrUpdate(proDetailReqVM.getProDetails(), proDetailReqVM.getFiles(), id);
         return MessageUtil.success("操作成功");
     }
 
