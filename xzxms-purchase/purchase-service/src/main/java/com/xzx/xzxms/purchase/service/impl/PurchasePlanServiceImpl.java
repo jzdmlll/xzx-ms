@@ -418,7 +418,7 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
                         purchaseProject.setOperator(operator + "");
                         purchaseProject.setTime(new Date().getTime());
                         purchaseProject.setInquiryProId(proPurchase.getId());
-                        purchaseProject.setPurchaseProNo(proPurchase.getProNo());
+                        purchaseProject.setProNo(proPurchase.getProNo());
                         purchaseProjectMapper.insert(purchaseProject);
 
                         //修改询价项目表中的采购项目ID

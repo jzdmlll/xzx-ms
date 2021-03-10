@@ -11,6 +11,8 @@ import com.xzx.xzxms.inquiry.dao.SysProOriginMapper;
 import com.xzx.xzxms.inquiry.dao.extend.SysProDetailExtendMapper;
 import com.xzx.xzxms.inquiry.service.ISysProDetailService;
 import com.xzx.xzxms.inquiry.bean.extend.SysProDetailExtend;
+import com.xzx.xzxms.purchase.bean.PurchaseProject;
+import com.xzx.xzxms.purchase.dao.PurchaseProjectMapper;
 import com.xzx.xzxms.system.bean.SysFile;
 import com.xzx.xzxms.system.bean.SysFileExample;
 import com.xzx.xzxms.system.bean.extend.SysFileExtend;
@@ -34,14 +36,14 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
     private SysProDetailExtendMapper sysProDetailExtendMapper;
     @Resource
     private SysProDetailMapper sysProDetailMapper;
-    @Autowired
+    @Resource
     private JedisDao jedisDaoImpl;
     @Resource
     private IFileUploadService fileUploadServiceImpl;
     @Resource
     private SysFileMapper sysFileMapper;
     @Resource
-    private SysProOriginMapper sysProOriginMapper;
+    private PurchaseProjectMapper purchaseProjectMapper;
 
     @Override
     public List<SysProDetailExtend> findById() {
@@ -58,6 +60,13 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
             sysFileExample.createCriteria().andOtherIdEqualTo(proDetail.getId()).andIsActiveEqualTo(CommonConstant.EFFECTIVE)
                     .andTypeEqualTo(SysFileExtend.TYPE_PRODETAIL);
             Long fileNum = sysFileMapper.countByExample(sysFileExample);
+
+            //采购项目文件也同时操作
+            SysFileExample purFileExample = new SysFileExample();
+            sysFileExample.createCriteria().andOtherIdEqualTo(proDetail.getPurchaseProId()).andIsActiveEqualTo(CommonConstant.EFFECTIVE)
+                    .andTypeEqualTo(SysFileExtend.TYPE_PRODETAIL);
+            Long purFileNum = sysFileMapper.countByExample(purFileExample);
+
             if (fileNum > 0) {
                 // 修改
                 // 覆盖之前文件
@@ -65,6 +74,13 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
                 newFile.setIsActive(CommonConstant.INVALID);
                 sysFileMapper.updateByExampleSelective(newFile, sysFileExample);
             }
+
+            if (purFileNum > 0){
+                SysFile newFile = new SysFile();
+                newFile.setIsActive(CommonConstant.INVALID);
+                sysFileMapper.updateByExampleSelective(newFile, purFileExample);
+            }
+
             // 修改
             // 文件上传
             for (SysFile file : files) {
@@ -98,14 +114,35 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
                 file.setIsUseful(1);
                 file.setOperator(operatorId);
                 sysFileMapper.insert(file);
+                //插入采购项目文件
+                file.setId(IDUtils.getId());
+                file.setOtherId(proDetail.getPurchaseProId());
+                sysFileMapper.insert(file);
             }
             //proDetail.setProRate(proDetail.getProRate()*1000);
             proDetail.setUpdateTime(new Date().getTime());
             sysProDetailMapper.updateByPrimaryKeySelective(proDetail);
 
+            //采购项目表也更新
+            PurchaseProject purchaseProject = new PurchaseProject();
+            purchaseProject.setId(proDetail.getPurchaseProId());
+            purchaseProject.setProjectName(proDetail.getName());
+            purchaseProject.setRemark(proDetail.getRemark());
+            purchaseProject.setUpdateOperator(proDetail.getUpdateOperator());
+            purchaseProject.setUpdateTime(proDetail.getUpdateTime());
+            purchaseProject.setProTypeId(proDetail.getProTypeId());
+            purchaseProject.setProOriginId(proDetail.getProOriginId());
+            purchaseProject.setProNo(proDetail.getProNo());
+            purchaseProject.setProRate(proDetail.getProRate());
+            purchaseProject.setContent(proDetail.getContent());
+            purchaseProjectMapper.updateByPrimaryKeySelective(purchaseProject);
+
         }else {
             // 新增
             long proDetailId = IDUtils.getId();
+            //采购项目ID
+            long purchaseProId = IDUtils.getId();
+
             //文件上传
             for (SysFile file : files) {
                 //如果redis中存在该文件
@@ -124,9 +161,13 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
                     file.setOtherId(proDetailId);
                     file.setTime(time);
                     file.setUrl(map.get("url").toString());
-                    file.setIsActive(1);
-                    file.setIsUseful(1);
+                    file.setIsActive(CommonConstant.EFFECTIVE);
+                    file.setIsUseful(CommonConstant.IS_NOT_USEFUL);
                     file.setOperator(operatorId);
+                    sysFileMapper.insert(file);
+                    //询价项目文件插入 采购项目文件也要插入 2021/03/09 sunny
+                    file.setId(IDUtils.getId());
+                    file.setOtherId(purchaseProId);
                     sysFileMapper.insert(file);
                 }
             }
@@ -150,11 +191,31 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
 
             //项目信息插入数据库
             proDetail.setId(proDetailId);
+            //与采购项目互绑
+            proDetail.setPurchaseProId(purchaseProId);
+
             proDetail.setProNo(temp.toString());
             proDetail.setTime(time);
-            proDetail.setIsActive(1);
-            proDetail.setIsUseful(0);
+            proDetail.setIsActive(CommonConstant.EFFECTIVE);
+            proDetail.setIsUseful(CommonConstant.IS_NOT_USEFUL);
             sysProDetailMapper.insert(proDetail);
+
+            //同时采购项目也插入
+            PurchaseProject purchaseProject = new PurchaseProject();
+            purchaseProject.setId(purchaseProId);
+            purchaseProject.setProjectName(proDetail.getName());
+            purchaseProject.setIsActive(CommonConstant.EFFECTIVE);
+            purchaseProject.setIsUseful(CommonConstant.IS_NOT_USEFUL);
+            purchaseProject.setOperator(proDetail.getOperator());
+            purchaseProject.setTime(time);
+            purchaseProject.setInquiryProId(proDetailId);
+            purchaseProject.setRemark(proDetail.getRemark());
+            purchaseProject.setProTypeId(proDetail.getProTypeId());
+            purchaseProject.setProOriginId(proDetail.getProOriginId());
+            purchaseProject.setProNo(proDetail.getProNo());
+            purchaseProject.setProRate(proDetail.getProRate());
+            purchaseProject.setContent(proDetail.getContent());
+            purchaseProjectMapper.insert(purchaseProject);
         }
     }
 

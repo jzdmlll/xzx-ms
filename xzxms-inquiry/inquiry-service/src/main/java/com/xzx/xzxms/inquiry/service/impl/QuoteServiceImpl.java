@@ -219,7 +219,7 @@ public class QuoteServiceImpl implements IQuoteService {
                         if(item.get("图片") != null && !"".equals(item.get("图片").toString().trim())) {
                             InputStream is = (InputStream)item.get("图片");
                             String imgType = item.get("imgType").toString();
-                            String imgName = item.get("供应商").toString().trim() + name + "报价设备图." + imgType;
+                            String imgName = name + "报价设备图." + imgType;
                             Map<String, Object> uploadResult = fileUploadServiceImpl.uploadByStream(is, imgName);
                             if (uploadResult.get("url")!=null){
                                 imgUrl = uploadResult.get("url").toString();

@@ -5,7 +5,7 @@ import com.xzx.xzxms.system.bean.SysFile;
 
 public class SysFileExtend extends SysFile {
     /**
-     * 询价项目文件
+     * 项目文件
      */
     public static final int TYPE_PRODETAIL = 0;
     /**

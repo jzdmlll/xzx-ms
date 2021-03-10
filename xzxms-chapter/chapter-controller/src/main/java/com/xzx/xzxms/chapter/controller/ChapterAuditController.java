@@ -80,6 +80,7 @@ public class ChapterAuditController {
         PageHelper.startPage(pageNum, pageSize, "sender_time desc");
         List<ChapterAudit> chapterAuditInfos = chapterAuditService.findChapterAuditInfosByProjectNameService(proName, startTime, overTime, auditStatus);
         PageInfo<ChapterAudit> pageInfo = new PageInfo<>(chapterAuditInfos);
+        PageHelper.clearPage();
         return MessageUtil.success("success", pageInfo);
     }
 
