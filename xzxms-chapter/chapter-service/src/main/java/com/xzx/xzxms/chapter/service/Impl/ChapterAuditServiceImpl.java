@@ -5,6 +5,7 @@ import com.xzx.xzxms.chapter.bean.ChapterAuditExample;
 import com.xzx.xzxms.chapter.dao.ChapterAuditMapper;
 import com.xzx.xzxms.chapter.dao.extend.ChapterAuditExtendMapper;
 import com.xzx.xzxms.chapter.service.ChapterAuditService;
+import com.xzx.xzxms.chapter.vo.ChapterAuditVO;
 import com.xzx.xzxms.commons.dao.redis.JedisDao;
 import com.xzx.xzxms.commons.fileupload.IFileUploadService;
 import com.xzx.xzxms.commons.utils.Base64Util;
@@ -130,10 +131,9 @@ public class ChapterAuditServiceImpl implements ChapterAuditService {
      * @return
      */
     @Override
-    public List<ChapterAudit> findChapterAuditInfosByProjectNameService(String proId, Long startTime, Long overTime,Integer auditStatus) {
+    public List<ChapterAuditVO> findChapterAuditInfosByProjectNameService(String proId, Long startTime, Long overTime,Integer auditStatus) {
 
-        List<ChapterAudit> chapterAuditInfos = chapterAuditExtendMapper.findChapterAuditor(proId, startTime, overTime, auditStatus);
-        return chapterAuditInfos;
+        return chapterAuditExtendMapper.findChapterAuditor(proId, startTime, overTime, auditStatus);
     }
 
     /**

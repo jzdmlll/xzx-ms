@@ -1,10 +1,9 @@
 package com.xzx.xzxms.chapter.dao.extend;
 
-import com.xzx.xzxms.chapter.bean.ChapterAudit;
 import com.xzx.xzxms.chapter.dto.ChapterAuditorDTO;
+import com.xzx.xzxms.chapter.vo.ChapterAuditVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -17,7 +16,6 @@ import java.util.List;
  * @修改描述：默认描述
  */
 @Mapper
-@Repository
 public interface ChapterAuditExtendMapper {
     /**
      * 周嘉玮
@@ -33,8 +31,8 @@ public interface ChapterAuditExtendMapper {
      * @param auditStatus
      * @return
      */
-    List<ChapterAudit> findChapterAuditor(@Param("proName") String proId,
-                                                    @Param("startTime") Long startTime,
-                                                    @Param("overTime") Long overTime,
-                                                    @Param("auditStatus") Integer auditStatus);
+    List<ChapterAuditVO> findChapterAuditor(@Param("proName") String proId,
+                                            @Param("startTime") Long startTime,
+                                            @Param("overTime") Long overTime,
+                                            @Param("auditStatus") Integer auditStatus);
 }
