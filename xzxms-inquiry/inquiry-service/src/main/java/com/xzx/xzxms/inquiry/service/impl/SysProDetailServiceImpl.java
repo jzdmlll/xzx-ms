@@ -69,7 +69,7 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
 
             //采购项目文件也同时操作
             SysFileExample purFileExample = new SysFileExample();
-            sysFileExample.createCriteria().andOtherIdEqualTo(proDetail.getPurchaseProId()).andIsActiveEqualTo(CommonConstant.EFFECTIVE)
+            purFileExample.createCriteria().andOtherIdEqualTo(proDetail.getPurchaseProId()).andIsActiveEqualTo(CommonConstant.EFFECTIVE)
                     .andTypeEqualTo(SysFileExtend.TYPE_PRODETAIL);
             Long purFileNum = sysFileMapper.countByExample(purFileExample);
 
@@ -78,12 +78,16 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
                 // 覆盖之前文件
                 SysFile newFile = new SysFile();
                 newFile.setIsActive(CommonConstant.INVALID);
+                newFile.setUpdateOperator(operatorId);
+                newFile.setUpdateTime(time);
                 sysFileMapper.updateByExampleSelective(newFile, sysFileExample);
             }
 
             if (purFileNum > 0){
                 SysFile newFile = new SysFile();
                 newFile.setIsActive(CommonConstant.INVALID);
+                newFile.setUpdateOperator(operatorId);
+                newFile.setUpdateTime(time);
                 sysFileMapper.updateByExampleSelective(newFile, purFileExample);
             }
 
