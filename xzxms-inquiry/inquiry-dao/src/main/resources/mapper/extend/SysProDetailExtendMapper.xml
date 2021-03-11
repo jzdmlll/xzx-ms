@@ -17,6 +17,6 @@
     <association property="sysProType" column="pro_type_id" select="com.xzx.xzxms.inquiry.dao.extend.SysProTypeExtendMapper.findById"></association>
     <association property="sysProOrigin" column="pro_origin_id" select="com.xzx.xzxms.inquiry.dao.extend.SysProOriginExtendMapper.findById"></association>
     <association property="sysUser" column="operator" select="com.xzx.xzxms.system.dao.extend.SysUserExtendMapper.findById"></association>
-    <association property="sysUser1" column="updateOperator" select="com.xzx.xzxms.system.dao.extend.SysUserExtendMapper.findById"></association>
+    <association property="sysUser1" column="update_operator" select="com.xzx.xzxms.system.dao.extend.SysUserExtendMapper.findById"></association>
   </resultMap>
 </mapper>
