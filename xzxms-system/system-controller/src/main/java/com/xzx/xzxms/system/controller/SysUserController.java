@@ -3,10 +3,7 @@ package com.xzx.xzxms.system.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xzx.xzxms.commons.dao.redis.JedisDao;
-import com.xzx.xzxms.commons.utils.JsonUtils;
-import com.xzx.xzxms.commons.utils.JwtTokenUtil;
-import com.xzx.xzxms.commons.utils.Message;
-import com.xzx.xzxms.commons.utils.MessageUtil;
+import com.xzx.xzxms.commons.utils.*;
 import com.xzx.xzxms.system.bean.SysUser;
 import com.xzx.xzxms.system.bean.extend.SysPrivilegeExtend;
 import com.xzx.xzxms.system.bean.extend.SysUserExtend;
@@ -24,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 
 @Validated
@@ -164,13 +162,6 @@ public class SysUserController {
         return MessageUtil.success("success",menuList);
     }
 
-    @ApiOperation(value = "获取验证码")
-    @GetMapping(value = "getCode")
-    public Message getCode(String email) {
-        userServiceImpl.getCode(email);
-        return MessageUtil.success("success");
-    }
-
    /* @ApiOperation(value = "注册")
     @PostMapping(value = "register")
     public Message register(UserRegister user) {
@@ -194,5 +185,43 @@ public class SysUserController {
     public Message register(long id) {
         SysUserExtend user = userServiceImpl.findById(id);
         return MessageUtil.success("success",user);
+    }
+
+    @ApiOperation(value = "修改密码验证原密码")
+    @GetMapping(value = "validOldPassword")
+    public Message validOldPassword(HttpServletRequest req, String password) {
+        String token = req.getHeader(JwtTokenUtil.AUTH_HEADER_KEY);
+        Long userId = Long.parseLong(JwtTokenUtil.getUserId(token, JwtTokenUtil.base64Secret));
+        String key = "xzx:valid:password:" + token;
+        int count = 1;
+        if (jedisDaoImpl.exists(key)) {
+            count = Integer.parseInt(jedisDaoImpl.get(key));
+            count ++;
+            if (count > 3) {
+                return MessageUtil.success("频繁验证密码，请稍后再试");
+            }
+        }
+        Boolean result = userServiceImpl.validOldPassword(userId, password);
+        if (!result) {
+            jedisDaoImpl.setCode("xzx:valid:password:"+token, count+"", 30, TimeUnit.SECONDS);
+            return MessageUtil.success("密码不正确", result);
+        }
+        return MessageUtil.success("success", result);
+    }
+
+    @ApiOperation(value = "绑定邮箱")
+    @PostMapping("bindEmail")
+    public Message bindEmail(HttpServletRequest req, String email) {
+        String token = req.getHeader(JwtTokenUtil.AUTH_HEADER_KEY);
+        Long userId = Long.parseLong(JwtTokenUtil.getUserId(token, JwtTokenUtil.base64Secret));
+
+        return null;
+    }
+
+    @ApiOperation(value = "绑定邮箱，获取验证码")
+    @GetMapping(value = "getEmailBindCode")
+    public Message getEmailBindCode(String email) {
+        userServiceImpl.getEmailBindCode(email);
+        return MessageUtil.success("success");
     }
 }

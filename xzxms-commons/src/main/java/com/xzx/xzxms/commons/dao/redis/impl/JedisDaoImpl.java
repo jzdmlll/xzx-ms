@@ -31,8 +31,13 @@ public class JedisDaoImpl implements JedisDao {
     }
 
     @Override
-    public void setCode(String key, String value, long minutes) {
-        stringRedisTemplate.opsForValue().set(key, value, minutes, TimeUnit.MINUTES);
+    public void setCode(String key, String value, long minutes, TimeUnit unit) {
+        stringRedisTemplate.opsForValue().set(key, value, minutes, unit);
+    }
+
+    @Override
+    public void setCode(String key, String value, long time) {
+        setCode(key, value, time, TimeUnit.MINUTES);
     }
 
     @Override
