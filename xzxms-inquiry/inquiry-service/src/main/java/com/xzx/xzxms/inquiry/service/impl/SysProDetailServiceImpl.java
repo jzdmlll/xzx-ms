@@ -53,11 +53,12 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
     @Override
     public void saveOrUpdate(SysProDetailWithBLOBs proDetail, List<SysFile> files, String loginId) {
         long time = new Date().getTime();
-        String operatorId = proDetail.getOperator();
+
         if (proDetail.getId() != null){
 
+            SysProDetail sysProDetail = sysProDetailMapper.selectByPrimaryKey(proDetail.getId());
             //修改前根据登录用户ID和项目创建ID判断是否有权限删除
-            if (!loginId.equals(proDetail.getOperator())){
+            if (!loginId.equals(sysProDetail.getOperator())){
                 throw new CustomerException("当前项目不是由您所创建,无修改权限!");
             }
 
@@ -78,7 +79,7 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
                 // 覆盖之前文件
                 SysFile newFile = new SysFile();
                 newFile.setIsActive(CommonConstant.INVALID);
-                newFile.setUpdateOperator(operatorId);
+                newFile.setUpdateOperator(loginId);
                 newFile.setUpdateTime(time);
                 sysFileMapper.updateByExampleSelective(newFile, sysFileExample);
             }
@@ -86,7 +87,7 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
             if (purFileNum > 0){
                 SysFile newFile = new SysFile();
                 newFile.setIsActive(CommonConstant.INVALID);
-                newFile.setUpdateOperator(operatorId);
+                newFile.setUpdateOperator(loginId);
                 newFile.setUpdateTime(time);
                 sysFileMapper.updateByExampleSelective(newFile, purFileExample);
             }
@@ -122,7 +123,7 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
                 file.setTime(time);
                 file.setIsActive(1);
                 file.setIsUseful(1);
-                file.setOperator(operatorId);
+                file.setOperator(loginId);
                 sysFileMapper.insert(file);
                 //插入采购项目文件
                 file.setId(IDUtils.getId());
@@ -130,7 +131,8 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
                 sysFileMapper.insert(file);
             }
             //proDetail.setProRate(proDetail.getProRate()*1000);
-            proDetail.setUpdateTime(new Date().getTime());
+            proDetail.setUpdateTime(time);
+            proDetail.setUpdateOperator(loginId);
             sysProDetailMapper.updateByPrimaryKeySelective(proDetail);
 
             //采购项目表也更新
@@ -138,7 +140,7 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
             purchaseProject.setId(proDetail.getPurchaseProId());
             purchaseProject.setProjectName(proDetail.getName());
             purchaseProject.setRemark(proDetail.getRemark());
-            purchaseProject.setUpdateOperator(proDetail.getUpdateOperator());
+            purchaseProject.setUpdateOperator(loginId);
             purchaseProject.setUpdateTime(proDetail.getUpdateTime());
             purchaseProject.setProTypeId(proDetail.getProTypeId());
             purchaseProject.setProOriginId(proDetail.getProOriginId());
@@ -173,7 +175,7 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
                     file.setUrl(map.get("url").toString());
                     file.setIsActive(CommonConstant.EFFECTIVE);
                     file.setIsUseful(CommonConstant.IS_NOT_USEFUL);
-                    file.setOperator(operatorId);
+                    file.setOperator(loginId);
                     sysFileMapper.insert(file);
                     //询价项目文件插入 采购项目文件也要插入 2021/03/09 sunny
                     file.setId(IDUtils.getId());
@@ -205,6 +207,7 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
             proDetail.setPurchaseProId(purchaseProId);
 
             proDetail.setProNo(temp.toString());
+            proDetail.setOperator(loginId);
             proDetail.setTime(time);
             proDetail.setIsActive(CommonConstant.EFFECTIVE);
             proDetail.setIsUseful(CommonConstant.IS_NOT_USEFUL);
@@ -216,7 +219,7 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
             purchaseProject.setProjectName(proDetail.getName());
             purchaseProject.setIsActive(CommonConstant.EFFECTIVE);
             purchaseProject.setIsUseful(CommonConstant.IS_NOT_USEFUL);
-            purchaseProject.setOperator(proDetail.getOperator());
+            purchaseProject.setOperator(loginId);
             purchaseProject.setTime(time);
             purchaseProject.setInquiryProId(proDetailId);
             purchaseProject.setRemark(proDetail.getRemark());
