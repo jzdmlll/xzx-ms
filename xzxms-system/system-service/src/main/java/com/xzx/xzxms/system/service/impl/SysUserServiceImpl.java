@@ -147,24 +147,25 @@ public class SysUserServiceImpl implements ISysUserService {
     }
 
     @Override
-    public void getCode(String email) {
-        //验证邮箱是否注册
-       /* SysUserExample example = new SysUserExample();
+    public void getEmailBindCode(String email) {
+        // 邮箱 是否重复
+        SysUserExample example = new SysUserExample();
         example.createCriteria().andEmailEqualTo(email);
-        List<SysUser> users = userMapper.selectByExample(example);
-        if(users.size() == 0){
-            //刷新redis中验证码
-            if(jedisDaoImpl.exists(email)){
+        long num = userMapper.countByExample(example);
+        if(num == 0){
+            // 刷新redis中验证码
+            String key = "xzx:code:bindEmail:"+email;
+            if(jedisDaoImpl.exists(key)) {
                 jedisDaoImpl.del(email);
-            }else{
-                //发送验证码
-                String code = EmailUtils.sendEamilCode(email);
-                //存入redis,5分钟过期
-                jedisDaoImpl.setCode(email, code, 5);
             }
+            //发送验证码
+            String code = EmailUtils.sendEamilCode(email, "绑定邮箱");
+            //存入redis,5分钟过期
+            jedisDaoImpl.setCode(key, code, 5);
+
         }else {
-            throw new CustomerException("该邮箱已注册");
-        }*/
+            throw new CustomerException("该邮箱已绑定");
+        }
     }
 
     @Override
@@ -179,5 +180,16 @@ public class SysUserServiceImpl implements ISysUserService {
         userRole.setRoleId(2L);
         userRole.setUserId(id);
         userRoleMapper.insert(userRole);
+    }
+
+    @Override
+    public Boolean validOldPassword(Long id, String password) {
+        SysUserExample example = new SysUserExample();
+        example.createCriteria().andIdEqualTo(id).andPasswordEqualTo(password);
+        long num = userMapper.countByExample(example);
+        if (num > 0) {
+            return true;
+        }
+        return false;
     }
 }

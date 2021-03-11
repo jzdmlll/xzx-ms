@@ -114,9 +114,9 @@ public class QuoteServiceImpl implements IQuoteService {
                     String imgUrl = "";
                     InquiryExample example = new InquiryExample();
 
-                    if (item.get("编号") != null && "".equals(item.get("编号").toString())) {
+                    if (item.get("编号") != null && !"".equals(item.get("编号").toString())) {
                         id = Long.parseLong(item.get("编号").toString().trim());
-                        example.createCriteria().andIdEqualTo(id).andIsActiveEqualTo(1).andProDetailIdEqualTo(proDetailId).andVetoEqualTo(0).andSortEqualTo(sort);
+                        example.createCriteria().andIdEqualTo(id).andIsActiveEqualTo(1).andVetoEqualTo(0);
                     }else {
                         name = item.get("设备名称").toString().trim();
                         params = item.get("型号").toString().trim();

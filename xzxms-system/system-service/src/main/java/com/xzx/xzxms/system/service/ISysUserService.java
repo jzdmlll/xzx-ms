@@ -50,14 +50,16 @@ public interface ISysUserService {
     void setRoles(List<Long> roles, long id);
 
     /**
-     * 发送邮箱验证码
+     * 绑定邮箱，获取验证码
      * @param email
      */
-    void getCode(String email);
+    void getEmailBindCode(String email);
 
     /**
      * 注册
      * @param SysUser
      */
     void register(SysUser SysUser);
+
+    Boolean validOldPassword(Long id, String password);
 }
