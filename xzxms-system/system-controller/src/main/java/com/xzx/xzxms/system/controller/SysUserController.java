@@ -5,7 +5,6 @@ import com.github.pagehelper.PageInfo;
 import com.xzx.xzxms.commons.dao.redis.JedisDao;
 import com.xzx.xzxms.commons.utils.*;
 import com.xzx.xzxms.system.bean.SysUser;
-import com.xzx.xzxms.system.bean.extend.SysPrivilegeExtend;
 import com.xzx.xzxms.system.bean.extend.SysUserExtend;
 import com.xzx.xzxms.system.service.ISysPrivilegeService;
 import com.xzx.xzxms.system.service.ISysUserService;
@@ -17,7 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -92,11 +91,11 @@ public class SysUserController {
     }
 
     @PostMapping("logout")
-    public Message logout(HttpServletRequest request) {
+    public Message logout(HttpServletResponse resp) {
         //从请求头中获取token
-        String token = request.getHeader("X-Token");
+        String token = resp.getHeader("X-Token");
         // 1. token从缓存中移除掉
-        if (jedisDaoImpl.exists(token)) {
+        if (token!=null&&jedisDaoImpl.exists(token)) {
             jedisDaoImpl.del(token);
         }
         return MessageUtil.success("退出成功");
@@ -189,8 +188,8 @@ public class SysUserController {
 
     @ApiOperation(value = "修改密码验证原密码")
     @GetMapping(value = "validOldPassword")
-    public Message validOldPassword(HttpServletRequest req, String password) {
-        String token = req.getHeader(JwtTokenUtil.AUTH_HEADER_KEY);
+    public Message validOldPassword(HttpServletResponse resp, String password) {
+        String token = resp.getHeader(JwtTokenUtil.AUTH_HEADER_KEY);
         Long userId = Long.parseLong(JwtTokenUtil.getUserId(token, JwtTokenUtil.base64Secret));
         String key = "xzx:valid:password:" + token;
         int count = 1;
@@ -211,11 +210,26 @@ public class SysUserController {
 
     @ApiOperation(value = "绑定邮箱")
     @PostMapping("bindEmail")
-    public Message bindEmail(HttpServletRequest req, String email) {
-        String token = req.getHeader(JwtTokenUtil.AUTH_HEADER_KEY);
-        Long userId = Long.parseLong(JwtTokenUtil.getUserId(token, JwtTokenUtil.base64Secret));
+    public Message bindEmail(HttpServletResponse resp, String email, String code) {
+        String key = "xzx:code:bindEmail:"+email;
+        if (jedisDaoImpl.exists(key)) {
+            String codeRedis = jedisDaoImpl.get(key);
+            if (codeRedis.equals(code)) {
+                String token = resp.getHeader(JwtTokenUtil.AUTH_HEADER_KEY);
+                Long userId = Long.parseLong(JwtTokenUtil.getUserId(token, JwtTokenUtil.base64Secret));
+                SysUser user = new SysUser();
+                user.setId(userId);
+                user.setEmail(email);
+                userServiceImpl.bindEmail(user);
+                jedisDaoImpl.del(key);
+                return MessageUtil.success("绑定成功", true);
+            }else {
+                return MessageUtil.error("验证码错误");
+            }
+        }else {
+            return MessageUtil.error("验证码已过期");
+        }
 
-        return null;
     }
 
     @ApiOperation(value = "绑定邮箱，获取验证码")

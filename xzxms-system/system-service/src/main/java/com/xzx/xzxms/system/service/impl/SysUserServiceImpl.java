@@ -10,12 +10,12 @@ import com.xzx.xzxms.system.dao.extend.SysUserExtendMapper;
 import com.xzx.xzxms.commons.dao.redis.JedisDao;
 import com.xzx.xzxms.system.vm.UserRoleVM;
 import com.xzx.xzxms.system.vm.UserVM;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import com.xzx.xzxms.system.service.ISysUserService;
 
 import javax.annotation.Resource;
 import java.util.*;
-
 @Service
 public class SysUserServiceImpl implements ISysUserService {
     @Resource
@@ -145,7 +145,7 @@ public class SysUserServiceImpl implements ISysUserService {
             }
         }
     }
-
+    @Async("taskExecutor")
     @Override
     public void getEmailBindCode(String email) {
         // 邮箱 是否重复
@@ -165,6 +165,20 @@ public class SysUserServiceImpl implements ISysUserService {
 
         }else {
             throw new CustomerException("该邮箱已绑定");
+        }
+    }
+
+    @Override
+    public void bindEmail(SysUser user) {
+        // 邮箱 是否重复
+        SysUserExample example = new SysUserExample();
+        example.createCriteria().andEmailEqualTo(user.getEmail());
+        long num = userMapper.countByExample(example);
+
+        if(num == 0){
+            userMapper.updateByPrimaryKeySelective(user);
+        }else {
+            throw new CustomerException("该邮箱已被绑定");
         }
     }
 
