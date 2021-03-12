@@ -3,18 +3,16 @@ package com.xzx.xzxms.purchase.controller;
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
 import com.xzx.xzxms.purchase.bean.PurchaseContract;
-import com.xzx.xzxms.purchase.dao.extend.PurchaseContractManagementExtendMapper;
 import com.xzx.xzxms.purchase.dto.PurchaseContractFIleDTO;
 import com.xzx.xzxms.purchase.service.IPurchaseContractService;
 import com.xzx.xzxms.purchase.service.PurchaseContractManagementService;
 import com.xzx.xzxms.purchase.vo.PurchaseContractGenerateNewVO;
-import com.xzx.xzxms.purchase.vo.PurchaseContractGenerateVO;
 import com.xzx.xzxms.purchase.vo.PurchaseContractVO;
 import com.xzx.xzxms.purchase.vo.PurchaseProjectVO;
+import com.xzx.xzxms.purchase.vo.SupplyByContractIdVO;
 import com.xzx.xzxms.system.bean.SysFile;
 import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -80,11 +78,18 @@ public class PurchaseContractManagementController {
      * @param contractId
      * @return
      */
-    @ApiOperation("根据合同id查询所有与其相关的购买项信息")
+    @ApiOperation("根据合同id查询所有与其相关的购买项信息,一、二、三审核页面")
     @GetMapping("findPurchaseMessageByContractId")
     public Message findPurchaseMessageByContractId(Long contractId, Long startTime, Long overTime, Integer auditStatus, Integer auditLevel){
         List<PurchaseContractGenerateNewVO> itemsInfos = purchaseContractManagementServiceImpl.findPurchaseMessageByContractId(contractId, startTime, overTime, auditStatus, auditLevel);
         return MessageUtil.success("success",itemsInfos);
+    }
+
+    @ApiOperation("根据合同ID查询出合同的所有采购项,采购合同管理页面")
+    @GetMapping("findSupplyByContractId")
+    public Message findSupplyByContractId(Long contractId){
+        List<SupplyByContractIdVO> list = purchaseContractServiceImpl.findSupplyByContractId(contractId);
+        return MessageUtil.success("success", list);
     }
 
     @ApiOperation("根据合同ID查询出合同下所有的文件")

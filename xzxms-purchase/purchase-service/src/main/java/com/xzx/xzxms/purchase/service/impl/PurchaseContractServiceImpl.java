@@ -10,6 +10,7 @@ import com.xzx.xzxms.purchase.dao.PurchaseItemsMapper;
 import com.xzx.xzxms.purchase.dao.PurchaseSupplyMapper;
 import com.xzx.xzxms.purchase.dao.extend.PurchaseContractExtendMapper;
 import com.xzx.xzxms.purchase.service.IPurchaseContractService;
+import com.xzx.xzxms.purchase.vo.SupplyByContractIdVO;
 import com.xzx.xzxms.system.bean.SysFile;
 import com.xzx.xzxms.system.bean.extend.SysFileExtend;
 import org.apache.commons.lang.StringUtils;
@@ -204,5 +205,11 @@ public class PurchaseContractServiceImpl implements IPurchaseContractService {
         }
         purchaseContract.setSendTime(new Date().getTime());
         purchaseContractMapper.updateByPrimaryKeySelective(purchaseContract);
+    }
+
+    @Override
+    public List<SupplyByContractIdVO> findSupplyByContractId(Long contractId) {
+        List<SupplyByContractIdVO> list = purchaseContractExtendMapper.findSupplyByContractId(contractId);
+        return list;
     }
 }
