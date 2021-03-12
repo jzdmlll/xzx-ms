@@ -10,12 +10,12 @@ import com.xzx.xzxms.system.dao.extend.SysUserExtendMapper;
 import com.xzx.xzxms.commons.dao.redis.JedisDao;
 import com.xzx.xzxms.system.vm.UserRoleVM;
 import com.xzx.xzxms.system.vm.UserVM;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import com.xzx.xzxms.system.service.ISysUserService;
 
 import javax.annotation.Resource;
 import java.util.*;
-
 @Service
 public class SysUserServiceImpl implements ISysUserService {
     @Resource
@@ -145,7 +145,7 @@ public class SysUserServiceImpl implements ISysUserService {
             }
         }
     }
-
+    @Async("taskExecutor")
     @Override
     public void getEmailBindCode(String email) {
         // 邮箱 是否重复
