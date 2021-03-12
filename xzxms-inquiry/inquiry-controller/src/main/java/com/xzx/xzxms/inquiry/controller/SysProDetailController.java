@@ -13,7 +13,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -48,8 +48,8 @@ public class SysProDetailController {
 
     @ApiOperation(value = "新增或修改项目")
     @PostMapping(value = "saveOrUpdate")
-    public Message saveOrUpdate(HttpServletRequest request, @RequestBody ProDetailReqVM proDetailReqVM){
-        String token = request.getHeader(JwtTokenUtil.AUTH_HEADER_KEY);
+    public Message saveOrUpdate(HttpServletResponse resp, @RequestBody ProDetailReqVM proDetailReqVM){
+        String token = resp.getHeader(JwtTokenUtil.AUTH_HEADER_KEY);
         String id = JwtTokenUtil.getUserId(token, JwtTokenUtil.base64Secret);
         sysProDetailServiceImpl.saveOrUpdate(proDetailReqVM.getProDetails(), proDetailReqVM.getFiles(), id);
         return MessageUtil.success("操作成功");
@@ -78,8 +78,8 @@ public class SysProDetailController {
 
     @ApiOperation(value = "逻辑删除项目")
     @PostMapping(value = "setInvalid")
-    public Message setInvalid(HttpServletRequest request, long proDetailId) {
-        String token = request.getHeader(JwtTokenUtil.AUTH_HEADER_KEY);
+    public Message setInvalid(HttpServletResponse resp, long proDetailId) {
+        String token = resp.getHeader(JwtTokenUtil.AUTH_HEADER_KEY);
         String id = JwtTokenUtil.getUserId(token, JwtTokenUtil.base64Secret);
         sysProDetailServiceImpl.setInvalid(proDetailId, id);
         return MessageUtil.success("操作成功");

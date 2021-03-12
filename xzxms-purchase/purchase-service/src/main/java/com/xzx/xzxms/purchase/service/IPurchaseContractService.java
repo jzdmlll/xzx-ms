@@ -2,6 +2,7 @@ package com.xzx.xzxms.purchase.service;
 
 import com.xzx.xzxms.purchase.bean.PurchaseContract;
 import com.xzx.xzxms.purchase.bean.PurchaseSupply;
+import com.xzx.xzxms.purchase.vo.SupplyByContractIdVO;
 import com.xzx.xzxms.system.bean.SysFile;
 
 import java.util.List;
@@ -61,4 +62,13 @@ public interface IPurchaseContractService {
      * @param purchaseContract
      */
     void purchaseContractSend(PurchaseContract purchaseContract);
+
+    /**
+     * 根据采购合同ID查询出合同下所有采购项信息
+     * sunny
+     * 2021/03/12
+     * @param contractId
+     * @return
+     */
+    List<SupplyByContractIdVO> findSupplyByContractId(Long contractId);
 }

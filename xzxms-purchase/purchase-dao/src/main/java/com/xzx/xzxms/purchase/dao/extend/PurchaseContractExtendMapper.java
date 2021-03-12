@@ -1,6 +1,7 @@
 package com.xzx.xzxms.purchase.dao.extend;
 
 import com.xzx.xzxms.purchase.bean.PurchaseContract;
+import com.xzx.xzxms.purchase.vo.SupplyByContractIdVO;
 import com.xzx.xzxms.system.bean.SysFile;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,4 +33,11 @@ public interface PurchaseContractExtendMapper {
      * @return
      */
     List<PurchaseContract> findByProjectId(@Param("projectId") Long projectId, @Param("contractName") String contractName);
+
+    /**
+     * 根据采购合同ID查询出合同下所有采购项信息
+     * @param contractId
+     * @return
+     */
+    List<SupplyByContractIdVO> findSupplyByContractId(Long contractId);
 }
