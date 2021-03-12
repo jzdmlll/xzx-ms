@@ -35,4 +35,5 @@ public class FileUploadController {
             throw new CustomerException("图片上传失败");
         }
     }
+
 }

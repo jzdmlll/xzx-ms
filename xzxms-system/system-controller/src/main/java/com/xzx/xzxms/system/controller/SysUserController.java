@@ -14,6 +14,7 @@ import com.xzx.xzxms.system.vm.UserVM;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -237,5 +238,18 @@ public class SysUserController {
     public Message getEmailBindCode(String email) {
         userServiceImpl.getEmailBindCode(email);
         return MessageUtil.success("success");
+    }
+
+    @ApiOperation(value = "上传头像")
+    @PostMapping(value = "uploadAvatar")
+    public Message uploadAvatar(@RequestParam("file") MultipartFile uploadFile, HttpServletResponse resp) {
+        String token = resp.getHeader(JwtTokenUtil.AUTH_HEADER_KEY);
+        Long userId = Long.parseLong(JwtTokenUtil.getUserId(token, JwtTokenUtil.base64Secret));
+        String url = userServiceImpl.uploadAvatar(uploadFile, userId);
+        if (url != null) {
+            return MessageUtil.success("上传成功", url);
+        }else {
+            return MessageUtil.error("上传头像失败");
+        }
     }
 }

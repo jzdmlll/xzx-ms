@@ -1,6 +1,7 @@
 package com.xzx.xzxms.system.service.impl;
 
 import com.xzx.xzxms.commons.aspect.annotation.AutoLog;
+import com.xzx.xzxms.commons.fileupload.IFileUploadService;
 import com.xzx.xzxms.commons.utils.*;
 import com.xzx.xzxms.system.bean.*;
 import com.xzx.xzxms.system.bean.extend.SysUserExtend;
@@ -13,8 +14,10 @@ import com.xzx.xzxms.system.vm.UserVM;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import com.xzx.xzxms.system.service.ISysUserService;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.*;
 @Service
 public class SysUserServiceImpl implements ISysUserService {
@@ -26,6 +29,8 @@ public class SysUserServiceImpl implements ISysUserService {
     private SysUserRoleMapper userRoleMapper;
     @Resource
     private JedisDao jedisDaoImpl;
+    @Resource
+    private IFileUploadService fileUploadService;
 
     @AutoLog(value = "登录成功！用户：")
     @Override
@@ -205,5 +210,22 @@ public class SysUserServiceImpl implements ISysUserService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public String uploadAvatar(MultipartFile file, Long id) {
+        try {
+            Map<String, Object> map = fileUploadService.uploadByStream(file.getInputStream(), file.getOriginalFilename());
+            if ("0".equals(map.get("error").toString())) {
+                SysUser user = new SysUser();
+                user.setId(id);
+                user.setAvatar(map.get("url").toString());
+                userMapper.updateByPrimaryKeySelective(user);
+                return map.get("url").toString();
+            }
+            return null;
+        } catch (IOException e) {
+            throw new CustomerException("上传头像失败");
+        }
     }
 }

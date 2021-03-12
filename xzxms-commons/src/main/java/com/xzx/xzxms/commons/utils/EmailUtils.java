@@ -47,9 +47,9 @@ public class EmailUtils {
         }
         return resultCode;        //同等验证码
     }
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EmailUtils email = new EmailUtils();
 
 		email.sendEamilCode("1037617790@qq.com", "重置密码");
-	}
+	}*/
 }

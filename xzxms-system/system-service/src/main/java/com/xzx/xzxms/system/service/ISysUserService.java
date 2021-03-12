@@ -4,6 +4,7 @@ package com.xzx.xzxms.system.service;
 import com.xzx.xzxms.system.bean.SysUser;
 import com.xzx.xzxms.system.bean.extend.SysUserExtend;
 import com.xzx.xzxms.system.vm.UserVM;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -67,5 +68,17 @@ public interface ISysUserService {
      */
     void register(SysUser SysUser);
 
+    /**
+     *
+     * @param id
+     * @param password
+     * @return
+     */
     Boolean validOldPassword(Long id, String password);
+
+    /**
+     * 用户上传头像
+     * @param id
+     */
+    String uploadAvatar(MultipartFile file, Long id);
 }
