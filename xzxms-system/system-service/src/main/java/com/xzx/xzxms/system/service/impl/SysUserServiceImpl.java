@@ -169,6 +169,20 @@ public class SysUserServiceImpl implements ISysUserService {
     }
 
     @Override
+    public void bindEmail(SysUser user) {
+        // 邮箱 是否重复
+        SysUserExample example = new SysUserExample();
+        example.createCriteria().andEmailEqualTo(user.getEmail());
+        long num = userMapper.countByExample(example);
+
+        if(num == 0){
+            userMapper.updateByPrimaryKeySelective(user);
+        }else {
+            throw new CustomerException("该邮箱已绑定");
+        }
+    }
+
+    @Override
     public void register(SysUser user) {
         //插入用户
         long id = IDUtils.getId();

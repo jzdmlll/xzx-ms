@@ -25,9 +25,7 @@ import javax.annotation.Resource;
 import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class JwtInterceptor extends HandlerInterceptorAdapter {
 
@@ -72,11 +70,24 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
             if (jedisDaoImpl.exists(token)) {
                 response.setHeader("Access-Control-Expose-Headers", "refresh");
                 response.setHeader("refresh", "true");
+
+                String userJson = jedisDaoImpl.get(token);
+                UserRoleVM user = JsonUtils.jsonToPojo(userJson, UserRoleVM.class);
+                Long userId = user.getId();
+                String username = user.getUsername();
+                //刷新token
+                String newToken = JwtTokenUtil.createJWT(userId, username);
+                // 将redis中token更新
+                jedisDaoImpl.del(token);
+                jedisDaoImpl.setCode(token, userJson, 1);
+                jedisDaoImpl.setCode(newToken, userJson, JwtTokenUtil.REDIS_TOKEN_TIME);
+                // 将新token返回
+                response.setHeader(JwtTokenUtil.AUTH_HEADER_KEY, newToken);
             } else {
                 throw new AuthenticationException("token过期, 请重新登陆");
             }
         } else {
-
+            response.setHeader(JwtTokenUtil.AUTH_HEADER_KEY, token);
             if (webSocketToken != null && !"".equals(webSocketToken)) {
                 // 验证WebSocket 请求token 是否有效
                 String userId = JwtTokenUtil.getUserId(token, JwtTokenUtil.base64Secret);

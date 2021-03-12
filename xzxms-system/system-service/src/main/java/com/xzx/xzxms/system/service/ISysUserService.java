@@ -56,6 +56,12 @@ public interface ISysUserService {
     void getEmailBindCode(String email);
 
     /**
+     * 绑定邮箱
+     * @param user
+     */
+    void bindEmail(SysUser user);
+
+    /**
      * 注册
      * @param SysUser
      */
