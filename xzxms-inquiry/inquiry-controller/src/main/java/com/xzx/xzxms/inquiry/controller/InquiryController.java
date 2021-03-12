@@ -2,9 +2,7 @@ package com.xzx.xzxms.inquiry.controller;
 import com.xzx.xzxms.commons.utils.CustomerException;
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
-import com.xzx.xzxms.inquiry.bean.Quote;
 import com.xzx.xzxms.inquiry.bean.SysProDetail;
-import com.xzx.xzxms.inquiry.dto.InquiryTree;
 import com.xzx.xzxms.inquiry.dto.InquiryTreeDTO;
 import com.xzx.xzxms.inquiry.service.IInquiryService;
 import com.xzx.xzxms.inquiry.bean.Inquiry;
@@ -13,13 +11,10 @@ import com.xzx.xzxms.inquiry.service.IProPurchaseService;
 import com.xzx.xzxms.inquiry.service.ISysProDetailService;
 import com.xzx.xzxms.inquiry.vm.BatchInquiryVM;
 import com.xzx.xzxms.inquiry.vm.ProPurchase;
-import com.xzx.xzxms.inquiry.vo.InquiryAndQuoteVO;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.xml.crypto.Data;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
