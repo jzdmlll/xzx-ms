@@ -221,6 +221,7 @@ public class SysUserController {
                 user.setId(userId);
                 user.setEmail(email);
                 userServiceImpl.bindEmail(user);
+                jedisDaoImpl.del(key);
                 return MessageUtil.success("绑定成功", true);
             }else {
                 return MessageUtil.error("验证码错误");

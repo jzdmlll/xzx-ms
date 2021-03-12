@@ -68,7 +68,7 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
         Claims claims = JwtTokenUtil.parseJWT(token, JwtTokenUtil.base64Secret);
         if (claims == null) {
             if (jedisDaoImpl.exists(token)) {
-                response.setHeader("Access-Control-Expose-Headers", "refresh");
+                response.setHeader("Access-Control-Expose-Headers", "refresh,"+JwtTokenUtil.AUTH_HEADER_KEY);
                 response.setHeader("refresh", "true");
 
                 String userJson = jedisDaoImpl.get(token);

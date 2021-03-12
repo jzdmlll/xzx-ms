@@ -178,7 +178,7 @@ public class SysUserServiceImpl implements ISysUserService {
         if(num == 0){
             userMapper.updateByPrimaryKeySelective(user);
         }else {
-            throw new CustomerException("该邮箱已绑定");
+            throw new CustomerException("该邮箱已被绑定");
         }
     }
 
