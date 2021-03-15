@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 系统通知控制器
@@ -30,23 +33,28 @@ public class SysAnnouncementController {
     private ISysAnnouncementSendService sysAnnouncementSendService;
     /**
      * 获取当前用户通知消息
-     * @param request
+     * @param resp
      * @return
      */
     @GetMapping("getMyAnnouncementSend")
-    public Message getMyAnnouncementSend(HttpServletRequest request,
+    public Message getMyAnnouncementSend(HttpServletResponse resp,
                                          @RequestParam(name="readFlag", defaultValue="0") String readFlag,
                                          @RequestParam(name="pageNo", defaultValue="1") Integer pageNo,
                                          @RequestParam(name="pageSize", defaultValue="10") Integer pageSize) {
         // 获取当前用户ID
-        String token = request.getHeader(JwtTokenUtil.AUTH_HEADER_KEY);
+        String token = resp.getHeader(JwtTokenUtil.AUTH_HEADER_KEY);
         Long userId = Long.parseLong(JwtTokenUtil.getUserId(token, JwtTokenUtil.base64Secret));
 
         Page<SysAnnouncementExtend> page = new Page<>(pageNo, pageSize);
         page.setOrderBy("send_time desc");
-        PageInfo<SysAnnouncementExtend> announcementSendPage = sysAnnouncementSendService.getMyAnnouncementSendPage(page, userId, readFlag);
+        PageInfo<SysAnnouncementExtend> announcement = sysAnnouncementSendService.getMyAnnouncementSendPage(page, userId, readFlag, "1");
+        PageInfo<SysAnnouncementExtend> sysAnnouncement = sysAnnouncementSendService.getMyAnnouncementSendPage(page, userId, readFlag, "2");
 
-        return MessageUtil.success("success", announcementSendPage);
+        Map<String, PageInfo<SysAnnouncementExtend>> result = new HashMap<>();
+        result.put("announcement", announcement);
+        result.put("sysAnnouncement", sysAnnouncement);
+
+        return MessageUtil.success("success", result);
     }
 
 }

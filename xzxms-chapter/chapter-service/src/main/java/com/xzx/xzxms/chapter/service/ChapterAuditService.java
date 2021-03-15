@@ -2,9 +2,11 @@ package com.xzx.xzxms.chapter.service;
 
 import com.xzx.xzxms.chapter.bean.ChapterAudit;
 import com.xzx.xzxms.chapter.vo.ChapterAuditVO;
+import com.xzx.xzxms.system.bean.SysAnnouncementWithBLOBs;
 import com.xzx.xzxms.system.bean.SysFile;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author：ZJW
@@ -23,7 +25,7 @@ public interface ChapterAuditService {
      * @param files
      * @return
      */
-    String insertChapterAuditService(ChapterAudit chapterAudit, List<SysFile> files);
+    String insertChapterAuditService(SysAnnouncementWithBLOBs announcement, ChapterAudit chapterAudit, List<SysFile> files);
 
     /**
      * 周嘉玮

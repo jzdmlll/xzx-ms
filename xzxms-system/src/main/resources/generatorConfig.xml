@@ -111,6 +111,6 @@
     <!--
         <table tableName="sys_file_privilege" domainObjectName="SysFilePrivilege" ></table>
     -->
-    <table tableName="sys_user" domainObjectName="SysUser"></table>
+    <table tableName="sys_announcement_send" domainObjectName="SysAnnouncementSend"></table>
       </context>
     </generatorConfiguration>

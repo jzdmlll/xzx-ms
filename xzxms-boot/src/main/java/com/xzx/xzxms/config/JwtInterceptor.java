@@ -2,17 +2,16 @@ package com.xzx.xzxms.config;
 
 
 import com.xzx.xzxms.commons.dao.redis.JedisDao;
+import com.xzx.xzxms.commons.model.base.bean.UserIdentity;
 import com.xzx.xzxms.commons.model.base.service.BaseCommonService;
 import com.xzx.xzxms.commons.utils.*;
 import com.xzx.xzxms.system.bean.SysPrivilege;
 import com.xzx.xzxms.system.bean.SysPrivilegeExample;
 import com.xzx.xzxms.system.bean.SysRole;
 import com.xzx.xzxms.system.bean.SysRolePrivilege;
-import com.xzx.xzxms.system.bean.extend.SysUserExtend;
 import com.xzx.xzxms.system.dao.SysPrivilegeMapper;
 import com.xzx.xzxms.system.dao.SysRolePrivilegeMapper;
 import com.xzx.xzxms.system.dao.extend.SysPrivilegeExtendMapper;
-import com.xzx.xzxms.system.service.ISysPrivilegeService;
 import com.xzx.xzxms.system.service.ISysUserService;
 import com.xzx.xzxms.system.vm.UserRoleVM;
 import io.jsonwebtoken.Claims;
@@ -66,7 +65,9 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
 
         // 验证token是否有效--无效已做异常抛出，由全局异常处理后返回对应信息
         Claims claims = JwtTokenUtil.parseJWT(token, JwtTokenUtil.base64Secret);
+        UserIdentity userIdentity = new UserIdentity();
         if (claims == null) {
+            // 刷新token
             if (jedisDaoImpl.exists(token)) {
                 response.setHeader("Access-Control-Expose-Headers", "refresh,"+JwtTokenUtil.AUTH_HEADER_KEY);
                 response.setHeader("refresh", "true");
@@ -82,12 +83,22 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
                 jedisDaoImpl.setCode(token, userJson, 1);
                 jedisDaoImpl.setCode(newToken, userJson, JwtTokenUtil.REDIS_TOKEN_TIME);
                 // 将新token返回
+                userIdentity.setToken(newToken);
+                userIdentity.setUserId(userId);
+                userIdentity.setUsername(user.getUsername());
                 response.setHeader(JwtTokenUtil.AUTH_HEADER_KEY, newToken);
+                // 返回用户id
+                request.setAttribute("userIdentity", userIdentity);
             } else {
                 throw new AuthenticationException("token过期, 请重新登陆");
             }
         } else {
+            // token 正常
+            userIdentity.setToken(token);
+            userIdentity.setUserId(Long.parseLong(Base64Util.decode(claims.get("userId", String.class))));
+            userIdentity.setUsername(claims.getSubject());
             response.setHeader(JwtTokenUtil.AUTH_HEADER_KEY, token);
+            request.setAttribute("userIdentity", userIdentity);
             if (webSocketToken != null && !"".equals(webSocketToken)) {
                 // 验证WebSocket 请求token 是否有效
                 String userId = JwtTokenUtil.getUserId(token, JwtTokenUtil.base64Secret);
@@ -145,7 +156,7 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
                 String[] split = path.split("/");
                 String pathParentLike = split[1];
                 example = new SysPrivilegeExample();
-                example.createCriteria().andParentIdIsNull().andRouteLike("%" + pathParentLike + "%");
+                example.createCriteria().andParentIdIsNull().andRouteLike("%" + pathParentLike+"/" + "%");
                 List<SysPrivilege> sysPrivileges = sysPrivilegeMapper.selectByExample(example);
                 if (sysPrivileges.size() == 1) {
                     Long pId = sysPrivileges.get(0).getId();

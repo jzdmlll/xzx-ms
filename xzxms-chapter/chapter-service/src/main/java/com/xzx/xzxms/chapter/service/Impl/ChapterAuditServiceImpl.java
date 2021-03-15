@@ -6,11 +6,14 @@ import com.xzx.xzxms.chapter.dao.ChapterAuditMapper;
 import com.xzx.xzxms.chapter.dao.extend.ChapterAuditExtendMapper;
 import com.xzx.xzxms.chapter.service.ChapterAuditService;
 import com.xzx.xzxms.chapter.vo.ChapterAuditVO;
+import com.xzx.xzxms.commons.aspect.annotation.AutoAnnouncementPush;
+import com.xzx.xzxms.commons.constant.CommonConstant;
 import com.xzx.xzxms.commons.dao.redis.JedisDao;
 import com.xzx.xzxms.commons.fileupload.IFileUploadService;
 import com.xzx.xzxms.commons.utils.Base64Util;
 import com.xzx.xzxms.commons.utils.CustomerException;
 import com.xzx.xzxms.commons.utils.IDUtils;
+import com.xzx.xzxms.system.bean.SysAnnouncementWithBLOBs;
 import com.xzx.xzxms.system.bean.SysFile;
 import com.xzx.xzxms.system.bean.SysFileExample;
 import com.xzx.xzxms.system.bean.extend.SysFileExtend;
@@ -55,9 +58,10 @@ public class ChapterAuditServiceImpl implements ChapterAuditService {
      * @param files
      * @return
      */
+    @AutoAnnouncementPush(value = "通知内容：", title = "用章审核通知")
     @Transactional
     @Override
-    public String insertChapterAuditService(ChapterAudit chapterAudit, List<SysFile> files) {
+    public String insertChapterAuditService(SysAnnouncementWithBLOBs announcement, ChapterAudit chapterAudit, List<SysFile> files) {
 
         if(chapterAudit.getId() == null) {
 

@@ -9,18 +9,18 @@ import com.xzx.xzxms.system.bean.SysAnnouncementWithBLOBs;
  */
 public class SysAnnouncementExtend extends SysAnnouncementWithBLOBs {
 
-    private String anntId;
+    private String anntSendId;
 
     private String userId;
 
     private String readFlag;
 
-    public String getAnntId() {
-        return anntId;
+    public String getAnntSendId() {
+        return anntSendId;
     }
 
-    public void setAnntId(String anntId) {
-        this.anntId = anntId;
+    public void setAnntSendId(String anntSendId) {
+        this.anntSendId = anntSendId;
     }
 
     public String getUserId() {

@@ -21,8 +21,15 @@ public interface ISysAnnouncementSendService {
     List<String> findByUserId(String userId);
 
     /**
-     *
+     * 获取用户消息
      * @return
      */
-    PageInfo<SysAnnouncementExtend> getMyAnnouncementSendPage(Page<SysAnnouncementExtend> page, Long userId, String readFlag);
+    PageInfo<SysAnnouncementExtend> getMyAnnouncementSendPage(Page<SysAnnouncementExtend> page, Long userId, String readFlag, String msgCategory);
+
+    /**
+     * 更改用户消息已读状态
+     * @param userId
+     * @param anntSendId
+     */
+    void editByAnntIdAndUserId(Long userId, String anntSendId);
 }

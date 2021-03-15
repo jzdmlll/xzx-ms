@@ -8,8 +8,12 @@ import com.xzx.xzxms.chapter.dto.ChapterAuditDTO;
 import com.xzx.xzxms.chapter.dto.ChapterAuditorDTO;
 import com.xzx.xzxms.chapter.service.ChapterAuditService;
 import com.xzx.xzxms.chapter.vo.ChapterAuditVO;
+import com.xzx.xzxms.commons.annotation.CurrentUser;
+import com.xzx.xzxms.commons.model.base.bean.UserIdentity;
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
+import com.xzx.xzxms.system.bean.SysAnnouncement;
+import com.xzx.xzxms.system.bean.SysAnnouncementWithBLOBs;
 import com.xzx.xzxms.system.bean.SysFile;
 import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Param;
@@ -36,13 +40,18 @@ public class ChapterAuditController {
     @Resource
     private ChapterAuditExtendMapper chapterAuditExtendMapper;
 
+
     /**
      * 周嘉玮
      */
     @ApiOperation("在文件表中新增文件；在用章审核表中新增信息")
     @PostMapping("insertChapterAudit")
-    public Message insertChapterAudit(@RequestBody ChapterAuditDTO chapterAuditDTO){
-        String result = chapterAuditService.insertChapterAuditService(chapterAuditDTO.getChapterAudit(), chapterAuditDTO.getFiles());
+    public Message insertChapterAudit(@RequestBody ChapterAuditDTO chapterAuditDTO, @CurrentUser UserIdentity userIdentity){
+        SysAnnouncementWithBLOBs announcement = new SysAnnouncementWithBLOBs();
+        announcement.setUserIds(chapterAuditDTO.getChapterAudit().getAuditor());
+        announcement.setSender(userIdentity.getUsername());
+        announcement.setCreateBy(userIdentity.getUserId()+"");
+        String result = chapterAuditService.insertChapterAuditService(announcement, chapterAuditDTO.getChapterAudit(), chapterAuditDTO.getFiles());
         if (result.equals("success")){
             return MessageUtil.success("success");
         }else {

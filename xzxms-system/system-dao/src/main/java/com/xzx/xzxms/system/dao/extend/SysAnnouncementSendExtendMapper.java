@@ -14,5 +14,7 @@ public interface SysAnnouncementSendExtendMapper {
 
     List<String> findByUserId(@Param("userId") String userId);
 
-    List<SysAnnouncementExtend> getMyAnnouncementSendPage(@Param("userId") Long userId,@Param("readFlag") String readFlag);
+    List<SysAnnouncementExtend> getMyAnnouncementSendPage(@Param("userId") Long userId,
+                                                          @Param("readFlag") String readFlag,
+                                                          @Param("msgCategory") String msgCategory);
 }

@@ -7,14 +7,22 @@
 	</select>
 
 	<select id="getMyAnnouncementSendPage" resultType="com.xzx.xzxms.system.bean.extend.SysAnnouncementExtend">
-		select *
+		select
+			sa.*,
+			sas.id anntSendId,
+			sas.user_id,
+			sas.read_flag
 		from sys_announcement sa
 		left join sys_announcement_send sas on sa.id = sas.annt_id
-		left join sys_user su on sas.user_id = su.id
 		<where>
-            su.is_active = 1 and su.id = #{userId}
+			sa.send_status = '1'
+			and sa.del_flag = '0'
+			and (sas.user_id = #{userId} or sa.msg_type = "ALL")
             <if test="readFlag != null and readFlag != ''">
 				and sas.read_flag = #{readFlag}
+			</if>
+			<if test="msgCategory != null and msgCategory != ''">
+				and sa.msg_category = #{msgCategory}
 			</if>
         </where>
 	</select>
