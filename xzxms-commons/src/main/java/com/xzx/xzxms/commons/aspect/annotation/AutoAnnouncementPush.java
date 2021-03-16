@@ -30,7 +30,6 @@ public @interface AutoAnnouncementPush {
      * @return
      */
     String msgType() default CommonConstant.MSG_TYPE_UESR;
-
     /**
      * 消息类型  1:通知公告2:系统消息
      * @default 2:系统消息

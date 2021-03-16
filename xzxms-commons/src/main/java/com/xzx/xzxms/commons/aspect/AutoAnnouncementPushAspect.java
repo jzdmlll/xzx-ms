@@ -1,14 +1,16 @@
 package com.xzx.xzxms.commons.aspect;
 
+import com.alibaba.fastjson.JSONObject;
 import com.xzx.xzxms.commons.aspect.annotation.AutoAnnouncementPush;
 import com.xzx.xzxms.commons.constant.CommonConstant;
+import com.xzx.xzxms.commons.constant.WebSocketConstant;
 import com.xzx.xzxms.commons.utils.IDUtils;
+import com.xzx.xzxms.commons.websocket.WebSocket;
 import com.xzx.xzxms.system.bean.SysAnnouncementSend;
 import com.xzx.xzxms.system.bean.SysAnnouncementWithBLOBs;
 import com.xzx.xzxms.system.dao.SysAnnouncementMapper;
 import com.xzx.xzxms.system.dao.SysAnnouncementSendMapper;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
@@ -33,6 +35,8 @@ public class AutoAnnouncementPushAspect {
     private SysAnnouncementMapper announcementMapper;
     @Resource
     private SysAnnouncementSendMapper announcementSendMapper;
+    @Resource
+    private WebSocket webSocket;
 
     // 切面
     @Pointcut("@annotation(com.xzx.xzxms.commons.aspect.annotation.AutoAnnouncementPush)")
@@ -59,14 +63,8 @@ public class AutoAnnouncementPushAspect {
                 // 如果是USER 指定用户通知
                 SysAnnouncementWithBLOBs announcement = new SysAnnouncementWithBLOBs();
                 String anntId = IDUtils.getId()+"";
-                announcement.setId(anntId);
-                announcement.setMsgCategory(msgCategory);
-                announcement.setMsgContent(annotation.value());
-                announcement.setMsgType(msgType);
-                announcement.setTitile(annotation.title());
-                announcement.setSendStatus(CommonConstant.HAS_SEND);
-                announcement.setSendTime(date);
-                announcement.setCreateTime(date);
+                JSONObject obj = new JSONObject();
+                obj.put(WebSocketConstant.MSG_CMD, WebSocketConstant.CMD_USER);
                 if (CommonConstant.MSG_TYPE_UESR.equals(msgType)) {
                     // 获取通知人
                     announcement = (SysAnnouncementWithBLOBs) arg;
@@ -79,6 +77,15 @@ public class AutoAnnouncementPushAspect {
                         ids = new String[]{userIds};
                     }
                     // 插入通知表
+                    announcement.setId(anntId);
+                    announcement.setMsgCategory(msgCategory);
+                    announcement.setMsgContent(annotation.value()+announcement.getMsgContent());
+                    announcement.setMsgType(msgType);
+                    announcement.setTitile(annotation.title());
+                    announcement.setSendStatus(CommonConstant.HAS_SEND);
+                    announcement.setSendTime(date);
+                    announcement.setCreateTime(date);
+                    announcement.setDelFlag(CommonConstant.DEL_FLAG_0+"");
                     announcementMapper.insert(announcement);
                     for (String id : ids) {
                         // 插入用户通知表
@@ -91,9 +98,24 @@ public class AutoAnnouncementPushAspect {
                         announcementSend.setCreateBy(announcement.getCreateBy());
                         announcementSendMapper.insert(announcementSend);
                     }
+                    // 发送推送消息(单点消息(多人))
+                    obj.put(WebSocketConstant.MSG_TXT, annotation.title());
+                    webSocket.sendMoreMessage(ids, obj.toJSONString());
                 }else {
                     // 如果是All 所有用户通知
+                    announcement.setId(anntId);
+                    announcement.setMsgCategory(msgCategory);
+                    announcement.setMsgContent(annotation.value()+announcement.getMsgContent());
+                    announcement.setMsgType(msgType);
+                    announcement.setTitile(annotation.title());
+                    announcement.setSendStatus(CommonConstant.HAS_SEND);
+                    announcement.setSendTime(date);
+                    announcement.setCreateTime(date);
+                    announcement.setDelFlag(CommonConstant.DEL_FLAG_0+"");
                     announcementMapper.insert(announcement);
+                    // 发送推送消息(广播消息)
+                    obj.put(WebSocketConstant.MSG_TXT, annotation.title());
+                    webSocket.sendAllMessage(obj.toJSONString());
                 }
             }
         }
