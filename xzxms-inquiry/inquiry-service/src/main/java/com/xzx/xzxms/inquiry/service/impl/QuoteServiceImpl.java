@@ -255,11 +255,14 @@ public class QuoteServiceImpl implements IQuoteService {
 
     @Override
     public void rowSave(Quote quote) {
-        Quote quote1 = quoteMapper.selectByPrimaryKey(quote.getId());
-        if (quote1.getIsUseful() == 0){
+
+        SysProCheckExample example = new SysProCheckExample();
+        example.createCriteria().andQuoteIdEqualTo(quote.getId());
+        List<SysProCheck> list = sysProCheckMapper.selectByExample(example);
+        if (list != null && list.size() > 0 && list.get(0).getTechnicalAudit() !=null && list.get(0).getTechnicalAudit() == 0){
             quoteMapper.updateByPrimaryKeySelective(quote);
         }else {
-            throw new CustomerException("请撤销审核后再修改!");
+            throw new CustomerException("请撤销技术审核后再修改!");
         }
     }
 

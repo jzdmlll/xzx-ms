@@ -5,6 +5,7 @@ package com.xzx.xzxms.purchase.vo;/**
  */
 
 import com.xzx.xzxms.purchase.bean.PurchaseItems;
+import com.xzx.xzxms.purchase.bean.PurchaseSupply;
 
 /**
  *@ClassName SaleItemsVO
@@ -13,4 +14,14 @@ import com.xzx.xzxms.purchase.bean.PurchaseItems;
  *@Date DATE{TIME}
  */
 public class SaleItemsVO extends PurchaseItems {
+
+    private PurchaseSupply purchaseSupply;
+
+    public PurchaseSupply getPurchaseSupply() {
+        return purchaseSupply;
+    }
+
+    public void setPurchaseSupply(PurchaseSupply purchaseSupply) {
+        this.purchaseSupply = purchaseSupply;
+    }
 }

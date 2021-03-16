@@ -1,6 +1,9 @@
 package com.xzx.xzxms.inquiry.service.impl;
 
+import com.xzx.xzxms.commons.constant.CommonConstant;
 import com.xzx.xzxms.commons.utils.CustomerException;
+import com.xzx.xzxms.inquiry.bean.Quote;
+import com.xzx.xzxms.inquiry.dao.QuoteMapper;
 import com.xzx.xzxms.inquiry.dao.SysProCheckMapper;
 import com.xzx.xzxms.inquiry.dao.extend.SysProCheckExtendMapper;
 import com.xzx.xzxms.inquiry.service.ISysProCheckService;
@@ -26,7 +29,7 @@ public class ProCheckServiceImpl implements ISysProCheckService {
     public void updateTechnicalStatus(List<SysProCheck> sysProChecks) {
 
         for (SysProCheck sysProCheck : sysProChecks){
-            if (sysProCheck.getCompareAudit() !=null && 0 != sysProCheck.getCompareAudit()){
+            if (sysProCheck.getCompareAudit() != null && 0 != sysProCheck.getCompareAudit()){
                 throw new CustomerException("已有比价结果，请勿再修改审核状态!");
             }
             sysProCheck.setTechnicalTime(new Date().getTime());

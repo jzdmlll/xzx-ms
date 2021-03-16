@@ -14,4 +14,23 @@
             </if>
         </where>
     </select>
+
+    <select id="findSaleItemBySaleId" resultMap="supplyMessage">
+        select i.*,
+        ss.supplier s_supplier,s.model s_model,s.brand s_brand,s.params s_params,s.price s_price,s.delivery s_delivery,s.remark s_remark,
+        s.total_price s_total_price,s.warranty s_warranty,s.arrival_status s_arrival_status,s.id s_id,s.number s_number,
+        s.revised_price s_revised_price, s.revised_remark s_revised_remark
+        from purchase_items i
+        left join purchase_supply s on i.id = s.item_id
+        left join supply_supplier ss on s.supplier_id = ss.id
+        <where>
+            i.is_active = 1 and s.is_active = 1
+            <if test="saleId != null and saleId != ''">
+                and i.sale_contract_id = #{saleId}
+            </if>
+        </where>
+    </select>
+    <resultMap id="supplyMessage" type="com.xzx.xzxms.purchase.vo.SaleItemsVO" extends="com.xzx.xzxms.purchase.dao.PurchaseItemsMapper.BaseResultMap">
+        <collection property="purchaseSupply" ofType="com.xzx.xzxms.purchase.bean.PurchaseSupply" autoMapping="true" columnPrefix="s_"></collection>
+    </resultMap>
 </mapper>
