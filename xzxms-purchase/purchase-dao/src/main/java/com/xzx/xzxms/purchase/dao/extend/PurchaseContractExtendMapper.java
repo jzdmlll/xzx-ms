@@ -4,7 +4,6 @@ import com.xzx.xzxms.purchase.bean.PurchaseContract;
 import com.xzx.xzxms.purchase.vo.SupplyByContractIdVO;
 import com.xzx.xzxms.system.bean.SysFile;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
