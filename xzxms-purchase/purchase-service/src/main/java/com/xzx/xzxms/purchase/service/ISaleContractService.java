@@ -37,4 +37,5 @@ public interface ISaleContractService {
      */
     void setInvalid(List<String> contractId, String loginId);
 
+
 }
