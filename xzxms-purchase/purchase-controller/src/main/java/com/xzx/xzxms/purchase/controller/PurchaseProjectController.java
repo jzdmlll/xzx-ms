@@ -37,8 +37,6 @@ public class PurchaseProjectController {
      * @param
      * @return
      */
-
-
     @ApiOperation(value = "查询所有采购项目的类型")
     @GetMapping(value = "findByAll")
     public Message findByAll(){

@@ -50,10 +50,21 @@ public interface PurchasePlanService {
 
     /**
      * 新增询价项目,新增询价商品
+     * 此接口需优化
+     * sunny
      * @param purchaseItemsList
      * @return
      */
     String insertSysProDetailService(PurchaseItemsListDTO purchaseItemsList);
+
+    /**
+     * 采购项发往询价
+     * sunny
+     * 2021/03/15
+     * 待完善,替换上面接口
+     * @param purchaseItemsList
+     */
+    void purchaseItemsSendInquiry(PurchaseItemsListDTO purchaseItemsList);
 
     /**
      * 新增单个采购计划项

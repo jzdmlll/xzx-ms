@@ -272,9 +272,15 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
 
             List<Long> itemIds = new ArrayList<>();
             for (PurchaseItems item : purchaseItemsList.getPurchaseItemsList()) {
-                Double sort = purchasePlanExtendMapper.findSort(sysProDetail.getName(), item.getSerialNumber());
+
+                //判断采购项是否已发往询价
+                PurchaseItems pi = purchaseItemsMapper.selectByPrimaryKey(item.getId());
+                //Double sort = purchasePlanExtendMapper.findSort(sysProDetail.getName(), item.getSerialNumber());
                 // 当该购买项不存在时
-                if (sort == null){
+                if (pi.getIsInquiry() == null && CommonConstant.IS_INQUIRY.equals(pi.getIsInquiry())){
+
+                    throw new CustomerException(item.getItem() + "该购买项已发往询价");
+                }else {
                     Inquiry inquiry = new Inquiry();
                     inquiry.setId(IDUtils.getId());
                     // 在根据item_id去purchase_items表中获取该购买项相关信息
@@ -317,10 +323,6 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
                         // 获取所有的item的id
                         itemIds.add(item.getId());
                     }
-                // 当该购买项已存在时
-                }else {
-                    System.out.println("该购买项已存在 " + item.getSerialNumber());
-                    throw new CustomerException("该购买项已存在 " + item.getItem());
                 }
 
                 // 更新采购项目是否需要询价
@@ -337,6 +339,12 @@ public class PurchasePlanServiceImpl implements PurchasePlanService {
             }
             return "success";
         }
+    }
+
+    @Override
+    public void purchaseItemsSendInquiry(PurchaseItemsListDTO purchaseItemsList) {
+
+
     }
 
     /**

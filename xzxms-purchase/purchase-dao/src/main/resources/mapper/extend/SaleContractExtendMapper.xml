@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzx.xzxms.purchase.dao.extend.SaleContractExtendMapper">
+    <select id="findSaleContractData" resultType="com.xzx.xzxms.purchase.vo.SaleContractVO">
+        select sc.id, sc.contract_no, sc.enginerring, sc.type, sc.remark, su1.username operator, su2.username update_operator,
+        sc.time, sc.update_time
+        from sale_contract sc
+        left join sys_user su1 on sc.operator = su1.id
+        left join sys_user su2 on sc.update_operator = su2.id
+        <where>
+            sc.is_active = 1
+            <if test="name != null and name != ''">
+                and sc.contract_no like CONCAT('%',#{name},'%')
+            </if>
+        </where>
+    </select>
+</mapper>

@@ -62,7 +62,7 @@
         left join purchase_items j on i.parent_id = j.id
         left join sys_user u on u.id = i.operator
         where i.project_id = #{projectId} and i.is_active = 1 and (i.parent_id is null or i.parent_id != -1)
-        order by serial_number
+        order by i.is_inquiry, i.serial_number
     </select>
 
     <select id="findSerialNumbersByProjectId" parameterType="long" resultType="double">
