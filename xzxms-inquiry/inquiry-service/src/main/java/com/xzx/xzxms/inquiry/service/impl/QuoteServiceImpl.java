@@ -1,5 +1,6 @@
 package com.xzx.xzxms.inquiry.service.impl;
 
+import com.xzx.xzxms.commons.aspect.annotation.AutoAnnouncementPush;
 import com.xzx.xzxms.commons.constant.CommonConstant;
 import com.xzx.xzxms.commons.dao.redis.JedisDao;
 import com.xzx.xzxms.commons.utils.*;
@@ -11,6 +12,7 @@ import com.xzx.xzxms.inquiry.bean.*;
 import com.xzx.xzxms.inquiry.bean.extend.QuoteExtend;
 import com.xzx.xzxms.inquiry.bean.extend.QuoteExtendInquiry;
 import com.xzx.xzxms.inquiry.bean.extend.QuoteProCheckExtend;
+import com.xzx.xzxms.system.bean.SysAnnouncementWithBLOBs;
 import com.xzx.xzxms.system.bean.SysFile;
 import com.xzx.xzxms.system.bean.SysFileExample;
 import com.xzx.xzxms.system.bean.extend.SysFileExtend;
@@ -378,10 +380,10 @@ public class QuoteServiceImpl implements IQuoteService {
 
         setQuoteInvalid(id);
     }
-
+    @AutoAnnouncementPush(value = "技审通知：", title = "技审通知")
     @Transactional
     @Override
-    public void initiateAudit(long inquiryId) {
+    public void initiateAudit(SysAnnouncementWithBLOBs announcement, long inquiryId) {
 
         QuoteExample example = new QuoteExample();
         example.createCriteria().andInquiryIdEqualTo(inquiryId).andIsActiveEqualTo(1);
