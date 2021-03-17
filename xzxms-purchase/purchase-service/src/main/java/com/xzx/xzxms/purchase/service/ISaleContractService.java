@@ -6,6 +6,7 @@ package com.xzx.xzxms.purchase.service;/**
 
 import com.xzx.xzxms.purchase.bean.SaleContract;
 import com.xzx.xzxms.purchase.vo.SaleContractVO;
+import com.xzx.xzxms.purchase.vo.SaleItemsVO;
 
 import java.util.List;
 
@@ -37,4 +38,12 @@ public interface ISaleContractService {
      */
     void setInvalid(List<String> contractId, String loginId);
 
+    /**
+     * 根据销售合同ID查询合同明细
+     * @param saleId
+     * @return
+     */
+    List<SaleItemsVO> findSaleItemBySaleId(String saleId);
+
+    //SaleContractVO find
 }

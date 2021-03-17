@@ -6,6 +6,7 @@ package com.xzx.xzxms.purchase.dao.extend;/**
 
 import com.xzx.xzxms.purchase.bean.SaleContract;
 import com.xzx.xzxms.purchase.vo.SaleContractVO;
+import com.xzx.xzxms.purchase.vo.SaleItemsVO;
 
 import java.util.List;
 
@@ -18,4 +19,6 @@ import java.util.List;
 public interface SaleContractExtendMapper {
 
     List<SaleContractVO> findSaleContractData(String name);
+
+    List<SaleItemsVO> findSaleItemBySaleId(String saleId);
 }

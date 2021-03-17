@@ -13,6 +13,7 @@ import com.xzx.xzxms.purchase.dao.SaleContractMapper;
 import com.xzx.xzxms.purchase.dao.extend.SaleContractExtendMapper;
 import com.xzx.xzxms.purchase.service.ISaleContractService;
 import com.xzx.xzxms.purchase.vo.SaleContractVO;
+import com.xzx.xzxms.purchase.vo.SaleItemsVO;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -79,5 +80,12 @@ public class SaleContractServiceImpl implements ISaleContractService {
             saleContract.setUpdateTime(new Date().getTime());
             saleContractMapper.updateByPrimaryKeySelective(saleContract);
         }
+    }
+
+    @Override
+    public List<SaleItemsVO> findSaleItemBySaleId(String saleId) {
+
+        List<SaleItemsVO> list = saleContractExtendMapper.findSaleItemBySaleId(saleId);
+        return list;
     }
 }

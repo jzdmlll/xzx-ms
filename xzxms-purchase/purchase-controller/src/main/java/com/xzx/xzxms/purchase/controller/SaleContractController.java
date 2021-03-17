@@ -4,12 +4,15 @@ package com.xzx.xzxms.purchase.controller;/**
  * @Version 1.0
  */
 
+import com.xzx.xzxms.commons.annotation.CurrentUser;
+import com.xzx.xzxms.commons.model.base.bean.UserIdentity;
 import com.xzx.xzxms.commons.utils.JwtTokenUtil;
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
 import com.xzx.xzxms.purchase.bean.SaleContract;
 import com.xzx.xzxms.purchase.service.ISaleContractService;
 import com.xzx.xzxms.purchase.vo.SaleContractVO;
+import com.xzx.xzxms.purchase.vo.SaleItemsVO;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -61,4 +64,11 @@ public class SaleContractController {
         return MessageUtil.success("success");
     }
 
+    @ApiOperation(value = "根据销售合同ID查询合同明细")
+    @GetMapping(value = "findSaleItemBySaleId")
+    public Message findSaleItemBySaleId(String saleId){
+
+        List<SaleItemsVO> list = saleContractServiceImpl.findSaleItemBySaleId(saleId);
+        return MessageUtil.success("success", list);
+    }
 }
