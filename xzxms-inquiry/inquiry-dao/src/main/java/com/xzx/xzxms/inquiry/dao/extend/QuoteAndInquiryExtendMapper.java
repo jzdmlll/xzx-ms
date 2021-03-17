@@ -1,5 +1,7 @@
 package com.xzx.xzxms.inquiry.dao.extend;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xzx.xzxms.inquiry.bean.extend.QuoteExtendInquiry;
 import com.xzx.xzxms.inquiry.vm.FinallyQuoteInquiryVM;
 import org.apache.ibatis.annotations.Param;
@@ -9,7 +11,7 @@ import java.util.List;
 
 public interface QuoteAndInquiryExtendMapper {
 
-    List<QuoteExtendInquiry> findBySupplierOrPro(@Param("supplier") String supplier, @Param("proId") long proId);
+    IPage<QuoteExtendInquiry> findBySupplierOrPro(Page<?> page, @Param("supplier") String supplier, @Param("proId") long proId);
 
     /**
      * 根据报价表ID关联查询出询价、报价内容

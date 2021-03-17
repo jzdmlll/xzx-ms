@@ -1,5 +1,7 @@
 package com.xzx.xzxms.system.dao.extend;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xzx.xzxms.system.bean.extend.SysAnnouncementExtend;
 import org.apache.ibatis.annotations.Param;
 
@@ -14,7 +16,8 @@ public interface SysAnnouncementSendExtendMapper {
 
     List<String> findByUserId(@Param("userId") String userId);
 
-    List<SysAnnouncementExtend> getMyAnnouncementSendPage(@Param("userId") Long userId,
-                                                          @Param("readFlag") String readFlag,
-                                                          @Param("msgCategory") String msgCategory);
+    IPage<SysAnnouncementExtend> getMyAnnouncementSendPage(Page<?> page,
+                                                           @Param("userId") Long userId,
+                                                           @Param("readFlag") String readFlag,
+                                                           @Param("msgCategory") String msgCategory);
 }

@@ -1,5 +1,7 @@
 package com.xzx.xzxms.inquiry.dao.extend;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xzx.xzxms.inquiry.bean.extend.SysCheckAndScheduleExtend;
 import com.xzx.xzxms.inquiry.vo.ProjectCompletionVO;
 import org.apache.ibatis.annotations.Mapper;
@@ -29,6 +31,5 @@ public interface SysIndexExtendMapper {
 
     @Select("SELECT COUNT(1) as total, FROM_UNIXTIME(time/1000,'%m') t FROM product_pool where product_pool.is_active = 1 AND FROM_UNIXTIME(time/1000,'%Y年%m') LIKE CONCAT(#{year,jdbcType=VARCHAR},'%') GROUP BY t, time ORDER BY t")
     List<Map<String,String>> findYearSupplier(String year);
-
-    List<ProjectCompletionVO> findProAndCompletion(@Param("orderBy") String orderBy);
+    IPage<ProjectCompletionVO> findProAndCompletion(Page<?> page, @Param("orderBy") String orderBy);
 }

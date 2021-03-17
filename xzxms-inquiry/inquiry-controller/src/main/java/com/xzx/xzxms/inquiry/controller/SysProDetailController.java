@@ -1,7 +1,7 @@
 package com.xzx.xzxms.inquiry.controller;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xzx.xzxms.commons.utils.JwtTokenUtil;
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
@@ -36,13 +36,12 @@ public class SysProDetailController {
     public Message findByAll( @RequestParam(value = "pageFlag",required = false,defaultValue = "0")Integer pageFlag,
                               @RequestParam(value = "pageNum",required = false,defaultValue = "1")Integer pageNum,
                               @RequestParam(value = "pageSize",required = false,defaultValue = "20")Integer pageSize){
-        List<SysProDetailExtend> sysProDetailExtend = sysProDetailServiceImpl.findById();
         if (pageFlag == 1) {
-            PageHelper.startPage(pageNum, pageSize, "time desc");
-            PageInfo<SysProDetailExtend> pageInfo = new PageInfo<>(sysProDetailExtend);
-            PageHelper.clearPage();
-            return MessageUtil.success("success", pageInfo);
+            Page<SysProDetailExtend> page = new Page<>(pageNum, pageSize);
+            IPage<SysProDetailExtend> byId = sysProDetailServiceImpl.findById(page);
+            return MessageUtil.success("success", byId);
         }
+        List<SysProDetailExtend> sysProDetailExtend = sysProDetailServiceImpl.findById();
         return MessageUtil.success("success",sysProDetailExtend);
     }
 

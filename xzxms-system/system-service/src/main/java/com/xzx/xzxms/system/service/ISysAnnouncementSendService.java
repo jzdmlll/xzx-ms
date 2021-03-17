@@ -1,7 +1,7 @@
 package com.xzx.xzxms.system.service;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xzx.xzxms.system.bean.extend.SysAnnouncementExtend;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public interface ISysAnnouncementSendService {
      * 获取用户消息
      * @return
      */
-    PageInfo<SysAnnouncementExtend> getMyAnnouncementSendPage(Page<SysAnnouncementExtend> page, Long userId, String readFlag, String msgCategory);
+    IPage<SysAnnouncementExtend> getMyAnnouncementSendPage(Page<SysAnnouncementExtend> page, Long userId, String readFlag, String msgCategory);
 
     /**
      * 更改用户消息已读状态

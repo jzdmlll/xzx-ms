@@ -9,25 +9,13 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.xzx</groupId>
+    <groupId>com.xzx.xzxms.tender</groupId>
     <artifactId>xzxms-tender</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>tender-controller</module>
+        <module>tender-bean</module>
         <module>tender-service</module>
         <module>tender-dao</module>
-        <module>tender-bean</module>
+        <module>tender-controller</module>
     </modules>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.mybatis.generator</groupId>
-                <artifactId>mybatis-generator-maven-plugin</artifactId>
-                <version>1.3.5</version>
-            </plugin>
-        </plugins>
-    </build>
-
-
 </project>

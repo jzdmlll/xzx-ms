@@ -1,5 +1,7 @@
 package com.xzx.xzxms.chapter.service.Impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xzx.xzxms.chapter.bean.ChapterAudit;
 import com.xzx.xzxms.chapter.bean.ChapterAuditExample;
 import com.xzx.xzxms.chapter.dao.ChapterAuditMapper;
@@ -135,9 +137,9 @@ public class ChapterAuditServiceImpl implements ChapterAuditService {
      * @return
      */
     @Override
-    public List<ChapterAuditVO> findChapterAuditInfosByProjectNameService(String proId, Long startTime, Long overTime,Integer auditStatus) {
+    public IPage<ChapterAuditVO> findChapterAuditInfosByProjectNameService(Page<?> page, String proId, Long startTime, Long overTime, Integer auditStatus) {
 
-        return chapterAuditExtendMapper.findChapterAuditor(proId, startTime, overTime, auditStatus);
+        return chapterAuditExtendMapper.findChapterAuditor(page, proId, startTime, overTime, auditStatus);
     }
 
     /**

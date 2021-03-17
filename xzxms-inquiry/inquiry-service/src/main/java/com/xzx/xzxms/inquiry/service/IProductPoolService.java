@@ -1,5 +1,7 @@
 package com.xzx.xzxms.inquiry.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xzx.xzxms.inquiry.bean.ProPool;
 import com.xzx.xzxms.inquiry.bean.extend.ProPoolExtend;
 
@@ -26,7 +28,7 @@ public interface IProductPoolService {
      //* @param choose 选用标识
      * @return
      */
-    List<ProPoolExtend> findByParams(String name, String brand, String proName, String model);
+    IPage<ProPoolExtend> findByParams(Page<ProPoolExtend> page, String name, String brand, String proName, String model);
 
     /**
      * 批量置为无效（假删）

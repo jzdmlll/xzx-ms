@@ -1,5 +1,7 @@
 package com.xzx.xzxms.inquiry.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xzx.xzxms.inquiry.dao.extend.SysIndexExtendMapper;
 import com.xzx.xzxms.inquiry.dao.extend.SysProCheckExtendMapper;
 import com.xzx.xzxms.inquiry.service.ISysIndexService;
@@ -130,47 +132,43 @@ public class SysIndexServiceImpl implements ISysIndexService {
     }
 
     @Override
-    public List<ToDoList> findTechnicalAuditDeal() {
-        List<ToDoList> ToDoLists = sysProCheckExtendMapper.findTechnicalAuditDeal();
-        return ToDoLists;
+    public IPage<ToDoList> findTechnicalAuditDeal(Page<ToDoList> page) {
+        return sysProCheckExtendMapper.findTechnicalAuditDeal(page);
     }
 
     @Override
-    public List<ToDoList> findBusinessAuditDeal() {
-        List<ToDoList> ToDoLists = sysProCheckExtendMapper.findBusinessAuditDeal();
-        return ToDoLists;
+    public IPage<ToDoList> findBusinessAuditDeal(Page<ToDoList> page) {
+        return sysProCheckExtendMapper.findBusinessAuditDeal(page);
     }
 
     @Override
-    public List<ToDoList> findCompareAuditDeal() {
-        List<ToDoList> ToDoLists = sysProCheckExtendMapper.findCompareAuditDeal();
-        return ToDoLists;
+    public IPage<ToDoList> findCompareAuditDeal(Page<ToDoList> page) {
+        return sysProCheckExtendMapper.findCompareAuditDeal(page);
     }
 
     @Override
-    public List<ToDoList> findFinallyAuditDeal() {
-        List<ToDoList> ToDoLists = sysProCheckExtendMapper.findFinallyAuditDeal();
-        return ToDoLists;
+    public IPage<ToDoList> findFinallyAuditDeal(Page<ToDoList> page) {
+        return sysProCheckExtendMapper.findFinallyAuditDeal(page);
     }
 
     @Override
-    public List<ProjectCompletionVO> findProAndCompletion(String orderBy) {
-        return sysIndexExtendMapper.findProAndCompletion(orderBy);
+    public IPage<ProjectCompletionVO> findProAndCompletion(Page<?> page, String orderBy) {
+        return sysIndexExtendMapper.findProAndCompletion(page, orderBy);
     }
 
     @Override
-    public List<ContractAuditDealVO> dataSourceFirst() {
-        return purchaseContractAuditExtendMapper.dataSourceFirst();
+    public IPage<ContractAuditDealVO> dataSourceFirst(Page<?> page) {
+        return purchaseContractAuditExtendMapper.dataSourceFirst(page);
     }
 
     @Override
-    public List<ContractAuditDealVO> dataSourceSecond() {
-        return purchaseContractAuditExtendMapper.dataSourceSecond();
+    public IPage<ContractAuditDealVO> dataSourceSecond(Page<?> page) {
+        return purchaseContractAuditExtendMapper.dataSourceSecond(page);
     }
 
     @Override
-    public List<ContractAuditDealVO> dataSourceThree() {
-        return purchaseContractAuditExtendMapper.dataSourceThree();
+    public IPage<ContractAuditDealVO> dataSourceThree(Page<?> page) {
+        return purchaseContractAuditExtendMapper.dataSourceThree(page);
     }
 
 

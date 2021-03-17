@@ -1,5 +1,7 @@
 package com.xzx.xzxms.inquiry.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xzx.xzxms.inquiry.bean.extend.SysCheckAndScheduleExtend;
 import com.xzx.xzxms.inquiry.vm.ProIsFinallyVM;
 import com.xzx.xzxms.inquiry.vm.ProjectSchedule;
@@ -61,48 +63,48 @@ public interface ISysIndexService {
      * 查询技术审核待办事项
      * @return
      */
-    List<ToDoList> findTechnicalAuditDeal();
+    IPage<ToDoList> findTechnicalAuditDeal(Page<ToDoList> page);
 
     /**
      * 查询商务审核待办事项
      * @return
      */
-    List<ToDoList> findBusinessAuditDeal();
+    IPage<ToDoList> findBusinessAuditDeal(Page<ToDoList> page);
 
     /**
      * 查询比价待办事项
      * @return
      */
-    List<ToDoList> findCompareAuditDeal();
+    IPage<ToDoList> findCompareAuditDeal(Page<ToDoList> page);
 
     /**
      * 查询终审待办事项
      * @return
      */
-    List<ToDoList> findFinallyAuditDeal();
+    IPage<ToDoList> findFinallyAuditDeal(Page<ToDoList> page);
 
     /**
      * 查询一审待办事项
      * @return
      */
-    List<ContractAuditDealVO> dataSourceFirst();
+    IPage<ContractAuditDealVO> dataSourceFirst(Page<?> page);
 
     /**
      * 查询二审待办事项
      * @return
      */
-    List<ContractAuditDealVO> dataSourceSecond();
+    IPage<ContractAuditDealVO> dataSourceSecond(Page<?> page);
 
     /**
      * 查询三审待办事项
      * @return
      */
-    List<ContractAuditDealVO> dataSourceThree();
+    IPage<ContractAuditDealVO> dataSourceThree(Page<?> page);
 
     /**
      * 查询项目完成进度
      * @return
      */
-    List<ProjectCompletionVO> findProAndCompletion(String orderBy);
+    IPage<ProjectCompletionVO> findProAndCompletion(Page<?> page, String orderBy);
 
 }

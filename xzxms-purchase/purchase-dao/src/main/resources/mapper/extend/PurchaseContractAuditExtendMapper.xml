@@ -17,9 +17,6 @@
         left join sys_user s3 on three_operator = s3.id
         <where>
             pc.is_active = 1 and pp.is_active = 1 and pc.first_audit = 0
-            <if test="contractId != null and contractId != ''">
-                and pc.id = #{contractId, jdbcType = BIGINT}
-            </if>
         </where>
         order by pp.id ,pc.send_time
     </select>
@@ -39,9 +36,6 @@
         left join sys_user s3 on three_operator = s3.id
         <where>
             pc.is_active = 1 and pp.is_active = 1 and pc.second_audit = 0
-            <if test="contractId != null and contractId != ''">
-                and pc.id = #{contractId, jdbcType = BIGINT}
-            </if>
         </where>
         order by pp.id ,pc.send_time
     </select>
@@ -61,9 +55,6 @@
         left join sys_user s3 on three_operator = s3.id
         <where>
             pc.is_active = 1 and pp.is_active = 1 and pc.three_audit = 0
-            <if test="contractId != null and contractId != ''">
-                and pc.id = #{contractId, jdbcType = BIGINT}
-            </if>
         </where>
         order by pp.id ,pc.send_time
     </select>

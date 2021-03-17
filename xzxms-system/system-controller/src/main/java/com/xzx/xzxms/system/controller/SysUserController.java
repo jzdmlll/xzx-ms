@@ -1,7 +1,5 @@
 package com.xzx.xzxms.system.controller;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.xzx.xzxms.commons.dao.redis.JedisDao;
 import com.xzx.xzxms.commons.utils.*;
 import com.xzx.xzxms.system.bean.SysUser;
@@ -35,18 +33,6 @@ public class SysUserController {
     private ISysPrivilegeService privilegeServiceImpl;
     @Resource
     private JedisDao jedisDaoImpl;
-
-    @GetMapping("test")
-    public Message test(int a, int b){
-
-        Message ms=new Message();
-        PageHelper.startPage(a, b);
-        List<SysUser> all = userServiceImpl.findAll();
-        PageInfo<SysUser> pi=new PageInfo<SysUser>(all);
-        ms.setData(pi);
-        PageHelper.clearPage();
-        return ms;
-    }
 
     @PostMapping("login")
     public Message login(@RequestBody UserVM userVM) {

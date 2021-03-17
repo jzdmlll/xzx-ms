@@ -1,5 +1,7 @@
 package com.xzx.xzxms.inquiry.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xzx.xzxms.inquiry.bean.Quote;
 import com.xzx.xzxms.inquiry.bean.extend.QuoteExtend;
 import com.xzx.xzxms.inquiry.bean.extend.QuoteExtendInquiry;
@@ -38,7 +40,7 @@ public interface IQuoteService {
      * 供应商报价查询/项目报价查询
      * @return
      */
-    List<QuoteExtendInquiry> findBySupplierOrPro(String supplier, long proId);
+    IPage<QuoteExtendInquiry> findBySupplierOrPro(Page<?> page, String supplier, long proId);
 
     /**
      * 批量置为无效（假删）

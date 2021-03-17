@@ -1,7 +1,7 @@
 package com.xzx.xzxms.system.controller;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xzx.xzxms.commons.utils.JwtTokenUtil;
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
@@ -13,10 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -46,11 +44,10 @@ public class SysAnnouncementController {
         Long userId = Long.parseLong(JwtTokenUtil.getUserId(token, JwtTokenUtil.base64Secret));
 
         Page<SysAnnouncementExtend> page = new Page<>(pageNo, pageSize);
-        page.setOrderBy("send_time desc");
-        PageInfo<SysAnnouncementExtend> announcement = sysAnnouncementSendService.getMyAnnouncementSendPage(page, userId, readFlag, "1");
-        PageInfo<SysAnnouncementExtend> sysAnnouncement = sysAnnouncementSendService.getMyAnnouncementSendPage(page, userId, readFlag, "2");
+        IPage<SysAnnouncementExtend> announcement = sysAnnouncementSendService.getMyAnnouncementSendPage(page, userId, readFlag, "1");
+        IPage<SysAnnouncementExtend> sysAnnouncement = sysAnnouncementSendService.getMyAnnouncementSendPage(page, userId, readFlag, "2");
 
-        Map<String, PageInfo<SysAnnouncementExtend>> result = new HashMap<>();
+        Map<String, IPage<SysAnnouncementExtend>> result = new HashMap<>();
         result.put("announcement", announcement);
         result.put("sysAnnouncement", sysAnnouncement);
 

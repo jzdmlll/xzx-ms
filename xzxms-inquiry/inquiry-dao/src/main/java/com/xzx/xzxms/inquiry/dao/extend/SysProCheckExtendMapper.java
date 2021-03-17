@@ -1,5 +1,7 @@
 package com.xzx.xzxms.inquiry.dao.extend;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xzx.xzxms.inquiry.bean.extend.SysCheckExtend;
 import com.xzx.xzxms.inquiry.vm.ToDoList;
 import org.apache.ibatis.annotations.Param;
@@ -30,9 +32,9 @@ public interface SysProCheckExtendMapper {
     int findQuoteIsChecked(long inquiryId);
 
     //待办
-    List<ToDoList> findTechnicalAuditDeal();
-    List<ToDoList> findBusinessAuditDeal();
-    List<ToDoList> findCompareAuditDeal();
-    List<ToDoList> findFinallyAuditDeal();
+    IPage<ToDoList> findTechnicalAuditDeal(Page<?> page);
+    IPage<ToDoList> findBusinessAuditDeal(Page<?> page);
+    IPage<ToDoList> findCompareAuditDeal(Page<?> page);
+    IPage<ToDoList> findFinallyAuditDeal(Page<?> page);
 
 }

@@ -1,5 +1,7 @@
 package com.xzx.xzxms.chapter.dao.extend;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xzx.xzxms.chapter.dto.ChapterAuditorDTO;
 import com.xzx.xzxms.chapter.vo.ChapterAuditVO;
 import org.apache.ibatis.annotations.Mapper;
@@ -31,8 +33,9 @@ public interface ChapterAuditExtendMapper {
      * @param auditStatus
      * @return
      */
-    List<ChapterAuditVO> findChapterAuditor(@Param("proName") String proId,
-                                            @Param("startTime") Long startTime,
-                                            @Param("overTime") Long overTime,
-                                            @Param("auditStatus") Integer auditStatus);
+    IPage<ChapterAuditVO> findChapterAuditor(Page<?> page,
+                                             @Param("proName") String proId,
+                                             @Param("startTime") Long startTime,
+                                             @Param("overTime") Long overTime,
+                                             @Param("auditStatus") Integer auditStatus);
 }

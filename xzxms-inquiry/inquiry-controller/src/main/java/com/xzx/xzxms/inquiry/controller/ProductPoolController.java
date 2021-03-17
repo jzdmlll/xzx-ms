@@ -1,7 +1,7 @@
 package com.xzx.xzxms.inquiry.controller;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
 import com.xzx.xzxms.inquiry.service.IProductPoolService;
@@ -50,10 +50,8 @@ public class ProductPoolController {
                                 @RequestParam(value="model", required=false, defaultValue = "")String model,
                                 @RequestParam(value = "pageNum",required = false,defaultValue = "1")int pageNum,
                                 @RequestParam(value = "pageSize",required = false,defaultValue = "50")int pageSize){
-        PageHelper.startPage(pageNum, pageSize, "time desc");
-        List<ProPoolExtend> list = productPoolServiceImpl.findByParams(name, brand, proName, model);
-        PageInfo<ProPoolExtend> pageInfo = new PageInfo<>(list);
-        PageHelper.clearPage();
+        Page<ProPoolExtend> page = new Page<>(pageNum, pageSize);
+        IPage<ProPoolExtend> pageInfo = productPoolServiceImpl.findByParams(page, name, brand, proName, model);
         return MessageUtil.success("success", pageInfo);
     }
 

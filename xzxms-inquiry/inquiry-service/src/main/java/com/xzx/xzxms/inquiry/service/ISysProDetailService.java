@@ -1,5 +1,7 @@
 package com.xzx.xzxms.inquiry.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xzx.xzxms.inquiry.bean.SysProDetail;
 import com.xzx.xzxms.inquiry.bean.SysProDetailWithBLOBs;
 import com.xzx.xzxms.inquiry.bean.extend.SysProDetailExtend;
@@ -18,6 +20,7 @@ public interface ISysProDetailService {
 
     List<SysProDetailExtend> findById();
 
+    IPage<SysProDetailExtend> findById(Page<?> page);
     /**
      * 新增或修改项目
      * @param proDetail

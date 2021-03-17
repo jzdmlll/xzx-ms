@@ -1,7 +1,7 @@
 package com.xzx.xzxms.inquiry.controller;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xzx.xzxms.commons.annotation.CurrentUser;
 import com.xzx.xzxms.commons.model.base.bean.UserIdentity;
 import com.xzx.xzxms.commons.utils.CustomerException;
@@ -66,10 +66,8 @@ public class QuoteController {
                                        @RequestParam(value = "proId",required = false,defaultValue = "-1") long proId,
                                        @RequestParam(value = "pageNum",required = false,defaultValue = "1")int pageNum,
                                        @RequestParam(value = "pageSize",required = false,defaultValue = "50")int pageSize){
-        PageHelper.startPage(pageNum, pageSize);
-        List<QuoteExtendInquiry> list = iQuoteServiceImpl.findBySupplierOrPro(supplier,proId);
-        PageInfo<QuoteExtendInquiry> pageInfo = new PageInfo<>(list);
-        PageHelper.clearPage();
+        Page<Quote> page = new Page<>(pageNum, pageSize);
+        IPage<QuoteExtendInquiry> pageInfo = iQuoteServiceImpl.findBySupplierOrPro(page, supplier, proId);
         return MessageUtil.success("success",pageInfo);
     }
 

@@ -1,6 +1,8 @@
 package com.xzx.xzxms.inquiry.dao.extend;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xzx.xzxms.inquiry.bean.extend.SysProDetailExtend;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -13,6 +15,8 @@ public interface SysProDetailExtendMapper {
     SysProDetailExtend findById(long proDetailId);
 
     List<SysProDetailExtend> findById();
+
+    IPage<SysProDetailExtend> findById(Page<?> page);
 
     @Select("select a.id from sys_pro_detail a RIGHT JOIN inquiry b on a.id=b.pro_detail_id " +
             "RIGHT JOIN quote c on b.id=c.inquiry_id  " +

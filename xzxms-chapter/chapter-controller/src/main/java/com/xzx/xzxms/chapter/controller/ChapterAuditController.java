@@ -1,7 +1,7 @@
 package com.xzx.xzxms.chapter.controller;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xzx.xzxms.chapter.bean.ChapterAudit;
 import com.xzx.xzxms.chapter.dao.extend.ChapterAuditExtendMapper;
 import com.xzx.xzxms.chapter.dto.ChapterAuditDTO;
@@ -12,12 +12,9 @@ import com.xzx.xzxms.commons.annotation.CurrentUser;
 import com.xzx.xzxms.commons.model.base.bean.UserIdentity;
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
-import com.xzx.xzxms.system.bean.SysAnnouncement;
 import com.xzx.xzxms.system.bean.SysAnnouncementWithBLOBs;
 import com.xzx.xzxms.system.bean.SysFile;
 import io.swagger.annotations.ApiOperation;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -88,11 +85,9 @@ public class ChapterAuditController {
     public Message findChapterAuditInfosByParams(String proName, Long startTime, Long overTime, Integer auditStatus,
                                                  @RequestParam(name = "pageSize", defaultValue = "10") int pageSize,
                                                  @RequestParam(name = "pageNum", defaultValue = "1") int pageNum){
-        PageHelper.startPage(pageNum, pageSize, "sender_time desc");
-        List<ChapterAuditVO> chapterAuditInfos = chapterAuditService.findChapterAuditInfosByProjectNameService(proName, startTime, overTime, auditStatus);
-        PageInfo<ChapterAuditVO> pageInfo = new PageInfo<>(chapterAuditInfos);
-        PageHelper.clearPage();
-        return MessageUtil.success("success", pageInfo);
+        Page<ChapterAuditVO> page = new Page<>(pageNum, pageSize);
+        IPage<ChapterAuditVO> chapterAuditInfos = chapterAuditService.findChapterAuditInfosByProjectNameService(page, proName, startTime, overTime, auditStatus);
+        return MessageUtil.success("success", chapterAuditInfos);
     }
 
     /**

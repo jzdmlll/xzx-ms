@@ -1,7 +1,7 @@
 package com.xzx.xzxms.inquiry.controller;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
 import com.xzx.xzxms.inquiry.service.ISysIndexService;
@@ -67,48 +67,40 @@ public class SysIndexController {
     @GetMapping(value = "findTechnicalAuditDeal")
     public Message findTechnicalAuditDeal(@RequestParam(value = "pageNum",required = false,defaultValue = "1")int pageNum,
                                           @RequestParam(value = "pageSize",required = false,defaultValue = "15")int pageSize){
-        PageHelper.startPage(pageNum, pageSize);
-        List<ToDoList> ToDoLists = sysIndexServiceImpl.findTechnicalAuditDeal();
+        Page<ToDoList> page = new Page<>(pageNum, pageSize);
+        IPage<ToDoList> ToDoLists = sysIndexServiceImpl.findTechnicalAuditDeal(page);
 
-        PageInfo<ToDoList> pageInfo = new PageInfo<>(ToDoLists);
-        PageHelper.clearPage();
-        return MessageUtil.success("success", pageInfo);
+        return MessageUtil.success("success", ToDoLists);
     }
 
     @ApiOperation(value = "查询商务审核待办事项")
     @GetMapping(value = "findBusinessAuditDeal")
     public Message findBusinessAuditDeal(@RequestParam(value = "pageNum",required = false,defaultValue = "1")int pageNum,
                                          @RequestParam(value = "pageSize",required = false,defaultValue = "15")int pageSize){
-        PageHelper.startPage(pageNum, pageSize);
-        List<ToDoList> ToDoLists = sysIndexServiceImpl.findBusinessAuditDeal();
+        Page<ToDoList> page = new Page<>(pageNum, pageSize);
+        IPage<ToDoList> ToDoLists = sysIndexServiceImpl.findBusinessAuditDeal(page);
 
-        PageInfo<ToDoList> pageInfo = new PageInfo<>(ToDoLists);
-        PageHelper.clearPage();
-        return MessageUtil.success("success", pageInfo);
+        return MessageUtil.success("success", ToDoLists);
     }
 
     @ApiOperation(value = "查询比价待办事项")
     @GetMapping(value = "findCompareAuditDeal")
     public Message findCompareAuditDeal(@RequestParam(value = "pageNum",required = false,defaultValue = "1")int pageNum,
                                         @RequestParam(value = "pageSize",required = false,defaultValue = "15")int pageSize){
-        PageHelper.startPage(pageNum, pageSize);
-        List<ToDoList> ToDoLists = sysIndexServiceImpl.findCompareAuditDeal();
+        Page<ToDoList> page = new Page<>(pageNum, pageSize);
+        IPage<ToDoList> ToDoLists = sysIndexServiceImpl.findCompareAuditDeal(page);
 
-        PageInfo<ToDoList> pageInfo = new PageInfo<>(ToDoLists);
-        PageHelper.clearPage();
-        return MessageUtil.success("success", pageInfo);
+        return MessageUtil.success("success", ToDoLists);
     }
 
     @ApiOperation(value = "查询终审待办事项")
     @GetMapping(value = "findFinallyAuditDeal")
     public Message findFinallyAuditDeal(@RequestParam(value = "pageNum",required = false,defaultValue = "1")int pageNum,
                                         @RequestParam(value = "pageSize",required = false,defaultValue = "15")int pageSize){
-        PageHelper.startPage(pageNum, pageSize);
-        List<ToDoList> ToDoLists = sysIndexServiceImpl.findFinallyAuditDeal();
+        Page<ToDoList> page = new Page<>(pageNum, pageSize);
+        IPage<ToDoList> ToDoLists = sysIndexServiceImpl.findFinallyAuditDeal(page);
 
-        PageInfo<ToDoList> pageInfo = new PageInfo<>(ToDoLists);
-        PageHelper.clearPage();
-        return MessageUtil.success("success", pageInfo);
+        return MessageUtil.success("success", ToDoLists);
     }
 
     @ApiOperation("查询项目完成进度")
@@ -116,46 +108,36 @@ public class SysIndexController {
     public Message findProAndCompletion(@RequestParam(value = "pageNum",required = false,defaultValue = "1")int pageNum,
                                         @RequestParam(value = "pageSize",required = false,defaultValue = "15")int pageSize,
                                         @RequestParam(value = "orderBy",required = false,defaultValue = "`completion` asc")String orderBy){
-        PageHelper.startPage(pageNum, pageSize);
-        List<ProjectCompletionVO> proAndCompletionList = sysIndexServiceImpl.findProAndCompletion(orderBy);
-        PageInfo<ProjectCompletionVO> pageInfo = new PageInfo<>(proAndCompletionList);
-        PageHelper.clearPage();
-        return MessageUtil.success("success", pageInfo);
+        Page<ProjectCompletionVO> page = new Page<>(pageNum, pageSize);
+        IPage<ProjectCompletionVO> ToDoLists = sysIndexServiceImpl.findProAndCompletion(page, orderBy);
+
+        return MessageUtil.success("success", ToDoLists);
     }
 
     @ApiOperation(value = "查询一审待办事项")
     @GetMapping(value = "dataSourceFirst")
     public Message dataSourceFirst(@RequestParam(value = "pageNum",required = false,defaultValue = "1")int pageNum,
                                         @RequestParam(value = "pageSize",required = false,defaultValue = "15")int pageSize){
-        PageHelper.startPage(pageNum, pageSize);
-        List<ContractAuditDealVO> list = sysIndexServiceImpl.dataSourceFirst();
-
-        PageInfo<ContractAuditDealVO> pageInfo = new PageInfo<>(list);
-        PageHelper.clearPage();
-        return MessageUtil.success("success", pageInfo);
+        Page<ContractAuditDealVO> page = new Page<>(pageNum, pageSize);
+        IPage<ContractAuditDealVO> ToDoLists = sysIndexServiceImpl.dataSourceFirst(page);
+        return MessageUtil.success("success", ToDoLists);
     }
 
     @ApiOperation(value = "查询二审待办事项")
     @GetMapping(value = "dataSourceSecond")
     public Message dataSourceSecond(@RequestParam(value = "pageNum",required = false,defaultValue = "1")int pageNum,
                                    @RequestParam(value = "pageSize",required = false,defaultValue = "15")int pageSize){
-        PageHelper.startPage(pageNum, pageSize);
-        List<ContractAuditDealVO> list = sysIndexServiceImpl.dataSourceSecond();
-
-        PageInfo<ContractAuditDealVO> pageInfo = new PageInfo<>(list);
-        PageHelper.clearPage();
-        return MessageUtil.success("success", pageInfo);
+        Page<ContractAuditDealVO> page = new Page<>(pageNum, pageSize);
+        IPage<ContractAuditDealVO> ToDoLists = sysIndexServiceImpl.dataSourceSecond(page);
+        return MessageUtil.success("success", ToDoLists);
     }
 
     @ApiOperation(value = "查询三审待办事项")
     @GetMapping(value = "dataSourceThree")
     public Message dataSourceThree(@RequestParam(value = "pageNum",required = false,defaultValue = "1")int pageNum,
                                    @RequestParam(value = "pageSize",required = false,defaultValue = "15")int pageSize){
-        PageHelper.startPage(pageNum, pageSize);
-        List<ContractAuditDealVO> list = sysIndexServiceImpl.dataSourceThree();
-
-        PageInfo<ContractAuditDealVO> pageInfo = new PageInfo<>(list);
-        PageHelper.clearPage();
-        return MessageUtil.success("success", pageInfo);
+        Page<ContractAuditDealVO> page = new Page<>(pageNum, pageSize);
+        IPage<ContractAuditDealVO> ToDoLists = sysIndexServiceImpl.dataSourceThree(page);
+        return MessageUtil.success("success", ToDoLists);
     }
 }

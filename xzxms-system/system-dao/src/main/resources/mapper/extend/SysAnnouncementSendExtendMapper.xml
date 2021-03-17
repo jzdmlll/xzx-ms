@@ -25,5 +25,6 @@
 				and sa.msg_category = #{msgCategory}
 			</if>
         </where>
+		order by sa.send_time desc
 	</select>
 </mapper>

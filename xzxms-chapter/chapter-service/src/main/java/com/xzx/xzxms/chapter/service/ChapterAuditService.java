@@ -1,5 +1,7 @@
 package com.xzx.xzxms.chapter.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xzx.xzxms.chapter.bean.ChapterAudit;
 import com.xzx.xzxms.chapter.vo.ChapterAuditVO;
 import com.xzx.xzxms.system.bean.SysAnnouncementWithBLOBs;
@@ -39,7 +41,7 @@ public interface ChapterAuditService {
      * 根据项目名称查询该项目下所有审核信息审核信息
      * @return
      */
-    List<ChapterAuditVO> findChapterAuditInfosByProjectNameService(String proName, Long startTime, Long overTime, Integer auditStatus);
+    IPage<ChapterAuditVO> findChapterAuditInfosByProjectNameService(Page<?> page, String proName, Long startTime, Long overTime, Integer auditStatus);
 
     /**
      * 周嘉玮

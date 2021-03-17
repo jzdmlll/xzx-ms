@@ -1,6 +1,9 @@
 package com.xzx.xzxms.purchase.dao.extend;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xzx.xzxms.inquiry.vo.ContractAuditDealVO;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -18,17 +21,17 @@ public interface PurchaseContractAuditExtendMapper {
      * 查询一级审核待办
      * @return
      */
-    List<ContractAuditDealVO> dataSourceFirst();
+    IPage<ContractAuditDealVO> dataSourceFirst(Page<?> page);
 
     /**
      * 查询二级审核待办
      * @return
      */
-    List<ContractAuditDealVO> dataSourceSecond();
+    IPage<ContractAuditDealVO> dataSourceSecond(Page<?> page);
 
     /**
      * 查询三级审核待办
      * @return
      */
-    List<ContractAuditDealVO> dataSourceThree();
+    IPage<ContractAuditDealVO> dataSourceThree(Page<?> page);
 }

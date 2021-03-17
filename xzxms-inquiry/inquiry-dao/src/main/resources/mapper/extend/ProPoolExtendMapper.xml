@@ -20,6 +20,7 @@
             and p.model like CONCAT(CONCAT('%',#{model}),'%')
           </if>
         </where>
+        order by `time`
     </select>
 
     <select id="fuzzyQueryByNameOrModel" resultType="com.xzx.xzxms.inquiry.bean.ProPool">

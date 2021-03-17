@@ -1,5 +1,7 @@
 package com.xzx.xzxms.inquiry.dao.extend;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xzx.xzxms.inquiry.bean.ProPool;
 import com.xzx.xzxms.inquiry.bean.extend.ProPoolExtend;
 import org.apache.ibatis.annotations.Mapper;
@@ -27,8 +29,8 @@ public interface ProPoolExtendMapper {
             "and pc.type=\"最终审核\" and pc.check_status != 0")
     int isFinalCheck(long proCheckId);
 
-    List<ProPoolExtend> findByParams(@Param("name") String name, @Param("brand") String brand,
-                                     @Param("proName") String proName, @Param("model") String model);
+    IPage<ProPoolExtend> findByParams(Page<?> page, @Param("name") String name, @Param("brand") String brand,
+                                      @Param("proName") String proName, @Param("model") String model);
 
     List<ProPool> fuzzyQueryByNameOrModel(@Param("name") String name, @Param("model") String model);
 

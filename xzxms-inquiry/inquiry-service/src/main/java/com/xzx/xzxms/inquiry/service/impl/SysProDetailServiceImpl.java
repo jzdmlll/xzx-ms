@@ -1,5 +1,7 @@
 package com.xzx.xzxms.inquiry.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xzx.xzxms.commons.constant.CommonConstant;
 import com.xzx.xzxms.commons.dao.redis.JedisDao;
 import com.xzx.xzxms.commons.utils.Base64Util;
@@ -49,6 +51,12 @@ public class SysProDetailServiceImpl implements ISysProDetailService {
     public List<SysProDetailExtend> findById() {
         return sysProDetailExtendMapper.findById();
     }
+
+    @Override
+    public IPage<SysProDetailExtend> findById(Page<?> page) {
+        return sysProDetailExtendMapper.findById(page);
+    }
+
     @Transactional
     @Override
     public void saveOrUpdate(SysProDetailWithBLOBs proDetail, List<SysFile> files, String loginId) {

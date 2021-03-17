@@ -1,5 +1,7 @@
 package com.xzx.xzxms.inquiry.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xzx.xzxms.commons.aspect.annotation.AutoAnnouncementPush;
 import com.xzx.xzxms.commons.constant.CommonConstant;
 import com.xzx.xzxms.commons.dao.redis.JedisDao;
@@ -269,10 +271,9 @@ public class QuoteServiceImpl implements IQuoteService {
     }
 
     @Override
-    public List<QuoteExtendInquiry> findBySupplierOrPro(String supplier, long proId) {
+    public IPage<QuoteExtendInquiry> findBySupplierOrPro(Page<?> page, String supplier, long proId) {
 
-        List<QuoteExtendInquiry> list = quoteAndInquiry.findBySupplierOrPro(supplier,proId);
-        return list;
+        return quoteAndInquiry.findBySupplierOrPro(page, supplier,proId);
     }
 
     @Transactional
