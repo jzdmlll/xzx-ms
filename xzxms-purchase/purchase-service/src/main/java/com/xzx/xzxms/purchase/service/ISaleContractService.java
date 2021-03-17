@@ -45,5 +45,10 @@ public interface ISaleContractService {
      */
     List<SaleItemsVO> findSaleItemBySaleId(String saleId);
 
-    //SaleContractVO find
+    /**
+     * 根据销售合同ID查询销售详情
+     * @param saleId
+     * @return
+     */
+    SaleContractVO findSaleContractDetail(String saleId);
 }
