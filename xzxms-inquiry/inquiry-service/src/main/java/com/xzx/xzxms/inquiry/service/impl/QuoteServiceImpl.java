@@ -263,10 +263,12 @@ public class QuoteServiceImpl implements IQuoteService {
         SysProCheckExample example = new SysProCheckExample();
         example.createCriteria().andQuoteIdEqualTo(quote.getId());
         List<SysProCheck> list = sysProCheckMapper.selectByExample(example);
-        if (list != null && list.size() > 0 && list.get(0).getTechnicalAudit() !=null && list.get(0).getTechnicalAudit() == 0){
-            quoteMapper.updateByPrimaryKeySelective(quote);
-        }else {
+
+        if (list != null && list.size() > 0 && list.get(0).getTechnicalAudit() !=null && list.get(0).getTechnicalAudit() != 0){
+
             throw new CustomerException("请撤销技术审核后再修改!");
+        }else {
+            quoteMapper.updateByPrimaryKeySelective(quote);
         }
     }
 

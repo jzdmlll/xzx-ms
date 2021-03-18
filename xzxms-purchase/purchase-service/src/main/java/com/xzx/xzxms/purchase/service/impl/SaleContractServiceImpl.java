@@ -88,4 +88,9 @@ public class SaleContractServiceImpl implements ISaleContractService {
         List<SaleItemsVO> list = saleContractExtendMapper.findSaleItemBySaleId(saleId);
         return list;
     }
+
+    @Override
+    public SaleContractVO findSaleContractDetail(String saleId) {
+        return null;
+    }
 }
