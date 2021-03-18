@@ -40,24 +40,33 @@ public class AutoGeneratorConfig {
         DataSourceConfig dsc = new DataSourceConfig();
         dsc.setUrl("jdbc:mysql://localhost:3306/xzx?useSSL=false&useUnicode=true&characterEncoding=utf-8"); dsc.setDriverName("com.mysql.jdbc.Driver"); dsc.setUsername("root"); dsc.setPassword("root"); dsc.setDbType(DbType.MYSQL); mpg.setDataSource(dsc);
         //3、包的配置
-        PackageConfig pc = new PackageConfig(); pc.setModuleName("tender");
-        pc.setParent("com.xzx.xzxms"); pc.setEntity("bean");
-        pc.setMapper("dao"); pc.setService("service");
-        pc.setController("controller"); mpg.setPackageInfo(pc);
+        PackageConfig pc = new PackageConfig();
+        pc.setModuleName("tender");
+        pc.setParent("com.xzx.xzxms");
+        pc.setEntity("com/xzx/xzxms/tender/bean");
+        pc.setMapper("com/xzx/xzxms/tender/dao");
+        pc.setService("com/xzx/xzxms/tender/service");
+        pc.setController("com/xzx/xzxms/tender/controller");
+        mpg.setPackageInfo(pc);
         //4、策略配置
         StrategyConfig strategy = new StrategyConfig();
-        strategy.setInclude("tender", "tender_tenderer");
         // 设置要映射的表名
+        strategy.setInclude("tender", "tender_tenderer");
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         strategy.setEntityLombokModel(true);
         // 自动lombok；
         strategy.setLogicDeleteFieldName("deleted");
         // 自动填充配置
-        TableFill gmtCreate = new TableFill("gmt_create", FieldFill.INSERT);
-        TableFill gmtModified = new TableFill("gmt_modified", FieldFill.INSERT_UPDATE);
+        TableFill createBy = new TableFill("create_by", FieldFill.INSERT);
+        TableFill createTime = new TableFill("create_time", FieldFill.INSERT);
+        TableFill updateBy = new TableFill("update_by", FieldFill.INSERT_UPDATE);
+        TableFill updateTime = new TableFill("update_time", FieldFill.INSERT_UPDATE);
         ArrayList<TableFill> tableFills = new ArrayList<>();
-        tableFills.add(gmtCreate); tableFills.add(gmtModified);
+        tableFills.add(createBy);
+        tableFills.add(createTime);
+        tableFills.add(updateBy);
+        tableFills.add(updateTime);
         strategy.setTableFillList(tableFills);
         // 乐观锁
         // strategy.setVersionFieldName("version");
