@@ -6,6 +6,7 @@ import com.xzx.xzxms.inquiry.bean.extend.QuoteExtendInquiry;
 import com.xzx.xzxms.inquiry.bean.extend.QuoteProCheckExtend;
 import com.xzx.xzxms.inquiry.vm.FinallyQuoteInquiryVM;
 import com.xzx.xzxms.inquiry.vm.InquiryVM;
+import com.xzx.xzxms.system.bean.SysAnnouncementWithBLOBs;
 
 import java.io.IOException;
 import java.util.List;
@@ -68,7 +69,7 @@ public interface IQuoteService {
      * 报价发起审核
      * @param inquiryId 询价ID
      */
-    void initiateAudit(long inquiryId);
+    void initiateAudit(SysAnnouncementWithBLOBs announcement, long inquiryId);
 
     /**
      * 报价发送比价

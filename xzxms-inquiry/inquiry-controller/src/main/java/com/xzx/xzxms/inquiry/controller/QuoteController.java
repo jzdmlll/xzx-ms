@@ -2,6 +2,8 @@ package com.xzx.xzxms.inquiry.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.xzx.xzxms.commons.annotation.CurrentUser;
+import com.xzx.xzxms.commons.model.base.bean.UserIdentity;
 import com.xzx.xzxms.commons.utils.CustomerException;
 import com.xzx.xzxms.commons.utils.Message;
 import com.xzx.xzxms.commons.utils.MessageUtil;
@@ -10,12 +12,15 @@ import com.xzx.xzxms.inquiry.bean.Quote;
 import com.xzx.xzxms.inquiry.bean.extend.QuoteExtend;
 import com.xzx.xzxms.inquiry.bean.extend.QuoteExtendInquiry;
 import com.xzx.xzxms.inquiry.bean.extend.QuoteProCheckExtend;
+import com.xzx.xzxms.system.bean.SysAnnouncementWithBLOBs;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/quote")
@@ -101,17 +106,24 @@ public class QuoteController {
     }
 
     @ApiOperation("报价手动发起审核")
-    @GetMapping("initiateAudit")
-    public Message initiateAudit(long inquiryId){
-
-        iQuoteServiceImpl.initiateAudit(inquiryId);
+    @PostMapping("initiateAudit")
+    public Message initiateAudit(@CurrentUser UserIdentity userIdentity, @RequestBody Map<String, Object> params){
+        SysAnnouncementWithBLOBs announcement = new SysAnnouncementWithBLOBs();
+        announcement.setUserIds((String)params.get("checkUsers"));
+        announcement.setCreateBy(userIdentity.getUserId()+"");
+        announcement.setSender(userIdentity.getUsername());
+        if (params.get("startTime")!=null&&params.get("endTime")!=null) {
+            announcement.setStartTime(new Date((Long)params.get("startTime")));
+            announcement.setEndTime(new Date((Long)params.get("endTime")));
+        }
+        announcement.setMsgContent((String)params.get("msgContent"));
+        iQuoteServiceImpl.initiateAudit(announcement, Long.parseLong(params.get("id").toString()));
         return MessageUtil.success("送审成功");
     }
 
     @ApiOperation("报价手动发往比价")
     @GetMapping("sendCompare")
     public Message sendCompare(long inquiryId){
-
         iQuoteServiceImpl.sendCompare(inquiryId);
         return MessageUtil.success("比价发送成功");
     }
